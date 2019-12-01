@@ -13,9 +13,11 @@ public class Main {
                 throw new CliException("Missing schema argument");
             if (configuration.getFile() == null)
                 throw new CliException("Missing JSON file argument");
+            if (configuration.getRootType() == null)
+                throw new CliException("Missing root type argument");
             if (configuration.isValidate()) {
                 initializeApplication();
-                JSoundValidateExecutor.getInstance().validate();
+                System.out.println(JSoundValidateExecutor.getInstance().validate());
             } else if (configuration.isAnnotate()) {
                 initializeApplication();
                 JSoundAnnotateExecutor.getInstance().annotate();

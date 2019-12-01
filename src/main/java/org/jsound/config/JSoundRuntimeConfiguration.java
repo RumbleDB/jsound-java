@@ -60,6 +60,10 @@ public class JSoundRuntimeConfiguration {
         return this._arguments.getOrDefault("schema", null);
     }
 
+    public String getRootType() {
+        return this._arguments.getOrDefault("root", null);
+    }
+
     public boolean isValidate() {
         if (this._arguments.containsKey("validate"))
             return this._arguments.get("validate").equals("yes");

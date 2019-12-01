@@ -1,7 +1,12 @@
 package jsound.exceptions.codes;
 
 public enum ErrorCodes {
-    CLI_ERROR_CODE("ABCDE123"), RUNTIME_EXCEPTION_ERROR_CODE("1234ABC");
+    CLI_ERROR_CODE("cli error"),
+    RUNTIME_EXCEPTION_ERROR_CODE("runtime exception"),
+    RESOURCE_NOT_FOUND_ERROR_CODE("resource not found"),
+    INVALID_TYPE_EXCEPTION("invalid type"),
+    UNEXPECTED_TYPE_EXCEPTION("unexpected type"),
+    INVALID_SCHEMA_EXCEPTION("invalid schema");
 
     private final String errorCode;
 
