@@ -11,4 +11,13 @@ public class ObjectType extends ItemType {
     ObjectType(Map<ObjectKey, ItemType> typeMap) {
         this._typeMap = typeMap;
     }
+
+    public Map<ObjectKey, ItemType> getTypeMap() {
+        return this._typeMap;
+    }
+
+    @Override
+    public boolean isObjectType() {
+        return true;
+    }
 }

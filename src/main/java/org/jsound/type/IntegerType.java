@@ -15,7 +15,13 @@ public class IntegerType extends AtomicType {
         _defaultValue = typeString.contains("=") ? Integer.parseInt(typeString.split("=")[1]) : null;
     }
 
+    @Override
     public Integer getDefaultValue() {
         return this._defaultValue;
+    }
+
+    @Override
+    public boolean isIntegerType() {
+        return true;
     }
 }

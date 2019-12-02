@@ -8,14 +8,19 @@ public class ObjectKey {
     public ObjectKey(String typeString) {
         this._typeStringValue = this.setMarkers(typeString);
     }
+
     private String setMarkers(String typeString) {
         this.required = typeString.contains("!");
         this.unique = typeString.contains("@");
         this.allowNull = typeString.contains("?");
         return typeString
-                .replace("!", "")
-                .replace("@", "")
-                .replace("?", "");
+            .replace("!", "")
+            .replace("@", "")
+            .replace("?", "");
+    }
+
+    public String getKeyName() {
+        return this._typeStringValue;
     }
 
     public boolean isRequired() {
@@ -29,4 +34,6 @@ public class ObjectKey {
     public boolean allowsNull() {
         return allowNull;
     }
+
+
 }

@@ -15,7 +15,13 @@ public class StringType extends AtomicType {
         _defaultValue = typeString.contains("=") ? typeString.split("=")[1] : null;
     }
 
+    @Override
     public String getDefaultValue() {
         return this._defaultValue;
+    }
+
+    @Override
+    public boolean isStringType() {
+        return true;
     }
 }

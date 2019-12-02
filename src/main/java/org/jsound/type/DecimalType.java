@@ -25,4 +25,9 @@ public class DecimalType extends AtomicType {
     public BigDecimal getDefaultValue() {
         return this._defaultValue;
     }
+
+    @Override
+    public boolean isDecimalType() {
+        return true;
+    }
 }

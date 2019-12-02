@@ -1,12 +1,29 @@
 package org.jsound.item;
 
-import org.jsound.api.Item;
+import org.jsound.api.AtomicItem;
+import org.jsound.api.ItemType;
 
-public class IntegerItem extends Item {
+public class IntegerItem extends AtomicItem {
 
     private Integer _value;
 
     IntegerItem(Integer integer) {
         this._value = integer;
+    }
+
+    public Integer getValue() {
+        return this._value;
+    }
+
+    @Override
+    public boolean isValidAgainst(ItemType itemType) {
+        return itemType.isIntegerType()
+            || itemType.isDecimalType()
+            || itemType.isDoubleType()
+            || super.isValidAgainst(itemType);
+    }
+
+    @Override public int hashCode() {
+        return this._value.hashCode();
     }
 }

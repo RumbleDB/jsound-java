@@ -2,6 +2,7 @@ package org.jsound.type;
 
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.api.AtomicType;
+import org.jsound.utils.StringUtils;
 
 public class BooleanType extends AtomicType {
 
@@ -14,19 +15,20 @@ public class BooleanType extends AtomicType {
     @Override
     protected void setDefaultValue(String typeString) {
         if (typeString.contains("=")) {
-            if (isBooleanLiteral(typeString)) {
+            if (StringUtils.isBooleanLiteral(typeString)) {
                 _defaultValue = Boolean.parseBoolean(typeString);
-            }
-            else
+            } else
                 throw new UnexpectedTypeException(typeString + " is not of type boolean.");
         }
     }
 
-    private boolean isBooleanLiteral(String value) {
-        return "true".equals(value) || "false".equals(value);
+    @Override
+    public Boolean getDefaultValue() {
+        return this._defaultValue;
     }
 
-    public boolean getDefaultValue() {
-        return this._defaultValue;
+    @Override
+    public boolean isBooleanType() {
+        return true;
     }
 }

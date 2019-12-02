@@ -36,6 +36,10 @@ public class TypeFactory {
         return new BooleanType(typeString);
     }
 
+    public ItemType createNullType() {
+        return new NullType();
+    }
+
     public ItemType createObjectType(Map<ObjectKey, ItemType> typeMap) {
         return new ObjectType(typeMap);
     }

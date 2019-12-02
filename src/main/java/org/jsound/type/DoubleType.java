@@ -10,11 +10,18 @@ public class DoubleType extends AtomicType {
         super(typeString);
     }
 
-    @Override protected void setDefaultValue(String typeString) {
+    @Override
+    protected void setDefaultValue(String typeString) {
         _defaultValue = typeString.contains("=") ? Double.parseDouble(typeString.split("=")[1]) : null;
     }
 
+    @Override
     public Double getDefaultValue() {
         return this._defaultValue;
+    }
+
+    @Override
+    public boolean isDoubleType() {
+        return true;
     }
 }

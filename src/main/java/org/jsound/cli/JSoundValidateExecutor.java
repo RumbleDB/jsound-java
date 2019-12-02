@@ -12,14 +12,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 
-class JSoundValidateExecutor {
+public class JSoundValidateExecutor {
 
     private static JSoundValidateExecutor instance;
+    private static Map<String, ItemType> schema;
 
     private JSoundValidateExecutor() {
     }
 
-    static JSoundValidateExecutor getInstance() {
+    public static JSoundValidateExecutor getInstance() {
         if (instance == null)
             instance = new JSoundValidateExecutor();
         return instance;
@@ -39,10 +40,13 @@ class JSoundValidateExecutor {
         }
         JsonIterator schemaObject = JsonIterator.parse(schemaString);
         JsonIterator fileObject = JsonIterator.parse(fileString);
-        Map<String, ItemType> schema = JsonParser.getRootTypeFromObject(schemaObject);
+        schema = JsonParser.getRootTypeFromObject(schemaObject);
         ItemType schemaItem = schema.get(rootType);
         Item fileItem = JsonParser.getItemFromObject(fileObject);
-
         return fileItem.isValidAgainst(schemaItem);
+    }
+
+    public ItemType getUserDefinedItemType(String key) {
+        return schema.getOrDefault(key, null);
     }
 }

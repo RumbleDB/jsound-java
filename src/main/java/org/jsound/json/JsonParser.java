@@ -8,10 +8,12 @@ import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.api.Item;
 import org.jsound.api.ItemType;
 import org.jsound.item.ItemFactory;
+import org.jsound.item.ObjectItem;
 import org.jsound.type.ObjectKey;
 import org.jsound.type.TypeFactory;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +30,20 @@ public class JsonParser {
                 case STRING:
                     return ItemFactory.getInstance().createStringItem(object.readString());
                 case NUMBER:
-                    return ItemFactory.getInstance().createIntegerItem(object.readInt());
+                    String number = object.readNumberAsString();
+                    if (number.contains("E") || number.contains("e")) {
+                        return ItemFactory.getInstance().createDoubleItem(Double.parseDouble(number));
+                    }
+                    if (number.contains(".")) {
+                        return ItemFactory.getInstance().createDecimalItem(new BigDecimal(number));
+                    }
+                    try {
+                        return ItemFactory.getInstance().createIntegerItem(Integer.parseInt(number));
+                    } catch (NumberFormatException e) {
+                        return ItemFactory.getInstance().createDecimalItem(new BigDecimal(number));
+                    }
+                case BOOLEAN:
+                    return ItemFactory.getInstance().createBooleanItem(object.readBoolean());
                 case OBJECT:
                     Map<String, Item> itemMap = new HashMap<>();
                     String key;
@@ -36,20 +51,26 @@ public class JsonParser {
                         itemMap.put(key, getItemFromObject(object));
                     }
                     return ItemFactory.getInstance()
-                            .createObjectItem(itemMap);
+                        .createObjectItem(itemMap);
                 case ARRAY:
                     List<Item> arrayValues = new ArrayList<>();
                     while (object.readArray()) {
-                        arrayValues.add(getItemFromObject(object));
+                        try {
+                            arrayValues.add(getItemFromObject(object));
+                        } catch (ClassCastException e) {
+                            throw new UnexpectedTypeException("Array is not containing just JSON objects.");
+                        }
                     }
                     return ItemFactory.getInstance().createArrayItem(arrayValues);
+                case NULL:
+                    object.readNull();
+                    return ItemFactory.getInstance().createNullItem();
                 default:
-                    return new Item();
+                    throw new JsoundException("Invalid value found while parsing. JSON is not well-formed!");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new JsoundException("IO error while parsing. JSON is not well-formed!");
         }
-        return new Item();
     }
 
     public static Map<String, ItemType> getRootTypeFromObject(JsonIterator object) {
@@ -61,7 +82,7 @@ public class JsonParser {
             Map<String, ItemType> schema = new HashMap<>();
             String key;
             while ((key = object.readObject()) != null) {
-                schema.put(key, TypeFactory.getInstance().createUserDefinedItemType(key, getTypeFromObject(object)));
+                schema.put(key, getTypeFromObject(object));
             }
             return schema;
         } catch (IOException e) {
@@ -81,7 +102,7 @@ public class JsonParser {
                         typeMap.put(new ObjectKey(key), getTypeFromObject(object));
                     }
                     return TypeFactory.getInstance()
-                            .createObjectType(typeMap);
+                        .createObjectType(typeMap);
                 case ARRAY:
                     ItemType arrayItemsType = null;
                     while (object.readArray()) {
@@ -99,65 +120,17 @@ public class JsonParser {
     private static ItemType parseType(String typeString) {
         if (typeString.contains(STRING.getTypeName())) {
             return TypeFactory.getInstance().createStringType(typeString);
-        }
-        else if (typeString.contains(INTEGER.getTypeName())) {
+        } else if (typeString.contains(INTEGER.getTypeName())) {
             return TypeFactory.getInstance().createIntegerType(typeString);
-        }
-        else if (typeString.contains(DECIMAL.getTypeName())) {
+        } else if (typeString.contains(DECIMAL.getTypeName())) {
             return TypeFactory.getInstance().createDecimalType(typeString);
-        }
-        else if (typeString.contains(DOUBLE.getTypeName())) {
+        } else if (typeString.contains(DOUBLE.getTypeName())) {
             return TypeFactory.getInstance().createDoubleType(typeString);
-        }
-        else if (typeString.contains(BOOLEAN.getTypeName())) {
+        } else if (typeString.contains(BOOLEAN.getTypeName())) {
             return TypeFactory.getInstance().createBooleanType(typeString);
+        } else if (typeString.contains(NULL.getTypeName())) {
+            return TypeFactory.getInstance().createNullType();
         }
-        return TypeFactory.getInstance().createUserDefinedItemType(typeString, new ItemType());
+        return TypeFactory.getInstance().createUserDefinedItemType(typeString, null);
     }
-//            if (object.whatIsNext().equals(STRING))
-//                return ItemFactory.getInstance().createStringItem(object.readString());
-//            if (object.whatIsNext().equals(NUMBER)) {
-//                String number = object.readNumberAsString();
-//                if (number.contains("E") || number.contains("e")) {
-//                    return ItemFactory.getInstance().createDoubleItem(Double.parseDouble(number));
-//                }
-//                if (number.contains(".") || number.length() >= 12) {
-//                    return ItemFactory.getInstance().createDecimalItem(new BigDecimal(number));
-//                }
-//                try {
-//                    return ItemFactory.getInstance().createIntegerItem(Integer.parseInt(number));
-//                } catch (NumberFormatException e) {
-//                    return ItemFactory.getInstance().createDecimalItem(new BigDecimal(number));
-//                }
-//            }
-//            if (object.whatIsNext().equals(BOOLEAN))
-//                return ItemFactory.getInstance().createBooleanItem(object.readBoolean());
-//            if (object.whatIsNext().equals(ARRAY)) {
-//                List<Item> values = new ArrayList<Item>();
-//                while (object.readArray()) {
-//                    values.add(getItemFromObject(object, metadata));
-//                }
-//                return ItemFactory.getInstance().createArrayItem(values);
-//            }
-//            if (object.whatIsNext().equals(OBJECT)) {
-//                List<String> keys = new ArrayList<String>();
-//                List<Item> values = new ArrayList<Item>();
-//                String s = null;
-//                while ((s = object.readObject()) != null) {
-//                    keys.add(s);
-//                    values.add(getItemFromObject(object, metadata));
-//                }
-//                return ItemFactory.getInstance()
-//                        .createObjectItem(keys, values, ItemMetadata.fromIteratorMetadata(metadata));
-//            }
-//            if (object.whatIsNext().equals(NULL)) {
-//                object.readNull();
-//                return ItemFactory.getInstance().createNullItem();
-//            }
-//            throw new SparksoniqRuntimeException("Invalid value found while parsing. JSON is not well-formed!");
-//        } catch (IOException e) {
-//            throw new SparksoniqRuntimeException("IO error while parsing. JSON is not well-formed!");
-//        }
-//    }
-
 }
