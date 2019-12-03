@@ -1,19 +1,18 @@
 package org.tyson;
 
-import org.jsound.api.AtomicItem;
 
 public class TYSONValue implements TysonItem {
 
     private String typeName;
-    private AtomicItem item;
+    private String itemValue;
 
-    public TYSONValue(String typeName, AtomicItem item) {
+    public TYSONValue(String typeName, String itemValue) {
         this.typeName = typeName;
-        this.item = item;
+        this.itemValue = itemValue;
     }
 
-    private static String toTYSONString(TYSONValue value) {
-        return value == null ? "null" : "(\"" + value.typeName + "\") " + value.item.getAnnotationString();
+    private static String toTYSONString(TYSONValue tysonValue) {
+        return tysonValue == null ? "null" : "(\"" + tysonValue.typeName + "\") " + tysonValue.itemValue;
     }
 
     public String toTYSONString() {

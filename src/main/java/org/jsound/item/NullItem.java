@@ -23,7 +23,7 @@ public class NullItem extends AtomicItem {
     }
 
     @Override
-    public String getAnnotationString() {
+    public String getStringAnnotation() {
         return "null";
     }
 }

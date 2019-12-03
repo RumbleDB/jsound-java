@@ -28,6 +28,11 @@ public class DecimalType extends AtomicType {
     }
 
     @Override
+    public String getDefaultValueStringAnnotation() {
+        return this._defaultValue.toString();
+    }
+
+    @Override
     public boolean isDecimalType() {
         return true;
     }

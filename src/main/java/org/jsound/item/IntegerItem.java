@@ -17,16 +17,16 @@ public class IntegerItem extends AtomicItem {
     }
 
     @Override
-    public String getAnnotationString() {
-        return this._value.toString();
-    }
-
-    @Override
     public boolean isValidAgainst(ItemType itemType) {
         return itemType.isIntegerType()
             || itemType.isDecimalType()
             || itemType.isDoubleType()
             || super.isValidAgainst(itemType);
+    }
+
+    @Override
+    public String getStringAnnotation() {
+        return this._value.toString();
     }
 
     @Override

@@ -3,6 +3,7 @@ package org.jsound.type;
 import org.jsound.api.AtomicType;
 import org.jsound.api.ItemTypes;
 
+
 public class StringType extends AtomicType {
 
     private String _defaultValue;
@@ -19,6 +20,11 @@ public class StringType extends AtomicType {
     @Override
     public String getDefaultValue() {
         return this._defaultValue;
+    }
+
+    @Override
+    public String getDefaultValueStringAnnotation() {
+        return "\"" + this._defaultValue + "\"";
     }
 
     @Override

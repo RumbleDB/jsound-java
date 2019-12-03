@@ -19,13 +19,13 @@ public class DecimalItem extends AtomicItem {
     }
 
     @Override
-    public String getAnnotationString() {
-        return this._value.toString();
+    public boolean isValidAgainst(ItemType itemType) {
+        return itemType.isDecimalType() || itemType.isDoubleType() || super.isValidAgainst(itemType);
     }
 
     @Override
-    public boolean isValidAgainst(ItemType itemType) {
-        return itemType.isDecimalType() || itemType.isDoubleType() || super.isValidAgainst(itemType);
+    public String getStringAnnotation() {
+        return this._value.toString();
     }
 
     @Override

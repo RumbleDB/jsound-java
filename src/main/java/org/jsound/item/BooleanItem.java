@@ -3,6 +3,7 @@ package org.jsound.item;
 import org.jsound.api.AtomicItem;
 import org.jsound.api.ItemType;
 
+
 public class BooleanItem extends AtomicItem {
 
     private boolean _value;
@@ -17,13 +18,13 @@ public class BooleanItem extends AtomicItem {
     }
 
     @Override
-    public String getAnnotationString() {
-        return Boolean.toString(this._value);
+    public boolean isValidAgainst(ItemType itemType) {
+        return itemType.isBooleanType() || super.isValidAgainst(itemType);
     }
 
     @Override
-    public boolean isValidAgainst(ItemType itemType) {
-        return itemType.isBooleanType() || super.isValidAgainst(itemType);
+    public String getStringAnnotation() {
+        return Boolean.toString(this._value);
     }
 
     @Override

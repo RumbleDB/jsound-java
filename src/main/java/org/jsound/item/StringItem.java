@@ -19,7 +19,7 @@ public class StringItem extends AtomicItem {
     }
 
     @Override
-    public String getAnnotationString() {
+    public String getStringAnnotation() {
         return "\"" + this._value + "\"";
     }
 

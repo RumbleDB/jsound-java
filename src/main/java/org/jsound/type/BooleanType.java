@@ -29,6 +29,11 @@ public class BooleanType extends AtomicType {
     }
 
     @Override
+    public String getDefaultValueStringAnnotation() {
+        return Boolean.toString(this._defaultValue);
+    }
+
+    @Override
     public boolean isBooleanType() {
         return true;
     }

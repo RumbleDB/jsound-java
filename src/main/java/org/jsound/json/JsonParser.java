@@ -8,7 +8,6 @@ import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.api.Item;
 import org.jsound.api.ItemType;
 import org.jsound.item.ItemFactory;
-import org.jsound.item.ObjectItem;
 import org.jsound.type.ObjectKey;
 import org.jsound.type.TypeFactory;
 
@@ -16,10 +15,16 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.jsound.api.ItemTypes.*;
+import static org.jsound.api.ItemTypes.BOOLEAN;
+import static org.jsound.api.ItemTypes.DECIMAL;
+import static org.jsound.api.ItemTypes.DOUBLE;
+import static org.jsound.api.ItemTypes.INTEGER;
+import static org.jsound.api.ItemTypes.NULL;
+import static org.jsound.api.ItemTypes.STRING;
 
 
 public class JsonParser {
@@ -96,7 +101,7 @@ public class JsonParser {
                 case STRING:
                     return parseType(object.readString());
                 case OBJECT:
-                    Map<ObjectKey, ItemType> typeMap = new HashMap<>();
+                    Map<ObjectKey, ItemType> typeMap = new LinkedHashMap<>();
                     String key;
                     while ((key = object.readObject()) != null) {
                         typeMap.put(new ObjectKey(key), getTypeFromObject(object));

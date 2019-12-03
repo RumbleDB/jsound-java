@@ -22,6 +22,11 @@ public class IntegerType extends AtomicType {
     }
 
     @Override
+    public String getDefaultValueStringAnnotation() {
+        return this._defaultValue.toString();
+    }
+
+    @Override
     public boolean isIntegerType() {
         return true;
     }

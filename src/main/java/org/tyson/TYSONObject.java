@@ -2,11 +2,11 @@ package org.tyson;
 
 import org.json.simple.JSONValue;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class TYSONObject extends HashMap<String, TysonItem> implements TysonItem {
+public class TYSONObject extends LinkedHashMap<String, TysonItem> implements TysonItem {
 
     private String typeName;
 

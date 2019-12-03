@@ -7,6 +7,7 @@ import org.jsound.type.ObjectKey;
 import org.jsound.type.ObjectType;
 import org.jsound.type.UserDefinedType;
 import org.tyson.TYSONObject;
+import org.tyson.TYSONValue;
 import org.tyson.TysonItem;
 
 import java.util.Map;
@@ -63,6 +64,14 @@ public class ObjectItem extends Item {
         for (ObjectKey key : typeMap.keySet()) {
             if (_itemMap.containsKey(key.getKeyName())) {
                 object.put(key.getKeyName(), _itemMap.get(key.getKeyName()).annotate(typeMap.get(key)));
+            } else if (typeMap.get(key).getDefaultValue() != null) {
+                object.put(
+                    key.getKeyName(),
+                    new TYSONValue(
+                            typeMap.get(key).getType().getTypeName(),
+                            typeMap.get(key).getDefaultValueStringAnnotation()
+                    )
+                );
             }
         }
         return object;

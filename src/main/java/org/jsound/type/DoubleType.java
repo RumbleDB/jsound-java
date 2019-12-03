@@ -22,6 +22,13 @@ public class DoubleType extends AtomicType {
     }
 
     @Override
+    public String getDefaultValueStringAnnotation() {
+        return (!this._defaultValue.isInfinite() && !this._defaultValue.isNaN())
+            ? this._defaultValue.toString()
+            : "null";
+    }
+
+    @Override
     public boolean isDoubleType() {
         return true;
     }

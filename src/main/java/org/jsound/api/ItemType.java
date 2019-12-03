@@ -1,6 +1,6 @@
 package org.jsound.api;
 
-public class ItemType {
+public abstract class ItemType {
 
     private ItemTypes type;
 
@@ -48,6 +48,10 @@ public class ItemType {
     }
 
     public Object getDefaultValue() {
+        return null;
+    }
+
+    public String getDefaultValueStringAnnotation() {
         return null;
     }
 

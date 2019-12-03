@@ -17,13 +17,13 @@ public class DoubleItem extends AtomicItem {
     }
 
     @Override
-    public String getAnnotationString() {
-        return (!this._value.isInfinite() && !this._value.isNaN()) ? this._value.toString() : "null";
+    public boolean isValidAgainst(ItemType itemType) {
+        return itemType.isDoubleType() || super.isValidAgainst(itemType);
     }
 
     @Override
-    public boolean isValidAgainst(ItemType itemType) {
-        return itemType.isDoubleType() || super.isValidAgainst(itemType);
+    public String getStringAnnotation() {
+        return (!this._value.isInfinite() && !this._value.isNaN()) ? this._value.toString() : "null";
     }
 
     @Override
