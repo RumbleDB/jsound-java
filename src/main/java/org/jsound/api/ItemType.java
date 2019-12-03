@@ -4,7 +4,8 @@ public class ItemType {
 
     private ItemTypes type;
 
-    public ItemType() {}
+    public ItemType() {
+    }
 
     public ItemType(ItemTypes type) {
         this.type = type;

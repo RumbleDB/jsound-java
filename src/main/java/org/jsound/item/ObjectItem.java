@@ -52,8 +52,12 @@ public class ObjectItem extends Item {
 
     @Override
     public Object annotate(ItemType itemType) {
-        ObjectType objectType= this.getObjectType(itemType);
-        TYSONObject object = new TYSONObject(objectType.getType().getTypeName());
+        ObjectType objectType = this.getObjectType(itemType);
+        TYSONObject object = new TYSONObject(
+                itemType.isUserDefinedType()
+                    ? ((UserDefinedType) itemType).getName()
+                    : objectType.getType().getTypeName()
+        );
         Map<ObjectKey, ItemType> typeMap = objectType.getTypeMap();
         for (ObjectKey key : typeMap.keySet()) {
             if (_itemMap.containsKey(key.getKeyName())) {
@@ -65,11 +69,11 @@ public class ObjectItem extends Item {
 
     private ObjectType getObjectType(ItemType itemType) {
         if (itemType.isObjectType()) {
-             return (ObjectType) itemType;
+            return (ObjectType) itemType;
         } else if (
-                itemType.isUserDefinedType()
-                        &&
-                        ((UserDefinedType) itemType).getItemType().isObjectType()
+            itemType.isUserDefinedType()
+                &&
+                ((UserDefinedType) itemType).getItemType().isObjectType()
         ) {
             return (ObjectType) ((UserDefinedType) itemType).getItemType();
         }

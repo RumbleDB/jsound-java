@@ -23,7 +23,9 @@ class JSoundAnnotateExecutor extends JSoundExecutor {
     void annotate() {
         initializeApplication();
         try (FileWriter file = new FileWriter(JSoundRuntimeConfiguration.getInstance().getOutputPath())) {
-            file.write(((TYSONObject) fileItem.annotate(schemaItem)).toTYSONString());
+            TYSONObject rootObject = (TYSONObject) fileItem.annotate(schemaItem);
+            rootObject.setTypeName(JSoundRuntimeConfiguration.getInstance().getRootType());
+            file.write(rootObject.toTYSONString());
         } catch (IOException e) {
             throw new JsoundException("Something bad happened");
         }

@@ -1,0 +1,1 @@
+ (directory) {"people": (persons) [ (person) {"last":" (string) \"Kirk\"","first":" (string) \"James\"","picture":" (string) \"1234hello\""}, (person) {"first":" (string) \"Mary\"","picture":" (string) \"1234hello\""}]}

@@ -45,7 +45,9 @@ public class ArrayItem extends Item {
     @Override
     public Object annotate(ItemType itemType) {
         ItemType arrayItemType = getArrayType(itemType).getArrayItemsType();
-        TYSONArray array = new TYSONArray(arrayItemType.getType().getTypeName());
+        TYSONArray array = new TYSONArray(
+                itemType.isUserDefinedType() ? ((UserDefinedType) itemType).getName() : itemType.getType().getTypeName()
+        );
         for (Item item : _items) {
             array.add(item.annotate(arrayItemType));
         }
@@ -56,8 +58,8 @@ public class ArrayItem extends Item {
         if (itemType.isArrayType())
             return (ArrayType) itemType;
         else if (
-                itemType.isUserDefinedType()
-                        && ((UserDefinedType) itemType).getItemType().isArrayType()
+            itemType.isUserDefinedType()
+                && ((UserDefinedType) itemType).getItemType().isArrayType()
         )
             return (ArrayType) ((UserDefinedType) itemType).getItemType();
         throw new UnexpectedTypeException("Array item does not have a matching array schema");

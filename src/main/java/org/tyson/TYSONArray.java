@@ -6,6 +6,7 @@ import java.util.Iterator;
 public class TYSONArray extends ArrayList<Object> {
 
     private String typeName;
+
     public TYSONArray(String typeName) {
         this.typeName = typeName;
     }
@@ -17,9 +18,9 @@ public class TYSONArray extends ArrayList<Object> {
             boolean first = true;
             StringBuilder sb = new StringBuilder();
             Iterator iter = list.iterator();
-            sb.append(list.typeName).append('[');
+            sb.append(" (").append(list.typeName).append(") ").append('[');
 
-            while(iter.hasNext()) {
+            while (iter.hasNext()) {
                 if (first) {
                     first = false;
                 } else {
