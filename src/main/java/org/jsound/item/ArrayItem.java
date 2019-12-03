@@ -8,6 +8,7 @@ import org.jsound.type.ObjectKey;
 import org.jsound.type.ObjectType;
 import org.jsound.type.UserDefinedType;
 import org.tyson.TYSONArray;
+import org.tyson.TysonItem;
 
 import java.util.*;
 
@@ -43,7 +44,7 @@ public class ArrayItem extends Item {
 
 
     @Override
-    public Object annotate(ItemType itemType) {
+    public TysonItem annotate(ItemType itemType) {
         ItemType arrayItemType = getArrayType(itemType).getArrayItemsType();
         TYSONArray array = new TYSONArray(
                 itemType.isUserDefinedType() ? ((UserDefinedType) itemType).getName() : itemType.getType().getTypeName()

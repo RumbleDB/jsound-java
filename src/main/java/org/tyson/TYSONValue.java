@@ -1,38 +1,22 @@
 package org.tyson;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import org.jsound.api.AtomicItem;
 
-import java.util.List;
-import java.util.Map;
+public class TYSONValue implements TysonItem {
 
-public class TYSONValue {
+    private String typeName;
+    private AtomicItem item;
 
-    TYSONValue() {
+    public TYSONValue(String typeName, AtomicItem item) {
+        this.typeName = typeName;
+        this.item = item;
     }
 
-    public static String toTYSONString(Object value) {
-        if (value == null) {
-            return "null";
-        } else if (value instanceof String) {
-            return "\"" + JSONValue.escape((String) value) + "\"";
-        } else if (value instanceof Double) {
-            return !((Double) value).isInfinite() && !((Double) value).isNaN() ? value.toString() : "null";
-        } else if (value instanceof Float) {
-            return !((Float) value).isInfinite() && !((Float) value).isNaN() ? value.toString() : "null";
-        } else if (value instanceof Number) {
-            return value.toString();
-        } else if (value instanceof Boolean) {
-            return value.toString();
-        } else if (value instanceof TYSONObject) {
-            return ((TYSONObject) value).toTYSONString();
-        } else if (value instanceof TYSONArray) {
-            return ((TYSONArray) value).toTYSONString();
-        } else if (value instanceof Map) {
-            return JSONObject.toJSONString((Map) value);
-        } else {
-            return value instanceof List ? JSONArray.toJSONString((List) value) : value.toString();
-        }
+    private static String toTYSONString(TYSONValue value) {
+        return value == null ? "null" : "(\"" + value.typeName + "\") " + value.item.getAnnotationString();
+    }
+
+    public String toTYSONString() {
+        return toTYSONString(this);
     }
 }

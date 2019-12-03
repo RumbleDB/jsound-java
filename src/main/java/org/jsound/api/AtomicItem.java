@@ -1,5 +1,8 @@
 package org.jsound.api;
 
+import org.tyson.TYSONValue;
+import org.tyson.TysonItem;
+
 public abstract class AtomicItem extends Item {
 
     @Override
@@ -8,9 +11,11 @@ public abstract class AtomicItem extends Item {
     }
 
     @Override
-    public Object annotate(ItemType itemType) {
-        return " (" + itemType.getType().getTypeName() + ") " + this.getValue();
+    public TysonItem annotate(ItemType itemType) {
+        return new TYSONValue(itemType.getType().getTypeName(), this);
     }
 
-    protected abstract Object getValue();
+    public abstract Object getValue();
+
+    public abstract String getAnnotationString();
 }

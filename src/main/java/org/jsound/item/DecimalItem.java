@@ -14,8 +14,13 @@ public class DecimalItem extends AtomicItem {
     }
 
     @Override
-    protected BigDecimal getValue() {
+    public BigDecimal getValue() {
         return this._value;
+    }
+
+    @Override
+    public String getAnnotationString() {
+        return this._value.toString();
     }
 
     @Override

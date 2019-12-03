@@ -14,8 +14,13 @@ public class StringItem extends AtomicItem {
     }
 
     @Override
-    protected String getValue() {
+    public String getValue() {
         return this._value;
+    }
+
+    @Override
+    public String getAnnotationString() {
+        return "\"" + this._value + "\"";
     }
 
     @Override
@@ -40,11 +45,6 @@ public class StringItem extends AtomicItem {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public Object annotate(ItemType itemType) {
-        return " (" + itemType.getType().getTypeName() + ") \"" + this.getValue() + "\"";
     }
 
     @Override

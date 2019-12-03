@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class TYSONObject extends HashMap<String, Object> {
+public class TYSONObject extends HashMap<String, TysonItem> implements TysonItem {
 
     private String typeName;
 
@@ -24,17 +24,17 @@ public class TYSONObject extends HashMap<String, Object> {
         } else {
             StringBuffer sb = new StringBuffer();
             boolean first = true;
-            Iterator iter = map.entrySet().iterator();
-            sb.append(" (").append(map.typeName).append(") ").append('{');
+            Iterator<Map.Entry<String, TysonItem>> iterator = map.entrySet().iterator();
+            sb.append("(\"").append(map.typeName).append("\") ").append('{');
 
-            while (iter.hasNext()) {
+            while (iterator.hasNext()) {
                 if (first) {
                     first = false;
                 } else {
-                    sb.append(',');
+                    sb.append(", ");
                 }
 
-                Map.Entry entry = (Map.Entry) iter.next();
+                Map.Entry<String, TysonItem> entry = iterator.next();
                 toTYSONString(String.valueOf(entry.getKey()), entry.getValue(), sb);
             }
 
@@ -43,7 +43,7 @@ public class TYSONObject extends HashMap<String, Object> {
         }
     }
 
-    private static void toTYSONString(String key, Object value, StringBuffer sb) {
+    private static void toTYSONString(String key, TysonItem value, StringBuffer sb) {
         sb.append('"');
         if (key == null) {
             sb.append("null");
@@ -51,8 +51,8 @@ public class TYSONObject extends HashMap<String, Object> {
             sb.append(JSONValue.escape(key));
         }
 
-        sb.append('"').append(':');
-        sb.append(TYSONValue.toTYSONString(value));
+        sb.append('"').append(": ");
+        sb.append(value.toTYSONString());
     }
 
     public void setTypeName(String typeName) {

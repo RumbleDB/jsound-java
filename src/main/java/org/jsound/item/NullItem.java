@@ -18,7 +18,12 @@ public class NullItem extends AtomicItem {
     }
 
     @Override
-    protected Object getValue() {
+    public Object getValue() {
         return null;
+    }
+
+    @Override
+    public String getAnnotationString() {
+        return "null";
     }
 }

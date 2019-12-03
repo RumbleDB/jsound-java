@@ -12,8 +12,13 @@ public class IntegerItem extends AtomicItem {
     }
 
     @Override
-    protected Integer getValue() {
+    public Integer getValue() {
         return this._value;
+    }
+
+    @Override
+    public String getAnnotationString() {
+        return this._value.toString();
     }
 
     @Override

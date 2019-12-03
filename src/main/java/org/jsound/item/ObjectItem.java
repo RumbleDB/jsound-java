@@ -7,6 +7,7 @@ import org.jsound.type.ObjectKey;
 import org.jsound.type.ObjectType;
 import org.jsound.type.UserDefinedType;
 import org.tyson.TYSONObject;
+import org.tyson.TysonItem;
 
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class ObjectItem extends Item {
     }
 
     @Override
-    public Object annotate(ItemType itemType) {
+    public TysonItem annotate(ItemType itemType) {
         ObjectType objectType = this.getObjectType(itemType);
         TYSONObject object = new TYSONObject(
                 itemType.isUserDefinedType()

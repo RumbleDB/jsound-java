@@ -12,8 +12,13 @@ public class DoubleItem extends AtomicItem {
     }
 
     @Override
-    protected Double getValue() {
+    public Double getValue() {
         return this._value;
+    }
+
+    @Override
+    public String getAnnotationString() {
+        return (!this._value.isInfinite() && !this._value.isNaN()) ? this._value.toString() : "null";
     }
 
     @Override

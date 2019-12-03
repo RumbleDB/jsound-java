@@ -12,8 +12,13 @@ public class BooleanItem extends AtomicItem {
     }
 
     @Override
-    protected Boolean getValue() {
+    public Boolean getValue() {
         return this._value;
+    }
+
+    @Override
+    public String getAnnotationString() {
+        return Boolean.toString(this._value);
     }
 
     @Override
