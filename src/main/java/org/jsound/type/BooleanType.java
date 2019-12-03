@@ -2,6 +2,7 @@ package org.jsound.type;
 
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.api.AtomicType;
+import org.jsound.api.ItemTypes;
 import org.jsound.utils.StringUtils;
 
 public class BooleanType extends AtomicType {
@@ -9,7 +10,7 @@ public class BooleanType extends AtomicType {
     private boolean _defaultValue;
 
     BooleanType(String typeString) {
-        super(typeString);
+        super(ItemTypes.BOOLEAN, typeString);
     }
 
     @Override

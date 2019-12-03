@@ -11,7 +11,8 @@ public class DoubleItem extends AtomicItem {
         this._value = value;
     }
 
-    public Double getValue() {
+    @Override
+    protected Double getValue() {
         return this._value;
     }
 
@@ -20,7 +21,8 @@ public class DoubleItem extends AtomicItem {
         return itemType.isDoubleType() || super.isValidAgainst(itemType);
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return this._value.hashCode();
     }
 }

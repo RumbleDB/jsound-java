@@ -1,13 +1,14 @@
 package org.jsound.type;
 
 import org.jsound.api.AtomicType;
+import org.jsound.api.ItemTypes;
 
 public class IntegerType extends AtomicType {
 
     private Integer _defaultValue;
 
     IntegerType(String typeString) {
-        super(typeString);
+        super(ItemTypes.INTEGER, typeString);
     }
 
     @Override

@@ -11,7 +11,8 @@ public class BooleanItem extends AtomicItem {
         this._value = value;
     }
 
-    public boolean getValue() {
+    @Override
+    protected Boolean getValue() {
         return this._value;
     }
 
@@ -20,7 +21,8 @@ public class BooleanItem extends AtomicItem {
         return itemType.isBooleanType() || super.isValidAgainst(itemType);
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return Boolean.hashCode(this._value);
     }
 }

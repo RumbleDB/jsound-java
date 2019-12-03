@@ -1,11 +1,13 @@
 package org.jsound.item;
 
+import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.api.Item;
 import org.jsound.api.ItemType;
 import org.jsound.type.ArrayType;
 import org.jsound.type.ObjectKey;
 import org.jsound.type.ObjectType;
 import org.jsound.type.UserDefinedType;
+import org.tyson.TYSONArray;
 
 import java.util.*;
 
@@ -25,13 +27,11 @@ public class ArrayItem extends Item {
     @Override
     public boolean isValidAgainst(ItemType itemType) {
         ArrayType arrayType;
-        if (itemType.isArrayType())
-            arrayType = (ArrayType) itemType;
-        else if (itemType.isUserDefinedType()
-        && ((UserDefinedType) itemType).getType().isArrayType())
-            arrayType = (ArrayType) ((UserDefinedType) itemType).getType();
-        else
+        try {
+            arrayType = getArrayType(itemType);
+        } catch (UnexpectedTypeException e) {
             return false;
+        }
         for (Item item : _items) {
             if (!item.isValidAgainst(arrayType.getArrayItemsType()))
                 return false;
@@ -39,6 +39,28 @@ public class ArrayItem extends Item {
         if (_items.isEmpty() || !_items.get(0).isObject())
             return true;
         return this.isUniqueSatisfied(arrayType);
+    }
+
+
+    @Override
+    public Object annotate(ItemType itemType) {
+        ItemType arrayItemType = getArrayType(itemType).getArrayItemsType();
+        TYSONArray array = new TYSONArray(arrayItemType.getType().getTypeName());
+        for (Item item : _items) {
+            array.add(item.annotate(arrayItemType));
+        }
+        return array;
+    }
+
+    private ArrayType getArrayType(ItemType itemType) {
+        if (itemType.isArrayType())
+            return (ArrayType) itemType;
+        else if (
+                itemType.isUserDefinedType()
+                        && ((UserDefinedType) itemType).getItemType().isArrayType()
+        )
+            return (ArrayType) ((UserDefinedType) itemType).getItemType();
+        throw new UnexpectedTypeException("Array item does not have a matching array schema");
     }
 
     private boolean isUniqueSatisfied(ArrayType arrayType) {
@@ -49,9 +71,9 @@ public class ArrayItem extends Item {
         } else if (
             arrayType.getArrayItemsType().isUserDefinedType()
                 &&
-                ((UserDefinedType) arrayType.getArrayItemsType()).getType().isObjectType()
+                ((UserDefinedType) arrayType.getArrayItemsType()).getItemType().isObjectType()
         ) {
-            objectType = (ObjectType) ((UserDefinedType) arrayType.getArrayItemsType()).getType();
+            objectType = (ObjectType) ((UserDefinedType) arrayType.getArrayItemsType()).getItemType();
         } else
             return true;
         for (ObjectKey key : objectType.getTypeMap().keySet()) {

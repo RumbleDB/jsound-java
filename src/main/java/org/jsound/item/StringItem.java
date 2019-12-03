@@ -13,7 +13,8 @@ public class StringItem extends AtomicItem {
         this._value = string;
     }
 
-    public String getValue() {
+    @Override
+    protected String getValue() {
         return this._value;
     }
 
@@ -27,7 +28,7 @@ public class StringItem extends AtomicItem {
             } else if (itemType.isDecimalType()) {
                 if (this._value.contains("e") || this._value.contains("E"))
                     return false;
-                Float.parseFloat(this.getValue());
+                Float.parseFloat(this._value);
             } else if (itemType.isDoubleType()) {
                 Double.parseDouble(this._value);
             } else if (itemType.isNullType()) {
@@ -41,13 +42,20 @@ public class StringItem extends AtomicItem {
         return true;
     }
 
-    @Override public int hashCode() {
+    @Override
+    public Object annotate(ItemType itemType) {
+        return " (" + itemType.getType().getTypeName() + ") \"" + this.getValue() + "\"";
+    }
+
+    @Override
+    public int hashCode() {
         return this._value.hashCode();
     }
 
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         if (!(o instanceof StringItem))
             return false;
-        return this._value.equals(((StringItem) o).getValue());
+        return this._value.equals(((StringItem) o)._value);
     }
 }

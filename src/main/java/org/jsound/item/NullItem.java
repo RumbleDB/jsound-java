@@ -16,4 +16,8 @@ public class NullItem extends AtomicItem {
     public boolean isValidAgainst(ItemType itemType) {
         return itemType.isNullType() || super.isValidAgainst(itemType);
     }
+
+    @Override protected Object getValue() {
+        return null;
+    }
 }

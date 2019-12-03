@@ -1,13 +1,14 @@
 package org.jsound.type;
 
 import org.jsound.api.AtomicType;
+import org.jsound.api.ItemTypes;
 
 public class DoubleType extends AtomicType {
 
     private Double _defaultValue;
 
     DoubleType(String typeString) {
-        super(typeString);
+        super(ItemTypes.DOUBLE, typeString);
     }
 
     @Override

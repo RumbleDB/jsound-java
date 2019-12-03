@@ -1,8 +1,13 @@
 package org.jsound.cli;
 
+import jsound.exceptions.JsoundException;
 import org.jsound.config.JSoundRuntimeConfiguration;
+import org.tyson.TYSONObject;
 
-class JSoundAnnotateExecutor {
+import java.io.FileWriter;
+import java.io.IOException;
+
+class JSoundAnnotateExecutor extends JSoundExecutor {
 
     private static JSoundAnnotateExecutor instance;
 
@@ -16,8 +21,11 @@ class JSoundAnnotateExecutor {
     }
 
     void annotate() {
-        String schemaPath = JSoundRuntimeConfiguration.getInstance().getSchema();
-        String filePath = JSoundRuntimeConfiguration.getInstance().getFile();
-        String outputpPath = JSoundRuntimeConfiguration.getInstance().getOutputPath();
+        initializeApplication();
+        try (FileWriter file = new FileWriter(JSoundRuntimeConfiguration.getInstance().getOutputPath())) {
+            file.write(((TYSONObject) fileItem.annotate(schemaItem)).toTYSONString());
+        } catch (IOException e) {
+            throw new JsoundException("Something bad happened");
+        }
     }
 }

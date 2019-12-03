@@ -1,11 +1,12 @@
 package org.jsound.type;
 
 import org.jsound.api.AtomicType;
+import org.jsound.api.ItemTypes;
 
 public class NullType extends AtomicType {
 
     NullType() {
-        super();
+        super(ItemTypes.NULL);
     }
 
     @Override

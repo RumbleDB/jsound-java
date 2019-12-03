@@ -16,10 +16,10 @@ public class Main {
             if (configuration.getRootType() == null)
                 throw new CliException("Missing root type argument");
             if (configuration.isValidate()) {
-                initializeApplication();
                 System.out.println(JSoundValidateExecutor.getInstance().validate());
             } else if (configuration.isAnnotate()) {
-                initializeApplication();
+                if (configuration.getOutputPath() == null)
+                    throw new CliException("Missing output path argument");
                 JSoundAnnotateExecutor.getInstance().annotate();
             } else {
                 System.out.println("Please specify if you want to validate or annotate the file against the schema");
@@ -42,8 +42,5 @@ public class Main {
                 ex.printStackTrace();
             }
         }
-    }
-
-    private static void initializeApplication() {
     }
 }

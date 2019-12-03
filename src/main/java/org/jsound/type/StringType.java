@@ -1,13 +1,14 @@
 package org.jsound.type;
 
 import org.jsound.api.AtomicType;
+import org.jsound.api.ItemTypes;
 
 public class StringType extends AtomicType {
 
     private String _defaultValue;
 
     StringType(String typeString) {
-        super(typeString);
+        super(ItemTypes.STRING, typeString);
     }
 
     @Override

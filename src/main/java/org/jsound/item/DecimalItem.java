@@ -13,7 +13,8 @@ public class DecimalItem extends AtomicItem {
         this._value = value;
     }
 
-    public BigDecimal getValue() {
+    @Override
+    protected BigDecimal getValue() {
         return this._value;
     }
 
@@ -22,7 +23,8 @@ public class DecimalItem extends AtomicItem {
         return itemType.isDecimalType() || itemType.isDoubleType() || super.isValidAgainst(itemType);
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return this._value.hashCode();
     }
 }

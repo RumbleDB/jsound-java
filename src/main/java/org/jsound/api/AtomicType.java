@@ -2,10 +2,12 @@ package org.jsound.api;
 
 public abstract class AtomicType extends ItemType {
 
-    protected AtomicType() {
+    public AtomicType(ItemTypes type) {
+        super(type);
     }
 
-    public AtomicType(String typeString) {
+    public AtomicType(ItemTypes type, String typeString) {
+        super(type);
         this.setDefaultValue(typeString);
     }
 

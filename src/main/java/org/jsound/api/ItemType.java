@@ -2,6 +2,14 @@ package org.jsound.api;
 
 public class ItemType {
 
+    private ItemTypes type;
+
+    public ItemType() {}
+
+    public ItemType(ItemTypes type) {
+        this.type = type;
+    }
+
     public boolean isStringType() {
         return false;
     }
@@ -40,5 +48,9 @@ public class ItemType {
 
     public Object getDefaultValue() {
         return null;
+    }
+
+    public ItemTypes getType() {
+        return this.type;
     }
 }

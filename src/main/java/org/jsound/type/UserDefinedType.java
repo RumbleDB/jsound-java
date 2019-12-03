@@ -2,6 +2,7 @@ package org.jsound.type;
 
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.api.ItemType;
+import org.jsound.api.ItemTypes;
 import org.jsound.cli.JSoundValidateExecutor;
 
 public class UserDefinedType extends ItemType {
@@ -17,7 +18,7 @@ public class UserDefinedType extends ItemType {
         return name;
     }
 
-    public ItemType getType() {
+    public ItemType getItemType() {
         if (type == null) {
             type = JSoundValidateExecutor.getInstance().getUserDefinedItemType(name);
             if (type == null) {
@@ -25,6 +26,11 @@ public class UserDefinedType extends ItemType {
             }
         }
         return type;
+    }
+
+    @Override
+    public ItemTypes getType() {
+        return this.getItemType().getType();
     }
 
     @Override

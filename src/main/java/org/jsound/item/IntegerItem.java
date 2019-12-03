@@ -11,7 +11,8 @@ public class IntegerItem extends AtomicItem {
         this._value = integer;
     }
 
-    public Integer getValue() {
+    @Override
+    protected Integer getValue() {
         return this._value;
     }
 
@@ -23,7 +24,8 @@ public class IntegerItem extends AtomicItem {
             || super.isValidAgainst(itemType);
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return this._value.hashCode();
     }
 }

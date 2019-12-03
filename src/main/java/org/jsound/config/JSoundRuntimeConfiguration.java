@@ -38,7 +38,7 @@ public class JSoundRuntimeConfiguration {
     }
 
     public String getOutputPath() {
-        return this._arguments.getOrDefault("output-path", null);
+        return this._arguments.getOrDefault("output", null);
     }
 
     public boolean getOverwrite() {

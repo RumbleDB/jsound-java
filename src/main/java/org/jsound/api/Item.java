@@ -2,9 +2,9 @@ package org.jsound.api;
 
 public abstract class Item {
 
-    public boolean isValidAgainst(ItemType itemType) {
-        return true;
-    }
+    public abstract boolean isValidAgainst(ItemType itemType);
+
+    public abstract Object annotate(ItemType itemType);
 
     public boolean isNull() {
         return false;
