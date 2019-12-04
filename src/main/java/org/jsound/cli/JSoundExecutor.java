@@ -4,7 +4,6 @@ import com.jsoniter.JsonIterator;
 import jsound.exceptions.ResourceNotFoundException;
 import org.jsound.api.Item;
 import org.jsound.api.ItemType;
-import org.jsound.config.JSoundRuntimeConfiguration;
 import org.jsound.json.JsonParser;
 
 import java.io.IOException;
@@ -17,11 +16,11 @@ public abstract class JSoundExecutor {
     private static Map<String, ItemType> schema;
     static ItemType schemaItem;
     static Item fileItem;
+    private static boolean initialized = false;
 
-    void initializeApplication() {
-        String schemaPath = JSoundRuntimeConfiguration.getInstance().getSchema();
-        String filePath = JSoundRuntimeConfiguration.getInstance().getFile();
-        String rootType = JSoundRuntimeConfiguration.getInstance().getRootType();
+    static void initializeApplication(String schemaPath, String filePath, String rootType) {
+        if (initialized)
+            return;
         String schemaString, fileString;
         try {
             Thread.sleep(3000);
@@ -35,9 +34,10 @@ public abstract class JSoundExecutor {
         schema = JsonParser.getRootTypeFromObject(schemaObject);
         schemaItem = schema.get(rootType);
         fileItem = JsonParser.getItemFromObject(fileObject);
+        initialized = true;
     }
 
-    public ItemType getUserDefinedItemType(String key) {
+    public static ItemType getUserDefinedItemType(String key) {
         return schema.getOrDefault(key, null);
     }
 }

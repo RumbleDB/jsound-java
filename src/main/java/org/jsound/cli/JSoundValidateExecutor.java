@@ -1,21 +1,14 @@
 package org.jsound.cli;
 
 
-public class JSoundValidateExecutor extends JSoundExecutor {
+public abstract class JSoundValidateExecutor extends JSoundExecutor {
 
-    private static JSoundValidateExecutor instance;
-
-    private JSoundValidateExecutor() {
-    }
-
-    public static JSoundValidateExecutor getInstance() {
-        if (instance == null)
-            instance = new JSoundValidateExecutor();
-        return instance;
-    }
-
-    boolean validate() {
-        initializeApplication();
-        return fileItem.isValidAgainst(schemaItem);
+    static void validate(String schemaPath, String filePath, String rootType) {
+        initializeApplication(schemaPath, filePath, rootType);
+        System.out.println(
+            fileItem.isValidAgainst(schemaItem)
+                ? "Validation completed successfully! ✅"
+                : "Validation failed ❌ : the file is not valid against the schema."
+        );
     }
 }

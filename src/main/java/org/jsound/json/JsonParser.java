@@ -19,12 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.jsound.api.ItemTypes.BOOLEAN;
-import static org.jsound.api.ItemTypes.DECIMAL;
-import static org.jsound.api.ItemTypes.DOUBLE;
-import static org.jsound.api.ItemTypes.INTEGER;
-import static org.jsound.api.ItemTypes.NULL;
-import static org.jsound.api.ItemTypes.STRING;
+import static org.jsound.api.ItemTypes.*;
 
 
 public class JsonParser {
@@ -133,6 +128,22 @@ public class JsonParser {
             return TypeFactory.getInstance().createDoubleType(typeString);
         } else if (typeString.contains(BOOLEAN.getTypeName())) {
             return TypeFactory.getInstance().createBooleanType(typeString);
+        } else if (typeString.contains(DATETIME.getTypeName())) {
+            return TypeFactory.getInstance().createDateTimeType(typeString);
+        } else if (typeString.contains(DATE.getTypeName())) {
+            return TypeFactory.getInstance().createDateType(typeString);
+        } else if (typeString.contains(TIME.getTypeName())) {
+            return TypeFactory.getInstance().createTimeType(typeString);
+        } else if (typeString.contains(DURATION.getTypeName())) {
+            return TypeFactory.getInstance().createDurationType(typeString);
+        } else if (typeString.contains(YEARMONTHDURATION.getTypeName())) {
+            return TypeFactory.getInstance().createYearMonthDurationType(typeString);
+        } else if (typeString.contains(DAYTIMEDURATION.getTypeName())) {
+            return TypeFactory.getInstance().createDayTimeDurationType(typeString);
+        } else if (typeString.contains(HEXBINARY.getTypeName())) {
+            return TypeFactory.getInstance().createHexBinaryType(typeString);
+        } else if (typeString.contains(BASE64BINARY.getTypeName())) {
+            return TypeFactory.getInstance().createBase64BinaryType(typeString);
         } else if (typeString.contains(NULL.getTypeName())) {
             return TypeFactory.getInstance().createNullType();
         }

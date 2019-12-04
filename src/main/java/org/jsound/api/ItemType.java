@@ -31,15 +31,47 @@ public abstract class ItemType {
         return false;
     }
 
+    public boolean isDateTimeType() {
+        return false;
+    }
+
+    public boolean isDateType() {
+        return false;
+    }
+
+    public boolean isTimeType() {
+        return false;
+    }
+
+    public boolean isDurationType() {
+        return false;
+    }
+
+    public boolean isYearMonthDurationType() {
+        return false;
+    }
+
+    public boolean isDayTimeDurationType() {
+        return false;
+    }
+
+    public boolean isHexBinaryType() {
+        return false;
+    }
+
+    public boolean isBase64BinaryType() {
+        return false;
+    }
+
+    public boolean isNullType() {
+        return false;
+    }
+
     public boolean isObjectType() {
         return false;
     }
 
     public boolean isArrayType() {
-        return false;
-    }
-
-    public boolean isNullType() {
         return false;
     }
 

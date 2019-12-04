@@ -20,7 +20,7 @@ public class UserDefinedType extends ItemType {
 
     public ItemType getItemType() {
         if (type == null) {
-            type = JSoundValidateExecutor.getInstance().getUserDefinedItemType(name);
+            type = JSoundValidateExecutor.getUserDefinedItemType(name);
             if (type == null) {
                 throw new UnexpectedTypeException("This type is not defined " + name);
             }

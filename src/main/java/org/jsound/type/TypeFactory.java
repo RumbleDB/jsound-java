@@ -36,6 +36,38 @@ public class TypeFactory {
         return new BooleanType(typeString);
     }
 
+    public ItemType createDurationType(String typeString) {
+        return new DurationType(typeString);
+    }
+
+    public ItemType createYearMonthDurationType(String typeString) {
+        return new YearMonthDurationType(typeString);
+    }
+
+    public ItemType createDayTimeDurationType(String typeString) {
+        return new DayTimeDurationType(typeString);
+    }
+
+    public ItemType createDateTimeType(String typeString) {
+        return new DateTimeType(typeString);
+    }
+
+    public ItemType createDateType(String typeString) {
+        return new DateType(typeString);
+    }
+
+    public ItemType createTimeType(String typeString) {
+        return new TimeType(typeString);
+    }
+
+    public ItemType createHexBinaryType(String typeString) {
+        return new HexBinaryType(typeString);
+    }
+
+    public ItemType createBase64BinaryType(String typeString) {
+        return new Base64BinaryType(typeString);
+    }
+
     public ItemType createNullType() {
         return new NullType();
     }

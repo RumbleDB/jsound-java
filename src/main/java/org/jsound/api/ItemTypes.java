@@ -17,10 +17,12 @@ public enum ItemTypes {
     DATE("date"),
     TIME("time"),
 
+    DURATION("duration"),
+    YEARMONTHDURATION("yearMonthDuration"),
+    DAYTIMEDURATION("dayTimeDuration"),
+
     HEXBINARY("hexBinary"),
     BASE64BINARY("base64Binary"),
-
-    DURATION("duration"),
 
     NULL("null");
 

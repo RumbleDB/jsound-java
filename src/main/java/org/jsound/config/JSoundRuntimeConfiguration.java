@@ -77,4 +77,13 @@ public class JSoundRuntimeConfiguration {
         else
             return false;
     }
+
+    public void hasNecessaryArguments() {
+        if (getSchema() == null)
+            throw new CliException("Missing schema argument");
+        if (getFile() == null)
+            throw new CliException("Missing JSON file argument");
+        if (getRootType() == null)
+            throw new CliException("Missing root type argument");
+    }
 }
