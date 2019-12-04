@@ -17,20 +17,21 @@ public class Main {
                     JSoundRuntimeConfiguration.getInstance().getRootType()
                 );
                 System.out.println(
-                        isValid
+                    isValid
                         ? "Validation completed successfully! ✅"
                         : "Validation failed ❌ : the file is not valid against the schema."
-        );
-            }
-            else if (configuration.isAnnotate()) {
+                );
+            } else if (configuration.isAnnotate()) {
                 if (configuration.getOutputPath() == null)
                     throw new CliException("Missing output path argument");
-                if (!JSoundAnnotateExecutor.annotate(
-                    JSoundRuntimeConfiguration.getInstance().getSchema(),
-                    JSoundRuntimeConfiguration.getInstance().getFile(),
-                    JSoundRuntimeConfiguration.getInstance().getRootType(),
-                    JSoundRuntimeConfiguration.getInstance().getOutputPath()
-                ))
+                if (
+                    !JSoundAnnotateExecutor.annotate(
+                        JSoundRuntimeConfiguration.getInstance().getSchema(),
+                        JSoundRuntimeConfiguration.getInstance().getFile(),
+                        JSoundRuntimeConfiguration.getInstance().getRootType(),
+                        JSoundRuntimeConfiguration.getInstance().getOutputPath()
+                    )
+                )
                     System.out.println("Validation failed ❌ : the file is not valid against the schema.");
                 else {
                     System.out.println("Validation completed successfully! ✅");

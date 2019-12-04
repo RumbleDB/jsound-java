@@ -1,7 +1,9 @@
 package org.jsound.type;
 
+import org.jsound.api.Item;
 import org.jsound.api.ItemType;
 import org.jsound.json.JsonParser;
+import org.tyson.TysonItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +23,25 @@ public class UnionType extends ItemType {
         }
     }
 
-    public List<ItemType> getTypes() {
-        return _types;
-    }
-
     @Override
     public boolean isUnionType() {
         return true;
+    }
+
+    public boolean validate(Item item) {
+        for (ItemType type : _types) {
+            if (item.isValidAgainst(type))
+                return true;
+        }
+        return false;
+    }
+
+    public TysonItem annotate(Item item) {
+        for (ItemType type : _types) {
+            if (item.isValidAgainst(type)) {
+                return item.annotateWith(type);
+            }
+        }
+        return null;
     }
 }

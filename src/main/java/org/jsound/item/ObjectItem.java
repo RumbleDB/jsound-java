@@ -5,6 +5,7 @@ import org.jsound.api.Item;
 import org.jsound.api.ItemType;
 import org.jsound.type.ObjectKey;
 import org.jsound.type.ObjectType;
+import org.jsound.type.UnionType;
 import org.tyson.TYSONObject;
 import org.tyson.TYSONValue;
 import org.tyson.TysonItem;
@@ -29,6 +30,8 @@ public class ObjectItem extends Item {
 
     @Override
     public boolean isValidAgainst(ItemType itemType) {
+        if (itemType.isUnionType())
+            return ((UnionType) itemType).validate(this);
         Map<ObjectKey, ItemType> typeMap;
         try {
             typeMap = this.getObjectType(itemType).getTypeMap();
@@ -52,13 +55,15 @@ public class ObjectItem extends Item {
     }
 
     @Override
-    public TysonItem annotate(ItemType itemType) {
+    public TysonItem annotateWith(ItemType itemType) {
+        if (itemType.isUnionType())
+            return ((UnionType) itemType).annotate(this);
         ObjectType objectType = this.getObjectType(itemType);
         TYSONObject object = new TYSONObject(itemType.getTypeName());
         Map<ObjectKey, ItemType> typeMap = objectType.getTypeMap();
         for (ObjectKey key : typeMap.keySet()) {
             if (_itemMap.containsKey(key.getKeyName())) {
-                object.put(key.getKeyName(), _itemMap.get(key.getKeyName()).annotate(typeMap.get(key)));
+                object.put(key.getKeyName(), _itemMap.get(key.getKeyName()).annotateWith(typeMap.get(key)));
             } else if (typeMap.get(key).getDefaultValue() != null) {
                 object.put(
                     key.getKeyName(),
@@ -69,6 +74,11 @@ public class ObjectItem extends Item {
                 );
             }
         }
+        for (String key : _itemMap.keySet()) {
+            if (!typeMap.containsKey(new ObjectKey(key, false))) {
+                object.put(key, new TYSONValue(null, _itemMap.get(key).getStringAnnotation()));
+            }
+        }
         return object;
     }
 
@@ -77,6 +87,24 @@ public class ObjectItem extends Item {
             return (ObjectType) itemType.getItemType();
         }
         throw new UnexpectedTypeException("The object does not have a corresponding schema object");
+    }
+
+
+    @Override
+    public String getStringAnnotation() {
+        boolean first = true;
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        for (String key : _itemMap.keySet()) {
+            if (first) {
+                first = false;
+            } else {
+                sb.append(", ");
+            }
+            sb.append("\"").append(key).append("\"").append(": ").append(_itemMap.get(key).getStringAnnotation());
+        }
+        sb.append('}');
+        return sb.toString();
     }
 
     public int hashCode() {

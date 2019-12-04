@@ -35,7 +35,7 @@ public class StringItem extends AtomicItem {
 
     @Override
     public boolean isValidAgainst(ItemType itemType) {
-        if (itemType.isStringType() || super.isValidAgainst(itemType))
+        if (itemType.isStringType())
             return true;
         try {
             if (itemType.isIntegerType()) {
@@ -66,6 +66,8 @@ public class StringItem extends AtomicItem {
                 Base64.decodeBase64(this._value);
             } else if (itemType.isNullType()) {
                 return StringUtils.isNullLiteral(this._value);
+            } else if (itemType.isUnionType()) {
+                return super.isValidAgainst(itemType);
             }
         } catch (Exception e) {
             return false;

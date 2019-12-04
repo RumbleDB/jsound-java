@@ -6,7 +6,7 @@ public abstract class Item {
 
     public abstract boolean isValidAgainst(ItemType itemType);
 
-    public abstract TysonItem annotate(ItemType itemType);
+    public abstract TysonItem annotateWith(ItemType itemType);
 
     public boolean isNull() {
         return false;
@@ -40,5 +40,5 @@ public abstract class Item {
         return false;
     }
 
-
+    public abstract String getStringAnnotation();
 }

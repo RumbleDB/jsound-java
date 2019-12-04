@@ -99,7 +99,7 @@ public class JsonParser {
                     Map<ObjectKey, ItemType> typeMap = new LinkedHashMap<>();
                     String key;
                     while ((key = object.readObject()) != null) {
-                        typeMap.put(new ObjectKey(key), getTypeFromObject(object));
+                        typeMap.put(new ObjectKey(key, true), getTypeFromObject(object));
                     }
                     return TypeFactory.getInstance()
                         .createObjectType(typeMap);

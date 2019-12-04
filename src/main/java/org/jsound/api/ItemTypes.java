@@ -30,7 +30,8 @@ public enum ItemTypes {
 
     private String typeName;
 
-    ItemTypes() {}
+    ItemTypes() {
+    }
 
     ItemTypes(String typeName) {
         this.typeName = typeName;

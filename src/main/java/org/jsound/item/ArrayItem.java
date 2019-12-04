@@ -6,6 +6,7 @@ import org.jsound.api.ItemType;
 import org.jsound.type.ArrayType;
 import org.jsound.type.ObjectKey;
 import org.jsound.type.ObjectType;
+import org.jsound.type.UnionType;
 import org.tyson.TYSONArray;
 import org.tyson.TysonItem;
 
@@ -26,6 +27,8 @@ public class ArrayItem extends Item {
 
     @Override
     public boolean isValidAgainst(ItemType itemType) {
+        if (itemType.isUnionType())
+            return ((UnionType) itemType).validate(this);
         ArrayType arrayType;
         try {
             arrayType = getArrayType(itemType);
@@ -43,11 +46,13 @@ public class ArrayItem extends Item {
 
 
     @Override
-    public TysonItem annotate(ItemType itemType) {
+    public TysonItem annotateWith(ItemType itemType) {
+        if (itemType.isUnionType())
+            return ((UnionType) itemType).annotate(this);
         ItemType arrayItemType = getArrayType(itemType).getArrayItemsType();
         TYSONArray array = new TYSONArray(itemType.getTypeName());
         for (Item item : _items) {
-            array.add(item.annotate(arrayItemType));
+            array.add(item.annotateWith(arrayItemType));
         }
         return array;
     }
@@ -82,6 +87,25 @@ public class ArrayItem extends Item {
         }
         return true;
     }
+
+
+    @Override
+    public String getStringAnnotation() {
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        sb.append('[');
+        for (Item item : _items) {
+            if (first) {
+                first = false;
+            } else {
+                sb.append(", ");
+            }
+            sb.append(item.getStringAnnotation());
+        }
+        sb.append(']');
+        return sb.toString();
+    }
+
 
     public int hashCode() {
         int result = _items.size();
