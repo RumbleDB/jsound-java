@@ -1,1 +1,1 @@
-{"directory": {"people": "persons"}, "persons": ["person"], "person": {"first!": "string", "last": "string=N/A", "picture": "hexBinary", "myDate": "date", "myTime": "time", "myYMDuration": "yearMonthDuration=P3Y", "myDTDuration": "dayTimeDuration=P3DT9S"}}
+{"directory": {"people": "persons"}, "persons": "secPersons", "secPersons": ["person"], "person": {"first!": "string", "last": "string=N/A", "picture": "hexBinary", "myDate": "date", "myTime": "time", "myYMDuration": "yearMonthDuration=P3Y", "myDTDuration": "dayTimeDuration=P3DT9S", "base64bin": "base64Binary=af2345"}}

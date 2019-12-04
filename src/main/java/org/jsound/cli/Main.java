@@ -11,24 +11,33 @@ public class Main {
         try {
             configuration.hasNecessaryArguments();
             if (configuration.isValidate()) {
-                JSoundValidateExecutor.validate(
+                boolean isValid = JSoundValidateExecutor.validate(
                     JSoundRuntimeConfiguration.getInstance().getSchema(),
                     JSoundRuntimeConfiguration.getInstance().getFile(),
                     JSoundRuntimeConfiguration.getInstance().getRootType()
                 );
+                System.out.println(
+                        isValid
+                        ? "Validation completed successfully! ✅"
+                        : "Validation failed ❌ : the file is not valid against the schema."
+        );
             }
-            if (configuration.isAnnotate()) {
+            else if (configuration.isAnnotate()) {
                 if (configuration.getOutputPath() == null)
                     throw new CliException("Missing output path argument");
-                JSoundAnnotateExecutor.annotate(
+                if (!JSoundAnnotateExecutor.annotate(
                     JSoundRuntimeConfiguration.getInstance().getSchema(),
                     JSoundRuntimeConfiguration.getInstance().getFile(),
                     JSoundRuntimeConfiguration.getInstance().getRootType(),
                     JSoundRuntimeConfiguration.getInstance().getOutputPath()
-                );
-            } else if (!configuration.isValidate() && !configuration.isAnnotate()) {
+                ))
+                    System.out.println("Validation failed ❌ : the file is not valid against the schema.");
+                else {
+                    System.out.println("Validation completed successfully! ✅");
+                    System.out.println("Annotation completed successfully! ✅");
+                }
+            } else
                 System.out.println("Please specify if you want to validate or annotate the file against the schema");
-            }
         } catch (Exception ex) {
             handleException(ex);
         }

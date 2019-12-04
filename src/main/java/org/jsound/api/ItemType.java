@@ -2,7 +2,7 @@ package org.jsound.api;
 
 public abstract class ItemType {
 
-    private ItemTypes type;
+    protected ItemTypes type;
 
     public ItemType() {
     }
@@ -79,6 +79,10 @@ public abstract class ItemType {
         return false;
     }
 
+    public boolean isUnionType() {
+        return false;
+    }
+
     public Object getDefaultValue() {
         return null;
     }
@@ -87,7 +91,11 @@ public abstract class ItemType {
         return null;
     }
 
-    public ItemTypes getType() {
-        return this.type;
+    public ItemType getItemType() {
+        return this;
+    }
+
+    public String getTypeName() {
+        return this.type.getTypeName();
     }
 }

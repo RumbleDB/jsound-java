@@ -3,7 +3,7 @@ package org.jsound.api;
 public enum ItemTypes {
     OBJECT("object"),
     ARRAY("array"),
-    ANY_URI("anyURI"),
+    ANYURI("anyURI"),
 
     STRING("string"),
 
@@ -24,9 +24,13 @@ public enum ItemTypes {
     HEXBINARY("hexBinary"),
     BASE64BINARY("base64Binary"),
 
-    NULL("null");
+    NULL("null"),
 
-    private final String typeName;
+    USERDEFINED();
+
+    private String typeName;
+
+    ItemTypes() {}
 
     ItemTypes(String typeName) {
         this.typeName = typeName;
@@ -34,5 +38,9 @@ public enum ItemTypes {
 
     public String getTypeName() {
         return typeName;
+    }
+
+    public void setTypeName(String name) {
+        this.typeName = name;
     }
 }

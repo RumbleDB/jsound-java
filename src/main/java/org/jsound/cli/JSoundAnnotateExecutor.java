@@ -9,17 +9,18 @@ import java.io.IOException;
 
 class JSoundAnnotateExecutor extends JSoundExecutor {
 
-    static void annotate(String schemaPath, String filePath, String rootType, String outputPath) {
+    static boolean annotate(String schemaPath, String filePath, String rootType, String outputPath) {
         try (FileWriter file = new FileWriter(outputPath)) {
-            initializeApplication(schemaPath, filePath, rootType);
+            if (!JSoundValidateExecutor.validate(schemaPath, filePath, rootType))
+                return false;
             TYSONObject rootObject = (TYSONObject) fileItem.annotate(schemaItem);
             rootObject.setTypeName(JSoundRuntimeConfiguration.getInstance().getRootType());
             file.write(rootObject.toTYSONString());
-            System.out.println("Annotation completed successfully! ✅");
         } catch (IOException e) {
             throw new ResourceNotFoundException("The specified output path is not valid.");
         } catch (Exception e) {
             System.out.println("Annotation failed ❌ : could not annotate the file with the provided the schema.");
         }
+        return true;
     }
 }

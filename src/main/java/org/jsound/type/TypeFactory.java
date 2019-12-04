@@ -83,4 +83,8 @@ public class TypeFactory {
     public ItemType createUserDefinedItemType(String name, ItemType type) {
         return new UserDefinedType(name, type);
     }
+
+    public ItemType createUnionType(String typeString) {
+        return new UnionType(typeString);
+    }
 }

@@ -5,7 +5,6 @@ import org.jsound.api.Item;
 import org.jsound.api.ItemType;
 import org.jsound.type.ObjectKey;
 import org.jsound.type.ObjectType;
-import org.jsound.type.UserDefinedType;
 import org.tyson.TYSONObject;
 import org.tyson.TYSONValue;
 import org.tyson.TysonItem;
@@ -55,11 +54,7 @@ public class ObjectItem extends Item {
     @Override
     public TysonItem annotate(ItemType itemType) {
         ObjectType objectType = this.getObjectType(itemType);
-        TYSONObject object = new TYSONObject(
-                itemType.isUserDefinedType()
-                    ? ((UserDefinedType) itemType).getName()
-                    : objectType.getType().getTypeName()
-        );
+        TYSONObject object = new TYSONObject(itemType.getTypeName());
         Map<ObjectKey, ItemType> typeMap = objectType.getTypeMap();
         for (ObjectKey key : typeMap.keySet()) {
             if (_itemMap.containsKey(key.getKeyName())) {
@@ -68,7 +63,7 @@ public class ObjectItem extends Item {
                 object.put(
                     key.getKeyName(),
                     new TYSONValue(
-                            typeMap.get(key).getType().getTypeName(),
+                            typeMap.get(key).getTypeName(),
                             typeMap.get(key).getDefaultValueStringAnnotation()
                     )
                 );
@@ -78,21 +73,14 @@ public class ObjectItem extends Item {
     }
 
     private ObjectType getObjectType(ItemType itemType) {
-        if (itemType.isObjectType()) {
-            return (ObjectType) itemType;
-        } else if (
-            itemType.isUserDefinedType()
-                &&
-                ((UserDefinedType) itemType).getItemType().isObjectType()
-        ) {
-            return (ObjectType) ((UserDefinedType) itemType).getItemType();
+        if (itemType.getItemType().isObjectType()) {
+            return (ObjectType) itemType.getItemType();
         }
         throw new UnexpectedTypeException("The object does not have a corresponding schema object");
     }
 
     public int hashCode() {
-        int result = 0;
-        result += _itemMap.size();
+        int result = _itemMap.size();
         for (String key : _itemMap.keySet()) {
             result += +_itemMap.get(key).hashCode();
         }

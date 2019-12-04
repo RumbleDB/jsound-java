@@ -117,8 +117,10 @@ public class JsonParser {
         }
     }
 
-    private static ItemType parseType(String typeString) {
-        if (typeString.contains(STRING.getTypeName())) {
+    public static ItemType parseType(String typeString) {
+        if (typeString.contains("|")) {
+            return TypeFactory.getInstance().createUnionType(typeString);
+        } else if (typeString.contains(STRING.getTypeName())) {
             return TypeFactory.getInstance().createStringType(typeString);
         } else if (typeString.contains(INTEGER.getTypeName())) {
             return TypeFactory.getInstance().createIntegerType(typeString);

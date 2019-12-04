@@ -7,30 +7,30 @@ import org.jsound.cli.JSoundValidateExecutor;
 
 public class UserDefinedType extends ItemType {
     private String name;
-    private ItemType type;
+    private ItemType itemType;
 
-    UserDefinedType(String name, ItemType type) {
+    UserDefinedType(String name, ItemType itemType) {
+        super(ItemTypes.USERDEFINED);
+        this.type.setTypeName(name);
         this.name = name;
-        this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ItemType getItemType() {
-        if (type == null) {
-            type = JSoundValidateExecutor.getUserDefinedItemType(name);
-            if (type == null) {
-                throw new UnexpectedTypeException("This type is not defined " + name);
-            }
-        }
-        return type;
+        this.itemType = itemType;
     }
 
     @Override
-    public ItemTypes getType() {
-        return this.getItemType().getType();
+    public ItemType getItemType() {
+        if (itemType == null) {
+            itemType = JSoundValidateExecutor.getUserDefinedItemType(name);
+            if (itemType == null) {
+                throw new UnexpectedTypeException("This itemType is not defined " + name);
+            }
+            itemType = itemType.getItemType();
+        }
+        return itemType;
+    }
+
+    @Override
+    public String getTypeName() {
+        return name;
     }
 
     @Override

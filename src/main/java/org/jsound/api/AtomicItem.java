@@ -12,7 +12,7 @@ public abstract class AtomicItem extends Item {
 
     @Override
     public TysonItem annotate(ItemType itemType) {
-        return new TYSONValue(itemType.getType().getTypeName(), this.getStringAnnotation());
+        return new TYSONValue(itemType.getTypeName(), this.getStringAnnotation());
     }
 
     public abstract Object getValue();
