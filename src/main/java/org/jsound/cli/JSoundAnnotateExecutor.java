@@ -9,9 +9,9 @@ import java.io.IOException;
 
 class JSoundAnnotateExecutor extends JSoundExecutor {
 
-    static boolean annotate(String schemaPath, String filePath, String rootType, String outputPath) {
+    static boolean annotate(String schemaPath, String filePath, String rootType, String outputPath, boolean compact) {
         try (FileWriter file = new FileWriter(outputPath)) {
-            if (!JSoundValidateExecutor.validate(schemaPath, filePath, rootType))
+            if (!JSoundValidateExecutor.validate(schemaPath, filePath, rootType, compact))
                 return false;
             TYSONObject rootObject = (TYSONObject) fileItem.annotateWith(schemaItem);
             rootObject.setTypeName(JSoundRuntimeConfiguration.getInstance().getRootType());

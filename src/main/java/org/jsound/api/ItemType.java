@@ -11,6 +11,10 @@ public abstract class ItemType {
         this.type = type;
     }
 
+    public boolean isAtomicType() {
+        return false;
+    }
+
     public boolean isStringType() {
         return false;
     }

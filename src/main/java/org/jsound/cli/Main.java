@@ -14,7 +14,8 @@ public class Main {
                 boolean isValid = JSoundValidateExecutor.validate(
                     JSoundRuntimeConfiguration.getInstance().getSchema(),
                     JSoundRuntimeConfiguration.getInstance().getFile(),
-                    JSoundRuntimeConfiguration.getInstance().getRootType()
+                    JSoundRuntimeConfiguration.getInstance().getRootType(),
+                    JSoundRuntimeConfiguration.getInstance().getCompact()
                 );
                 System.out.println(
                     isValid
@@ -29,7 +30,8 @@ public class Main {
                         JSoundRuntimeConfiguration.getInstance().getSchema(),
                         JSoundRuntimeConfiguration.getInstance().getFile(),
                         JSoundRuntimeConfiguration.getInstance().getRootType(),
-                        JSoundRuntimeConfiguration.getInstance().getOutputPath()
+                        JSoundRuntimeConfiguration.getInstance().getOutputPath(),
+                        JSoundRuntimeConfiguration.getInstance().getCompact()
                     )
                 )
                     System.out.println("Validation failed ❌ : the file is not valid against the schema.");

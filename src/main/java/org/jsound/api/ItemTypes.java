@@ -1,6 +1,8 @@
 package org.jsound.api;
 
 public enum ItemTypes {
+    VALUE("value"),
+
     OBJECT("object"),
     ARRAY("array"),
     ANYURI("anyURI"),

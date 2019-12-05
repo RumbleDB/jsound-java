@@ -4,7 +4,9 @@ import com.jsoniter.JsonIterator;
 import jsound.exceptions.ResourceNotFoundException;
 import org.jsound.api.Item;
 import org.jsound.api.ItemType;
-import org.jsound.json.JsonParser;
+import org.jsound.json.InstanceFileJsonParser;
+import org.jsound.json.CompactSchemaFileJsonParser;
+import org.jsound.json.SchemaFileJsonParser;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +20,7 @@ public abstract class JSoundExecutor {
     static Item fileItem;
     private static boolean initialized = false;
 
-    static void initializeApplication(String schemaPath, String filePath, String rootType) {
+    static void initializeApplication(String schemaPath, String filePath, String rootType, boolean compact) {
         if (initialized)
             return;
         String schemaString, fileString;
@@ -31,9 +33,14 @@ public abstract class JSoundExecutor {
         }
         JsonIterator schemaObject = JsonIterator.parse(schemaString);
         JsonIterator fileObject = JsonIterator.parse(fileString);
-        schema = JsonParser.getRootTypeFromObject(schemaObject);
+        schema = compact
+            ? CompactSchemaFileJsonParser.getRootTypes(schemaObject)
+            : SchemaFileJsonParser.getRootType(schemaObject);
+
+        // TODO: controllare che baseType sia valido contro il type at hand
+
         schemaItem = schema.get(rootType);
-        fileItem = JsonParser.getItemFromObject(fileObject);
+        fileItem = InstanceFileJsonParser.getItemFromObject(fileObject);
         initialized = true;
     }
 

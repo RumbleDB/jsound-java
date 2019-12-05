@@ -12,4 +12,9 @@ public abstract class AtomicType extends ItemType {
     }
 
     protected abstract void setDefaultValue(String typeString);
+
+    @Override
+    public boolean isAtomicType() {
+        return true;
+    }
 }

@@ -2,7 +2,7 @@ package org.jsound.type;
 
 import org.jsound.api.Item;
 import org.jsound.api.ItemType;
-import org.jsound.json.JsonParser;
+import org.jsound.json.CompactSchemaFileJsonParser;
 import org.tyson.TysonItem;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class UnionType extends ItemType {
     private void parseUnionType(String typeString) {
         String[] typesString = typeString.split("\\|");
         for (String type : typesString) {
-            _types.add(JsonParser.parseType(type));
+            _types.add(CompactSchemaFileJsonParser.parseType(type));
         }
     }
 

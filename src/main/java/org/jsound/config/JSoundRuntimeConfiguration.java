@@ -64,6 +64,10 @@ public class JSoundRuntimeConfiguration {
         return this._arguments.getOrDefault("root", null);
     }
 
+    public boolean getCompact() {
+        return Boolean.parseBoolean(this._arguments.getOrDefault("compact", null));
+    }
+
     public boolean isValidate() {
         if (this._arguments.containsKey("validate"))
             return this._arguments.get("validate").equals("yes");
