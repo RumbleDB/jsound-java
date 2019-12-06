@@ -10,10 +10,12 @@ import org.jsound.api.TypeDescriptor;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
 import org.jsound.type.Kinds;
+import org.jsound.type.TypeFactory;
 
 import java.io.IOException;
 import java.util.*;
 
+import static org.jsound.api.AtomicTypes.*;
 import static org.jsound.facets.FacetTypes.*;
 
 public class SchemaFileJsonParser {
@@ -46,32 +48,33 @@ public class SchemaFileJsonParser {
     private static void getTypeDescriptor(JsonIterator object) throws IOException {
         if (object.whatIsNext() != ValueType.OBJECT)
             throw new UnexpectedTypeException(object.read().toString());
-        TypeDescriptor typeDescriptor = null;
-        String key;
-        String name = null;
-        Kinds kind = null;
-        while ((key = object.readObject()) != null) {
-            switch (key) {
-                case "name":
-                    checkField(name, key);
-                    name = getStringFromObject(object);
-                    break;
-                case "kind":
-                    checkName(name);
-                    checkField(kind, key);
-                    kind = getKindFromObject(object); // consider switch instead of overriding buildTypeDescriptor
-                    typeDescriptor = kind.buildTypeDescriptor(name, object);
-                    break;
-                default:
-                    throw new InvalidSchemaException("Please define name and type before " + key);
-            }
-        }
-        if (name == null || kind == null)
-            throw new InvalidSchemaException("Missing name or kind");
-        schema.put(name, typeDescriptor);
+
+        if (!"name".equals(object.readObject()))
+            throw new InvalidSchemaException("Please specify the \"name\" first.");
+        String name = getStringFromObject(object);
+
+        if (!"kind".equals(object.readObject()))
+            throw new InvalidSchemaException("Please specify the \"kind\" before other properties.");
+
+        schema.put(name, buildTypeDescriptor(name, object));
     }
 
-    public static TypeDescriptor buildAtomicTypeDescriptor(String name, JsonIterator object) throws IOException {
+    private static TypeDescriptor buildTypeDescriptor(String name, JsonIterator object) throws IOException {
+        Kinds kind = getKindFromObject(object);
+        switch (kind) {
+            case ATOMIC:
+                return buildAtomicTypeDescriptor(name, object);
+            case OBJECT:
+                return buildObjectTypeDescriptor(name, object);
+            case ARRAY:
+                return buildArrayTypeDescriptor(name, object);
+            case UNION:
+                return buildUnionTypeDescriptor(name, object);
+        }
+        throw new InvalidSchemaException("Invalid kind.");
+    }
+
+    private static TypeDescriptor buildAtomicTypeDescriptor(String name, JsonIterator object) throws IOException {
         String key, baseType;
         if ((key = object.readObject()) != null) {
             if (!key.equals("baseType"))
@@ -87,7 +90,53 @@ public class SchemaFileJsonParser {
         } catch (IllegalArgumentException e) {
             throw new InvalidSchemaException("baseType " + baseType + "not defined for atomic kind.");
         }
-        return atomicType.buildAtomicType(name, object); // consider switch instead of overriding buildAtomicType
+        return buildAtomicType(atomicType, name, object);
+    }
+
+    private static TypeDescriptor buildAtomicType(
+            AtomicTypes atomicType,
+            String name,
+            JsonIterator object
+    )
+            throws IOException {
+        switch (atomicType) {
+            case STRING:
+                return new TypeDescriptor(
+                        TypeFactory.getInstance()
+                            .createStringType(name, createFacets(STRING.getAllowedFacets(), object))
+                );
+            case INTEGER:
+                return new TypeDescriptor(
+                        TypeFactory.getInstance()
+                            .createIntegerType(name, createFacets(INTEGER.getAllowedFacets(), object))
+                );
+            case DECIMAL:
+                return new TypeDescriptor(
+                        TypeFactory.getInstance()
+                            .createDecimalType(name, createFacets(DECIMAL.getAllowedFacets(), object))
+                );
+            case DOUBLE:
+                return new TypeDescriptor(
+                        TypeFactory.getInstance()
+                            .createDoubleType(name, createFacets(DOUBLE.getAllowedFacets(), object))
+                );
+            case HEXBINARY:
+                return new TypeDescriptor(
+                        TypeFactory.getInstance()
+                            .createHexBinaryType(name, createFacets(HEXBINARY.getAllowedFacets(), object))
+                );
+            case BASE64BINARY:
+                return new TypeDescriptor(
+                        TypeFactory.getInstance()
+                            .createBase64BinaryType(name, createFacets(BASE64BINARY.getAllowedFacets(), object))
+                );
+            case ANYURI:
+                return new TypeDescriptor(
+                        TypeFactory.getInstance()
+                            .createAnyURIType(name, createFacets(ANYURI.getAllowedFacets(), object))
+                );
+        }
+        throw new InvalidSchemaException("Invalid atomic baseType");
     }
 
     public static TypeDescriptor buildObjectTypeDescriptor(String name, JsonIterator object) throws IOException {
@@ -132,7 +181,10 @@ public class SchemaFileJsonParser {
     public static String getStringFromObject(JsonIterator object) throws IOException {
         if (!object.whatIsNext().equals(ValueType.STRING))
             throw new UnexpectedTypeException("Invalid string " + object.read().toString());
-        return object.readString();
+        String result = object.readString();
+        if (result == null)
+            throw new InvalidSchemaException("Invalid null value.");
+        return result;
     }
 
     public static Integer getIntegerFromObject(JsonIterator object) throws IOException {
@@ -143,13 +195,11 @@ public class SchemaFileJsonParser {
 
 
     private static Kinds getKindFromObject(JsonIterator object) throws IOException {
-        if (!object.whatIsNext().equals(ValueType.STRING))
-            throw new UnexpectedTypeException("Invalid kind " + object.read().toString());
-        String kind = object.readString();
+        String kind = getStringFromObject(object);
         try {
             return Kinds.valueOf(kind.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new UnexpectedTypeException("Invalid kind " + object.read().toString());
+            throw new UnexpectedTypeException("Invalid kind " + kind);
         }
     }
 
