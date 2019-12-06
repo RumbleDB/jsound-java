@@ -3,6 +3,7 @@ package org.jsound.type;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.api.AtomicType;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.Facets;
 
 import java.math.BigDecimal;
 
@@ -10,8 +11,17 @@ public class DecimalType extends AtomicType {
 
     private BigDecimal _defaultValue = null;
 
+    private String _name;
+    private Facets _facets;
+
     DecimalType(String typeString) {
         super(ItemTypes.DECIMAL, typeString);
+    }
+
+    DecimalType(String name, Facets facets) {
+        super(ItemTypes.DECIMAL);
+        this._name = name;
+        this._facets = facets;
     }
 
     @Override

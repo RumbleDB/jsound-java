@@ -2,11 +2,20 @@ package org.jsound.type;
 
 import org.jsound.api.AtomicType;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.Facets;
 
 
 public class StringType extends AtomicType {
 
     private String _defaultValue;
+    private String _name;
+    private Facets _facets;
+
+    StringType(String name, Facets facets) {
+        super(ItemTypes.STRING);
+        this._name = name;
+        this._facets = facets;
+    }
 
     StringType(String typeString) {
         super(ItemTypes.STRING, typeString);

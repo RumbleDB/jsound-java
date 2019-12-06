@@ -2,6 +2,7 @@ package org.jsound.type;
 
 
 import org.jsound.api.ItemType;
+import org.jsound.facets.Facets;
 
 import java.util.Map;
 
@@ -86,5 +87,37 @@ public class TypeFactory {
 
     public ItemType createUnionType(String typeString) {
         return new UnionType(typeString);
+    }
+
+    public ItemType createAnyURIType(String name) {
+        return new AnyURIType(name);
+    }
+
+    public ItemType createStringType(String typeString, Facets facets) {
+        return new StringType(typeString, facets);
+    }
+
+    public ItemType createIntegerType(String name, Facets facets) {
+        return new IntegerType(name, facets);
+    }
+
+    public ItemType createDecimalType(String name, Facets facets) {
+        return new DecimalType(name, facets);
+    }
+
+    public ItemType createDoubleType(String name, Facets facets) {
+        return new DoubleType(name, facets);
+    }
+
+    public ItemType createHexBinaryType(String name, Facets facets) {
+        return new HexBinaryType(name, facets);
+    }
+
+    public ItemType createBase64BinaryType(String name, Facets facets) {
+        return new Base64BinaryType(name, facets);
+    }
+
+    public ItemType createAnyURIType(String name, Facets facets) {
+        return new AnyURIType(name, facets);
     }
 }

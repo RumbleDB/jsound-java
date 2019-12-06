@@ -4,6 +4,7 @@ import com.jsoniter.JsonIterator;
 import jsound.exceptions.ResourceNotFoundException;
 import org.jsound.api.Item;
 import org.jsound.api.ItemType;
+import org.jsound.api.TypeDescriptor;
 import org.jsound.json.InstanceFileJsonParser;
 import org.jsound.json.CompactSchemaFileJsonParser;
 import org.jsound.json.SchemaFileJsonParser;
@@ -15,7 +16,7 @@ import java.util.Map;
 
 public abstract class JSoundExecutor {
 
-    private static Map<String, ItemType> schema;
+    private static Map<String, TypeDescriptor> schema;
     static ItemType schemaItem;
     static Item fileItem;
     private static boolean initialized = false;
@@ -35,9 +36,10 @@ public abstract class JSoundExecutor {
         JsonIterator fileObject = JsonIterator.parse(fileString);
         schema = compact
             ? CompactSchemaFileJsonParser.getRootTypes(schemaObject)
-            : SchemaFileJsonParser.getRootType(schemaObject);
+            : SchemaFileJsonParser.getSchema(schemaObject);
 
         // TODO: controllare che baseType sia valido contro il type at hand
+        // TODO: controllare che items in enumeration siano validi contro type at hand
 
         schemaItem = schema.get(rootType);
         fileItem = InstanceFileJsonParser.getItemFromObject(fileObject);

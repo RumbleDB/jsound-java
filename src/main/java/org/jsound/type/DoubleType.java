@@ -2,13 +2,23 @@ package org.jsound.type;
 
 import org.jsound.api.AtomicType;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.Facets;
 
 public class DoubleType extends AtomicType {
 
     private Double _defaultValue;
 
+    private String _name;
+    private Facets _facets;
+
     DoubleType(String typeString) {
         super(ItemTypes.DOUBLE, typeString);
+    }
+
+    DoubleType(String name, Facets facets) {
+        super(ItemTypes.DOUBLE);
+        this._name = name;
+        this._facets = facets;
     }
 
     @Override
