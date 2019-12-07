@@ -2,7 +2,6 @@ package org.jsound.type;
 
 
 import org.jsound.api.ItemType;
-import org.jsound.facets.Facets;
 
 import java.util.Map;
 
@@ -93,31 +92,59 @@ public class TypeFactory {
         return new AnyURIType(name);
     }
 
-    public ItemType createStringType(String typeString, Facets facets) {
-        return new StringType(typeString, facets);
+    public ItemType createStringType() {
+        return new StringType();
     }
 
-    public ItemType createIntegerType(String name, Facets facets) {
-        return new IntegerType(name, facets);
+    public ItemType createIntegerType() {
+        return new IntegerType();
     }
 
-    public ItemType createDecimalType(String name, Facets facets) {
-        return new DecimalType(name, facets);
+    public ItemType createDecimalType() {
+        return new DecimalType();
     }
 
-    public ItemType createDoubleType(String name, Facets facets) {
-        return new DoubleType(name, facets);
+    public ItemType createDoubleType() {
+        return new DoubleType();
     }
 
-    public ItemType createHexBinaryType(String name, Facets facets) {
-        return new HexBinaryType(name, facets);
+    public ItemType createDurationType() {
+        return new DurationType();
     }
 
-    public ItemType createBase64BinaryType(String name, Facets facets) {
-        return new Base64BinaryType(name, facets);
+    public ItemType createYearMonthDurationType() {
+        return new YearMonthDurationType();
     }
 
-    public ItemType createAnyURIType(String name, Facets facets) {
-        return new AnyURIType(name, facets);
+    public ItemType createDayTimeDurationType() {
+        return new DayTimeDurationType();
+    }
+
+    public ItemType createDateTimeType() {
+        return new DateTimeType();
+    }
+
+    public ItemType createDateType() {
+        return new DateType();
+    }
+
+    public ItemType createTimeType() {
+        return new TimeType();
+    }
+
+    public ItemType createHexBinaryType() {
+        return new HexBinaryType();
+    }
+
+    public ItemType createBase64BinaryType() {
+        return new Base64BinaryType();
+    }
+
+    public ItemType createBooleanType() {
+        return new BooleanType();
+    }
+
+    public ItemType createAnyURIType() {
+        return new AnyURIType();
     }
 }

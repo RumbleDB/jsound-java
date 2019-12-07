@@ -1,40 +1,21 @@
 package org.jsound.type;
 
-import jsound.exceptions.UnexpectedTypeException;
-import org.jsound.api.AtomicType;
+import org.jsound.api.AtomicTypeDescriptor;
 import org.jsound.api.ItemTypes;
-import org.jsound.utils.StringUtils;
+import org.jsound.facets.FacetTypes;
+import org.jsound.facets.Facets;
 
-public class BooleanType extends AtomicType {
+import java.util.Collections;
+import java.util.Set;
 
-    private boolean _defaultValue;
+public class BooleanType extends AtomicTypeDescriptor {
 
-    BooleanType(String typeString) {
-        super(ItemTypes.BOOLEAN, typeString);
+    public BooleanType(String name, Facets facets) {
+        super(ItemTypes.BOOLEAN, name, facets);
     }
 
     @Override
-    protected void setDefaultValue(String typeString) {
-        if (typeString.contains("=")) {
-            if (StringUtils.isBooleanLiteral(typeString)) {
-                _defaultValue = Boolean.parseBoolean(typeString);
-            } else
-                throw new UnexpectedTypeException(typeString + " is not of type boolean.");
-        }
-    }
-
-    @Override
-    public Boolean getDefaultValue() {
-        return this._defaultValue;
-    }
-
-    @Override
-    public String getDefaultValueStringAnnotation() {
-        return Boolean.toString(this._defaultValue);
-    }
-
-    @Override
-    public boolean isBooleanType() {
-        return true;
+    public Set<FacetTypes> getAllowedFacets() {
+        return Collections.emptySet();
     }
 }

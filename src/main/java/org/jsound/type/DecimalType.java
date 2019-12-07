@@ -1,49 +1,41 @@
 package org.jsound.type;
 
-import jsound.exceptions.UnexpectedTypeException;
-import org.jsound.api.AtomicType;
+import org.jsound.api.AtomicTypeDescriptor;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
 
-import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-public class DecimalType extends AtomicType {
+import static org.jsound.facets.FacetTypes.FRACTION_DIGITS;
+import static org.jsound.facets.FacetTypes.MAX_EXCLUSIVE;
+import static org.jsound.facets.FacetTypes.MAX_INCLUSIVE;
+import static org.jsound.facets.FacetTypes.MIN_EXCLUSIVE;
+import static org.jsound.facets.FacetTypes.MIN_INCLUSIVE;
+import static org.jsound.facets.FacetTypes.TOTAL_DIGITS;
 
-    private BigDecimal _defaultValue = null;
+public class DecimalType extends AtomicTypeDescriptor {
 
-    private String _name;
-    private Facets _facets;
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
+            Arrays.asList(
+                    MIN_INCLUSIVE,
+                    MAX_INCLUSIVE,
+                    MIN_EXCLUSIVE,
+                    MAX_EXCLUSIVE,
+                    TOTAL_DIGITS,
+                    FRACTION_DIGITS
+            )
+    );
 
-    DecimalType(String typeString) {
-        super(ItemTypes.DECIMAL, typeString);
-    }
-
-    DecimalType(String name, Facets facets) {
-        super(ItemTypes.DECIMAL);
-        this._name = name;
-        this._facets = facets;
-    }
-
-    @Override
-    protected void setDefaultValue(String typeString) {
-        if (typeString.contains("=")) {
-            if (typeString.contains("e") || typeString.contains("E"))
-                throw new UnexpectedTypeException(typeString + " is not of type decimal.");
-            _defaultValue = new BigDecimal(typeString.split("=")[1]);
-        }
-    }
-
-    public BigDecimal getDefaultValue() {
-        return this._defaultValue;
+    public DecimalType(String name, Facets facets) {
+        super(ItemTypes.DECIMAL, name, facets);
+        this.baseType = this;
     }
 
     @Override
-    public String getDefaultValueStringAnnotation() {
-        return this._defaultValue.toString();
-    }
-
-    @Override
-    public boolean isDecimalType() {
-        return true;
+    public Set<FacetTypes> getAllowedFacets() {
+        return _allowedFacets;
     }
 }

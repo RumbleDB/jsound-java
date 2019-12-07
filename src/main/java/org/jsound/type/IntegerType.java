@@ -1,43 +1,41 @@
 package org.jsound.type;
 
-import org.jsound.api.AtomicType;
+import org.jsound.api.AtomicTypeDescriptor;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
 
-public class IntegerType extends AtomicType {
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-    private Integer _defaultValue;
+import static org.jsound.facets.FacetTypes.FRACTION_DIGITS;
+import static org.jsound.facets.FacetTypes.MAX_EXCLUSIVE;
+import static org.jsound.facets.FacetTypes.MAX_INCLUSIVE;
+import static org.jsound.facets.FacetTypes.MIN_EXCLUSIVE;
+import static org.jsound.facets.FacetTypes.MIN_INCLUSIVE;
+import static org.jsound.facets.FacetTypes.TOTAL_DIGITS;
 
-    private String _name;
-    private Facets _facets;
+public class IntegerType extends AtomicTypeDescriptor {
 
-    IntegerType(String typeString) {
-        super(ItemTypes.INTEGER, typeString);
-    }
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
+            Arrays.asList(
+                    MIN_INCLUSIVE,
+                    MAX_INCLUSIVE,
+                    MIN_EXCLUSIVE,
+                    MAX_EXCLUSIVE,
+                    TOTAL_DIGITS,
+                    FRACTION_DIGITS
+            )
+    );
 
-    IntegerType(String name, Facets facets) {
-        super(ItemTypes.INTEGER);
-        this._name = name;
-        this._facets = facets;
-    }
-
-    @Override
-    protected void setDefaultValue(String typeString) {
-        _defaultValue = typeString.contains("=") ? Integer.parseInt(typeString.split("=")[1]) : null;
-    }
-
-    @Override
-    public Integer getDefaultValue() {
-        return this._defaultValue;
-    }
-
-    @Override
-    public String getDefaultValueStringAnnotation() {
-        return this._defaultValue.toString();
+    public IntegerType(String name, Facets facets) {
+        super(ItemTypes.INTEGER, name, facets);
+        this.baseType = this;
     }
 
     @Override
-    public boolean isIntegerType() {
-        return true;
+    public Set<FacetTypes> getAllowedFacets() {
+        return _allowedFacets;
     }
 }

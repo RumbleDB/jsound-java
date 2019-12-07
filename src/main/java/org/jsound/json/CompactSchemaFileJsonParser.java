@@ -19,7 +19,9 @@ import static org.jsound.api.ItemTypes.NULL;
 
 public class CompactSchemaFileJsonParser {
 
-    public static Map<String, ItemType> getRootTypes(JsonIterator object) {
+    public static JsonIterator object;
+
+    public static Map<String, ItemType> getRootTypes() {
         try {
             if (!object.whatIsNext().equals(ValueType.OBJECT)) {
                 throw new InvalidSchemaException("The schema root object must be a JSON object");
@@ -27,7 +29,7 @@ public class CompactSchemaFileJsonParser {
             Map<String, ItemType> schema = new HashMap<>();
             String key;
             while ((key = object.readObject()) != null) {
-                schema.put(key, getTypeFromObject(object));
+                schema.put(key, getTypeFromObject());
             }
             return schema;
         } catch (IOException e) {
@@ -35,7 +37,7 @@ public class CompactSchemaFileJsonParser {
         }
     }
 
-    private static ItemType getTypeFromObject(JsonIterator object) {
+    private static ItemType getTypeFromObject() {
         try {
             switch (object.whatIsNext()) {
                 case STRING:

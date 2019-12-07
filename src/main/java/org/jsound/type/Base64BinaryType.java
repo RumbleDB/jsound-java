@@ -1,43 +1,29 @@
 package org.jsound.type;
 
-import org.jsound.api.AtomicType;
+import org.jsound.api.AtomicTypeDescriptor;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
 
-public class Base64BinaryType extends AtomicType {
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-    private String _defaultValue;
+import static org.jsound.facets.FacetTypes.LENGTH;
+import static org.jsound.facets.FacetTypes.MAX_LENGTH;
+import static org.jsound.facets.FacetTypes.MIN_LENGTH;
 
-    private String _name;
-    private Facets _facets;
+public class Base64BinaryType extends AtomicTypeDescriptor {
 
-    Base64BinaryType(String name, Facets facets) {
-        super(ItemTypes.BASE64BINARY);
-        this._name = name;
-        this._facets = facets;
-    }
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MIN_LENGTH, MAX_LENGTH));
 
-    Base64BinaryType(String typeString) {
-        super(ItemTypes.BASE64BINARY, typeString);
-    }
-
-    @Override
-    protected void setDefaultValue(String typeString) {
-        _defaultValue = typeString.contains("=") ? typeString.split("=")[1] : null;
-    }
-
-    public String getDefaultValue() {
-        return this._defaultValue;
+    public Base64BinaryType(String name, Facets facets) {
+        super(ItemTypes.BASE64BINARY, name, facets);
+        this.baseType = this;
     }
 
     @Override
-    public String getDefaultValueStringAnnotation() {
-        return "\"" + this._defaultValue + "\"";
+    public Set<FacetTypes> getAllowedFacets() {
+        return _allowedFacets;
     }
-
-    @Override
-    public boolean isBase64BinaryType() {
-        return true;
-    }
-
 }

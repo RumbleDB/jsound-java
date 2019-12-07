@@ -1,45 +1,30 @@
 package org.jsound.type;
 
-import org.jsound.api.AtomicType;
+import org.jsound.api.AtomicTypeDescriptor;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
 
-public class DoubleType extends AtomicType {
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-    private Double _defaultValue;
+import static org.jsound.facets.FacetTypes.MAX_EXCLUSIVE;
+import static org.jsound.facets.FacetTypes.MAX_INCLUSIVE;
+import static org.jsound.facets.FacetTypes.MIN_EXCLUSIVE;
+import static org.jsound.facets.FacetTypes.MIN_INCLUSIVE;
 
-    private String _name;
-    private Facets _facets;
+public class DoubleType extends AtomicTypeDescriptor {
 
-    DoubleType(String typeString) {
-        super(ItemTypes.DOUBLE, typeString);
-    }
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE));
 
-    DoubleType(String name, Facets facets) {
-        super(ItemTypes.DOUBLE);
-        this._name = name;
-        this._facets = facets;
-    }
-
-    @Override
-    protected void setDefaultValue(String typeString) {
-        _defaultValue = typeString.contains("=") ? Double.parseDouble(typeString.split("=")[1]) : null;
+    public DoubleType(String name, Facets facets) {
+        super(ItemTypes.DOUBLE, name, facets);
+        this.baseType = this;
     }
 
     @Override
-    public Double getDefaultValue() {
-        return this._defaultValue;
-    }
-
-    @Override
-    public String getDefaultValueStringAnnotation() {
-        return (!this._defaultValue.isInfinite() && !this._defaultValue.isNaN())
-            ? this._defaultValue.toString()
-            : "null";
-    }
-
-    @Override
-    public boolean isDoubleType() {
-        return true;
+    public Set<FacetTypes> getAllowedFacets() {
+        return _allowedFacets;
     }
 }

@@ -17,7 +17,7 @@ import java.util.Map;
 public abstract class JSoundExecutor {
 
     private static Map<String, TypeDescriptor> schema;
-    static ItemType schemaItem;
+    static TypeDescriptor schemaItem;
     static Item fileItem;
     private static boolean initialized = false;
 
@@ -34,9 +34,13 @@ public abstract class JSoundExecutor {
         }
         JsonIterator schemaObject = JsonIterator.parse(schemaString);
         JsonIterator fileObject = JsonIterator.parse(fileString);
-        schema = compact
-            ? CompactSchemaFileJsonParser.getRootTypes(schemaObject)
-            : SchemaFileJsonParser.getSchema(schemaObject);
+        if (compact) {
+            CompactSchemaFileJsonParser.object = schemaObject;
+            schema = CompactSchemaFileJsonParser.getRootTypes();
+        } else {
+            SchemaFileJsonParser.object = schemaObject;
+            schema = SchemaFileJsonParser.getSchema();
+        }
 
         // TODO: controllare che baseType sia valido contro il type at hand
         // TODO: controllare che items in enumeration siano validi contro type at hand

@@ -1,43 +1,30 @@
 package org.jsound.type;
 
-import org.jsound.api.AtomicType;
+import org.jsound.api.AtomicTypeDescriptor;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-public class StringType extends AtomicType {
+import static org.jsound.facets.FacetTypes.LENGTH;
+import static org.jsound.facets.FacetTypes.MAX_LENGTH;
+import static org.jsound.facets.FacetTypes.MIN_LENGTH;
 
-    private String _defaultValue;
-    private String _name;
-    private Facets _facets;
 
-    StringType(String name, Facets facets) {
-        super(ItemTypes.STRING);
-        this._name = name;
-        this._facets = facets;
-    }
+public class StringType extends AtomicTypeDescriptor {
 
-    StringType(String typeString) {
-        super(ItemTypes.STRING, typeString);
-    }
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MIN_LENGTH, MAX_LENGTH));
 
-    @Override
-    protected void setDefaultValue(String typeString) {
-        _defaultValue = typeString.contains("=") ? typeString.split("=")[1] : null;
+    public StringType(String name, Facets facets) {
+        super(ItemTypes.STRING, name, facets);
+        this.baseType = this;
     }
 
     @Override
-    public String getDefaultValue() {
-        return this._defaultValue;
-    }
-
-    @Override
-    public String getDefaultValueStringAnnotation() {
-        return "\"" + this._defaultValue + "\"";
-    }
-
-    @Override
-    public boolean isStringType() {
-        return true;
+    public Set<FacetTypes> getAllowedFacets() {
+        return _allowedFacets;
     }
 }

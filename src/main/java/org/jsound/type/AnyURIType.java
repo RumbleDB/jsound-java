@@ -1,26 +1,29 @@
 package org.jsound.type;
 
-import org.jsound.api.AtomicType;
+import org.jsound.api.AtomicTypeDescriptor;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
 
-public class AnyURIType extends AtomicType {
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-    private String _name;
-    private Facets _facets;
+import static org.jsound.facets.FacetTypes.LENGTH;
+import static org.jsound.facets.FacetTypes.MAX_LENGTH;
+import static org.jsound.facets.FacetTypes.MIN_LENGTH;
 
-    AnyURIType(String typeString) {
-        super(ItemTypes.ANYURI, typeString);
-    }
+public class AnyURIType extends AtomicTypeDescriptor {
 
-    AnyURIType(String name, Facets facets) {
-        super(ItemTypes.ANYURI);
-        this._name = name;
-        this._facets = facets;
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MIN_LENGTH, MAX_LENGTH));
+
+    public AnyURIType(String name, Facets facets) {
+        super(ItemTypes.ANYURI, name, facets);
+        this.baseType = this;
     }
 
     @Override
-    protected void setDefaultValue(String typeString) {
+    public Set<FacetTypes> getAllowedFacets() {
+        return _allowedFacets;
     }
-
 }

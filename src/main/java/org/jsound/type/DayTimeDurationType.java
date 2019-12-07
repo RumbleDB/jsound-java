@@ -3,6 +3,7 @@ package org.jsound.type;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.Facets;
 
 public class DayTimeDurationType extends DurationType {
 
@@ -18,13 +19,9 @@ public class DayTimeDurationType extends DurationType {
         .appendSuffix("S")
         .toFormatter();
 
-    DayTimeDurationType(String typeString) {
-        super(ItemTypes.DAYTIMEDURATION, typeString);
-    }
-
-    @Override
-    public boolean isDayTimeDurationType() {
-        return true;
+    public DayTimeDurationType(String name, Facets facets) {
+        super(ItemTypes.DAYTIMEDURATION, name, facets);
+        this.baseType = this;
     }
 
     public static PeriodFormatter getFormatter() {

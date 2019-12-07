@@ -1,28 +1,21 @@
 package org.jsound.type;
 
-import org.jsound.api.AtomicType;
+import org.jsound.api.AtomicTypeDescriptor;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.FacetTypes;
+import org.jsound.facets.Facets;
 
-public class NullType extends AtomicType {
+import java.util.Collections;
+import java.util.Set;
 
-    private String _defaultValue;
+public class NullType extends AtomicTypeDescriptor {
 
-    NullType() {
-        super(ItemTypes.NULL);
+    public NullType(String name, Facets facets) {
+        super(ItemTypes.NULL, name, facets);
     }
 
     @Override
-    protected void setDefaultValue(String typeString) {
-        this._defaultValue = typeString.contains("=") ? typeString.split("=")[1] : "null";
-    }
-
-    @Override
-    public boolean isNullType() {
-        return true;
-    }
-
-    @Override
-    public String getDefaultValueStringAnnotation() {
-        return this._defaultValue;
+    public Set<FacetTypes> getAllowedFacets() {
+        return Collections.emptySet();
     }
 }

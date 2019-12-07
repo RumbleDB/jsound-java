@@ -1,43 +1,34 @@
 package org.jsound.type;
 
-import org.jsound.api.AtomicType;
+import org.jsound.api.AtomicTypeDescriptor;
 import org.jsound.api.ItemTypes;
+import org.jsound.facets.FacetTypes;
+import org.jsound.facets.Facets;
 
-public class DurationType extends AtomicType {
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-    private String _defaultValue;
+import static org.jsound.facets.FacetTypes.MAX_EXCLUSIVE;
+import static org.jsound.facets.FacetTypes.MAX_INCLUSIVE;
+import static org.jsound.facets.FacetTypes.MIN_EXCLUSIVE;
+import static org.jsound.facets.FacetTypes.MIN_INCLUSIVE;
 
-    DurationType(String typeString) {
-        super(ItemTypes.DURATION, typeString);
+public class DurationType extends AtomicTypeDescriptor {
+
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE));
+
+    public DurationType(String name, Facets facets) {
+        super(ItemTypes.DURATION, name, facets);
+        this.baseType = this;
     }
 
-    DurationType(ItemTypes type, String typeString) {
-        super(type, typeString);
-    }
-
-    @Override
-    protected void setDefaultValue(String typeString) {
-        _defaultValue = typeString.contains("=") ? typeString.split("=")[1] : null;
-    }
-
-    @Override
-    public String getDefaultValue() {
-        return _defaultValue;
-    }
-
-    @Override
-    public String getDefaultValueStringAnnotation() {
-        return "\"" + _defaultValue + "\"";
+    DurationType(ItemTypes durationSubtype, String name, Facets facets) {
+        super(durationSubtype, name, facets);
     }
 
     @Override
-    public boolean isDurationType() {
-        return true;
-    }
-
-    public static String getPositivePeriod(String period) {
-        if (period.startsWith("-"))
-            return period.substring(1);
-        return period;
+    public Set<FacetTypes> getAllowedFacets() {
+        return _allowedFacets;
     }
 }
