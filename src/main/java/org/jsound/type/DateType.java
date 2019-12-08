@@ -29,7 +29,9 @@ public class DateType extends AtomicTypeDescriptor {
         .toFormatter()
         .withOffsetParsed();
 
-    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE, EXPLICIT_TIMEZONE));
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
+            Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE, EXPLICIT_TIMEZONE)
+    );
 
     public DateType(String name, Facets facets) {
         super(ItemTypes.DATE, name, facets);

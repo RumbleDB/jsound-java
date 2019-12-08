@@ -16,7 +16,9 @@ import static org.jsound.facets.FacetTypes.MIN_INCLUSIVE;
 
 public class DurationType extends AtomicTypeDescriptor {
 
-    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE));
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
+            Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE)
+    );
 
     public DurationType(String name, Facets facets) {
         super(ItemTypes.DURATION, name, facets);

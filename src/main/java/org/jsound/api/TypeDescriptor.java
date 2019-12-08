@@ -11,7 +11,8 @@ public abstract class TypeDescriptor {
     protected TypeDescriptor baseType;
     private Facets facets;
 
-    TypeDescriptor() {}
+    TypeDescriptor() {
+    }
 
     TypeDescriptor(ItemTypes type, String name, Facets facets) {
         this.type = type;
@@ -36,8 +37,12 @@ public abstract class TypeDescriptor {
         return false;
     }
 
-    public boolean isUnionType () {
+    public boolean isUnionType() {
         return false;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public ItemTypes getType() {

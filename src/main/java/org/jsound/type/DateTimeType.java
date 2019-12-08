@@ -17,7 +17,9 @@ import static org.jsound.facets.FacetTypes.MIN_INCLUSIVE;
 
 public class DateTimeType extends AtomicTypeDescriptor {
 
-    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE, EXPLICIT_TIMEZONE));
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
+            Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE, EXPLICIT_TIMEZONE)
+    );
 
     public DateTimeType(String name, Facets facets) {
         super(ItemTypes.DATETIME, name, facets);

@@ -16,7 +16,9 @@ import static org.jsound.facets.FacetTypes.MIN_INCLUSIVE;
 
 public class DoubleType extends AtomicTypeDescriptor {
 
-    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE));
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
+            Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE)
+    );
 
     public DoubleType(String name, Facets facets) {
         super(ItemTypes.DOUBLE, name, facets);

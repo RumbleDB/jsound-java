@@ -33,8 +33,4 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     public Set<FacetTypes> getAllowedFacets() {
         return _allowedFacets;
     }
-
-    public void setBaseType(ObjectTypeDescriptor baseType) {
-        this.baseType = baseType;
-    }
 }

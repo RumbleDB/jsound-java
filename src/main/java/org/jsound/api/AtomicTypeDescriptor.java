@@ -14,6 +14,7 @@ import org.jsound.type.DoubleType;
 import org.jsound.type.DurationType;
 import org.jsound.type.HexBinaryType;
 import org.jsound.type.IntegerType;
+import org.jsound.type.Kinds;
 import org.jsound.type.NullType;
 import org.jsound.type.StringType;
 import org.jsound.type.TimeType;
@@ -54,49 +55,49 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         Facets facets;
         switch (atomicType) {
             case STRING:
-                facets = createFacets(StringType._allowedFacets);
+                facets = createFacets(StringType._allowedFacets, Kinds.ATOMIC);
                 return new StringType(name, facets);
             case INTEGER:
-                facets = createFacets(IntegerType._allowedFacets);
+                facets = createFacets(IntegerType._allowedFacets, Kinds.ATOMIC);
                 return new IntegerType(name, facets);
             case DECIMAL:
-                facets = createFacets(DecimalType._allowedFacets);
+                facets = createFacets(DecimalType._allowedFacets, Kinds.ATOMIC);
                 return new DecimalType(name, facets);
             case DOUBLE:
-                facets = createFacets(DoubleType._allowedFacets);
+                facets = createFacets(DoubleType._allowedFacets, Kinds.ATOMIC);
                 return new DoubleType(name, facets);
             case DURATION:
-                facets = createFacets(DurationType._allowedFacets);
+                facets = createFacets(DurationType._allowedFacets, Kinds.ATOMIC);
                 return new DurationType(name, facets);
             case YEAR_MONTH_DURATION:
-                facets = createFacets(YearMonthDurationType._allowedFacets);
+                facets = createFacets(YearMonthDurationType._allowedFacets, Kinds.ATOMIC);
                 return new YearMonthDurationType(name, facets);
             case DAY_TIME_DURATION:
-                facets = createFacets(DayTimeDurationType._allowedFacets);
+                facets = createFacets(DayTimeDurationType._allowedFacets, Kinds.ATOMIC);
                 return new DayTimeDurationType(name, facets);
             case DATETIME:
-                facets = createFacets(DateTimeType._allowedFacets);
+                facets = createFacets(DateTimeType._allowedFacets, Kinds.ATOMIC);
                 return new DateTimeType(name, facets);
             case DATE:
-                facets = createFacets(DateType._allowedFacets);
+                facets = createFacets(DateType._allowedFacets, Kinds.ATOMIC);
                 return new DateType(name, facets);
             case TIME:
-                facets = createFacets(TimeType._allowedFacets);
+                facets = createFacets(TimeType._allowedFacets, Kinds.ATOMIC);
                 return new TimeType(name, facets);
             case HEXBINARY:
-                facets = createFacets(HexBinaryType._allowedFacets);
+                facets = createFacets(HexBinaryType._allowedFacets, Kinds.ATOMIC);
                 return new HexBinaryType(name, facets);
             case BASE64BINARY:
-                facets = createFacets(Base64BinaryType._allowedFacets);
+                facets = createFacets(Base64BinaryType._allowedFacets, Kinds.ATOMIC);
                 return new Base64BinaryType(name, facets);
             case BOOLEAN:
-                facets = createFacets(Collections.emptySet());
+                facets = createFacets(Collections.emptySet(), Kinds.ATOMIC);
                 return new BooleanType(name, facets);
             case NULL:
-                facets = createFacets(Collections.emptySet());
+                facets = createFacets(Collections.emptySet(), Kinds.ATOMIC);
                 return new NullType(name, facets);
             case ANY_URI:
-                facets = createFacets(AnyURIType._allowedFacets);
+                facets = createFacets(AnyURIType._allowedFacets, Kinds.ATOMIC);
                 return new AnyURIType(name, facets);
         }
         throw new InvalidSchemaException("Invalid atomic baseType");

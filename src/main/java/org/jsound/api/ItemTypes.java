@@ -28,6 +28,8 @@ public enum ItemTypes {
 
     NULL("null"),
 
+    UNION("union"),
+
     USERDEFINED();
 
     private String typeName;

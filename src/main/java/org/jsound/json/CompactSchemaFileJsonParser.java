@@ -46,14 +46,14 @@ public class CompactSchemaFileJsonParser {
                     Map<ObjectKey, ItemType> typeMap = new LinkedHashMap<>();
                     String key;
                     while ((key = object.readObject()) != null) {
-                        typeMap.put(new ObjectKey(key, true), getTypeFromObject(object));
+                        typeMap.put(new ObjectKey(key, true), getTypeFromObject());
                     }
                     return TypeFactory.getInstance()
                         .createObjectType(typeMap);
                 case ARRAY:
                     ItemType arrayItemsType = null;
                     while (object.readArray()) {
-                        arrayItemsType = getTypeFromObject(object);
+                        arrayItemsType = getTypeFromObject();
                     }
                     return TypeFactory.getInstance().createArrayType(arrayItemsType);
                 default:

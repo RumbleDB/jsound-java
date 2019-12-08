@@ -5,10 +5,12 @@ import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
 import jsound.exceptions.UnexpectedTypeException;
+import org.jsound.api.ArrayTypeDescriptor;
 import org.jsound.api.AtomicTypeDescriptor;
 import org.jsound.api.AtomicTypes;
 import org.jsound.api.ObjectTypeDescriptor;
 import org.jsound.api.TypeDescriptor;
+import org.jsound.api.UnionTypeDescriptor;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
 import org.jsound.type.Kinds;
@@ -46,7 +48,8 @@ public class SchemaFileJsonParser {
                 throw new InvalidSchemaException("Please provide an array of types");
             }
             while (object.readArray()) {
-                getTypeDescriptor();
+                TypeDescriptor typeDescriptor = getTypeDescriptor();
+                schema.put(typeDescriptor.getName(), typeDescriptor);
             }
             return schema;
         } catch (IOException e) {
@@ -54,7 +57,7 @@ public class SchemaFileJsonParser {
         }
     }
 
-    private static void getTypeDescriptor() throws IOException {
+    public static TypeDescriptor getTypeDescriptor() throws IOException {
         if (object.whatIsNext() != ValueType.OBJECT)
             throw new UnexpectedTypeException(object.read().toString());
 
@@ -65,7 +68,7 @@ public class SchemaFileJsonParser {
         if (!"kind".equals(object.readObject()))
             throw new InvalidSchemaException("Please specify the \"kind\" before other properties.");
 
-        schema.put(name, buildTypeDescriptor(name));
+        return buildTypeDescriptor(name);
     }
 
     private static TypeDescriptor buildTypeDescriptor(String name) throws IOException {
@@ -101,8 +104,13 @@ public class SchemaFileJsonParser {
                 TypeDescriptor typeDescriptor = schema.get(baseType);
                 if (!typeDescriptor.isAtomicType())
                     throw new InvalidSchemaException("The baseType must be atomic.");
-                return new AtomicTypeDescriptor(typeDescriptor.getType(), name, (AtomicTypeDescriptor) typeDescriptor, createFacets(typeDescriptor.getAllowedFacets()));
-            } else if("atomic".equals(baseType))
+                return new AtomicTypeDescriptor(
+                        typeDescriptor.getType(),
+                        name,
+                        (AtomicTypeDescriptor) typeDescriptor,
+                        createFacets(typeDescriptor.getAllowedFacets(), Kinds.ATOMIC)
+                );
+            } else if ("atomic".equals(baseType))
                 throw new InvalidSchemaException("BaseType cannot be atomic.");
             throw new InvalidSchemaException("Type " + baseType + " not defined for " + name);
         }
@@ -120,9 +128,16 @@ public class SchemaFileJsonParser {
                     TypeDescriptor typeDescriptor = schema.get(baseType);
                     if (!typeDescriptor.isObjectType())
                         throw new InvalidSchemaException("The baseType must be of type object.");
-                    return new ObjectTypeDescriptor(name, (ObjectTypeDescriptor) typeDescriptor, createFacets(ObjectTypeDescriptor._allowedFacets));
+                    return new ObjectTypeDescriptor(
+                            name,
+                            (ObjectTypeDescriptor) typeDescriptor,
+                            createFacets(ObjectTypeDescriptor._allowedFacets, Kinds.OBJECT)
+                    );
                 } else if ("object".equals(baseType))
-                    return new ObjectTypeDescriptor(name, createFacets(ObjectTypeDescriptor._allowedFacets));
+                    return new ObjectTypeDescriptor(
+                            name,
+                            createFacets(ObjectTypeDescriptor._allowedFacets, Kinds.OBJECT)
+                    );
                 throw new InvalidSchemaException("Type " + baseType + " not defined for " + name);
             }
             try {
@@ -130,8 +145,11 @@ public class SchemaFileJsonParser {
                 if (!(ObjectTypeDescriptor._allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
                     throw new InvalidSchemaException("Invalid facet " + key + ".");
                 Facets facets = new Facets();
-                facets.setFacet(facetTypes, object);
-                return new ObjectTypeDescriptor(name, createFacets(facets, ObjectTypeDescriptor._allowedFacets));
+                facets.setFacet(facetTypes, object, Kinds.OBJECT);
+                return new ObjectTypeDescriptor(
+                        name,
+                        createFacets(facets, ObjectTypeDescriptor._allowedFacets, Kinds.OBJECT)
+                );
             } catch (IllegalArgumentException e) {
                 throw new InvalidSchemaException("Invalid facet " + key + ".");
             }
@@ -139,14 +157,14 @@ public class SchemaFileJsonParser {
         return new ObjectTypeDescriptor(name, new Facets());
     }
 
-    public static Facets createFacets(Facets facets, Set<FacetTypes> allowedFacets) throws IOException {
+    public static Facets createFacets(Facets facets, Set<FacetTypes> allowedFacets, Kinds kind) throws IOException {
         String key;
         while ((key = object.readObject()) != null) {
             try {
                 FacetTypes facetTypes = FacetTypes.valueOf(key);
                 if (!(allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
                     throw new InvalidSchemaException("Invalid facet " + key + ".");
-                facets.setFacet(facetTypes, object);
+                facets.setFacet(facetTypes, object, kind);
             } catch (IllegalArgumentException e) {
                 throw new InvalidSchemaException("Invalid facet " + key + ".");
             }
@@ -154,16 +172,80 @@ public class SchemaFileJsonParser {
         return facets;
     }
 
-    public static Facets createFacets(Set<FacetTypes> allowedFacets) throws IOException {
-        return createFacets(new Facets(), allowedFacets);
+    public static Facets createFacets(Set<FacetTypes> allowedFacets, Kinds kind) throws IOException {
+        return createFacets(new Facets(), allowedFacets, kind);
     }
 
     private static TypeDescriptor buildArrayTypeDescriptor(String name) throws IOException {
-        return null;
+        String baseType;
+        String key = object.readObject();
+        if (key != null) {
+            if ("baseType".equals(key)) {
+                baseType = getStringFromObject();
+                if (schema.containsKey(baseType)) {
+                    TypeDescriptor typeDescriptor = schema.get(baseType);
+                    if (!typeDescriptor.isArrayType())
+                        throw new InvalidSchemaException("The baseType must be of type array.");
+                    return new ArrayTypeDescriptor(
+                            name,
+                            (ArrayTypeDescriptor) typeDescriptor,
+                            createFacets(ArrayTypeDescriptor._allowedFacets, Kinds.ARRAY)
+                    );
+                } else if ("array".equals(baseType))
+                    return new ArrayTypeDescriptor(name, createFacets(ArrayTypeDescriptor._allowedFacets, Kinds.ARRAY));
+                throw new InvalidSchemaException("Type " + baseType + " not defined for " + name);
+            }
+            try {
+                FacetTypes facetTypes = FacetTypes.valueOf(key);
+                if (!(ArrayTypeDescriptor._allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
+                    throw new InvalidSchemaException("Invalid facet " + key + ".");
+                Facets facets = new Facets();
+                facets.setFacet(facetTypes, object, Kinds.ARRAY);
+                return new ArrayTypeDescriptor(
+                        name,
+                        createFacets(facets, ArrayTypeDescriptor._allowedFacets, Kinds.ARRAY)
+                );
+            } catch (IllegalArgumentException e) {
+                throw new InvalidSchemaException("Invalid facet " + key + ".");
+            }
+        }
+        return new ArrayTypeDescriptor(name, new Facets());
     }
 
     private static TypeDescriptor buildUnionTypeDescriptor(String name) throws IOException {
-        return null;
+        String baseType;
+        String key = object.readObject();
+        if (key != null) {
+            if ("baseType".equals(key)) {
+                baseType = getStringFromObject();
+                if (schema.containsKey(baseType)) {
+                    TypeDescriptor typeDescriptor = schema.get(baseType);
+                    if (!typeDescriptor.isArrayType())
+                        throw new InvalidSchemaException("The baseType must be of type array.");
+                    return new UnionTypeDescriptor(
+                            name,
+                            (UnionTypeDescriptor) typeDescriptor,
+                            createFacets(UnionTypeDescriptor._allowedFacets, Kinds.UNION)
+                    );
+                } else if ("union".equals(baseType))
+                    return new UnionTypeDescriptor(name, createFacets(UnionTypeDescriptor._allowedFacets, Kinds.UNION));
+                throw new InvalidSchemaException("Type " + baseType + " not defined for " + name);
+            }
+            try {
+                FacetTypes facetTypes = FacetTypes.valueOf(key);
+                if (!(UnionTypeDescriptor._allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
+                    throw new InvalidSchemaException("Invalid facet " + key + ".");
+                Facets facets = new Facets();
+                facets.setFacet(facetTypes, object, Kinds.UNION);
+                return new UnionTypeDescriptor(
+                        name,
+                        createFacets(facets, UnionTypeDescriptor._allowedFacets, Kinds.UNION)
+                );
+            } catch (IllegalArgumentException e) {
+                throw new InvalidSchemaException("Invalid facet " + key + ".");
+            }
+        }
+        return new UnionTypeDescriptor(name, new Facets());
     }
 
     private static Kinds getKindFromObject() throws IOException {

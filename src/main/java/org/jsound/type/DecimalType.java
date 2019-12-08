@@ -20,12 +20,12 @@ public class DecimalType extends AtomicTypeDescriptor {
 
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
             Arrays.asList(
-                    MIN_INCLUSIVE,
-                    MAX_INCLUSIVE,
-                    MIN_EXCLUSIVE,
-                    MAX_EXCLUSIVE,
-                    TOTAL_DIGITS,
-                    FRACTION_DIGITS
+                MIN_INCLUSIVE,
+                MAX_INCLUSIVE,
+                MIN_EXCLUSIVE,
+                MAX_EXCLUSIVE,
+                TOTAL_DIGITS,
+                FRACTION_DIGITS
             )
     );
 

@@ -44,6 +44,9 @@ public abstract class JSoundExecutor {
 
         // TODO: controllare che baseType sia valido contro il type at hand
         // TODO: controllare che items in enumeration siano validi contro type at hand
+        // TODO: controllare che i stringtype dei field descriptors siano type esistenti e validi
+        // TODO: controllare che i default value dei field descriptors contro i loro type
+        // TODO: controllare che i stringType di arraycontent e unioncontent siano esistenti e validi
 
         schemaItem = schema.get(rootType);
         fileItem = InstanceFileJsonParser.getItemFromObject(fileObject);
