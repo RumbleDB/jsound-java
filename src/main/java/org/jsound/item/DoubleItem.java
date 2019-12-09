@@ -1,7 +1,7 @@
 package org.jsound.item;
 
 import org.jsound.api.AtomicItem;
-import org.jsound.api.ItemType;
+import org.jsound.api.TypeDescriptor;
 
 public class DoubleItem extends AtomicItem {
 
@@ -17,8 +17,8 @@ public class DoubleItem extends AtomicItem {
     }
 
     @Override
-    public boolean isValidAgainst(ItemType itemType) {
-        return itemType.isDoubleType() || super.isValidAgainst(itemType);
+    public boolean isValidAgainst(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isDoubleType() || super.isValidAgainst(typeDescriptor);
     }
 
     @Override

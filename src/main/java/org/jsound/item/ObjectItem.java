@@ -3,9 +3,8 @@ package org.jsound.item;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.api.Item;
 import org.jsound.api.ItemType;
+import org.jsound.api.TypeDescriptor;
 import org.jsound.type.ObjectKey;
-import org.jsound.type.ObjectType;
-import org.jsound.type.UnionType;
 import org.tyson.TYSONObject;
 import org.tyson.TYSONValue;
 import org.tyson.TysonItem;
@@ -29,12 +28,12 @@ public class ObjectItem extends Item {
     }
 
     @Override
-    public boolean isValidAgainst(ItemType itemType) {
-        if (itemType.isUnionType())
-            return ((UnionType) itemType).validate(this);
+    public boolean isValidAgainst(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor.isUnionType())
+            return ((UnionType) typeDescriptor).validate(this);
         Map<ObjectKey, ItemType> typeMap;
         try {
-            typeMap = this.getObjectType(itemType).getTypeMap();
+            typeMap = this.getObjectType(typeDescriptor).getTypeMap();
         } catch (UnexpectedTypeException e) {
             return false;
         }
@@ -55,11 +54,11 @@ public class ObjectItem extends Item {
     }
 
     @Override
-    public TysonItem annotateWith(ItemType itemType) {
-        if (itemType.isUnionType())
-            return ((UnionType) itemType).annotate(this);
-        ObjectType objectType = this.getObjectType(itemType);
-        TYSONObject object = new TYSONObject(itemType.getTypeName());
+    public TysonItem annotateWith(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor.isUnionType())
+            return ((UnionType) typeDescriptor).annotate(this);
+        ObjectType objectType = this.getObjectType(typeDescriptor);
+        TYSONObject object = new TYSONObject(typeDescriptor.getTypeName());
         Map<ObjectKey, ItemType> typeMap = objectType.getTypeMap();
         for (ObjectKey key : typeMap.keySet()) {
             if (_itemMap.containsKey(key.getKeyName())) {

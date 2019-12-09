@@ -71,22 +71,6 @@ public abstract class ItemType {
         return false;
     }
 
-    public boolean isObjectType() {
-        return false;
-    }
-
-    public boolean isArrayType() {
-        return false;
-    }
-
-    public boolean isUserDefinedType() {
-        return false;
-    }
-
-    public boolean isUnionType() {
-        return false;
-    }
-
     public Object getDefaultValue() {
         return null;
     }

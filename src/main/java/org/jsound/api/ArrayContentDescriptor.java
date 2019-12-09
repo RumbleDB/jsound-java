@@ -11,4 +11,8 @@ public class ArrayContentDescriptor {
     public ArrayContentDescriptor(String stringType) {
         this.stringType = stringType;
     }
+
+    public TypeDescriptor getType() {
+        return type;
+    }
 }

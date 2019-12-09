@@ -26,11 +26,7 @@ public enum ItemTypes {
     HEXBINARY("hexBinary"),
     BASE64BINARY("base64Binary"),
 
-    NULL("null"),
-
-    UNION("union"),
-
-    USERDEFINED();
+    NULL("null");
 
     private String typeName;
 

@@ -49,55 +49,71 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
 
     public static AtomicTypeDescriptor buildAtomicType(
             AtomicTypes atomicType,
-            String name
+            String name,
+            boolean shouldCreateFacets
     )
             throws IOException {
-        Facets facets;
+        Facets facets = null;
         switch (atomicType) {
             case STRING:
-                facets = createFacets(StringType._allowedFacets, Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(StringType._allowedFacets, Kinds.ATOMIC);
                 return new StringType(name, facets);
             case INTEGER:
-                facets = createFacets(IntegerType._allowedFacets, Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(IntegerType._allowedFacets, Kinds.ATOMIC);
                 return new IntegerType(name, facets);
             case DECIMAL:
-                facets = createFacets(DecimalType._allowedFacets, Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(DecimalType._allowedFacets, Kinds.ATOMIC);
                 return new DecimalType(name, facets);
             case DOUBLE:
-                facets = createFacets(DoubleType._allowedFacets, Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(DoubleType._allowedFacets, Kinds.ATOMIC);
                 return new DoubleType(name, facets);
             case DURATION:
-                facets = createFacets(DurationType._allowedFacets, Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(DurationType._allowedFacets, Kinds.ATOMIC);
                 return new DurationType(name, facets);
-            case YEAR_MONTH_DURATION:
-                facets = createFacets(YearMonthDurationType._allowedFacets, Kinds.ATOMIC);
+            case YEARMONTHDURATION:
+                if (shouldCreateFacets)
+                    facets = createFacets(YearMonthDurationType._allowedFacets, Kinds.ATOMIC);
                 return new YearMonthDurationType(name, facets);
-            case DAY_TIME_DURATION:
-                facets = createFacets(DayTimeDurationType._allowedFacets, Kinds.ATOMIC);
+            case DAYTIMEDURATION:
+                if (shouldCreateFacets)
+                    facets = createFacets(DayTimeDurationType._allowedFacets, Kinds.ATOMIC);
                 return new DayTimeDurationType(name, facets);
             case DATETIME:
-                facets = createFacets(DateTimeType._allowedFacets, Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(DateTimeType._allowedFacets, Kinds.ATOMIC);
                 return new DateTimeType(name, facets);
             case DATE:
-                facets = createFacets(DateType._allowedFacets, Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(DateType._allowedFacets, Kinds.ATOMIC);
                 return new DateType(name, facets);
             case TIME:
-                facets = createFacets(TimeType._allowedFacets, Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(TimeType._allowedFacets, Kinds.ATOMIC);
                 return new TimeType(name, facets);
             case HEXBINARY:
-                facets = createFacets(HexBinaryType._allowedFacets, Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(HexBinaryType._allowedFacets, Kinds.ATOMIC);
                 return new HexBinaryType(name, facets);
             case BASE64BINARY:
-                facets = createFacets(Base64BinaryType._allowedFacets, Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(Base64BinaryType._allowedFacets, Kinds.ATOMIC);
                 return new Base64BinaryType(name, facets);
             case BOOLEAN:
-                facets = createFacets(Collections.emptySet(), Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(Collections.emptySet(), Kinds.ATOMIC);
                 return new BooleanType(name, facets);
             case NULL:
-                facets = createFacets(Collections.emptySet(), Kinds.ATOMIC);
+                if (shouldCreateFacets)
+                    facets = createFacets(Collections.emptySet(), Kinds.ATOMIC);
                 return new NullType(name, facets);
-            case ANY_URI:
-                facets = createFacets(AnyURIType._allowedFacets, Kinds.ATOMIC);
+            case ANYURI:
+                if (shouldCreateFacets)
+                    facets = createFacets(AnyURIType._allowedFacets, Kinds.ATOMIC);
                 return new AnyURIType(name, facets);
         }
         throw new InvalidSchemaException("Invalid atomic baseType");

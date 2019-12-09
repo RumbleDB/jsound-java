@@ -7,7 +7,7 @@ import org.joda.time.Period;
 import org.joda.time.format.ISODateTimeFormat;
 import org.joda.time.format.ISOPeriodFormat;
 import org.jsound.api.AtomicItem;
-import org.jsound.api.ItemType;
+import org.jsound.api.TypeDescriptor;
 import org.jsound.type.DateType;
 import org.jsound.type.DayTimeDurationType;
 import org.jsound.type.DurationType;
@@ -34,40 +34,40 @@ public class StringItem extends AtomicItem {
     }
 
     @Override
-    public boolean isValidAgainst(ItemType itemType) {
-        if (itemType.isStringType())
+    public boolean isValidAgainst(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor.isStringType())
             return true;
         try {
-            if (itemType.isIntegerType()) {
+            if (typeDescriptor.isIntegerType()) {
                 Integer.parseInt(this._value);
-            } else if (itemType.isDecimalType()) {
+            } else if (typeDescriptor.isDecimalType()) {
                 if (this._value.contains("e") || this._value.contains("E"))
                     return false;
                 Float.parseFloat(this._value);
-            } else if (itemType.isDoubleType()) {
+            } else if (typeDescriptor.isDoubleType()) {
                 Double.parseDouble(this._value);
-            } else if (itemType.isBooleanType()) {
+            } else if (typeDescriptor.isBooleanType()) {
                 return StringUtils.isBooleanLiteral(this._value);
-            } else if (itemType.isDateTimeType()) {
+            } else if (typeDescriptor.isDateTimeType()) {
                 DateTime.parse(this._value, ISODateTimeFormat.dateTimeParser().withOffsetParsed());
-            } else if (itemType.isDateType()) {
+            } else if (typeDescriptor.isDateType()) {
                 DateTime.parse(this._value, DateType.getFormatter());
-            } else if (itemType.isTimeType()) {
+            } else if (typeDescriptor.isTimeType()) {
                 DateTime.parse(this._value, ISODateTimeFormat.timeParser().withOffsetParsed());
-            } else if (itemType.isYearMonthDurationType()) {
+            } else if (typeDescriptor.isYearMonthDurationType()) {
                 Period.parse(DurationType.getPositivePeriod(this._value), YearMonthDurationType.getFormatter());
-            } else if (itemType.isDayTimeDurationType()) {
+            } else if (typeDescriptor.isDayTimeDurationType()) {
                 Period.parse(DurationType.getPositivePeriod(this._value), DayTimeDurationType.getFormatter());
-            } else if (itemType.isDurationType()) {
+            } else if (typeDescriptor.isDurationType()) {
                 Period.parse(DurationType.getPositivePeriod(this._value), ISOPeriodFormat.standard());
-            } else if (itemType.isHexBinaryType()) {
+            } else if (typeDescriptor.isHexBinaryType()) {
                 Hex.decodeHex(this._value.toCharArray());
-            } else if (itemType.isBase64BinaryType()) {
+            } else if (typeDescriptor.isBase64BinaryType()) {
                 Base64.decodeBase64(this._value);
-            } else if (itemType.isNullType()) {
+            } else if (typeDescriptor.isNullType()) {
                 return StringUtils.isNullLiteral(this._value);
-            } else if (itemType.isUnionType()) {
-                return super.isValidAgainst(itemType);
+            } else if (typeDescriptor.isUnionType()) {
+                return super.isValidAgainst(typeDescriptor);
             }
         } catch (Exception e) {
             return false;

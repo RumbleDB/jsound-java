@@ -1,11 +1,11 @@
 package org.jsound.api;
 
 public class FieldDescriptor {
-    private String name;
-    private TypeDescriptor type;
-    private String stringType;
+    public String name;
+    public TypeDescriptor type;
+    public String stringType;
     private Boolean required = false;
-    private Item defaultValue;
+    private String defaultValue;
     private Boolean unique = false;
 
     public void setName(String name) {
@@ -24,7 +24,7 @@ public class FieldDescriptor {
         this.required = required;
     }
 
-    public void setDefaultValue(Item defaultValue) {
+    public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
     }
 

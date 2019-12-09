@@ -17,9 +17,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.jsound.cli.JSoundExecutor.schema;
+import static org.jsound.cli.JSoundExecutor.object;
 import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
-import static org.jsound.json.SchemaFileJsonParser.object;
-import static org.jsound.json.SchemaFileJsonParser.schema;
 
 public class Facets {
     Integer length = null, minLength = null, maxLength = null;
@@ -29,9 +29,9 @@ public class Facets {
     List<Item> enumeration = null;
     List<String> constraints = null;
     TimezoneFacet explicitTimezone = null;
-    List<FieldDescriptor> objectContent = null;
-    ArrayContentDescriptor arrayContent = null;
-    UnionContentDescriptor unionContent = null;
+    public List<FieldDescriptor> objectContent = null;
+    public ArrayContentDescriptor arrayContent = null;
+    public UnionContentDescriptor unionContent = null;
     Boolean closed = null;
 
     public void setFacet(FacetTypes facetType, JsonIterator object, Kinds kind) throws IOException {
@@ -150,6 +150,8 @@ public class Facets {
                 break;
             case ARRAY:
                 this.setArrayContentFromObject();
+                if (this.arrayContent == null)
+                    this.arrayContent = new ArrayContentDescriptor(SchemaFileJsonParser.getTypeDescriptor());
                 break;
             case UNION:
                 this.setUnionContentFromObject();
@@ -173,7 +175,7 @@ public class Facets {
                         fieldsNames.add(name);
                         break;
                     case "type":
-                        setFieldDescriptorType(fieldDescriptor, object);
+                        setFieldDescriptorType(fieldDescriptor);
                         break;
                     case "required":
                         fieldDescriptor.setRequired(Boolean.parseBoolean(getStringFromObject()));
@@ -182,7 +184,7 @@ public class Facets {
                         fieldDescriptor.setUnique(Boolean.parseBoolean(getStringFromObject()));
                         break;
                     case "default":
-                        fieldDescriptor.setDefaultValue(getItemFromObject(object));
+                        fieldDescriptor.setDefaultValue(getStringFromObject());
                         break;
                     default:
                         throw new InvalidSchemaException(key + " is not a valid property for the field descriptor.");
@@ -193,7 +195,7 @@ public class Facets {
         this.objectContent = fieldDescriptors;
     }
 
-    private void setArrayContentFromObject() throws IOException {
+    public void setArrayContentFromObject() throws IOException {
         int size = 0;
         while (object.readArray()) {
             if (size > 0)
@@ -204,8 +206,7 @@ public class Facets {
                     this.arrayContent = new ArrayContentDescriptor(schema.get(contentType));
                 else
                     this.arrayContent = new ArrayContentDescriptor(object.readString());
-            } else
-                this.arrayContent = new ArrayContentDescriptor(SchemaFileJsonParser.getTypeDescriptor());
+            }
             size++;
         }
         if (size == 0)
@@ -227,7 +228,7 @@ public class Facets {
         this.unionContent = unionContent;
     }
 
-    private static void setFieldDescriptorType(FieldDescriptor fieldDescriptor, JsonIterator object)
+    private static void setFieldDescriptorType(FieldDescriptor fieldDescriptor)
             throws IOException {
         if (object.whatIsNext().equals(ValueType.STRING)) {
             String fieldType = object.readString();
@@ -238,5 +239,17 @@ public class Facets {
         } else if (!object.whatIsNext().equals(ValueType.OBJECT))
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
         fieldDescriptor.setType(SchemaFileJsonParser.getTypeDescriptor());
+    }
+
+    public void setUnionContent(String unionContentString) {
+        String[] unionTypes = unionContentString.split("\\|");
+        UnionContentDescriptor unionContent = new UnionContentDescriptor();
+        for (String type : unionTypes) {
+            if (schema.containsKey(type))
+                unionContent.types.add(schema.get(type));
+            else
+                unionContent.stringTypes.add(type);
+        }
+        this.unionContent = unionContent;
     }
 }

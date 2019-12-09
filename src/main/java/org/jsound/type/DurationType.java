@@ -33,4 +33,10 @@ public class DurationType extends AtomicTypeDescriptor {
     public Set<FacetTypes> getAllowedFacets() {
         return _allowedFacets;
     }
+
+    public static String getPositivePeriod(String period) {
+        if (period.startsWith("-"))
+            return period.substring(1);
+        return period;
+    }
 }

@@ -3,10 +3,8 @@ package org.jsound.item;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.api.Item;
 import org.jsound.api.ItemType;
-import org.jsound.type.ArrayType;
+import org.jsound.api.TypeDescriptor;
 import org.jsound.type.ObjectKey;
-import org.jsound.type.ObjectType;
-import org.jsound.type.UnionType;
 import org.tyson.TYSONArray;
 import org.tyson.TysonItem;
 
@@ -26,12 +24,12 @@ public class ArrayItem extends Item {
     }
 
     @Override
-    public boolean isValidAgainst(ItemType itemType) {
-        if (itemType.isUnionType())
-            return ((UnionType) itemType).validate(this);
+    public boolean isValidAgainst(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor.isUnionType())
+            return ((UnionType) typeDescriptor).validate(this);
         ArrayType arrayType;
         try {
-            arrayType = getArrayType(itemType);
+            arrayType = getArrayType(typeDescriptor);
         } catch (UnexpectedTypeException e) {
             return false;
         }
@@ -46,11 +44,11 @@ public class ArrayItem extends Item {
 
 
     @Override
-    public TysonItem annotateWith(ItemType itemType) {
-        if (itemType.isUnionType())
-            return ((UnionType) itemType).annotate(this);
-        ItemType arrayItemType = getArrayType(itemType).getArrayItemsType();
-        TYSONArray array = new TYSONArray(itemType.getTypeName());
+    public TysonItem annotateWith(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor.isUnionType())
+            return ((UnionType) typeDescriptor).annotate(this);
+        ItemType arrayItemType = getArrayType(typeDescriptor).getArrayItemsType();
+        TYSONArray array = new TYSONArray(typeDescriptor.getTypeName());
         for (Item item : _items) {
             array.add(item.annotateWith(arrayItemType));
         }

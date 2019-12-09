@@ -4,9 +4,9 @@ import org.tyson.TysonItem;
 
 public abstract class Item {
 
-    public abstract boolean isValidAgainst(ItemType itemType);
+    public abstract boolean isValidAgainst(TypeDescriptor typeDescriptor);
 
-    public abstract TysonItem annotateWith(ItemType itemType);
+    public abstract TysonItem annotateWith(TypeDescriptor typeDescriptor);
 
     public boolean isNull() {
         return false;

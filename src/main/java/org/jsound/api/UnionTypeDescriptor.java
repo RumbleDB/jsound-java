@@ -14,12 +14,12 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Collections.singletonList(CONTENT));
 
     public UnionTypeDescriptor(String name, Facets facets) {
-        super(ItemTypes.UNION, name, facets);
+        super(ItemTypes.VALUE, name, facets);
         this.baseType = this;
     }
 
     public UnionTypeDescriptor(String name, UnionTypeDescriptor baseType, Facets facets) {
-        super(ItemTypes.UNION, name, baseType, facets);
+        super(ItemTypes.VALUE, name, baseType, facets);
     }
 
     @Override
