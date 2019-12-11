@@ -4,21 +4,22 @@ import com.jsoniter.JsonIterator;
 import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.UnexpectedTypeException;
-import org.jsound.api.ArrayContentDescriptor;
-import org.jsound.api.FieldDescriptor;
-import org.jsound.api.Item;
-import org.jsound.api.UnionContentDescriptor;
+import org.jsound.item.Item;
 import org.jsound.json.SchemaFileJsonParser;
-import org.jsound.type.Kinds;
+import org.jsound.kinds.Kinds;
+import org.jsound.type.ArrayContentDescriptor;
+import org.jsound.type.FieldDescriptor;
+import org.jsound.type.TypeOrReference;
+import org.jsound.type.UnionContentDescriptor;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
-import static org.jsound.cli.JSoundExecutor.schema;
 import static org.jsound.cli.JSoundExecutor.object;
+import static org.jsound.cli.JSoundExecutor.schema;
 import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class Facets {
@@ -29,7 +30,7 @@ public class Facets {
     List<Item> enumeration = null;
     List<String> constraints = null;
     TimezoneFacet explicitTimezone = null;
-    public List<FieldDescriptor> objectContent = null;
+    public Map<String, FieldDescriptor> objectContent = null;
     public ArrayContentDescriptor arrayContent = null;
     public UnionContentDescriptor unionContent = null;
     Boolean closed = null;
@@ -144,14 +145,16 @@ public class Facets {
             throw new UnexpectedTypeException("Content property should be an array.");
         switch (kind) {
             case ATOMIC:
-                throw new InvalidSchemaException("Cannot have content facet for atomic type.");
+                throw new InvalidSchemaException("Cannot have content facet for atomic atomicTypes.");
             case OBJECT:
                 this.setObjectContentFromObject();
                 break;
             case ARRAY:
                 this.setArrayContentFromObject();
                 if (this.arrayContent == null)
-                    this.arrayContent = new ArrayContentDescriptor(SchemaFileJsonParser.getTypeDescriptor());
+                    this.arrayContent = new ArrayContentDescriptor(
+                            new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor())
+                    );
                 break;
             case UNION:
                 this.setUnionContentFromObject();
@@ -161,20 +164,18 @@ public class Facets {
 
     private void setObjectContentFromObject() throws IOException {
         String key;
-        List<FieldDescriptor> fieldDescriptors = new ArrayList<>();
-        Set<String> fieldsNames = new HashSet<>();
+        Map<String, FieldDescriptor> fieldDescriptors = new LinkedHashMap<>();
         while (object.readArray()) {
             FieldDescriptor fieldDescriptor = new FieldDescriptor();
             while ((key = object.readObject()) != null) {
                 switch (key) {
                     case "name":
                         String name = getStringFromObject();
-                        if (fieldsNames.contains(name))
+                        if (fieldDescriptors.containsKey(name))
                             throw new InvalidSchemaException("The field descriptor " + name + " was already defined.");
                         fieldDescriptor.setName(name);
-                        fieldsNames.add(name);
                         break;
-                    case "type":
+                    case "atomicTypes":
                         setFieldDescriptorType(fieldDescriptor);
                         break;
                     case "required":
@@ -190,7 +191,7 @@ public class Facets {
                         throw new InvalidSchemaException(key + " is not a valid property for the field descriptor.");
                 }
             }
-            fieldDescriptors.add(fieldDescriptor);
+            fieldDescriptors.put(fieldDescriptor.getName(), fieldDescriptor);
         }
         this.objectContent = fieldDescriptors;
     }
@@ -199,18 +200,18 @@ public class Facets {
         int size = 0;
         while (object.readArray()) {
             if (size > 0)
-                throw new InvalidSchemaException("Can only specify one type for the array content type.");
+                throw new InvalidSchemaException("Can only specify one atomicTypes for the array content atomicTypes.");
             if (object.whatIsNext().equals(ValueType.STRING)) {
                 String contentType = object.readString();
                 if (schema.containsKey(contentType))
-                    this.arrayContent = new ArrayContentDescriptor(schema.get(contentType));
+                    this.arrayContent = new ArrayContentDescriptor(new TypeOrReference(schema.get(contentType)));
                 else
-                    this.arrayContent = new ArrayContentDescriptor(object.readString());
+                    this.arrayContent = new ArrayContentDescriptor(new TypeOrReference(contentType));
             }
             size++;
         }
         if (size == 0)
-            throw new InvalidSchemaException("You must specify the content type for array.");
+            throw new InvalidSchemaException("You must specify the content atomicTypes for array.");
     }
 
     private void setUnionContentFromObject() throws IOException {
@@ -219,26 +220,27 @@ public class Facets {
             if (object.whatIsNext().equals(ValueType.STRING)) {
                 String type = object.readString();
                 if (schema.containsKey(type))
-                    unionContent.types.add(schema.get(type));
+                    unionContent.getTypes().add(new TypeOrReference(schema.get(type)));
                 else
-                    unionContent.stringTypes.add(type);
+                    unionContent.getTypes().add(new TypeOrReference(type));
             } else
-                unionContent.types.add(SchemaFileJsonParser.getTypeDescriptor());
+                unionContent.getTypes().add(new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor()));
         }
         this.unionContent = unionContent;
     }
 
-    private static void setFieldDescriptorType(FieldDescriptor fieldDescriptor)
-            throws IOException {
+    private static void setFieldDescriptorType(FieldDescriptor fieldDescriptor) throws IOException {
         if (object.whatIsNext().equals(ValueType.STRING)) {
             String fieldType = object.readString();
             if (schema.containsKey(fieldType))
-                fieldDescriptor.setType(schema.get(fieldType));
+                fieldDescriptor.setType(new TypeOrReference(schema.get(fieldType)));
             else
-                fieldDescriptor.setStringType(fieldType);
-        } else if (!object.whatIsNext().equals(ValueType.OBJECT))
+                fieldDescriptor.setType(new TypeOrReference(fieldType));
+        }
+        else if (!object.whatIsNext().equals(ValueType.OBJECT))
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
-        fieldDescriptor.setType(SchemaFileJsonParser.getTypeDescriptor());
+        else
+            fieldDescriptor.setType(new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor()));
     }
 
     public void setUnionContent(String unionContentString) {
@@ -246,9 +248,9 @@ public class Facets {
         UnionContentDescriptor unionContent = new UnionContentDescriptor();
         for (String type : unionTypes) {
             if (schema.containsKey(type))
-                unionContent.types.add(schema.get(type));
+                unionContent.getTypes().add(new TypeOrReference(schema.get(type)));
             else
-                unionContent.stringTypes.add(type);
+                unionContent.getTypes().add(new TypeOrReference(type));
         }
         this.unionContent = unionContent;
     }

@@ -3,13 +3,13 @@ package org.jsound.cli;
 import com.jsoniter.JsonIterator;
 import jsound.exceptions.CliException;
 import jsound.exceptions.ResourceNotFoundException;
-import org.jsound.api.AtomicTypeDescriptor;
-import org.jsound.api.AtomicTypes;
-import org.jsound.api.Item;
-import org.jsound.api.TypeDescriptor;
+import org.jsound.item.Item;
 import org.jsound.json.CompactSchemaFileJsonParser;
 import org.jsound.json.InstanceFileJsonParser;
 import org.jsound.json.SchemaFileJsonParser;
+import org.jsound.type.AtomicTypeDescriptor;
+import org.jsound.type.AtomicTypes;
+import org.jsound.type.TypeDescriptor;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -55,10 +55,10 @@ public abstract class JSoundExecutor {
             SchemaFileJsonParser.createSchema();
         }
 
-        // TODO: controllare che baseType sia valido contro il type at hand
-        // TODO: controllare che items in enumeration siano validi contro type at hand
-        // TODO: controllare che i stringtype dei field descriptors siano type esistenti e validi
-        // TODO: controllare che i default value dei field descriptors siano validi contro i loro type
+        // TODO: controllare che baseType sia valido contro il atomicTypes at hand
+        // TODO: controllare che atomicItems in enumeration siano validi contro atomicTypes at hand
+        // TODO: controllare che i stringtype dei field descriptors siano atomicTypes esistenti e validi
+        // TODO: controllare che i default value dei field descriptors siano validi contro i loro atomicTypes
         // TODO: controllare che i stringType di arraycontent e unioncontent siano esistenti e validi
 
         schemaItem = schema.get(rootType);

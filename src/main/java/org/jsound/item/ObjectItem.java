@@ -1,10 +1,10 @@
 package org.jsound.item;
 
 import jsound.exceptions.UnexpectedTypeException;
-import org.jsound.api.Item;
-import org.jsound.api.ItemType;
-import org.jsound.api.TypeDescriptor;
-import org.jsound.type.ObjectKey;
+import org.jsound.type.FieldDescriptor;
+import org.jsound.type.ObjectTypeDescriptor;
+import org.jsound.type.TypeDescriptor;
+import org.jsound.type.UnionTypeDescriptor;
 import org.tyson.TYSONObject;
 import org.tyson.TYSONValue;
 import org.tyson.TysonItem;
@@ -30,23 +30,18 @@ public class ObjectItem extends Item {
     @Override
     public boolean isValidAgainst(TypeDescriptor typeDescriptor) {
         if (typeDescriptor.isUnionType())
-            return ((UnionType) typeDescriptor).validate(this);
-        Map<ObjectKey, ItemType> typeMap;
+            return ((UnionTypeDescriptor) typeDescriptor).validate(this);
+        Map<String, FieldDescriptor> fields;
         try {
-            typeMap = this.getObjectType(typeDescriptor).getTypeMap();
+            fields = this.getObjectType(typeDescriptor).getFacets().objectContent;
         } catch (UnexpectedTypeException e) {
             return false;
         }
-        for (ObjectKey key : typeMap.keySet()) {
-            if (_itemMap.containsKey(key.getKeyName())) {
-                if (
-                    (_itemMap.get(key.getKeyName()).isNull() && !key.allowsNull())
-                        ||
-                        (!_itemMap.get(key.getKeyName()).isValidAgainst(typeMap.get(key)))
-                ) {
+        for (String fieldName : fields.keySet()) {
+            if (_itemMap.containsKey(fieldName)) {
+                if (!_itemMap.get(fieldName).isValidAgainst(fields.get(fieldName).getType().getTypeDescriptor()))
                     return false;
-                }
-            } else if (key.isRequired() && typeMap.get(key).getDefaultValue() == null) {
+            } else if (fields.get(fieldName).isRequired() && fields.get(fieldName).getDefaultValue() == null) {
                 return false;
             }
         }
@@ -56,34 +51,38 @@ public class ObjectItem extends Item {
     @Override
     public TysonItem annotateWith(TypeDescriptor typeDescriptor) {
         if (typeDescriptor.isUnionType())
-            return ((UnionType) typeDescriptor).annotate(this);
-        ObjectType objectType = this.getObjectType(typeDescriptor);
-        TYSONObject object = new TYSONObject(typeDescriptor.getTypeName());
-        Map<ObjectKey, ItemType> typeMap = objectType.getTypeMap();
-        for (ObjectKey key : typeMap.keySet()) {
-            if (_itemMap.containsKey(key.getKeyName())) {
-                object.put(key.getKeyName(), _itemMap.get(key.getKeyName()).annotateWith(typeMap.get(key)));
-            } else if (typeMap.get(key).getDefaultValue() != null) {
+            return ((UnionTypeDescriptor) typeDescriptor).annotate(this);
+        ObjectTypeDescriptor objectType = this.getObjectType(typeDescriptor);
+        TYSONObject object = new TYSONObject(typeDescriptor.getName());
+        Map<String, FieldDescriptor> fields = objectType.getFacets().objectContent;
+        for (String fieldName : fields.keySet()) {
+            if (_itemMap.containsKey(fieldName)) {
                 object.put(
-                    key.getKeyName(),
+                    fieldName,
+                    _itemMap.get(fieldName).annotateWith(fields.get(fieldName).getType().getTypeDescriptor())
+                );
+            } else if (fields.get(fieldName).getDefaultValue() != null) {
+                object.put(
+                    fieldName,
                     new TYSONValue(
-                            typeMap.get(key).getTypeName(),
-                            typeMap.get(key).getDefaultValueStringAnnotation()
+                            fields.get(fieldName).getName(),
+                            fields.get(fieldName).getDefaultValueAnnotation()
                     )
                 );
             }
         }
         for (String key : _itemMap.keySet()) {
-            if (!typeMap.containsKey(new ObjectKey(key, false))) {
+            if (!fields.containsKey(key)) {
                 object.put(key, new TYSONValue(null, _itemMap.get(key).getStringAnnotation()));
             }
         }
         return object;
     }
 
-    private ObjectType getObjectType(ItemType itemType) {
-        if (itemType.getItemType().isObjectType()) {
-            return (ObjectType) itemType.getItemType();
+    private ObjectTypeDescriptor getObjectType(TypeDescriptor typeDescriptor) {
+        TypeDescriptor baseType = typeDescriptor.getBaseType();
+        if (baseType.isObjectType()) {
+            return (ObjectTypeDescriptor) baseType;
         }
         throw new UnexpectedTypeException("The object does not have a corresponding schema object");
     }

@@ -4,25 +4,26 @@ import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
 import jsound.exceptions.UnexpectedTypeException;
-import org.jsound.api.ArrayContentDescriptor;
-import org.jsound.api.ArrayTypeDescriptor;
-import org.jsound.api.AtomicTypes;
-import org.jsound.api.FieldDescriptor;
-import org.jsound.api.ObjectTypeDescriptor;
-import org.jsound.api.TypeDescriptor;
-import org.jsound.api.UnionTypeDescriptor;
+import org.jsound.atomicTypes.NullType;
 import org.jsound.facets.Facets;
-import org.jsound.type.NullType;
+import org.jsound.type.ArrayContentDescriptor;
+import org.jsound.type.ArrayTypeDescriptor;
+import org.jsound.type.AtomicTypes;
+import org.jsound.type.FieldDescriptor;
+import org.jsound.type.ObjectTypeDescriptor;
+import org.jsound.type.TypeDescriptor;
+import org.jsound.type.TypeOrReference;
+import org.jsound.type.UnionTypeDescriptor;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
-import static org.jsound.api.AtomicTypeDescriptor.buildAtomicType;
 import static org.jsound.cli.JSoundExecutor.object;
 import static org.jsound.cli.JSoundExecutor.schema;
+import static org.jsound.type.AtomicTypeDescriptor.buildAtomicType;
 
 
 public class CompactSchemaFileJsonParser {
@@ -64,10 +65,10 @@ public class CompactSchemaFileJsonParser {
                 case ARRAY:
                     facets.setArrayContentFromObject();
                     if (facets.arrayContent == null)
-                        facets.arrayContent = new ArrayContentDescriptor(getTypeFromObject(name));
+                        facets.arrayContent = new ArrayContentDescriptor(new TypeOrReference(getTypeFromObject(name)));
                     return new ArrayTypeDescriptor(name, facets);
                 default:
-                    throw new UnexpectedTypeException(object.read().toString());
+                    throw new UnexpectedTypeException("Type for " + name + " is not string nor object nor array.");
             }
         } catch (IOException e) {
             throw new JsoundException("Error parsing the JSON file");
@@ -76,21 +77,25 @@ public class CompactSchemaFileJsonParser {
 
     private static ObjectTypeDescriptor buildObjectType(String name, Facets facets) throws IOException {
         String key;
-        List<FieldDescriptor> fieldDescriptors = new ArrayList<>();
+        Map<String, FieldDescriptor> fieldDescriptors = new LinkedHashMap<>();
         while ((key = object.readObject()) != null) {
             FieldDescriptor fieldDescriptor = new FieldDescriptor();
             boolean allowNull = setMarkers(fieldDescriptor, key);
+            if (fieldDescriptors.containsKey(fieldDescriptor.getName()))
+                throw new InvalidSchemaException("The field descriptor " + name + " was already defined.");
             setFieldDescriptorType(fieldDescriptor);
             if (allowNull) {
                 Facets unionTypeFacets = new Facets();
-                if (fieldDescriptor.stringType != null)
-                    unionTypeFacets.unionContent.stringTypes.add(fieldDescriptor.stringType);
+                if (fieldDescriptor.getType().getStringType() != null)
+                    unionTypeFacets.unionContent.getTypes()
+                        .add(new TypeOrReference(fieldDescriptor.getType().getStringType()));
                 else
-                    unionTypeFacets.unionContent.types.add(fieldDescriptor.type);
-                unionTypeFacets.unionContent.types.add(new NullType("null", new Facets()));
-                fieldDescriptor.setType(new UnionTypeDescriptor(name, unionTypeFacets));
+                    unionTypeFacets.unionContent.getTypes()
+                        .add(new TypeOrReference(fieldDescriptor.getType().getTypeDescriptor()));
+                unionTypeFacets.unionContent.getTypes().add(new TypeOrReference(new NullType("null", new Facets())));
+                fieldDescriptor.setType(new TypeOrReference(new UnionTypeDescriptor(name, unionTypeFacets)));
             }
-            fieldDescriptors.add(fieldDescriptor);
+            fieldDescriptors.put(fieldDescriptor.getName(), fieldDescriptor);
         }
         facets.objectContent = fieldDescriptors;
         return new ObjectTypeDescriptor(name, facets);
@@ -101,14 +106,17 @@ public class CompactSchemaFileJsonParser {
             String fieldType = object.readString();
             if (fieldType.contains("=")) {
                 fieldDescriptor.setDefaultValue(fieldType.split("=")[1]);
+                fieldType = fieldType.split("=")[0];
             }
             if (schema.containsKey(fieldType))
-                fieldDescriptor.setType(schema.get(fieldType));
+                fieldDescriptor.setType(new TypeOrReference(schema.get(fieldType)));
             else
-                fieldDescriptor.setStringType(fieldType);
-        } else if (!object.whatIsNext().equals(ValueType.OBJECT))
+                fieldDescriptor.setType(new TypeOrReference(fieldType));
+        }
+        else if (!object.whatIsNext().equals(ValueType.OBJECT))
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
-        fieldDescriptor.setType(getTypeFromObject(fieldDescriptor.name));
+        else
+            fieldDescriptor.setType(new TypeOrReference(getTypeFromObject(fieldDescriptor.name)));
     }
 
     private static boolean setMarkers(FieldDescriptor fieldDescriptor, String name) {

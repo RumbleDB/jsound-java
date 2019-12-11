@@ -88,6 +88,6 @@ public class JSoundRuntimeConfiguration {
         if (getFile() == null)
             throw new CliException("Missing JSON file argument");
         if (getRootType() == null)
-            throw new CliException("Missing root type argument");
+            throw new CliException("Missing root atomicTypes argument");
     }
 }

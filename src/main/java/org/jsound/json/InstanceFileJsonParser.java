@@ -3,7 +3,7 @@ package org.jsound.json;
 import com.jsoniter.JsonIterator;
 import jsound.exceptions.JsoundException;
 import jsound.exceptions.UnexpectedTypeException;
-import org.jsound.api.Item;
+import org.jsound.item.Item;
 import org.jsound.item.ItemFactory;
 
 import java.io.IOException;

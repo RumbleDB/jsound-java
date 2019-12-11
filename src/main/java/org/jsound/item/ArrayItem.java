@@ -1,14 +1,20 @@
 package org.jsound.item;
 
 import jsound.exceptions.UnexpectedTypeException;
-import org.jsound.api.Item;
-import org.jsound.api.ItemType;
-import org.jsound.api.TypeDescriptor;
-import org.jsound.type.ObjectKey;
+import org.jsound.type.ArrayTypeDescriptor;
+import org.jsound.type.FieldDescriptor;
+import org.jsound.type.ObjectTypeDescriptor;
+import org.jsound.type.TypeDescriptor;
+import org.jsound.type.UnionTypeDescriptor;
 import org.tyson.TYSONArray;
 import org.tyson.TysonItem;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ArrayItem extends Item {
 
@@ -19,66 +25,65 @@ public class ArrayItem extends Item {
         this._items = items;
     }
 
-    public List<Item> getItems() {
-        return this._items;
-    }
-
     @Override
     public boolean isValidAgainst(TypeDescriptor typeDescriptor) {
         if (typeDescriptor.isUnionType())
-            return ((UnionType) typeDescriptor).validate(this);
-        ArrayType arrayType;
+            return ((UnionTypeDescriptor) typeDescriptor).validate(this);
+        TypeDescriptor arrayItemType;
         try {
-            arrayType = getArrayType(typeDescriptor);
+            arrayItemType = getArrayType(typeDescriptor).getFacets().arrayContent.getType().getTypeDescriptor();
         } catch (UnexpectedTypeException e) {
             return false;
         }
         for (Item item : _items) {
-            if (!item.isValidAgainst(arrayType.getArrayItemsType().getItemType()))
+            if (!item.isValidAgainst(arrayItemType))
                 return false;
         }
         if (_items.isEmpty() || !_items.get(0).isObject())
             return true;
-        return this.isUniqueSatisfied(arrayType);
+        return this.isUniqueSatisfied(arrayItemType);
     }
 
 
     @Override
     public TysonItem annotateWith(TypeDescriptor typeDescriptor) {
         if (typeDescriptor.isUnionType())
-            return ((UnionType) typeDescriptor).annotate(this);
-        ItemType arrayItemType = getArrayType(typeDescriptor).getArrayItemsType();
-        TYSONArray array = new TYSONArray(typeDescriptor.getTypeName());
+            return ((UnionTypeDescriptor) typeDescriptor).annotate(this);
+        TypeDescriptor arrayItemType = getArrayType(typeDescriptor).getFacets().arrayContent.getType()
+            .getTypeDescriptor();
+        TYSONArray array = new TYSONArray(typeDescriptor.getName());
         for (Item item : _items) {
             array.add(item.annotateWith(arrayItemType));
         }
         return array;
     }
 
-    private ArrayType getArrayType(ItemType itemType) {
-        if (itemType.getItemType().isArrayType())
-            return (ArrayType) itemType.getItemType();
-        throw new UnexpectedTypeException("Array item does not have a matching array schema");
+    private ArrayTypeDescriptor getArrayType(TypeDescriptor typeDescriptor) {
+        TypeDescriptor baseType = typeDescriptor.getBaseType();
+        if (baseType.isArrayType())
+            return (ArrayTypeDescriptor) baseType;
+        throw new UnexpectedTypeException("Array atomicItems does not have a matching array schema");
     }
 
-    private boolean isUniqueSatisfied(ArrayType arrayType) {
+    private boolean isUniqueSatisfied(TypeDescriptor arrayItemType) {
         Map<String, Set<Item>> fieldsValues = new HashMap<>();
-        ObjectType objectType;
-        if (arrayType.getArrayItemsType().getItemType().isObjectType()) {
-            objectType = (ObjectType) arrayType.getArrayItemsType().getItemType();
+        ObjectTypeDescriptor objectType;
+        if (arrayItemType.isObjectType()) {
+            objectType = (ObjectTypeDescriptor) arrayItemType;
         } else
             return true;
-        for (ObjectKey key : objectType.getTypeMap().keySet()) {
-            if (key.isUnique()) {
+        Map<String, FieldDescriptor> fields = objectType.getFacets().objectContent;
+        for (String fieldName : fields.keySet()) {
+            if (fields.get(fieldName).isUnique()) {
                 for (Item item : _items) {
-                    Item value = ((ObjectItem) item).getItemMap().get(key.getKeyName());
-                    if (fieldsValues.containsKey(key.getKeyName())) {
-                        if (fieldsValues.get(key.getKeyName()).contains(value)) {
+                    Item value = ((ObjectItem) item).getItemMap().get(fieldName);
+                    if (fieldsValues.containsKey(fieldName)) {
+                        if (fieldsValues.get(fieldName).contains(value)) {
                             return false;
                         }
-                        fieldsValues.get(key.getKeyName()).add(value);
+                        fieldsValues.get(fieldName).add(value);
                     } else {
-                        fieldsValues.put(key.getKeyName(), new HashSet<>(Collections.singleton(value)));
+                        fieldsValues.put(fieldName, new HashSet<>(Collections.singleton(value)));
                     }
                 }
             }

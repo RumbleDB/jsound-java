@@ -4,28 +4,28 @@ import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
 import jsound.exceptions.UnexpectedTypeException;
-import org.jsound.api.ArrayTypeDescriptor;
-import org.jsound.api.AtomicTypeDescriptor;
-import org.jsound.api.AtomicTypes;
-import org.jsound.api.ObjectTypeDescriptor;
-import org.jsound.api.TypeDescriptor;
-import org.jsound.api.UnionTypeDescriptor;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
-import org.jsound.type.Kinds;
+import org.jsound.kinds.Kinds;
+import org.jsound.type.ArrayTypeDescriptor;
+import org.jsound.type.AtomicTypeDescriptor;
+import org.jsound.type.AtomicTypes;
+import org.jsound.type.ObjectTypeDescriptor;
+import org.jsound.type.TypeDescriptor;
+import org.jsound.type.UnionTypeDescriptor;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.jsound.api.AtomicTypeDescriptor.buildAtomicType;
 import static org.jsound.cli.JSoundExecutor.object;
 import static org.jsound.cli.JSoundExecutor.schema;
 import static org.jsound.facets.FacetTypes.CONSTRAINTS;
 import static org.jsound.facets.FacetTypes.ENUMERATION;
 import static org.jsound.facets.FacetTypes.METADATA;
 import static org.jsound.facets.Facets.getStringFromObject;
+import static org.jsound.type.AtomicTypeDescriptor.buildAtomicType;
 
 public class SchemaFileJsonParser {
     private static final Set<FacetTypes> commonFacets = new HashSet<>(
@@ -123,7 +123,7 @@ public class SchemaFileJsonParser {
                 if (schema.containsKey(baseType)) {
                     TypeDescriptor typeDescriptor = schema.get(baseType);
                     if (!typeDescriptor.isObjectType())
-                        throw new InvalidSchemaException("The baseType must be of type object.");
+                        throw new InvalidSchemaException("The baseType must be of atomicTypes object.");
                     return new ObjectTypeDescriptor(
                             name,
                             (ObjectTypeDescriptor) typeDescriptor,
@@ -162,7 +162,7 @@ public class SchemaFileJsonParser {
                 if (schema.containsKey(baseType)) {
                     TypeDescriptor typeDescriptor = schema.get(baseType);
                     if (!typeDescriptor.isArrayType())
-                        throw new InvalidSchemaException("The baseType must be of type array.");
+                        throw new InvalidSchemaException("The baseType must be of atomicTypes array.");
                     return new ArrayTypeDescriptor(
                             name,
                             (ArrayTypeDescriptor) typeDescriptor,
@@ -198,7 +198,7 @@ public class SchemaFileJsonParser {
                 if (schema.containsKey(baseType)) {
                     TypeDescriptor typeDescriptor = schema.get(baseType);
                     if (!typeDescriptor.isArrayType())
-                        throw new InvalidSchemaException("The baseType must be of type array.");
+                        throw new InvalidSchemaException("The baseType must be of atomicTypes array.");
                     return new UnionTypeDescriptor(
                             name,
                             (UnionTypeDescriptor) typeDescriptor,
