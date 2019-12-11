@@ -6,7 +6,6 @@ import jsound.exceptions.JsoundException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.atomicTypes.NullType;
 import org.jsound.facets.Facets;
-import org.jsound.type.ArrayContentDescriptor;
 import org.jsound.type.ArrayTypeDescriptor;
 import org.jsound.type.AtomicTypes;
 import org.jsound.type.FieldDescriptor;
@@ -16,10 +15,9 @@ import org.jsound.type.TypeOrReference;
 import org.jsound.type.UnionTypeDescriptor;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static org.jsound.cli.JSoundExecutor.object;
 import static org.jsound.cli.JSoundExecutor.schema;
@@ -28,45 +26,52 @@ import static org.jsound.type.AtomicTypeDescriptor.buildAtomicType;
 
 public class CompactSchemaFileJsonParser {
 
-    private static Set<String> typesToCheck = new HashSet<>();
-    private static boolean shouldCheckType = false;
-    private static boolean isStringType = false;
+    public static Map<String, TypeOrReference> compactSchema = new HashMap<>();
 
     public static void createSchema() {
+
         try {
             if (!object.whatIsNext().equals(ValueType.OBJECT)) {
                 throw new InvalidSchemaException("The schema root object must be a JSON object");
             }
 
-            String key;
-            while ((key = object.readObject()) != null) {
-                if (object.whatIsNext().equals(ValueType.STRING))
-                    isStringType = true;
-                TypeDescriptor typeDescriptor = getTypeFromObject(key);
-                if (isStringType && shouldCheckType)
-                    typesToCheck.add(key);
-                schema.put(key, typeDescriptor);
-                shouldCheckType = false;
-                isStringType = false;
+            String typeName;
+            while ((typeName = object.readObject()) != null) {
+                compactSchema.put(typeName, getTypeFromObject(typeName));
+            }
+            for (String key : compactSchema.keySet()) {
+                if (schema.get(key) == null)
+                    getType(key);
             }
         } catch (IOException e) {
             throw new JsoundException("Error parsing the JSON file");
         }
     }
 
-    private static TypeDescriptor getTypeFromObject(String name) {
+    private static TypeDescriptor getType(String key) {
+        TypeOrReference typeOrReference = compactSchema.get(key);
+        TypeDescriptor typeDescriptor;
+        if (typeOrReference.getType() == null) {
+            typeDescriptor = getType(typeOrReference.getStringType());
+            schema.put(key, typeDescriptor);
+            return typeDescriptor;
+        }
+        typeDescriptor = typeOrReference.getType();
+        schema.put(key, typeDescriptor);
+        return typeDescriptor;
+    }
+
+    public static TypeOrReference getTypeFromObject(String name) {
         try {
             Facets facets = new Facets();
             switch (object.whatIsNext()) {
                 case STRING:
                     return parseType(name, object.readString());
                 case OBJECT:
-                    return buildObjectType(name, facets);
+                    return new TypeOrReference(buildObjectType(name, facets));
                 case ARRAY:
-                    facets.setArrayContentFromObject();
-                    if (facets.arrayContent == null)
-                        facets.arrayContent = new ArrayContentDescriptor(new TypeOrReference(getTypeFromObject(name)));
-                    return new ArrayTypeDescriptor(name, facets);
+                    facets.setArrayContent(name);
+                    return new TypeOrReference(new ArrayTypeDescriptor(name, facets));
                 default:
                     throw new UnexpectedTypeException("Type for " + name + " is not string nor object nor array.");
             }
@@ -108,15 +113,15 @@ public class CompactSchemaFileJsonParser {
                 fieldDescriptor.setDefaultValue(fieldType.split("=")[1]);
                 fieldType = fieldType.split("=")[0];
             }
-            if (schema.containsKey(fieldType))
-                fieldDescriptor.setType(new TypeOrReference(schema.get(fieldType)));
+            if (compactSchema.containsKey(fieldType))
+                fieldDescriptor.setType(compactSchema.get(fieldType));
             else
-                fieldDescriptor.setType(new TypeOrReference(fieldType));
+                fieldDescriptor.setType(parseType(fieldDescriptor.name, fieldType));
         }
         else if (!object.whatIsNext().equals(ValueType.OBJECT))
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
         else
-            fieldDescriptor.setType(new TypeOrReference(getTypeFromObject(fieldDescriptor.name)));
+            fieldDescriptor.setType(getTypeFromObject(fieldDescriptor.name));
     }
 
     private static boolean setMarkers(FieldDescriptor fieldDescriptor, String name) {
@@ -132,19 +137,18 @@ public class CompactSchemaFileJsonParser {
         return allowNull;
     }
 
-    private static TypeDescriptor parseType(String name, String typeString) throws IOException {
+    private static TypeOrReference parseType(String name, String typeString) throws IOException {
         if (typeString.contains("|")) {
             Facets facets = new Facets();
             facets.setUnionContent(typeString);
-            return new UnionTypeDescriptor(name, facets);
+            return new TypeOrReference(new UnionTypeDescriptor(name, facets));
         }
         try {
-            return buildAtomicType(AtomicTypes.valueOf(typeString.toUpperCase()), name, false);
+            return new TypeOrReference(buildAtomicType(AtomicTypes.valueOf(typeString.toUpperCase()), name, false));
         } catch (IllegalArgumentException e) {
-            if (schema.containsKey(typeString))
-                return schema.get(typeString);
-            shouldCheckType = true;
-            return null;
+            if (compactSchema.containsKey(typeString))
+                return compactSchema.get(typeString);
+            return new TypeOrReference(typeString);
         }
     }
 }

@@ -29,4 +29,8 @@ public class TypeOrReference {
     public String getStringType() {
         return stringType;
     }
+
+    public TypeDescriptor getType() {
+        return type;
+    }
 }

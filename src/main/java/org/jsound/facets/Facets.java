@@ -20,6 +20,8 @@ import java.util.Map;
 
 import static org.jsound.cli.JSoundExecutor.object;
 import static org.jsound.cli.JSoundExecutor.schema;
+import static org.jsound.json.CompactSchemaFileJsonParser.compactSchema;
+import static org.jsound.json.CompactSchemaFileJsonParser.getTypeFromObject;
 import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class Facets {
@@ -212,6 +214,10 @@ public class Facets {
         }
         if (size == 0)
             throw new InvalidSchemaException("You must specify the content atomicTypes for array.");
+        if (this.arrayContent == null)
+            this.arrayContent = new ArrayContentDescriptor(
+                    new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor())
+            );
     }
 
     private void setUnionContentFromObject() throws IOException {
@@ -247,11 +253,31 @@ public class Facets {
         String[] unionTypes = unionContentString.split("\\|");
         UnionContentDescriptor unionContent = new UnionContentDescriptor();
         for (String type : unionTypes) {
-            if (schema.containsKey(type))
-                unionContent.getTypes().add(new TypeOrReference(schema.get(type)));
+            if (compactSchema.containsKey(type))
+                unionContent.getTypes().add(compactSchema.get(type));
             else
                 unionContent.getTypes().add(new TypeOrReference(type));
         }
         this.unionContent = unionContent;
+    }
+
+    public void setArrayContent(String name) throws IOException {
+        int size = 0;
+        while (object.readArray()) {
+            if (size > 0)
+                throw new InvalidSchemaException("Can only specify one atomicTypes for the array content atomicTypes.");
+            if (object.whatIsNext().equals(ValueType.STRING)) {
+                String contentType = object.readString();
+                if (schema.containsKey(contentType))
+                    this.arrayContent = new ArrayContentDescriptor(compactSchema.get(contentType));
+                else
+                    this.arrayContent = new ArrayContentDescriptor(new TypeOrReference(contentType));
+            }
+            size++;
+        }
+        if (size == 0)
+            throw new InvalidSchemaException("You must specify the content atomicTypes for array.");
+        if (arrayContent == null)
+            arrayContent = new ArrayContentDescriptor(getTypeFromObject(name));
     }
 }

@@ -20,6 +20,7 @@ class JSoundAnnotateExecutor extends JSoundExecutor {
             throw new ResourceNotFoundException("The specified output path is not valid.");
         } catch (Exception e) {
             System.out.println("Annotation failed ❌ : could not annotate the file with the provided the schema.");
+            return false;
         }
         return true;
     }

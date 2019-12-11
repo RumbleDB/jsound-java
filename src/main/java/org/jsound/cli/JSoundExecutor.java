@@ -10,12 +10,15 @@ import org.jsound.json.SchemaFileJsonParser;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.AtomicTypes;
 import org.jsound.type.TypeDescriptor;
+import org.jsound.type.TypeOrReference;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.jsound.json.CompactSchemaFileJsonParser.compactSchema;
 
 public abstract class JSoundExecutor {
 
@@ -44,6 +47,7 @@ public abstract class JSoundExecutor {
         for (AtomicTypes type : AtomicTypes.values()) {
             try {
                 schema.put(type.getTypeName(), AtomicTypeDescriptor.buildAtomicType(type, type.getTypeName(), false));
+                compactSchema.put(type.getTypeName(), new TypeOrReference(schema.get(type.getTypeName())));
             } catch (IOException e) {
                 throw new CliException("Something wrong happened.");
             }
