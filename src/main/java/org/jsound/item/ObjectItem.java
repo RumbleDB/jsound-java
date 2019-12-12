@@ -56,17 +56,18 @@ public class ObjectItem extends Item {
         TYSONObject object = new TYSONObject(typeDescriptor.getName());
         Map<String, FieldDescriptor> fields = objectType.getFacets().objectContent;
         for (String fieldName : fields.keySet()) {
+            FieldDescriptor fieldDescriptor = fields.get(fieldName);
             if (_itemMap.containsKey(fieldName)) {
                 object.put(
                     fieldName,
-                    _itemMap.get(fieldName).annotateWith(fields.get(fieldName).getType().getTypeDescriptor())
+                    _itemMap.get(fieldName).annotateWith(fieldDescriptor.getType().getTypeDescriptor())
                 );
-            } else if (fields.get(fieldName).getDefaultValue() != null) {
+            } else if (fieldDescriptor.getDefaultValue() != null) {
                 object.put(
                     fieldName,
                     new TYSONValue(
-                            fields.get(fieldName).getName(),
-                            fields.get(fieldName).getDefaultValueAnnotation()
+                            fieldDescriptor.getName(),
+                            fieldDescriptor.getDefaultValueAnnotation()
                     )
                 );
             }

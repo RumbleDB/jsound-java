@@ -6,10 +6,12 @@ import jsound.exceptions.JsoundException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
+import org.jsound.item.Item;
 import org.jsound.kinds.Kinds;
 import org.jsound.type.ArrayTypeDescriptor;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.AtomicTypes;
+import org.jsound.type.FieldDescriptor;
 import org.jsound.type.ItemTypes;
 import org.jsound.type.ObjectTypeDescriptor;
 import org.jsound.type.TypeDescriptor;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.jsound.cli.JSoundExecutor.object;
@@ -57,8 +60,38 @@ public class SchemaFileJsonParser {
             for (AtomicTypeDescriptor atomicTypeDescriptor : shouldCheckBaseType) {
                 checkType(atomicTypeDescriptor);
             }
+            for (TypeDescriptor typeDescriptor : schema.values()) {
+                if (typeDescriptor.getFacets().hasEnumeration()) {
+                    checkEnumeration(
+                        typeDescriptor.getFacets().getEnumeration(),
+                        typeDescriptor.baseType.getTypeDescriptor()
+                    );
+                }
+                if (typeDescriptor.getFacets().hasDefaultValue()) {
+                    checkDefaultValue(typeDescriptor.getFacets().objectContent);
+                }
+            }
         } catch (IOException e) {
             throw new JsoundException("Error parsing the JSON file");
+        }
+    }
+
+    private static void checkDefaultValue(Map<String, FieldDescriptor> objectContent) {
+        for (FieldDescriptor fieldDescriptor : objectContent.values()) {
+            if (!fieldDescriptor.getDefaultValue().isValidAgainst(fieldDescriptor.getType().getTypeDescriptor()))
+                throw new InvalidSchemaException("Default value not valid");
+        }
+    }
+
+    private static void checkEnumeration(List<Item> enumeration, TypeDescriptor typeDescriptor) {
+        for (Item item : enumeration) {
+            if (!item.isValidAgainst(typeDescriptor))
+                throw new InvalidSchemaException(
+                        "Enumeration value "
+                            + item.getStringAnnotation()
+                            + " not valid against type "
+                            + typeDescriptor.getType().getTypeName()
+                );
         }
     }
 
@@ -130,12 +163,14 @@ public class SchemaFileJsonParser {
                 TypeDescriptor typeDescriptor = schema.get(baseTypeString);
                 if (!typeDescriptor.isAtomicType())
                     throw new InvalidSchemaException("The baseType must be atomic.");
-                return new AtomicTypeDescriptor(
+                AtomicTypeDescriptor atomicTypeDescriptor = new AtomicTypeDescriptor(
                         typeDescriptor.getType(),
                         name,
                         new TypeOrReference(typeDescriptor),
-                        createFacets(typeDescriptor.getAllowedFacets(), Kinds.ATOMIC)
+                        createFacets(AtomicTypeDescriptor._allowedFacets, Kinds.ATOMIC)
                 );
+                shouldCheckBaseType.add(atomicTypeDescriptor);
+                return atomicTypeDescriptor;
             } else if ("atomic".equals(baseTypeString))
                 throw new InvalidSchemaException("BaseType cannot be atomic.");
             AtomicTypeDescriptor atomicTypeDescriptor = new AtomicTypeDescriptor(

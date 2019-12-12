@@ -6,6 +6,7 @@ import jsound.exceptions.JsoundException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.atomicTypes.NullType;
 import org.jsound.facets.Facets;
+import org.jsound.item.ItemFactory;
 import org.jsound.type.ArrayTypeDescriptor;
 import org.jsound.type.AtomicTypes;
 import org.jsound.type.FieldDescriptor;
@@ -110,8 +111,8 @@ public class CompactSchemaFileJsonParser {
         if (object.whatIsNext().equals(ValueType.STRING)) {
             String fieldType = object.readString();
             if (fieldType.contains("=")) {
-                fieldDescriptor.setDefaultValue(fieldType.split("=")[1]);
                 fieldType = fieldType.split("=")[0];
+                fieldDescriptor.setDefaultValue(ItemFactory.getInstance().createStringItem(fieldType.split("=")[1]));
             }
             if (compactSchema.containsKey(fieldType))
                 fieldDescriptor.setType(compactSchema.get(fieldType));

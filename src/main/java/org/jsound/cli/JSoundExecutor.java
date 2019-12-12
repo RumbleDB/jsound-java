@@ -59,12 +59,6 @@ public abstract class JSoundExecutor {
             SchemaFileJsonParser.createSchema();
         }
 
-        // TODO: controllare che baseType sia valido contro il atomicTypes at hand
-        // TODO: controllare che atomicItems in enumeration siano validi contro atomicTypes at hand
-        // TODO: controllare che i stringtype dei field descriptors siano atomicTypes esistenti e validi
-        // TODO: controllare che i default value dei field descriptors siano validi contro i loro atomicTypes
-        // TODO: controllare che i stringType di arraycontent e unioncontent siano esistenti e validi
-
         schemaItem = schema.get(rootType);
         fileItem = InstanceFileJsonParser.getItemFromObject(fileObject);
         initialized = true;

@@ -31,13 +31,14 @@ public class Facets {
     String minInclusive = null, maxInclusive = null, minExclusive = null, maxExclusive = null;
     Integer totalDigits = null, fractionDigits = null;
     Item metadata = null;
-    List<Item> enumeration = null;
+    private List<Item> enumeration = null;
     List<String> constraints = null;
     TimezoneFacet explicitTimezone = null;
     public Map<String, FieldDescriptor> objectContent = null;
     public ArrayContentDescriptor arrayContent = null;
     public UnionContentDescriptor unionContent = null;
-    Boolean closed = null;
+    private Boolean closed = null;
+    private Boolean hasEnumeration, hasDefaultValue = false;
 
     private Set<FacetTypes> definedFacets = new HashSet<>();
 
@@ -95,6 +96,7 @@ public class Facets {
             case ENUMERATION:
                 checkField(this.enumeration, "enumeration");
                 this.enumeration = getEnumerationFromObject();
+                this.hasEnumeration = true;
                 break;
             case METADATA:
                 checkField(this.metadata, "metadata");
@@ -107,8 +109,20 @@ public class Facets {
         }
     }
 
+    public Boolean hasEnumeration() {
+        return hasEnumeration;
+    }
+
+    public Boolean hasDefaultValue() {
+        return hasDefaultValue;
+    }
+
     public Set<FacetTypes> getDefinedFacets() {
         return definedFacets;
+    }
+
+    public List<Item> getEnumeration() {
+        return enumeration;
     }
 
     private static void checkField(Object key, String fieldName) {
@@ -192,7 +206,8 @@ public class Facets {
                         fieldDescriptor.setUnique(Boolean.parseBoolean(getStringFromObject()));
                         break;
                     case "default":
-                        fieldDescriptor.setDefaultValue(getStringFromObject());
+                        fieldDescriptor.setDefaultValue(getItemFromObject(object));
+                        this.hasDefaultValue = true;
                         break;
                     default:
                         throw new InvalidSchemaException(key + " is not a valid property for the field descriptor.");

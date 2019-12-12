@@ -1,10 +1,12 @@
 package org.jsound.type;
 
+import org.jsound.item.Item;
+
 public class FieldDescriptor {
     public String name;
     private TypeOrReference type;
     private Boolean required = false;
-    private String defaultValue;
+    private Item defaultValue;
     private Boolean unique = false;
 
     public void setName(String name) {
@@ -19,7 +21,7 @@ public class FieldDescriptor {
         this.required = required;
     }
 
-    public void setDefaultValue(String defaultValue) {
+    public void setDefaultValue(Item defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -43,7 +45,7 @@ public class FieldDescriptor {
         return unique;
     }
 
-    public String getDefaultValue() {
+    public Item getDefaultValue() {
         return defaultValue;
     }
 
