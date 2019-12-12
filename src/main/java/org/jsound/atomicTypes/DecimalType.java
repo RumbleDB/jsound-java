@@ -31,7 +31,6 @@ public class DecimalType extends AtomicTypeDescriptor {
 
     public DecimalType(String name, Facets facets) {
         super(ItemTypes.DECIMAL, name, facets);
-        this.baseType = this;
     }
 
     @Override

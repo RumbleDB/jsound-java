@@ -17,10 +17,10 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
 
     public ObjectTypeDescriptor(String name, Facets facets) {
         super(ItemTypes.OBJECT, name, facets);
-        this.baseType = this;
+        this.baseType = new TypeOrReference(this);
     }
 
-    public ObjectTypeDescriptor(String name, ObjectTypeDescriptor baseType, Facets facets) {
+    public ObjectTypeDescriptor(String name, TypeOrReference baseType, Facets facets) {
         super(ItemTypes.OBJECT, name, baseType, facets);
     }
 

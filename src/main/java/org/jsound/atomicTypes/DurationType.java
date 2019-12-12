@@ -22,7 +22,6 @@ public class DurationType extends AtomicTypeDescriptor {
 
     public DurationType(String name, Facets facets) {
         super(ItemTypes.DURATION, name, facets);
-        this.baseType = this;
     }
 
     DurationType(ItemTypes durationSubtype, String name, Facets facets) {

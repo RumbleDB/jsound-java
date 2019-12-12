@@ -14,9 +14,11 @@ import org.jsound.type.UnionContentDescriptor;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.jsound.cli.JSoundExecutor.object;
 import static org.jsound.cli.JSoundExecutor.schema;
@@ -37,7 +39,10 @@ public class Facets {
     public UnionContentDescriptor unionContent = null;
     Boolean closed = null;
 
+    private Set<FacetTypes> definedFacets = new HashSet<>();
+
     public void setFacet(FacetTypes facetType, JsonIterator object, Kinds kind) throws IOException {
+        definedFacets.add(facetType);
         switch (facetType) {
             case LENGTH:
                 checkField(this.length, "length");
@@ -102,6 +107,10 @@ public class Facets {
         }
     }
 
+    public Set<FacetTypes> getDefinedFacets() {
+        return definedFacets;
+    }
+
     private static void checkField(Object key, String fieldName) {
         if (key != null)
             throw new InvalidSchemaException("Field " + fieldName + " is already defined");
@@ -153,10 +162,6 @@ public class Facets {
                 break;
             case ARRAY:
                 this.setArrayContentFromObject();
-                if (this.arrayContent == null)
-                    this.arrayContent = new ArrayContentDescriptor(
-                            new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor())
-                    );
                 break;
             case UNION:
                 this.setUnionContentFromObject();
@@ -242,8 +247,7 @@ public class Facets {
                 fieldDescriptor.setType(new TypeOrReference(schema.get(fieldType)));
             else
                 fieldDescriptor.setType(new TypeOrReference(fieldType));
-        }
-        else if (!object.whatIsNext().equals(ValueType.OBJECT))
+        } else if (!object.whatIsNext().equals(ValueType.OBJECT))
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
         else
             fieldDescriptor.setType(new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor()));

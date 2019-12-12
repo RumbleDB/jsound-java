@@ -19,7 +19,6 @@ public class AnyURIType extends AtomicTypeDescriptor {
 
     public AnyURIType(String name, Facets facets) {
         super(ItemTypes.ANYURI, name, facets);
-        this.baseType = this;
     }
 
     @Override

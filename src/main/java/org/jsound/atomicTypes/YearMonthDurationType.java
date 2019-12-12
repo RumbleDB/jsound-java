@@ -16,7 +16,6 @@ public class YearMonthDurationType extends DurationType {
 
     public YearMonthDurationType(String name, Facets facets) {
         super(ItemTypes.YEARMONTHDURATION, name, facets);
-        this.baseType = this;
     }
 
     public static PeriodFormatter getFormatter() {

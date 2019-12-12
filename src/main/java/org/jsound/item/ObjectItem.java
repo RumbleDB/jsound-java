@@ -87,7 +87,6 @@ public class ObjectItem extends Item {
         throw new UnexpectedTypeException("The object does not have a corresponding schema object");
     }
 
-
     @Override
     public String getStringAnnotation() {
         boolean first = true;

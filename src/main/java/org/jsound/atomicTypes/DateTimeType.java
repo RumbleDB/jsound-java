@@ -23,7 +23,6 @@ public class DateTimeType extends AtomicTypeDescriptor {
 
     public DateTimeType(String name, Facets facets) {
         super(ItemTypes.DATETIME, name, facets);
-        this.baseType = this;
     }
 
     @Override

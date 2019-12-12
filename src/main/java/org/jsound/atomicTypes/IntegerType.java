@@ -31,7 +31,6 @@ public class IntegerType extends AtomicTypeDescriptor {
 
     public IntegerType(String name, Facets facets) {
         super(ItemTypes.INTEGER, name, facets);
-        this.baseType = this;
     }
 
     @Override

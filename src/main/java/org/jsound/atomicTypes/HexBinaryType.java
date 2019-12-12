@@ -19,7 +19,6 @@ public class HexBinaryType extends AtomicTypeDescriptor {
 
     public HexBinaryType(String name, Facets facets) {
         super(ItemTypes.HEXBINARY, name, facets);
-        this.baseType = this;
     }
 
     @Override

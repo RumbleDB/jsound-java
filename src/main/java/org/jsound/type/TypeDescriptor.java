@@ -8,14 +8,8 @@ import java.util.Set;
 public class TypeDescriptor {
     private ItemTypes type;
     private String name;
-    protected TypeDescriptor baseType;
-    private String stringBaseType;
+    public TypeOrReference baseType;
     private Facets facets;
-
-    public TypeDescriptor(String name, String stringBaseType) {
-        this.name = name;
-        this.stringBaseType = stringBaseType;
-    }
 
     TypeDescriptor(ItemTypes type, String name, Facets facets) {
         this.type = type;
@@ -23,7 +17,7 @@ public class TypeDescriptor {
         this.facets = facets;
     }
 
-    TypeDescriptor(ItemTypes type, String name, TypeDescriptor baseType, Facets facets) {
+    TypeDescriptor(ItemTypes type, String name, TypeOrReference baseType, Facets facets) {
         this(type, name, facets);
         this.baseType = baseType;
     }
@@ -113,7 +107,9 @@ public class TypeDescriptor {
     }
 
     public TypeDescriptor getBaseType() {
-        return baseType.equals(this) ? baseType : baseType.getBaseType();
+        return this.equals(baseType.getTypeDescriptor())
+            ? baseType.getTypeDescriptor()
+            : baseType.getTypeDescriptor().getBaseType();
     }
 
     public Facets getFacets() {

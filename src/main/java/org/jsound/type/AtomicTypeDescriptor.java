@@ -21,19 +21,47 @@ import org.jsound.facets.Facets;
 import org.jsound.kinds.Kinds;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
+import static org.jsound.facets.FacetTypes.EXPLICIT_TIMEZONE;
+import static org.jsound.facets.FacetTypes.FRACTION_DIGITS;
+import static org.jsound.facets.FacetTypes.LENGTH;
+import static org.jsound.facets.FacetTypes.MAX_EXCLUSIVE;
+import static org.jsound.facets.FacetTypes.MAX_INCLUSIVE;
+import static org.jsound.facets.FacetTypes.MAX_LENGTH;
+import static org.jsound.facets.FacetTypes.MIN_EXCLUSIVE;
+import static org.jsound.facets.FacetTypes.MIN_INCLUSIVE;
+import static org.jsound.facets.FacetTypes.MIN_LENGTH;
+import static org.jsound.facets.FacetTypes.TOTAL_DIGITS;
 import static org.jsound.json.SchemaFileJsonParser.createFacets;
 
 
 public class AtomicTypeDescriptor extends TypeDescriptor {
 
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
+            Arrays.asList(
+                LENGTH,
+                MIN_LENGTH,
+                MAX_LENGTH,
+                MIN_INCLUSIVE,
+                MAX_INCLUSIVE,
+                MIN_EXCLUSIVE,
+                MAX_EXCLUSIVE,
+                TOTAL_DIGITS,
+                FRACTION_DIGITS,
+                EXPLICIT_TIMEZONE
+            )
+    );
+
     protected AtomicTypeDescriptor(ItemTypes type, String name, Facets facets) {
         super(type, name, facets);
+        this.baseType = new TypeOrReference(this);
     }
 
-    public AtomicTypeDescriptor(ItemTypes type, String name, AtomicTypeDescriptor baseType, Facets facets) {
+    public AtomicTypeDescriptor(ItemTypes type, String name, TypeOrReference baseType, Facets facets) {
         super(type, name, baseType, facets);
     }
 
@@ -44,7 +72,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
 
     @Override
     public Set<FacetTypes> getAllowedFacets() {
-        return this.baseType.getAllowedFacets();
+        return this.baseType.getTypeDescriptor().getAllowedFacets();
     }
 
     public static AtomicTypeDescriptor buildAtomicType(

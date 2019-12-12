@@ -22,7 +22,6 @@ public class DoubleType extends AtomicTypeDescriptor {
 
     public DoubleType(String name, Facets facets) {
         super(ItemTypes.DOUBLE, name, facets);
-        this.baseType = this;
     }
 
     @Override

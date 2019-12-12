@@ -19,7 +19,6 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
 
     public Base64BinaryType(String name, Facets facets) {
         super(ItemTypes.BASE64BINARY, name, facets);
-        this.baseType = this;
     }
 
     @Override

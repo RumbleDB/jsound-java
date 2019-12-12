@@ -117,8 +117,7 @@ public class CompactSchemaFileJsonParser {
                 fieldDescriptor.setType(compactSchema.get(fieldType));
             else
                 fieldDescriptor.setType(parseType(fieldDescriptor.name, fieldType));
-        }
-        else if (!object.whatIsNext().equals(ValueType.OBJECT))
+        } else if (!object.whatIsNext().equals(ValueType.OBJECT))
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
         else
             fieldDescriptor.setType(getTypeFromObject(fieldDescriptor.name));

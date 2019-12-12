@@ -19,10 +19,10 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     public UnionTypeDescriptor(String name, Facets facets) {
         super(ItemTypes.VALUE, name, facets);
-        this.baseType = this;
+        this.baseType = new TypeOrReference(this);
     }
 
-    public UnionTypeDescriptor(String name, UnionTypeDescriptor baseType, Facets facets) {
+    public UnionTypeDescriptor(String name, TypeOrReference baseType, Facets facets) {
         super(ItemTypes.VALUE, name, baseType, facets);
     }
 

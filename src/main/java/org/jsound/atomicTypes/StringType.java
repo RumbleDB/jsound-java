@@ -20,7 +20,6 @@ public class StringType extends AtomicTypeDescriptor {
 
     public StringType(String name, Facets facets) {
         super(ItemTypes.STRING, name, facets);
-        this.baseType = this;
     }
 
     @Override

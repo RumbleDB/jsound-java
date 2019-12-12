@@ -1,6 +1,8 @@
 package org.jsound.type;
 
 public enum ItemTypes {
+    ATOMIC("atomic"),
+
     VALUE("value"),
 
     OBJECT("object"),

@@ -21,7 +21,6 @@ public class DayTimeDurationType extends DurationType {
 
     public DayTimeDurationType(String name, Facets facets) {
         super(ItemTypes.DAYTIMEDURATION, name, facets);
-        this.baseType = this;
     }
 
     public static PeriodFormatter getFormatter() {

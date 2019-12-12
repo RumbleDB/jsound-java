@@ -17,10 +17,10 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
 
     public ArrayTypeDescriptor(String name, Facets facets) {
         super(ItemTypes.ARRAY, name, facets);
-        this.baseType = this;
+        this.baseType = new TypeOrReference(this);
     }
 
-    public ArrayTypeDescriptor(String name, ArrayTypeDescriptor baseType, Facets facets) {
+    public ArrayTypeDescriptor(String name, TypeOrReference baseType, Facets facets) {
         super(ItemTypes.ARRAY, name, baseType, facets);
     }
 

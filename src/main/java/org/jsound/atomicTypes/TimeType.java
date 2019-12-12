@@ -23,7 +23,6 @@ public class TimeType extends AtomicTypeDescriptor {
 
     public TimeType(String name, Facets facets) {
         super(ItemTypes.TIME, name, facets);
-        this.baseType = this;
     }
 
     @Override
