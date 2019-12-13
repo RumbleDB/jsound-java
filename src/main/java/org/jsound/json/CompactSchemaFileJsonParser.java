@@ -55,12 +55,10 @@ public class CompactSchemaFileJsonParser {
     private static TypeDescriptor getType(String key) {
         TypeOrReference typeOrReference = compactSchema.get(key);
         TypeDescriptor typeDescriptor;
-        if (typeOrReference.getType() == null) {
+        if (typeOrReference.getType() == null)
             typeDescriptor = getType(typeOrReference.getStringType());
-            schema.put(key, typeDescriptor);
-            return typeDescriptor;
-        }
-        typeDescriptor = typeOrReference.getType();
+        else
+            typeDescriptor = typeOrReference.getType();
         schema.put(key, typeDescriptor);
         return typeDescriptor;
     }

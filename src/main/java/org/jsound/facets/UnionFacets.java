@@ -39,7 +39,7 @@ public class UnionFacets extends Facets {
                 else
                     unionContent.getTypes().add(new TypeOrReference(type));
             } else
-                unionContent.getTypes().add(new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor()));
+                unionContent.getTypes().add(new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor(true)));
         }
         this.unionContent = unionContent;
     }

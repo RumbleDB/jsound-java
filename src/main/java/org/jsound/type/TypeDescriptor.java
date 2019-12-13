@@ -106,7 +106,7 @@ public abstract class TypeDescriptor {
 
     public TypeDescriptor getBaseType() {
         return this.equals(baseType.getTypeDescriptor())
-            ? baseType.getTypeDescriptor()
+            ? this
             : baseType.getTypeDescriptor().getBaseType();
     }
 

@@ -49,7 +49,7 @@ public class ArrayFacets extends Facets {
             throw new InvalidSchemaException("You must specify the content atomicTypes for array.");
         if (this.content == null)
             this.content = new ArrayContentDescriptor(
-                    new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor())
+                    new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor(true))
             );
     }
 

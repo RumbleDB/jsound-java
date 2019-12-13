@@ -52,7 +52,7 @@ public class ObjectFacets extends Facets {
                             throw new InvalidSchemaException("The field descriptor " + name + " was already defined.");
                         fieldDescriptor.setName(name);
                         break;
-                    case "atomicTypes":
+                    case "type":
                         setFieldDescriptorType(fieldDescriptor);
                         break;
                     case "required":
@@ -84,7 +84,7 @@ public class ObjectFacets extends Facets {
         } else if (!object.whatIsNext().equals(ValueType.OBJECT))
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
         else
-            fieldDescriptor.setType(new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor()));
+            fieldDescriptor.setType(new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor(true)));
     }
 
     public Boolean hasDefaultValue() {

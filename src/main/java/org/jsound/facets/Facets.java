@@ -16,12 +16,12 @@ import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class Facets {
 
-    Item metadata = null;
+    private Item metadata = null;
     private List<Item> enumeration = null;
-    List<String> constraints = null;
+    private List<String> constraints = null;
     private Boolean hasEnumeration = false;
 
-    protected Set<FacetTypes> definedFacets = new HashSet<>();
+    Set<FacetTypes> definedFacets = new HashSet<>();
 
     public void setFacet(FacetTypes facetType) throws IOException {
         definedFacets.add(facetType);

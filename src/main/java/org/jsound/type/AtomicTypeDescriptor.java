@@ -81,7 +81,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
 
     @Override
     public Set<FacetTypes> getAllowedFacets() {
-        return this.baseType.getTypeDescriptor().getAllowedFacets();
+        return this.getBaseType().getAllowedFacets();
     }
 
     public static AtomicTypeDescriptor buildAtomicType(

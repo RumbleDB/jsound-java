@@ -56,7 +56,7 @@ public class SchemaFileJsonParser {
                 throw new InvalidSchemaException("Please provide an array of types");
             }
             while (object.readArray()) {
-                TypeDescriptor typeDescriptor = getTypeDescriptor();
+                TypeDescriptor typeDescriptor = getTypeDescriptor(false);
                 schema.put(typeDescriptor.getName(), typeDescriptor);
             }
             for (AtomicTypeDescriptor atomicTypeDescriptor : shouldCheckBaseType) {
@@ -120,13 +120,16 @@ public class SchemaFileJsonParser {
         return typeDescriptor;
     }
 
-    public static TypeDescriptor getTypeDescriptor() throws IOException {
+    public static TypeDescriptor getTypeDescriptor(boolean isNested) throws IOException {
         if (object.whatIsNext() != ValueType.OBJECT)
             throw new UnexpectedTypeException(object.read().toString());
 
-        if (!"name".equals(object.readObject()))
-            throw new InvalidSchemaException("Please specify the \"name\" first.");
-        String name = getStringFromObject();
+        String name = null;
+        if (!isNested) {
+            if (!"name".equals(object.readObject()))
+                throw new InvalidSchemaException("Please specify the \"name\" first.");
+            name = getStringFromObject();
+        }
 
         if (!"kind".equals(object.readObject()))
             throw new InvalidSchemaException("Please specify the \"kind\" before other properties.");
