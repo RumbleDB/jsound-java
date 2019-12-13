@@ -1,7 +1,7 @@
 package org.jsound.atomicTypes;
 
+import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
-import org.jsound.facets.Facets;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -20,7 +20,7 @@ public class DoubleType extends AtomicTypeDescriptor {
             Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE)
     );
 
-    public DoubleType(String name, Facets facets) {
+    public DoubleType(String name, AtomicFacets facets) {
         super(ItemTypes.DOUBLE, name, facets);
     }
 

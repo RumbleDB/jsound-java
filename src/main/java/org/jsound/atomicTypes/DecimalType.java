@@ -1,7 +1,7 @@
 package org.jsound.atomicTypes;
 
+import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
-import org.jsound.facets.Facets;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -29,7 +29,7 @@ public class DecimalType extends AtomicTypeDescriptor {
             )
     );
 
-    public DecimalType(String name, Facets facets) {
+    public DecimalType(String name, AtomicFacets facets) {
         super(ItemTypes.DECIMAL, name, facets);
     }
 

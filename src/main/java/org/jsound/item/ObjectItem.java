@@ -33,7 +33,7 @@ public class ObjectItem extends Item {
             return ((UnionTypeDescriptor) typeDescriptor).validate(this);
         Map<String, FieldDescriptor> fields;
         try {
-            fields = this.getObjectType(typeDescriptor).getFacets().objectContent;
+            fields = this.getObjectType(typeDescriptor).getFacets().content;
         } catch (UnexpectedTypeException e) {
             return false;
         }
@@ -54,7 +54,7 @@ public class ObjectItem extends Item {
             return ((UnionTypeDescriptor) typeDescriptor).annotate(this);
         ObjectTypeDescriptor objectType = this.getObjectType(typeDescriptor);
         TYSONObject object = new TYSONObject(typeDescriptor.getName());
-        Map<String, FieldDescriptor> fields = objectType.getFacets().objectContent;
+        Map<String, FieldDescriptor> fields = objectType.getFacets().content;
         for (String fieldName : fields.keySet()) {
             FieldDescriptor fieldDescriptor = fields.get(fieldName);
             if (_itemMap.containsKey(fieldName)) {

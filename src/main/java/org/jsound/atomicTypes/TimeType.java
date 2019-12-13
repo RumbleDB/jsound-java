@@ -1,7 +1,7 @@
 package org.jsound.atomicTypes;
 
+import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
-import org.jsound.facets.Facets;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -21,7 +21,7 @@ public class TimeType extends AtomicTypeDescriptor {
             Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE, EXPLICIT_TIMEZONE)
     );
 
-    public TimeType(String name, Facets facets) {
+    public TimeType(String name, AtomicFacets facets) {
         super(ItemTypes.TIME, name, facets);
     }
 

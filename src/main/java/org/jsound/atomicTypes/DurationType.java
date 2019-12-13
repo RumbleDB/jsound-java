@@ -1,7 +1,7 @@
 package org.jsound.atomicTypes;
 
+import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
-import org.jsound.facets.Facets;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -20,11 +20,11 @@ public class DurationType extends AtomicTypeDescriptor {
             Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE)
     );
 
-    public DurationType(String name, Facets facets) {
+    public DurationType(String name, AtomicFacets facets) {
         super(ItemTypes.DURATION, name, facets);
     }
 
-    DurationType(ItemTypes durationSubtype, String name, Facets facets) {
+    DurationType(ItemTypes durationSubtype, String name, AtomicFacets facets) {
         super(durationSubtype, name, facets);
     }
 

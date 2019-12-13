@@ -1,7 +1,7 @@
 package org.jsound.atomicTypes;
 
+import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
-import org.jsound.facets.Facets;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -17,7 +17,7 @@ public class AnyURIType extends AtomicTypeDescriptor {
 
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MIN_LENGTH, MAX_LENGTH));
 
-    public AnyURIType(String name, Facets facets) {
+    public AnyURIType(String name, AtomicFacets facets) {
         super(ItemTypes.ANYURI, name, facets);
     }
 

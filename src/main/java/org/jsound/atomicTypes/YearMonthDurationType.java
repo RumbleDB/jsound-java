@@ -2,7 +2,7 @@ package org.jsound.atomicTypes;
 
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
-import org.jsound.facets.Facets;
+import org.jsound.facets.AtomicFacets;
 import org.jsound.type.ItemTypes;
 
 public class YearMonthDurationType extends DurationType {
@@ -14,7 +14,7 @@ public class YearMonthDurationType extends DurationType {
         .appendSuffix("M")
         .toFormatter();
 
-    public YearMonthDurationType(String name, Facets facets) {
+    public YearMonthDurationType(String name, AtomicFacets facets) {
         super(ItemTypes.YEARMONTHDURATION, name, facets);
     }
 

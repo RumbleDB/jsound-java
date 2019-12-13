@@ -1,7 +1,7 @@
 package org.jsound.atomicTypes;
 
+import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
-import org.jsound.facets.Facets;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -17,7 +17,7 @@ public class HexBinaryType extends AtomicTypeDescriptor {
 
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MIN_LENGTH, MAX_LENGTH));
 
-    public HexBinaryType(String name, Facets facets) {
+    public HexBinaryType(String name, AtomicFacets facets) {
         super(ItemTypes.HEXBINARY, name, facets);
     }
 

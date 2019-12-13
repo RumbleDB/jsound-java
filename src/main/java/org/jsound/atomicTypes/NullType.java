@@ -1,7 +1,7 @@
 package org.jsound.atomicTypes;
 
+import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
-import org.jsound.facets.Facets;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class NullType extends AtomicTypeDescriptor {
 
-    public NullType(String name, Facets facets) {
+    public NullType(String name, AtomicFacets facets) {
         super(ItemTypes.NULL, name, facets);
     }
 

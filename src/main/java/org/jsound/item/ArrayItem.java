@@ -31,7 +31,7 @@ public class ArrayItem extends Item {
             return ((UnionTypeDescriptor) typeDescriptor).validate(this);
         TypeDescriptor arrayItemType;
         try {
-            arrayItemType = getArrayType(typeDescriptor).getFacets().arrayContent.getType().getTypeDescriptor();
+            arrayItemType = getArrayType(typeDescriptor).getFacets().content.getType().getTypeDescriptor();
         } catch (UnexpectedTypeException e) {
             return false;
         }
@@ -49,7 +49,7 @@ public class ArrayItem extends Item {
     public TysonItem annotateWith(TypeDescriptor typeDescriptor) {
         if (typeDescriptor.isUnionType())
             return ((UnionTypeDescriptor) typeDescriptor).annotate(this);
-        TypeDescriptor arrayItemType = getArrayType(typeDescriptor).getFacets().arrayContent.getType()
+        TypeDescriptor arrayItemType = getArrayType(typeDescriptor).getFacets().content.getType()
             .getTypeDescriptor();
         TYSONArray array = new TYSONArray(typeDescriptor.getName());
         for (Item item : _items) {
@@ -72,7 +72,7 @@ public class ArrayItem extends Item {
             objectType = (ObjectTypeDescriptor) arrayItemType;
         } else
             return true;
-        Map<String, FieldDescriptor> fields = objectType.getFacets().objectContent;
+        Map<String, FieldDescriptor> fields = objectType.getFacets().content;
         for (String fieldName : fields.keySet()) {
             if (fields.get(fieldName).isUnique()) {
                 for (Item item : _items) {

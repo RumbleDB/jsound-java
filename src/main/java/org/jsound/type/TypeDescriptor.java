@@ -5,20 +5,18 @@ import org.jsound.facets.Facets;
 
 import java.util.Set;
 
-public class TypeDescriptor {
+public abstract class TypeDescriptor {
     private ItemTypes type;
     private String name;
     public TypeOrReference baseType;
-    private Facets facets;
 
-    TypeDescriptor(ItemTypes type, String name, Facets facets) {
+    TypeDescriptor(ItemTypes type, String name) {
         this.type = type;
         this.name = name;
-        this.facets = facets;
     }
 
-    TypeDescriptor(ItemTypes type, String name, TypeOrReference baseType, Facets facets) {
-        this(type, name, facets);
+    TypeDescriptor(ItemTypes type, String name, TypeOrReference baseType) {
+        this(type, name);
         this.baseType = baseType;
     }
 
@@ -112,11 +110,7 @@ public class TypeDescriptor {
             : baseType.getTypeDescriptor().getBaseType();
     }
 
-    public Facets getFacets() {
-        return facets;
-    }
+    public abstract Facets getFacets();
 
-    public Set<FacetTypes> getAllowedFacets() {
-        return null;
-    }
+    public abstract Set<FacetTypes> getAllowedFacets();
 }
