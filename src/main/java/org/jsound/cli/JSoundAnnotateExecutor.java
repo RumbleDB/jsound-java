@@ -13,7 +13,7 @@ class JSoundAnnotateExecutor extends JSoundExecutor {
         try (FileWriter file = new FileWriter(outputPath)) {
             if (!JSoundValidateExecutor.validate(schemaPath, filePath, rootType, compact))
                 return false;
-            TYSONObject rootObject = (TYSONObject) fileItem.annotateWith(schemaItem);
+            TYSONObject rootObject = (TYSONObject) schemaItem.annotate(fileItem);
             rootObject.setTypeName(JSoundRuntimeConfiguration.getInstance().getRootType());
             file.write(rootObject.toTYSONString());
         } catch (IOException e) {

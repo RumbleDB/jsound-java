@@ -1,10 +1,13 @@
 package org.jsound.atomicTypes;
 
+import org.jsound.atomicItems.AnyURIItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
+import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +22,36 @@ public class AnyURIType extends AtomicTypeDescriptor {
 
     public AnyURIType(String name, AtomicFacets facets) {
         super(ItemTypes.ANYURI, name, facets);
+    }
+
+    public AnyURIType(AtomicTypeDescriptor typeDescriptor) {
+        super(ItemTypes.ANYURI, typeDescriptor.getName(), typeDescriptor.baseType, typeDescriptor.getFacets());
+    }
+
+    @Override
+    public boolean validate(Item item) {
+        URI uri;
+        try {
+            uri = URI.create(item.getStringValue());
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+        if (this.getFacets() == null)
+            return true;
+        item = new AnyURIItem(uri);
+        if (!validateLengthFacets(item))
+            return false;
+        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+    }
+
+    @Override
+    protected boolean validateEnumeration(Item item) throws IllegalArgumentException {
+        URI uri = item.getAnyURIValue();
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            if (uri.equals(URI.create(enumItem.getStringValue())))
+                return true;
+        }
+        return false;
     }
 
     @Override

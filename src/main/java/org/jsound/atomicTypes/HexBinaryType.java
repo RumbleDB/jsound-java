@@ -1,7 +1,11 @@
 package org.jsound.atomicTypes;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
+import org.jsound.atomicItems.HexBinaryItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
+import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -19,6 +23,36 @@ public class HexBinaryType extends AtomicTypeDescriptor {
 
     public HexBinaryType(String name, AtomicFacets facets) {
         super(ItemTypes.HEXBINARY, name, facets);
+    }
+
+    public HexBinaryType(AtomicTypeDescriptor typeDescriptor) {
+        super(ItemTypes.HEXBINARY, typeDescriptor.getName(), typeDescriptor.baseType, typeDescriptor.getFacets());
+    }
+
+    @Override
+    public boolean validate(Item item) {
+        byte[] hexValue;
+        try {
+            hexValue = Hex.decodeHex(item.getStringValue().toCharArray());
+        } catch (DecoderException e) {
+            return false;
+        }
+        if (this.getFacets() == null)
+            return true;
+        item = new HexBinaryItem(hexValue, item.getStringValue());
+        if (!validateLengthFacets(item))
+            return false;
+        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+    }
+
+    @Override
+    protected boolean validateEnumeration(Item item) throws DecoderException {
+        byte[] hexValue = item.getBinaryValue();
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            if (Arrays.equals(hexValue, Hex.decodeHex(enumItem.getStringValue().toCharArray())))
+                return true;
+        }
+        return false;
     }
 
     @Override

@@ -10,11 +10,13 @@ import java.io.IOException;
 
 import static org.jsound.cli.JSoundExecutor.object;
 import static org.jsound.cli.JSoundExecutor.schema;
+import static org.jsound.facets.AtomicFacets.getIntegerFromObject;
 import static org.jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static org.jsound.json.CompactSchemaFileJsonParser.getTypeFromObject;
 
 public class ArrayFacets extends Facets {
     public ArrayContentDescriptor content = null;
+    public Integer minLength = null, maxLength = null;
 
     @Override
     public void setFacet(FacetTypes facetType) throws IOException {
@@ -23,6 +25,14 @@ public class ArrayFacets extends Facets {
             case CONTENT:
                 checkField(this.content, "arrayContent");
                 this.setArrayContentFromObject();
+                break;
+            case MIN_LENGTH:
+                checkField(this.minLength, "minLength");
+                this.minLength = getIntegerFromObject();
+                break;
+            case MAX_LENGTH:
+                checkField(this.maxLength, "maxLength");
+                this.maxLength = getIntegerFromObject();
                 break;
             case ENUMERATION:
             case METADATA:

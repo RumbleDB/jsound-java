@@ -1,7 +1,6 @@
 package org.jsound.atomicItems;
 
 import org.jsound.item.AtomicItem;
-import org.jsound.type.TypeDescriptor;
 
 
 public class BooleanItem extends AtomicItem {
@@ -13,18 +12,18 @@ public class BooleanItem extends AtomicItem {
     }
 
     @Override
-    public Boolean getValue() {
-        return this._value;
+    public boolean isBoolean() {
+        return true;
     }
 
     @Override
-    public boolean isValidAgainst(TypeDescriptor typeDescriptor) {
-        return typeDescriptor.isBooleanType() || super.isValidAgainst(typeDescriptor);
+    public String getStringValue() {
+        return Boolean.toString(this._value);
     }
 
     @Override
     public String getStringAnnotation() {
-        return Boolean.toString(this._value);
+        return this.getStringValue();
     }
 
     @Override

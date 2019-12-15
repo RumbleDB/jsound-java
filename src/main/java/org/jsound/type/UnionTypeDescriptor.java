@@ -42,25 +42,27 @@ public class UnionTypeDescriptor extends TypeDescriptor {
         return true;
     }
 
+    @Override
     public boolean validate(Item item) {
         TypeDescriptor typeDescriptor;
         for (TypeOrReference typeOrReference : this.getFacets().unionContent.getTypes()) {
             typeDescriptor = typeOrReference.getTypeDescriptor();
-            if (item.isValidAgainst(typeDescriptor))
+            if (typeDescriptor.validate(item))
                 return true;
         }
         return false;
     }
 
+    @Override
     public TysonItem annotate(Item item) {
         TypeDescriptor typeDescriptor;
         for (TypeOrReference typeOrReference : this.getFacets().unionContent.getTypes()) {
             typeDescriptor = typeOrReference.getTypeDescriptor();
-            if (item.isValidAgainst(typeDescriptor))
+            if (typeDescriptor.validate(item))
                 return new TYSONValue(typeDescriptor.getName(), item.getStringAnnotation());
         }
         throw new InvalidSchemaException(
-                item.getStringAnnotation() + " cannot is not valid against any type of union " + this.getName()
+                item.getStringValue() + " cannot is not valid against any type of union " + this.getName()
         );
     }
 

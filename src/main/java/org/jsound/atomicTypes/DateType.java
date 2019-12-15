@@ -1,10 +1,15 @@
 package org.jsound.atomicTypes;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 import org.joda.time.format.DateTimeParser;
+import org.jsound.atomicItems.DateItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
+import org.jsound.facets.TimezoneFacet;
+import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -37,13 +42,88 @@ public class DateType extends AtomicTypeDescriptor {
         super(ItemTypes.DATE, name, facets);
     }
 
+    public DateType(AtomicTypeDescriptor typeDescriptor) {
+        super(ItemTypes.DATE, typeDescriptor.getName(), typeDescriptor.baseType, typeDescriptor.getFacets());
+    }
+
+    @Override
+    public boolean validate(Item item) {
+        DateTime date;
+        try {
+            date = getDateFromItem(item);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+        if (this.getFacets() == null)
+            return true;
+        item = new DateItem(date);
+        if (!validateBoundariesFacets(item))
+            return false;
+        if (this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE) && !checkExplicitTimezone(item))
+            return false;
+
+        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+    }
+
+    private boolean checkExplicitTimezone(Item item) {
+        DateTime date = DateTime.parse(
+            item.getStringValue(),
+            _formatter
+        );
+        return (item.getStringValue().endsWith("Z")
+            || date.getZone() != DateTimeZone.getDefault()
+            || !this.getFacets().explicitTimezone.equals(TimezoneFacet.REQUIRED))
+            && ((!item.getStringValue().endsWith("Z") && date.getZone() == DateTimeZone.getDefault())
+                || !this.getFacets().explicitTimezone.equals(TimezoneFacet.PROHIBITED));
+    }
+
+    @Override
+    protected boolean validateMinInclusive(Item item) {
+        return subtractDate(item.getDateTime(), this.getFacets().minInclusive) >= 0;
+    }
+
+    @Override
+    protected boolean validateMinExclusive(Item item) {
+        return subtractDate(item.getDateTime(), this.getFacets().minExclusive) > 0;
+    }
+
+    @Override
+    protected boolean validateMaxInclusive(Item item) {
+        return subtractDate(item.getDateTime(), this.getFacets().maxInclusive) <= 0;
+    }
+
+    @Override
+    protected boolean validateMaxExclusive(Item item) {
+        return subtractDate(item.getDateTime(), this.getFacets().maxExclusive) < 0;
+    }
+
+    @Override
+    protected boolean validateEnumeration(Item item) {
+        DateTime date = getDateFromItem(item);
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            if (date.equals(getDateFromItem(enumItem)))
+                return true;
+        }
+        return false;
+    }
+
+    private long subtractDate(DateTime itemDate, Item constraintItem) {
+        return itemDate.getMillis() - getDateFromItem(constraintItem).getMillis();
+    }
+
+    private DateTime getDateFromItem(Item item) {
+        DateTime date = DateTime.parse(
+            item.getStringValue(),
+            _formatter
+        );
+        if (!item.getStringValue().endsWith("Z") && date.getZone() == DateTimeZone.getDefault())
+            return date.withZoneRetainFields(DateTimeZone.UTC);
+        return date;
+    }
+
     @Override
     public Set<FacetTypes> getAllowedFacets() {
         return _allowedFacets;
-    }
-
-    public static DateTimeFormatter getFormatter() {
-        return _formatter;
     }
 
     @Override

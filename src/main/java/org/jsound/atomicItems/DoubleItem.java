@@ -1,7 +1,6 @@
 package org.jsound.atomicItems;
 
 import org.jsound.item.AtomicItem;
-import org.jsound.type.TypeDescriptor;
 
 public class DoubleItem extends AtomicItem {
 
@@ -12,18 +11,23 @@ public class DoubleItem extends AtomicItem {
     }
 
     @Override
-    public Double getValue() {
-        return this._value;
+    public boolean isDouble() {
+        return true;
     }
 
     @Override
-    public boolean isValidAgainst(TypeDescriptor typeDescriptor) {
-        return typeDescriptor.isDoubleType() || super.isValidAgainst(typeDescriptor);
+    public Double getDoubleValue() {
+        return _value;
+    }
+
+    @Override
+    public String getStringValue() {
+        return (!this._value.isInfinite() && !this._value.isNaN()) ? this._value.toString() : "null";
     }
 
     @Override
     public String getStringAnnotation() {
-        return (!this._value.isInfinite() && !this._value.isNaN()) ? this._value.toString() : "null";
+        return this.getStringValue();
     }
 
     @Override

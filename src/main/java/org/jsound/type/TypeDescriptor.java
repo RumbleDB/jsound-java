@@ -2,6 +2,8 @@ package org.jsound.type;
 
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
+import org.jsound.item.Item;
+import org.tyson.TysonItem;
 
 import java.util.Set;
 
@@ -104,6 +106,10 @@ public abstract class TypeDescriptor {
         return type;
     }
 
+    public void setType(ItemTypes type) {
+        this.type = type;
+    }
+
     public TypeDescriptor getBaseType() {
         return this.equals(baseType.getTypeDescriptor())
             ? this
@@ -113,4 +119,8 @@ public abstract class TypeDescriptor {
     public abstract Facets getFacets();
 
     public abstract Set<FacetTypes> getAllowedFacets();
+
+    public abstract boolean validate(Item item);
+
+    public abstract TysonItem annotate(Item item);
 }

@@ -1,8 +1,12 @@
 package org.jsound.atomicTypes;
 
+import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+import org.jsound.atomicItems.DayTimeDurationItem;
 import org.jsound.facets.AtomicFacets;
+import org.jsound.item.Item;
+import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
 public class DayTimeDurationType extends DurationType {
@@ -23,7 +27,28 @@ public class DayTimeDurationType extends DurationType {
         super(ItemTypes.DAYTIMEDURATION, name, facets);
     }
 
-    public static PeriodFormatter getFormatter() {
+    public DayTimeDurationType(AtomicTypeDescriptor typeDescriptor) {
+        super(ItemTypes.DAYTIMEDURATION, typeDescriptor);
+    }
+
+    @Override
+    public boolean validate(Item item) {
+        Period period;
+        try {
+            period = getPeriodFromItem(item);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+        if (this.getFacets() == null)
+            return true;
+        item = new DayTimeDurationItem(period);
+        if (!validateBoundariesFacets(item))
+            return false;
+        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+    }
+
+    @Override
+    protected PeriodFormatter getPeriodFormatter() {
         return _formatter;
     }
 

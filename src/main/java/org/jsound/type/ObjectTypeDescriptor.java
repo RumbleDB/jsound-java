@@ -3,6 +3,11 @@ package org.jsound.type;
 import jsound.exceptions.InvalidSchemaException;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.ObjectFacets;
+import org.jsound.item.Item;
+import org.jsound.item.ObjectItem;
+import org.tyson.TYSONObject;
+import org.tyson.TYSONValue;
+import org.tyson.TysonItem;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -39,6 +44,70 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     @Override
     public Set<FacetTypes> getAllowedFacets() {
         return _allowedFacets;
+    }
+
+    @Override
+    public boolean validate(Item item) {
+        if (!item.isObject())
+            return false;
+        ObjectItem objectItem;
+        try {
+            objectItem = (ObjectItem) item;
+        } catch (ClassCastException e) {
+            return false;
+        }
+        for (String fieldName : this.getFacets().content.keySet()) {
+            if (objectItem.getItemMap().containsKey(fieldName)) {
+                if (
+                    !this.getFacets().content.get(fieldName)
+                        .getType()
+                        .getTypeDescriptor()
+                        .validate(objectItem.getItemMap().get(fieldName))
+                )
+                    return false;
+            } else if (
+                this.getFacets().content.get(fieldName).isRequired()
+                    && this.getFacets().content.get(fieldName).getDefaultValue() == null
+            ) {
+                return false;
+            }
+        }
+        return this.baseType.getTypeDescriptor().equals(this) || this.baseType.getTypeDescriptor().validate(item);
+    }
+
+    @Override
+    public TysonItem annotate(Item item) {
+        ObjectItem objectItem;
+        try {
+            objectItem = (ObjectItem) item;
+        } catch (ClassCastException e) {
+            throw new InvalidSchemaException("Annotation not possible. Need an object.");
+        }
+
+        TYSONObject object = new TYSONObject(this.getName());
+        for (String fieldName : this.getFacets().content.keySet()) {
+            FieldDescriptor fieldDescriptor = this.getFacets().content.get(fieldName);
+            if (objectItem.getItemMap().containsKey(fieldName)) {
+                object.put(
+                    fieldName,
+                    fieldDescriptor.getType().getTypeDescriptor().annotate(objectItem.getItemMap().get(fieldName))
+                );
+            } else if (fieldDescriptor.getDefaultValue() != null) {
+                object.put(
+                    fieldName,
+                    new TYSONValue(
+                            fieldDescriptor.getName(),
+                            fieldDescriptor.getDefaultValueAnnotation()
+                    )
+                );
+            }
+        }
+        for (String key : objectItem.getItemMap().keySet()) {
+            if (!this.getFacets().content.containsKey(key)) {
+                object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key).getStringValue()));
+            }
+        }
+        return object;
     }
 
     @Override

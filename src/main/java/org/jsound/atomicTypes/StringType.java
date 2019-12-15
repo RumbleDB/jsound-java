@@ -2,6 +2,7 @@ package org.jsound.atomicTypes;
 
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
+import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -20,6 +21,21 @@ public class StringType extends AtomicTypeDescriptor {
 
     public StringType(String name, AtomicFacets facets) {
         super(ItemTypes.STRING, name, facets);
+    }
+
+    public StringType(AtomicTypeDescriptor typeDescriptor) {
+        super(ItemTypes.STRING, typeDescriptor.getName(), typeDescriptor.baseType, typeDescriptor.getFacets());
+    }
+
+    @Override
+    public boolean validate(Item item) {
+        if (!item.isString())
+            return false;
+        if (this.getFacets() == null)
+            return true;
+        if (!validateLengthFacets(item))
+            return false;
+        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
     }
 
     @Override

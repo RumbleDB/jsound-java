@@ -2,16 +2,18 @@ package org.jsound.facets;
 
 import com.jsoniter.ValueType;
 import jsound.exceptions.UnexpectedTypeException;
+import org.jsound.item.Item;
 
 import java.io.IOException;
 
 import static org.jsound.cli.JSoundExecutor.object;
+import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class AtomicFacets extends Facets {
-    private Integer length = null, minLength = null, maxLength = null;
-    private String minInclusive = null, maxInclusive = null, minExclusive = null, maxExclusive = null;
-    private Integer totalDigits = null, fractionDigits = null;
-    private TimezoneFacet explicitTimezone = null;
+    public Integer length = null, minLength = null, maxLength = null;
+    public Item minInclusive = null, maxInclusive = null, minExclusive = null, maxExclusive = null;
+    public Integer totalDigits = null, fractionDigits = null;
+    public TimezoneFacet explicitTimezone = null;
 
     @Override
     public void setFacet(FacetTypes facetType) throws IOException {
@@ -22,28 +24,28 @@ public class AtomicFacets extends Facets {
                 this.length = getIntegerFromObject();
                 break;
             case MIN_LENGTH:
-                checkField(this.minLength, "maxLength");
+                checkField(this.minLength, "minLength");
                 this.minLength = getIntegerFromObject();
                 break;
             case MAX_LENGTH:
-                checkField(this.maxLength, "minLength");
+                checkField(this.maxLength, "maxLength");
                 this.maxLength = getIntegerFromObject();
                 break;
             case MIN_INCLUSIVE:
                 checkField(this.minInclusive, "minInclusive");
-                this.minInclusive = getStringFromObject();
+                this.minInclusive = getItemFromObject(object);
                 break;
             case MAX_INCLUSIVE:
                 checkField(this.maxInclusive, "maxInclusive");
-                this.maxInclusive = getStringFromObject();
+                this.maxInclusive = getItemFromObject(object);
                 break;
             case MIN_EXCLUSIVE:
                 checkField(this.minExclusive, "minExclusive");
-                this.minExclusive = getStringFromObject();
+                this.minExclusive = getItemFromObject(object);
                 break;
             case MAX_EXCLUSIVE:
                 checkField(this.maxExclusive, "maxExclusive");
-                this.maxExclusive = getStringFromObject();
+                this.maxExclusive = getItemFromObject(object);
                 break;
             case TOTAL_DIGITS:
                 checkField(this.totalDigits, "totalDigits");

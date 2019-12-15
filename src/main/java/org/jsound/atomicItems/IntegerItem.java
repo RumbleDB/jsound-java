@@ -1,7 +1,8 @@
 package org.jsound.atomicItems;
 
 import org.jsound.item.AtomicItem;
-import org.jsound.type.TypeDescriptor;
+
+import java.math.BigDecimal;
 
 public class IntegerItem extends AtomicItem {
 
@@ -12,21 +13,28 @@ public class IntegerItem extends AtomicItem {
     }
 
     @Override
-    public Integer getValue() {
-        return this._value;
+    public boolean isInteger() {
+        return true;
     }
 
     @Override
-    public boolean isValidAgainst(TypeDescriptor typeDescriptor) {
-        return typeDescriptor.isIntegerType()
-            || typeDescriptor.isDecimalType()
-            || typeDescriptor.isDoubleType()
-            || super.isValidAgainst(typeDescriptor);
+    public Integer getIntegerValue() {
+        return _value;
+    }
+
+    @Override
+    public BigDecimal castToDecimalValue() {
+        return BigDecimal.valueOf(this._value);
+    }
+
+    @Override
+    public String getStringValue() {
+        return this._value.toString();
     }
 
     @Override
     public String getStringAnnotation() {
-        return this._value.toString();
+        return this.getStringValue();
     }
 
     @Override

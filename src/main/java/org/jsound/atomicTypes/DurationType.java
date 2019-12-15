@@ -1,7 +1,13 @@
 package org.jsound.atomicTypes;
 
+import org.joda.time.Instant;
+import org.joda.time.Period;
+import org.joda.time.format.ISOPeriodFormat;
+import org.joda.time.format.PeriodFormatter;
+import org.jsound.atomicItems.DurationItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
+import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -24,8 +30,16 @@ public class DurationType extends AtomicTypeDescriptor {
         super(ItemTypes.DURATION, name, facets);
     }
 
+    public DurationType(AtomicTypeDescriptor typeDescriptor) {
+        super(ItemTypes.DURATION, typeDescriptor.getName(), typeDescriptor.baseType, typeDescriptor.getFacets());
+    }
+
     DurationType(ItemTypes durationSubtype, String name, AtomicFacets facets) {
         super(durationSubtype, name, facets);
+    }
+
+    DurationType(ItemTypes durationSubtype, AtomicTypeDescriptor typeDescriptor) {
+        super(durationSubtype, typeDescriptor.getName(), typeDescriptor.baseType, typeDescriptor.getFacets());
     }
 
     @Override
@@ -42,5 +56,64 @@ public class DurationType extends AtomicTypeDescriptor {
     @Override
     public boolean isDurationType() {
         return true;
+    }
+
+    @Override
+    public boolean validate(Item item) {
+        Period period;
+        try {
+            period = getPeriodFromItem(item);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+        if (this.getFacets() == null)
+            return true;
+        item = new DurationItem(period);
+        if (!validateBoundariesFacets(item))
+            return false;
+        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+    }
+
+    @Override
+    protected boolean validateEnumeration(Item item) {
+        Period period = getPeriodFromItem(item);
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            if (period.equals(getPeriodFromItem(enumItem)))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean validateMinInclusive(Item item) {
+        return subtractPeriods(item.getDuration(), this.getFacets().minInclusive) >= 0;
+    }
+
+    @Override
+    protected boolean validateMinExclusive(Item item) {
+        return subtractPeriods(item.getDuration(), this.getFacets().minExclusive) > 0;
+    }
+
+    @Override
+    protected boolean validateMaxInclusive(Item item) {
+        return subtractPeriods(item.getDuration(), this.getFacets().maxInclusive) <= 0;
+    }
+
+    @Override
+    protected boolean validateMaxExclusive(Item item) {
+        return subtractPeriods(item.getDuration(), this.getFacets().maxExclusive) < 0;
+    }
+
+    private long subtractPeriods(Period itemPeriod, Item constraintItem) {
+        return itemPeriod.minus(getPeriodFromItem(constraintItem)).toDurationFrom(Instant.now()).getMillis();
+    }
+
+    protected Period getPeriodFromItem(Item item) {
+        Period period = Period.parse(getPositivePeriod(item.getStringValue()), this.getPeriodFormatter());
+        return item.getStringValue().startsWith("-") ? period.negated() : period;
+    }
+
+    protected PeriodFormatter getPeriodFormatter() {
+        return ISOPeriodFormat.standard();
     }
 }

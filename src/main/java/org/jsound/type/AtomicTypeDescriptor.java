@@ -18,6 +18,9 @@ import org.jsound.atomicTypes.TimeType;
 import org.jsound.atomicTypes.YearMonthDurationType;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
+import org.jsound.item.Item;
+import org.tyson.TYSONValue;
+import org.tyson.TysonItem;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -82,6 +85,16 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     @Override
     public Set<FacetTypes> getAllowedFacets() {
         return this.getBaseType().getAllowedFacets();
+    }
+
+    @Override
+    public boolean validate(Item item) {
+        return false;
+    }
+
+    @Override
+    public TysonItem annotate(Item item) {
+        return new TYSONValue(this.getName(), item.getStringAnnotation());
     }
 
     public static AtomicTypeDescriptor buildAtomicType(
@@ -174,5 +187,106 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
 
     public static AtomicFacets createFacets() throws IOException {
         return createFacets(_allowedFacets);
+    }
+
+    protected boolean validateLengthFacets(Item item) {
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case LENGTH:
+                    if (item.getStringValue().length() != this.getFacets().length)
+                        return false;
+                    break;
+                case MIN_LENGTH:
+                    if (item.getStringValue().length() < this.getFacets().minLength)
+                        return false;
+                    break;
+                case MAX_LENGTH:
+                    if (item.getStringValue().length() > this.getFacets().maxLength)
+                        return false;
+                    break;
+                case ENUMERATION:
+                    try {
+                        if (!validateEnumeration(item))
+                            return false;
+                    } catch (Exception e) {
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return true;
+    }
+
+    protected boolean validateBoundariesFacets(Item item) {
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case MIN_INCLUSIVE:
+                    if (!validateMinInclusive(item))
+                        return false;
+                    break;
+                case MIN_EXCLUSIVE:
+                    if (!validateMinExclusive(item))
+                        return false;
+                    break;
+                case MAX_INCLUSIVE:
+                    if (!validateMaxInclusive(item))
+                        return false;
+                    break;
+                case MAX_EXCLUSIVE:
+                    if (!validateMaxExclusive(item))
+                        return false;
+                    break;
+                case ENUMERATION:
+                    try {
+                        if (!validateEnumeration(item))
+                            return false;
+                    } catch (Exception e) {
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return true;
+    }
+
+    protected boolean validateDigitsFacets(Item item) {
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case TOTAL_DIGITS:
+                    if (item.castToDecimalValue().precision() > this.getFacets().totalDigits)
+                        return false;
+                    break;
+                case FRACTION_DIGITS:
+                    if (item.castToDecimalValue().scale() > this.getFacets().fractionDigits)
+                        return false;
+                    break;
+            }
+        }
+        return true;
+    }
+
+    protected boolean validateMinInclusive(Item item) {
+        return false;
+    }
+
+    protected boolean validateMinExclusive(Item item) {
+        return false;
+    }
+
+    protected boolean validateMaxInclusive(Item item) {
+        return false;
+    }
+
+    protected boolean validateMaxExclusive(Item item) {
+        return false;
+    }
+
+    protected boolean validateEnumeration(Item item) throws Exception {
+        String string = item.getStringValue();
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            if (string.equals(enumItem.getStringValue()))
+                return true;
+        }
+        return false;
     }
 }

@@ -1,13 +1,13 @@
 package org.jsound.item;
 
-import org.jsound.type.TypeDescriptor;
-import org.tyson.TysonItem;
+import jsound.exceptions.UnexpectedTypeException;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+
+import java.math.BigDecimal;
+import java.net.URI;
 
 public abstract class Item {
-
-    public abstract boolean isValidAgainst(TypeDescriptor typeDescriptor);
-
-    public abstract TysonItem annotateWith(TypeDescriptor typeDescriptor);
 
     public boolean isString() {
         return false;
@@ -41,5 +41,43 @@ public abstract class Item {
         return false;
     }
 
-    public abstract String getStringAnnotation();
+    public Integer getIntegerValue() {
+        throw new UnexpectedTypeException(this.getStringValue() + " does not have an integer.");
+    }
+
+    public BigDecimal castToDecimalValue() {
+        throw new UnexpectedTypeException(this.getStringValue() + " cannot be cast to decimal.");
+    }
+
+    public BigDecimal getDecimalValue() {
+        throw new UnexpectedTypeException(this.getStringValue() + " does not have a decimal.");
+    }
+
+    public Double getDoubleValue() {
+        throw new UnexpectedTypeException(this.getStringValue() + " does not have a double.");
+    }
+
+    public String getStringValue() {
+        return null;
+    }
+
+    public DateTime getDateTime() {
+        throw new UnexpectedTypeException(this.getStringValue() + " does not have a dateTime.");
+    }
+
+    public URI getAnyURIValue() {
+        throw new UnexpectedTypeException(this.getStringValue() + " does not have a URI.");
+    }
+
+    public byte[] getBinaryValue() {
+        throw new UnexpectedTypeException(this.getStringValue() + " does not have a binary value.");
+    }
+
+    public Period getDuration() {
+        throw new UnexpectedTypeException(this.getStringValue() + " does not have a period.");
+    }
+
+    public String getStringAnnotation() {
+        return "\"" + this.getStringValue() + "\"";
+    }
 }
