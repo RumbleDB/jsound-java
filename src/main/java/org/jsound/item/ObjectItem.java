@@ -1,5 +1,7 @@
 package org.jsound.item;
 
+import org.tyson.TYSONObject;
+
 import java.util.Map;
 
 public class ObjectItem extends Item {
@@ -23,14 +25,17 @@ public class ObjectItem extends Item {
         boolean first = true;
         StringBuilder sb = new StringBuilder();
         sb.append('{');
+        TYSONObject.newLineIncreaseCounter(sb);
         for (String key : _itemMap.keySet()) {
             if (first) {
                 first = false;
             } else {
                 sb.append(", ");
+                TYSONObject.newLine(sb);
             }
             sb.append("\"").append(key).append("\"").append(": ").append(_itemMap.get(key).getStringAnnotation());
         }
+        TYSONObject.newLineDecreaseCounter(sb);
         sb.append('}');
         return sb.toString();
     }

@@ -19,12 +19,14 @@ public class TYSONArray extends ArrayList<TysonItem> implements TysonItem {
             StringBuilder sb = new StringBuilder();
             Iterator<TysonItem> iterator = list.iterator();
             sb.append("(\"").append(list.typeName).append("\") ").append('[');
+            TYSONObject.newLineIncreaseCounter(sb);
 
             while (iterator.hasNext()) {
                 if (first) {
                     first = false;
                 } else {
                     sb.append(", ");
+                    TYSONObject.newLine(sb);
                 }
 
                 TysonItem value = iterator.next();
@@ -35,6 +37,7 @@ public class TYSONArray extends ArrayList<TysonItem> implements TysonItem {
                 }
             }
 
+            TYSONObject.newLineDecreaseCounter(sb);
             sb.append(']');
             return sb.toString();
         }

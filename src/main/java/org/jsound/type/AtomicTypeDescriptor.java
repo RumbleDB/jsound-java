@@ -94,7 +94,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
 
     @Override
     public TysonItem annotate(Item item) {
-        return new TYSONValue(this.getName(), item.getStringAnnotation());
+        return new TYSONValue(this.getName(), item);
     }
 
     public static AtomicTypeDescriptor buildAtomicType(

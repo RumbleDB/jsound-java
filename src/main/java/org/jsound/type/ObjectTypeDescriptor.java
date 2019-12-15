@@ -97,14 +97,14 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                     fieldName,
                     new TYSONValue(
                             fieldDescriptor.getName(),
-                            fieldDescriptor.getDefaultValueAnnotation()
+                            fieldDescriptor.getDefaultValue()
                     )
                 );
             }
         }
         for (String key : objectItem.getItemMap().keySet()) {
             if (!this.getFacets().content.containsKey(key)) {
-                object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key).getStringValue()));
+                object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key)));
             }
         }
         return object;

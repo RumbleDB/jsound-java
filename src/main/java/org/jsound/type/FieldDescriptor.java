@@ -48,8 +48,4 @@ public class FieldDescriptor {
     public Item getDefaultValue() {
         return defaultValue;
     }
-
-    public String getDefaultValueAnnotation() {
-        return "\"" + this.defaultValue + "\"";
-    }
 }

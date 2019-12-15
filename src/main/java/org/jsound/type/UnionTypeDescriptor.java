@@ -59,7 +59,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
         for (TypeOrReference typeOrReference : this.getFacets().unionContent.getTypes()) {
             typeDescriptor = typeOrReference.getTypeDescriptor();
             if (typeDescriptor.validate(item))
-                return new TYSONValue(typeDescriptor.getName(), item.getStringAnnotation());
+                return new TYSONValue(typeDescriptor.getName(), item);
         }
         throw new InvalidSchemaException(
                 item.getStringValue() + " cannot is not valid against any type of union " + this.getName()

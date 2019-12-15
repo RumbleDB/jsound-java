@@ -111,10 +111,10 @@ public class CompactSchemaFileJsonParser {
 
     private static void setFieldDescriptorType(FieldDescriptor fieldDescriptor) throws IOException {
         if (object.whatIsNext().equals(ValueType.STRING)) {
-            String fieldType = object.readString();
-            if (fieldType.contains("=")) {
-                fieldType = fieldType.split("=")[0];
-                fieldDescriptor.setDefaultValue(ItemFactory.getInstance().createStringItem(fieldType.split("=")[1]));
+            String fieldValue = object.readString();
+            String fieldType = fieldValue.split("=")[0];
+            if (fieldValue.contains("=")) {
+                fieldDescriptor.setDefaultValue(ItemFactory.getInstance().createStringItem(fieldValue.split("=")[1]));
             }
             if (compactSchema.containsKey(fieldType))
                 fieldDescriptor.setType(compactSchema.get(fieldType));
