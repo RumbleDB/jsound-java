@@ -7,14 +7,11 @@ import org.jsound.item.Item;
 import org.tyson.TYSONValue;
 import org.tyson.TysonItem;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.jsound.cli.JSoundExecutor.object;
 import static org.jsound.facets.FacetTypes.CONTENT;
-import static org.jsound.json.SchemaFileJsonParser.commonFacets;
 
 public class UnionTypeDescriptor extends TypeDescriptor {
 
@@ -69,24 +66,5 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     @Override
     public UnionFacets getFacets() {
         return facets;
-    }
-
-    public static UnionFacets createFacets(UnionFacets unionFacets) throws IOException {
-        String key;
-        while ((key = object.readObject()) != null) {
-            try {
-                FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
-                if (!(_allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
-                    throw new InvalidSchemaException("Invalid facet " + key + ".");
-                unionFacets.setFacet(facetTypes);
-            } catch (IllegalArgumentException e) {
-                throw new InvalidSchemaException("Invalid facet " + key + ".");
-            }
-        }
-        return unionFacets;
-    }
-
-    public static UnionFacets createFacets() throws IOException {
-        return createFacets(new UnionFacets());
     }
 }

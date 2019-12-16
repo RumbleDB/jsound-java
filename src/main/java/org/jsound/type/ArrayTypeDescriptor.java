@@ -8,7 +8,6 @@ import org.jsound.item.Item;
 import org.tyson.TYSONArray;
 import org.tyson.TysonItem;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,11 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.jsound.cli.JSoundExecutor.object;
 import static org.jsound.facets.FacetTypes.CONTENT;
 import static org.jsound.facets.FacetTypes.MAX_LENGTH;
 import static org.jsound.facets.FacetTypes.MIN_LENGTH;
-import static org.jsound.json.SchemaFileJsonParser.commonFacets;
 
 public class ArrayTypeDescriptor extends TypeDescriptor {
 
@@ -109,25 +106,6 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     @Override
     public ArrayFacets getFacets() {
         return facets;
-    }
-
-    public static ArrayFacets createFacets(ArrayFacets facets) throws IOException {
-        String key;
-        while ((key = object.readObject()) != null) {
-            try {
-                FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
-                if (!(_allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
-                    throw new InvalidSchemaException("Invalid facet " + key + ".");
-                facets.setFacet(facetTypes);
-            } catch (IllegalArgumentException e) {
-                throw new InvalidSchemaException("Invalid facet " + key + ".");
-            }
-        }
-        return facets;
-    }
-
-    public static ArrayFacets createFacets() throws IOException {
-        return createFacets(new ArrayFacets());
     }
 
     private boolean isUniqueSatisfied(List<Item> arrayItems) {

@@ -20,7 +20,9 @@ import org.jsound.atomicTypes.StringType;
 import org.jsound.atomicTypes.TimeType;
 import org.jsound.atomicTypes.YearMonthDurationType;
 import org.jsound.facets.ArrayFacets;
+import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
+import org.jsound.facets.Facets;
 import org.jsound.facets.ObjectFacets;
 import org.jsound.facets.UnionFacets;
 import org.jsound.kinds.Kinds;
@@ -207,7 +209,7 @@ public class SchemaFileJsonParser {
                         typeDescriptor.getType(),
                         name,
                         new TypeOrReference(typeDescriptor),
-                        AtomicTypeDescriptor.createFacets()
+                        createAtomicFacets(AtomicTypeDescriptor._allowedFacets)
                 );
                 shouldCheckBaseType.add(atomicTypeDescriptor);
                 return atomicTypeDescriptor;
@@ -217,7 +219,7 @@ public class SchemaFileJsonParser {
                     ItemTypes.ATOMIC,
                     name,
                     new TypeOrReference(baseTypeString),
-                    AtomicTypeDescriptor.createFacets()
+                    createAtomicFacets(AtomicTypeDescriptor._allowedFacets)
             );
             shouldCheckBaseType.add(atomicTypeDescriptor);
             return atomicTypeDescriptor;
@@ -239,17 +241,17 @@ public class SchemaFileJsonParser {
                     return new ObjectTypeDescriptor(
                             name,
                             new TypeOrReference(typeDescriptor),
-                            ObjectTypeDescriptor.createFacets()
+                            createObjectFacets()
                     );
                 } else if ("object".equals(baseTypeString))
                     return new ObjectTypeDescriptor(
                             name,
-                            ObjectTypeDescriptor.createFacets()
+                            createObjectFacets()
                     );
                 return new ObjectTypeDescriptor(
                         name,
                         new TypeOrReference(baseTypeString),
-                        ObjectTypeDescriptor.createFacets()
+                        createObjectFacets()
                 );
             }
             try {
@@ -260,7 +262,7 @@ public class SchemaFileJsonParser {
                 facets.setFacet(facetTypes);
                 return new ObjectTypeDescriptor(
                         name,
-                        ObjectTypeDescriptor.createFacets(facets)
+                        (ObjectFacets) createFacets(ObjectTypeDescriptor._allowedFacets, facets)
                 );
             } catch (IllegalArgumentException e) {
                 throw new InvalidSchemaException("Invalid facet " + key + ".");
@@ -282,14 +284,14 @@ public class SchemaFileJsonParser {
                     return new ArrayTypeDescriptor(
                             name,
                             new TypeOrReference(typeDescriptor),
-                            ArrayTypeDescriptor.createFacets()
+                            createArrayFacets()
                     );
                 } else if ("array".equals(baseTypeString))
-                    return new ArrayTypeDescriptor(name, ArrayTypeDescriptor.createFacets());
+                    return new ArrayTypeDescriptor(name, createArrayFacets());
                 return new ArrayTypeDescriptor(
                         name,
                         new TypeOrReference(baseTypeString),
-                        ArrayTypeDescriptor.createFacets()
+                        createArrayFacets()
                 );
             }
             try {
@@ -300,7 +302,7 @@ public class SchemaFileJsonParser {
                 facets.setFacet(facetTypes);
                 return new ArrayTypeDescriptor(
                         name,
-                        ArrayTypeDescriptor.createFacets(facets)
+                        (ArrayFacets) createFacets(ArrayTypeDescriptor._allowedFacets, facets)
                 );
             } catch (IllegalArgumentException e) {
                 throw new InvalidSchemaException("Invalid facet " + key + ".");
@@ -322,14 +324,14 @@ public class SchemaFileJsonParser {
                     return new UnionTypeDescriptor(
                             name,
                             new TypeOrReference(typeDescriptor),
-                            UnionTypeDescriptor.createFacets()
+                            createUnionFacets()
                     );
                 } else if ("union".equals(baseTypeString))
-                    return new UnionTypeDescriptor(name, UnionTypeDescriptor.createFacets());
+                    return new UnionTypeDescriptor(name, createUnionFacets());
                 return new UnionTypeDescriptor(
                         name,
                         new TypeOrReference(baseTypeString),
-                        UnionTypeDescriptor.createFacets()
+                        createUnionFacets()
                 );
             }
             try {
@@ -340,7 +342,7 @@ public class SchemaFileJsonParser {
                 facets.setFacet(facetTypes);
                 return new UnionTypeDescriptor(
                         name,
-                        UnionTypeDescriptor.createFacets(facets)
+                        (UnionFacets) createFacets(UnionTypeDescriptor._allowedFacets, facets)
                 );
             } catch (IllegalArgumentException e) {
                 throw new InvalidSchemaException("Invalid facet " + key + ".");
@@ -356,5 +358,36 @@ public class SchemaFileJsonParser {
         } catch (IllegalArgumentException e) {
             throw new UnexpectedTypeException("Invalid kind " + kind);
         }
+    }
+
+    public static AtomicFacets createAtomicFacets(Set<FacetTypes> allowedFacets) throws IOException {
+        return (AtomicFacets) createFacets(allowedFacets, new AtomicFacets());
+    }
+
+    public static ObjectFacets createObjectFacets() throws IOException {
+        return (ObjectFacets) createFacets(ObjectTypeDescriptor._allowedFacets, new ObjectFacets());
+    }
+
+    public static ArrayFacets createArrayFacets() throws IOException {
+        return (ArrayFacets) createFacets(ArrayTypeDescriptor._allowedFacets, new ArrayFacets());
+    }
+
+    public static UnionFacets createUnionFacets() throws IOException {
+        return (UnionFacets) createFacets(UnionTypeDescriptor._allowedFacets, new UnionFacets());
+    }
+
+    public static Facets createFacets(Set<FacetTypes> allowedFacets, Facets facets) throws IOException {
+        String key;
+        while ((key = object.readObject()) != null) {
+            try {
+                FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
+                if (!(allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
+                    throw new InvalidSchemaException("Invalid facet " + key + ".");
+                facets.setFacet(facetTypes);
+            } catch (IllegalArgumentException e) {
+                throw new InvalidSchemaException("Invalid facet " + key + ".");
+            }
+        }
+        return facets;
     }
 }
