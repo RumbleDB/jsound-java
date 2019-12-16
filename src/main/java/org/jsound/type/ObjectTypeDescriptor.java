@@ -99,16 +99,17 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
             } else if (fieldDescriptor.getDefaultValue() != null) {
                 object.put(
                     fieldName,
-                    new TYSONValue(
-                            fieldDescriptor.getName(),
-                            fieldDescriptor.getDefaultValue()
-                    )
+                    fieldDescriptor.getTypeOrReference().getTypeDescriptor().annotate(fieldDescriptor.getDefaultValue())
                 );
             }
         }
+
         for (String key : objectItem.getItemMap().keySet()) {
             if (!this.getFacets().getObjectContent().containsKey(key)) {
-                object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key)));
+                if (!this.baseType.getTypeDescriptor().equals(this))
+                    object.put(key, this.baseType.getTypeDescriptor().annotate(objectItem.getItemMap().get(key)));
+                else
+                    object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key)));
             }
         }
         return object;

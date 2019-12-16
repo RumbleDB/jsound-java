@@ -4,7 +4,7 @@
 	}, 
 	"durationType" : "duration|yearMonthDuration|dayTimeDuration", 
 	"dateTimeType": "dateTime|date|time",
-	"binaryType": "base64Binary|hexBinary",
+	"binaryType": "hexBinary|base64Binary",
 	"arrayOfBinaries" : [
 		"binaryType"
 	],
