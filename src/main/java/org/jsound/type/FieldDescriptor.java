@@ -33,7 +33,7 @@ public class FieldDescriptor {
         return name;
     }
 
-    public TypeOrReference getType() {
+    public TypeOrReference getTypeOrReference() {
         return type;
     }
 

@@ -45,7 +45,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     @Override
     public boolean validate(Item item) {
         TypeDescriptor typeDescriptor;
-        for (TypeOrReference typeOrReference : this.getFacets().unionContent.getTypes()) {
+        for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
             typeDescriptor = typeOrReference.getTypeDescriptor();
             if (typeDescriptor.validate(item))
                 return true;
@@ -56,7 +56,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     @Override
     public TysonItem annotate(Item item) {
         TypeDescriptor typeDescriptor;
-        for (TypeOrReference typeOrReference : this.getFacets().unionContent.getTypes()) {
+        for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
             typeDescriptor = typeOrReference.getTypeDescriptor();
             if (typeDescriptor.validate(item))
                 return new TYSONValue(typeDescriptor.getName(), item);
@@ -75,7 +75,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
         String key;
         while ((key = object.readObject()) != null) {
             try {
-                FacetTypes facetTypes = FacetTypes.valueOf(key);
+                FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
                 if (!(_allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
                     throw new InvalidSchemaException("Invalid facet " + key + ".");
                 unionFacets.setFacet(facetTypes);

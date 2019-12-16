@@ -5,7 +5,6 @@ import org.jsound.facets.ArrayFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.ArrayItem;
 import org.jsound.item.Item;
-import org.jsound.item.ObjectItem;
 import org.tyson.TYSONArray;
 import org.tyson.TysonItem;
 
@@ -75,7 +74,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     private boolean checkContent(ArrayItem arrayItem) {
-        TypeDescriptor arrayItemType = this.getFacets().content.getType().getTypeDescriptor();
+        TypeDescriptor arrayItemType = this.getFacets().getArrayContent().getType().getTypeDescriptor();
         for (Item itemInArray : arrayItem.getItems()) {
             if (!arrayItemType.validate(itemInArray))
                 return false;
@@ -94,7 +93,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         } catch (ClassCastException e) {
             throw new InvalidSchemaException("Cannot annotate. Need an array item.");
         }
-        TypeDescriptor arrayItemType = this.getFacets().content.getType().getTypeDescriptor();
+        TypeDescriptor arrayItemType = this.getFacets().getArrayContent().getType().getTypeDescriptor();
         TYSONArray array = new TYSONArray(this.getName());
         for (Item itemInArray : arrayItem.getItems()) {
             array.add(arrayItemType.annotate(itemInArray));
@@ -116,7 +115,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         String key;
         while ((key = object.readObject()) != null) {
             try {
-                FacetTypes facetTypes = FacetTypes.valueOf(key);
+                FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
                 if (!(_allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
                     throw new InvalidSchemaException("Invalid facet " + key + ".");
                 facets.setFacet(facetTypes);
@@ -134,22 +133,24 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     private boolean isUniqueSatisfied(List<Item> arrayItems) {
         Map<String, Set<Item>> fieldsValues = new HashMap<>();
         ObjectTypeDescriptor objectType;
-        if (this.getFacets().content.getType().getTypeDescriptor().isObjectType()) {
-            objectType = (ObjectTypeDescriptor) this.getFacets().content.getType().getTypeDescriptor();
+        if (this.getFacets().getArrayContent().getType().getTypeDescriptor().isObjectType()) {
+            objectType = (ObjectTypeDescriptor) this.getFacets().getArrayContent().getType().getTypeDescriptor();
         } else
             return true;
-        Map<String, FieldDescriptor> fields = objectType.getFacets().content;
+        Map<String, FieldDescriptor> fields = objectType.getFacets().getObjectContent();
         for (String fieldName : fields.keySet()) {
             if (fields.get(fieldName).isUnique()) {
                 for (Item item : arrayItems) {
-                    Item value = ((ObjectItem) item).getItemMap().get(fieldName);
-                    if (fieldsValues.containsKey(fieldName)) {
-                        if (fieldsValues.get(fieldName).contains(value)) {
-                            return false;
+                    if (item.getItemMap().containsKey(fieldName)) {
+                        Item value = item.getItemMap().get(fieldName);
+                        if (fieldsValues.containsKey(fieldName)) {
+                            if (fieldsValues.get(fieldName).contains(value)) {
+                                return false;
+                            }
+                            fieldsValues.get(fieldName).add(value);
+                        } else {
+                            fieldsValues.put(fieldName, new HashSet<>(Collections.singleton(value)));
                         }
-                        fieldsValues.get(fieldName).add(value);
-                    } else {
-                        fieldsValues.put(fieldName, new HashSet<>(Collections.singleton(value)));
                     }
                 }
             }

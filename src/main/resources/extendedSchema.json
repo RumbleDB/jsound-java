@@ -1,0 +1,32 @@
+{
+  "types" : [
+    {
+      "name" :"only-foo",
+      "kind" : "object",
+      "content" : [
+        {
+          "name" : "foo",
+          "type" : "string",
+          "required" : true 
+        }
+      ],
+      "closed" : true
+    },
+    {
+      "name" : "foo-bar-and-arrays",
+      "kind" : "object",
+      "content" : [
+        {
+          "name" : "foo",
+          "type" : "string",
+          "required" : true
+        },
+        {
+         "name" : "bar",
+         "type" : "boolean"
+        }
+      ]
+    }
+  ]
+}
+

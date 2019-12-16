@@ -56,21 +56,28 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         } catch (ClassCastException e) {
             return false;
         }
-        for (String fieldName : this.getFacets().content.keySet()) {
+        if (this.getFacets().isClosed()) {
+            for (String key : objectItem.getItemMap().keySet()) {
+                if (!this.getFacets().getObjectContent().containsKey(key)) {
+                    return false;
+                }
+            }
+        }
+        for (String fieldName : this.getFacets().getObjectContent().keySet()) {
+            FieldDescriptor fieldDescriptor = this.getFacets().getObjectContent().get(fieldName);
             if (objectItem.getItemMap().containsKey(fieldName)) {
                 if (
-                    !this.getFacets().content.get(fieldName)
-                        .getType()
+                    !fieldDescriptor
+                        .getTypeOrReference()
                         .getTypeDescriptor()
                         .validate(objectItem.getItemMap().get(fieldName))
                 )
                     return false;
-            } else if (
-                this.getFacets().content.get(fieldName).isRequired()
-                    && this.getFacets().content.get(fieldName).getDefaultValue() == null
-            ) {
+            } else if (fieldDescriptor.isRequired() && fieldDescriptor.getDefaultValue() == null)
                 return false;
-            }
+            if (fieldDescriptor.getDefaultValue() != null)
+                if (!fieldDescriptor.getTypeOrReference().getTypeDescriptor().validate(fieldDescriptor.getDefaultValue()))
+                    return false;
         }
         return this.baseType.getTypeDescriptor().equals(this) || this.baseType.getTypeDescriptor().validate(item);
     }
@@ -85,12 +92,12 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         }
 
         TYSONObject object = new TYSONObject(this.getName());
-        for (String fieldName : this.getFacets().content.keySet()) {
-            FieldDescriptor fieldDescriptor = this.getFacets().content.get(fieldName);
+        for (String fieldName : this.getFacets().getObjectContent().keySet()) {
+            FieldDescriptor fieldDescriptor = this.getFacets().getObjectContent().get(fieldName);
             if (objectItem.getItemMap().containsKey(fieldName)) {
                 object.put(
                     fieldName,
-                    fieldDescriptor.getType().getTypeDescriptor().annotate(objectItem.getItemMap().get(fieldName))
+                    fieldDescriptor.getTypeOrReference().getTypeDescriptor().annotate(objectItem.getItemMap().get(fieldName))
                 );
             } else if (fieldDescriptor.getDefaultValue() != null) {
                 object.put(
@@ -103,7 +110,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
             }
         }
         for (String key : objectItem.getItemMap().keySet()) {
-            if (!this.getFacets().content.containsKey(key)) {
+            if (!this.getFacets().getObjectContent().containsKey(key)) {
                 object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key)));
             }
         }
@@ -119,7 +126,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         String key;
         while ((key = object.readObject()) != null) {
             try {
-                FacetTypes facetTypes = FacetTypes.valueOf(key);
+                FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
                 if (!(_allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
                     throw new InvalidSchemaException("Invalid facet " + key + ".");
                 facets.setFacet(facetTypes);

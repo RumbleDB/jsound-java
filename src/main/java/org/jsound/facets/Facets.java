@@ -4,11 +4,15 @@ import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.item.Item;
+import org.jsound.type.ArrayContentDescriptor;
+import org.jsound.type.FieldDescriptor;
+import org.jsound.type.UnionContentDescriptor;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.jsound.cli.JSoundExecutor.object;
@@ -19,9 +23,8 @@ public class Facets {
     private Item metadata = null;
     private List<Item> enumeration = null;
     private List<String> constraints = null;
-    private Boolean hasEnumeration = false;
 
-    Set<FacetTypes> definedFacets = new HashSet<>();
+    public Set<FacetTypes> definedFacets = new HashSet<>();
 
     public void setFacet(FacetTypes facetType) throws IOException {
         definedFacets.add(facetType);
@@ -29,7 +32,6 @@ public class Facets {
             case ENUMERATION:
                 checkField(this.enumeration, "enumeration");
                 this.enumeration = getEnumerationFromObject();
-                this.hasEnumeration = true;
                 break;
             case METADATA:
                 checkField(this.metadata, "metadata");
@@ -40,10 +42,6 @@ public class Facets {
                 this.constraints = getConstraintsTypeFromObject();
                 break;
         }
-    }
-
-    public Boolean hasEnumeration() {
-        return hasEnumeration;
     }
 
     public Set<FacetTypes> getDefinedFacets() {
@@ -86,5 +84,17 @@ public class Facets {
             constraints.add(getStringFromObject());
         }
         return constraints;
+    }
+
+    public Map<String, FieldDescriptor> getObjectContent() {
+        throw new UnexpectedTypeException("This type does not have an object content.");
+    }
+
+    public ArrayContentDescriptor getArrayContent() {
+        throw new UnexpectedTypeException("This type does not have an array content.");
+    }
+
+    public UnionContentDescriptor getUnionContent() {
+        throw new UnexpectedTypeException("This type does not have a union content.");
     }
 }

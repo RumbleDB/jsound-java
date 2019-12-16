@@ -2,6 +2,7 @@ package org.jsound.facets;
 
 import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
+import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.json.SchemaFileJsonParser;
 import org.jsound.type.FieldDescriptor;
 import org.jsound.type.TypeOrReference;
@@ -16,21 +17,20 @@ import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class ObjectFacets extends Facets {
 
-    public Map<String, FieldDescriptor> content = null;
+    private Map<String, FieldDescriptor> objectContent = null;
     private Boolean closed = null;
-    private Boolean hasDefaultValue = false;
 
     @Override
     public void setFacet(FacetTypes facetType) throws IOException {
         definedFacets.add(facetType);
         switch (facetType) {
             case CONTENT:
-                checkField(this.content, "objectContent");
+                checkField(this.objectContent, "objectContent");
                 this.setObjectContentFromObject();
                 break;
             case CLOSED:
                 checkField(this.closed, "closed");
-                this.closed = Boolean.parseBoolean(getStringFromObject());
+                this.closed = getBooleanFromObject();
                 break;
             case ENUMERATION:
             case METADATA:
@@ -56,14 +56,13 @@ public class ObjectFacets extends Facets {
                         setFieldDescriptorType(fieldDescriptor);
                         break;
                     case "required":
-                        fieldDescriptor.setRequired(Boolean.parseBoolean(getStringFromObject()));
+                        fieldDescriptor.setRequired(getBooleanFromObject());
                         break;
                     case "unique":
-                        fieldDescriptor.setUnique(Boolean.parseBoolean(getStringFromObject()));
+                        fieldDescriptor.setUnique(getBooleanFromObject());
                         break;
                     case "default":
                         fieldDescriptor.setDefaultValue(getItemFromObject(object));
-                        this.hasDefaultValue = true;
                         break;
                     default:
                         throw new InvalidSchemaException(key + " is not a valid property for the field descriptor.");
@@ -71,7 +70,7 @@ public class ObjectFacets extends Facets {
             }
             fieldDescriptors.put(fieldDescriptor.getName(), fieldDescriptor);
         }
-        this.content = fieldDescriptors;
+        this.objectContent = fieldDescriptors;
     }
 
     private static void setFieldDescriptorType(FieldDescriptor fieldDescriptor) throws IOException {
@@ -87,7 +86,23 @@ public class ObjectFacets extends Facets {
             fieldDescriptor.setType(new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor(true)));
     }
 
-    public Boolean hasDefaultValue() {
-        return hasDefaultValue;
+    public void setObjectContent(Map<String, FieldDescriptor> objectContent) {
+        definedFacets.add(FacetTypes.CONTENT);
+        this.objectContent = objectContent;
+    }
+
+    @Override
+    public Map<String, FieldDescriptor> getObjectContent() {
+        return objectContent;
+    }
+
+    public boolean isClosed() {
+        return closed != null ? closed : false;
+    }
+
+    public static boolean getBooleanFromObject() throws IOException {
+        if (!object.whatIsNext().equals(ValueType.BOOLEAN))
+            throw new UnexpectedTypeException("Invalid string " + object.read().toString());
+        return object.readBoolean();
     }
 }

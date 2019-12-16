@@ -174,7 +174,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         AtomicFacets atomicFacets = new AtomicFacets();
         while ((key = object.readObject()) != null) {
             try {
-                FacetTypes facetTypes = FacetTypes.valueOf(key);
+                FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
                 if (!(allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
                     throw new InvalidSchemaException("Invalid facet " + key + ".");
                 atomicFacets.setFacet(facetTypes);

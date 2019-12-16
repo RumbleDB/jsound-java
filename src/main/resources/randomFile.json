@@ -1,0 +1,39 @@
+{
+	"types": [
+		{
+			"myDurationType": "-P5DT5M5.234S", 
+			"myDateTimeType": "23:23:22+12:00",
+			"requiredDateTimeType": "1995-11-22T00:00:00+13:00",
+			"myBinaryType": [
+				"af88",
+				"c18="
+			] 
+		},
+		{
+			"myDurationType": "P13Y5M",
+			"myDateTimeType": "2001-01-01Z", 
+			"requiredDateTimeType": "2001-11-22T00:00:00+13:00",
+			"myBinaryType": [
+				"VGhpcyBpcyBhIHBpY3R1cmU=",
+				"abc"
+			],
+			"otherFieldObject": {
+				"hello": 1,
+				"nullField": null
+			}
+		},
+		{
+			"nullDurationType": null,
+			"requiredDateTimeType": "2001-11-22T00:00:00+13:00",
+			"uniqueBinaryType": "abcdef",
+			"otherFieldArray": [
+				1,2,3,4,5
+			]
+		},
+		{
+			"requiredDateTimeType": "2001-11-22T00:00:00+11:00",
+			"uniqueBinaryType": "abcde1",
+			"durationTypeWithDefault": "PT5M6.789S"
+		}
+	]
+}

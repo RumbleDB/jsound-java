@@ -6,6 +6,7 @@ import org.joda.time.Period;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.util.Map;
 
 public abstract class Item {
 
@@ -26,6 +27,10 @@ public abstract class Item {
     }
 
     public boolean isBoolean() {
+        return false;
+    }
+
+    public boolean isYearMonthDurationItem() {
         return false;
     }
 
@@ -75,6 +80,10 @@ public abstract class Item {
 
     public Period getDuration() {
         throw new UnexpectedTypeException(this.getStringValue() + " does not have a period.");
+    }
+
+    public Map<String, Item> getItemMap() {
+        return null;
     }
 
     public String getStringAnnotation() {

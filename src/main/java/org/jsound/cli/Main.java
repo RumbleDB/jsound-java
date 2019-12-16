@@ -53,7 +53,7 @@ public class Main {
             } else {
                 System.out.println("An error has occured: " + ex.getMessage());
                 System.out.println(
-                    "We should investigate this 🙈. Please contact us or file an issue on GitHub with your query."
+                    "We should investigate this. Please contact us or file an issue on GitHub with your query."
                 );
                 System.out.println("Link: ");
                 ex.printStackTrace();

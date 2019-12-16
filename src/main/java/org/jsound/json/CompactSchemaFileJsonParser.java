@@ -72,7 +72,7 @@ public class CompactSchemaFileJsonParser {
                     return new TypeOrReference(buildObjectType(name, new ObjectFacets()));
                 case ARRAY:
                     ArrayFacets facets = new ArrayFacets();
-                    facets.setContent(name);
+                    facets.setArrayContent(name);
                     return new TypeOrReference(new ArrayTypeDescriptor(name, facets));
                 default:
                     throw new UnexpectedTypeException("Type for " + name + " is not string nor object nor array.");
@@ -93,19 +93,19 @@ public class CompactSchemaFileJsonParser {
             setFieldDescriptorType(fieldDescriptor);
             if (allowNull) {
                 UnionFacets unionTypeFacets = new UnionFacets();
-                if (fieldDescriptor.getType().getStringType() != null)
-                    unionTypeFacets.unionContent.getTypes()
-                        .add(new TypeOrReference(fieldDescriptor.getType().getStringType()));
+                if (fieldDescriptor.getTypeOrReference().getStringType() != null)
+                    unionTypeFacets.getUnionContent().getTypes()
+                        .add(new TypeOrReference(fieldDescriptor.getTypeOrReference().getStringType()));
                 else
-                    unionTypeFacets.unionContent.getTypes()
-                        .add(new TypeOrReference(fieldDescriptor.getType().getType()));
-                unionTypeFacets.unionContent.getTypes()
+                    unionTypeFacets.getUnionContent().getTypes()
+                        .add(new TypeOrReference(fieldDescriptor.getTypeOrReference().getType()));
+                unionTypeFacets.getUnionContent().getTypes()
                     .add(new TypeOrReference(new NullType("null", new AtomicFacets())));
                 fieldDescriptor.setType(new TypeOrReference(new UnionTypeDescriptor(name, unionTypeFacets)));
             }
             fieldDescriptors.put(fieldDescriptor.getName(), fieldDescriptor);
         }
-        facets.content = fieldDescriptors;
+        facets.setObjectContent(fieldDescriptors);
         return new ObjectTypeDescriptor(name, facets);
     }
 

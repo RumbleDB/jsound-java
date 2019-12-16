@@ -23,12 +23,10 @@ import org.jsound.facets.ArrayFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.ObjectFacets;
 import org.jsound.facets.UnionFacets;
-import org.jsound.item.Item;
 import org.jsound.kinds.Kinds;
 import org.jsound.type.ArrayTypeDescriptor;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.AtomicTypes;
-import org.jsound.type.FieldDescriptor;
 import org.jsound.type.ItemTypes;
 import org.jsound.type.ObjectTypeDescriptor;
 import org.jsound.type.TypeDescriptor;
@@ -40,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static org.jsound.cli.JSoundExecutor.object;
@@ -77,40 +74,8 @@ public class SchemaFileJsonParser {
             for (AtomicTypeDescriptor atomicTypeDescriptor : shouldCheckBaseType) {
                 checkType(atomicTypeDescriptor);
             }
-            for (TypeDescriptor typeDescriptor : schema.values()) {
-                if (typeDescriptor.getFacets().hasEnumeration()) {
-                    checkEnumeration(
-                        typeDescriptor.getFacets().getEnumeration(),
-                        typeDescriptor.baseType.getTypeDescriptor()
-                    );
-                }
-                if (typeDescriptor.isObjectType()) {
-                    ObjectFacets objectFacets = (ObjectFacets) typeDescriptor.getFacets();
-                    if (objectFacets.hasDefaultValue())
-                        checkDefaultValue(objectFacets.content);
-                }
-            }
         } catch (IOException e) {
             throw new JsoundException("Error parsing the JSON file");
-        }
-    }
-
-    private static void checkDefaultValue(Map<String, FieldDescriptor> objectContent) {
-        for (FieldDescriptor fieldDescriptor : objectContent.values()) {
-            if (!fieldDescriptor.getType().getTypeDescriptor().validate(fieldDescriptor.getDefaultValue()))
-                throw new InvalidSchemaException("Default value not valid");
-        }
-    }
-
-    private static void checkEnumeration(List<Item> enumeration, TypeDescriptor typeDescriptor) {
-        for (Item item : enumeration) {
-            if (!typeDescriptor.validate(item))
-                throw new InvalidSchemaException(
-                        "Enumeration value "
-                            + item.getStringValue()
-                            + " not valid against type "
-                            + typeDescriptor.getType().getTypeName()
-                );
         }
     }
 
@@ -288,7 +253,7 @@ public class SchemaFileJsonParser {
                 );
             }
             try {
-                FacetTypes facetTypes = FacetTypes.valueOf(key);
+                FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
                 if (!(ObjectTypeDescriptor._allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
                     throw new InvalidSchemaException("Invalid facet " + key + ".");
                 ObjectFacets facets = new ObjectFacets();
@@ -328,7 +293,7 @@ public class SchemaFileJsonParser {
                 );
             }
             try {
-                FacetTypes facetTypes = FacetTypes.valueOf(key);
+                FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
                 if (!(ArrayTypeDescriptor._allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
                     throw new InvalidSchemaException("Invalid facet " + key + ".");
                 ArrayFacets facets = new ArrayFacets();
@@ -368,7 +333,7 @@ public class SchemaFileJsonParser {
                 );
             }
             try {
-                FacetTypes facetTypes = FacetTypes.valueOf(key);
+                FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
                 if (!(UnionTypeDescriptor._allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
                     throw new InvalidSchemaException("Invalid facet " + key + ".");
                 UnionFacets facets = new UnionFacets();

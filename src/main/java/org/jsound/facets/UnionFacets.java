@@ -12,7 +12,11 @@ import static org.jsound.cli.JSoundExecutor.schema;
 import static org.jsound.json.CompactSchemaFileJsonParser.compactSchema;
 
 public class UnionFacets extends Facets {
-    public UnionContentDescriptor unionContent = null;
+    private UnionContentDescriptor unionContent;
+
+    public UnionFacets() {
+        unionContent = new UnionContentDescriptor();
+    }
 
     @Override
     public void setFacet(FacetTypes facetType) throws IOException {
@@ -54,5 +58,10 @@ public class UnionFacets extends Facets {
                 unionContent.getTypes().add(new TypeOrReference(type));
         }
         this.unionContent = unionContent;
+    }
+
+    @Override
+    public UnionContentDescriptor getUnionContent() {
+        return unionContent;
     }
 }

@@ -15,7 +15,7 @@ import static org.jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static org.jsound.json.CompactSchemaFileJsonParser.getTypeFromObject;
 
 public class ArrayFacets extends Facets {
-    public ArrayContentDescriptor content = null;
+    private ArrayContentDescriptor arrayContent = null;
     public Integer minLength = null, maxLength = null;
 
     @Override
@@ -23,7 +23,7 @@ public class ArrayFacets extends Facets {
         definedFacets.add(facetType);
         switch (facetType) {
             case CONTENT:
-                checkField(this.content, "arrayContent");
+                checkField(this.arrayContent, "arrayContent");
                 this.setArrayContentFromObject();
                 break;
             case MIN_LENGTH:
@@ -49,21 +49,22 @@ public class ArrayFacets extends Facets {
             if (object.whatIsNext().equals(ValueType.STRING)) {
                 String contentType = object.readString();
                 if (schema.containsKey(contentType))
-                    this.content = new ArrayContentDescriptor(new TypeOrReference(schema.get(contentType)));
+                    this.arrayContent = new ArrayContentDescriptor(new TypeOrReference(schema.get(contentType)));
                 else
-                    this.content = new ArrayContentDescriptor(new TypeOrReference(contentType));
+                    this.arrayContent = new ArrayContentDescriptor(new TypeOrReference(contentType));
             }
             size++;
         }
         if (size == 0)
             throw new InvalidSchemaException("You must specify the content atomicTypes for array.");
-        if (this.content == null)
-            this.content = new ArrayContentDescriptor(
+        if (this.arrayContent == null)
+            this.arrayContent = new ArrayContentDescriptor(
                     new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor(true))
             );
     }
 
-    public void setContent(String name) throws IOException {
+    public void setArrayContent(String name) throws IOException {
+        definedFacets.add(FacetTypes.CONTENT);
         int size = 0;
         while (object.readArray()) {
             if (size > 0)
@@ -71,15 +72,20 @@ public class ArrayFacets extends Facets {
             if (object.whatIsNext().equals(ValueType.STRING)) {
                 String contentType = object.readString();
                 if (schema.containsKey(contentType))
-                    this.content = new ArrayContentDescriptor(compactSchema.get(contentType));
+                    this.arrayContent = new ArrayContentDescriptor(compactSchema.get(contentType));
                 else
-                    this.content = new ArrayContentDescriptor(new TypeOrReference(contentType));
+                    this.arrayContent = new ArrayContentDescriptor(new TypeOrReference(contentType));
             }
             size++;
         }
         if (size == 0)
             throw new InvalidSchemaException("You must specify the content atomicTypes for array.");
-        if (content == null)
-            content = new ArrayContentDescriptor(getTypeFromObject(name));
+        if (arrayContent == null)
+            arrayContent = new ArrayContentDescriptor(getTypeFromObject(name));
+    }
+
+    @Override
+    public ArrayContentDescriptor getArrayContent() {
+        return arrayContent;
     }
 }

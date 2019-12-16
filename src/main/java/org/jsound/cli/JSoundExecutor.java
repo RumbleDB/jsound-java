@@ -28,7 +28,7 @@ public abstract class JSoundExecutor {
     public static Map<String, TypeDescriptor> schema = new HashMap<>();
     public static JsonIterator object;
 
-    static void initializeApplication(String schemaPath, String filePath, String rootType, boolean compact) {
+    public static void initializeApplication(String schemaPath, String filePath, String rootType, boolean compact) {
         if (initialized)
             return;
         String schemaString, fileString;

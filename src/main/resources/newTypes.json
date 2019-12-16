@@ -1,6 +1,0 @@
-{
-	"people": [
-		{ "first" : "James", "last" : "Kirk", "picture" : "af88", "myDate": "2021-02-10", "myTime": "23:23:22+12:00", "myDTDuration": "-P5DT5M5.234S", "male" : {"bella": "zio", "come": {"va": ["la", "vita"]}}},
-		{ "first" : "Mary", "picture" : "bf98", "myDate": "2011-12-12", "myTime": "14:13:22", "myYMDuration": "P13Y5M", "base64bin": "VGhpcyBpcyBhIHBpY3R1cmU="}
-	]
-}
