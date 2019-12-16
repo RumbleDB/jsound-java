@@ -1,8 +1,10 @@
 package org.jsound.json;
 
 import com.jsoniter.ValueType;
+import jsound.exceptions.AlreadyExistingTypeException;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
+import jsound.exceptions.OverrideBuiltinTypeException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.atomicTypes.AnyURIType;
 import org.jsound.atomicTypes.Base64BinaryType;
@@ -164,6 +166,8 @@ public class SchemaFileJsonParser {
             if (!"name".equals(object.readObject()))
                 throw new InvalidSchemaException("Please specify the \"name\" first.");
             name = getStringFromObject();
+            if (schema.containsKey(name))
+                throwExistingTypeException(name);
         }
 
         if (!"kind".equals(object.readObject()))
@@ -357,6 +361,15 @@ public class SchemaFileJsonParser {
             return Kinds.valueOf(kind.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new UnexpectedTypeException("Invalid kind " + kind);
+        }
+    }
+
+    static void throwExistingTypeException(String name) {
+        try {
+            AtomicTypes.valueOf(name);
+            throw new OverrideBuiltinTypeException("Builtin types are reserved and cannot be overriden or redefined.");
+        } catch (IllegalArgumentException e) {
+            throw new AlreadyExistingTypeException("Two types may not have the same name within an assembled schema set.");
         }
     }
 

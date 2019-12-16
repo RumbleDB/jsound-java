@@ -25,6 +25,7 @@ import java.util.Map;
 
 import static org.jsound.cli.JSoundExecutor.object;
 import static org.jsound.cli.JSoundExecutor.schema;
+import static org.jsound.json.SchemaFileJsonParser.throwExistingTypeException;
 import static org.jsound.type.AtomicTypeDescriptor.buildAtomicType;
 
 
@@ -41,6 +42,8 @@ public class CompactSchemaFileJsonParser {
 
             String typeName;
             while ((typeName = object.readObject()) != null) {
+                if (compactSchema.containsKey(typeName))
+                    throwExistingTypeException(typeName);
                 compactSchema.put(typeName, getTypeFromObject(typeName));
             }
             for (String key : compactSchema.keySet()) {
