@@ -14,9 +14,13 @@ class JSoundAnnotateExecutor extends JSoundExecutor {
             throws IOException {
         try {
             if (!JSoundValidateExecutor.validate(schemaPath, filePath, rootType, compact))
-                throw new InvalidInstanceAgainstSchemaException("Annotation can't be done. The candidate instance is invalid against the provided schema.");
+                throw new InvalidInstanceAgainstSchemaException(
+                        "Annotation can't be done. The candidate instance is invalid against the provided schema."
+                );
         } catch (Exception e) {
-            throw new InvalidInstanceAgainstSchemaException("Annotation can't be done. The candidate instance is invalid against the provided schema.");
+            throw new InvalidInstanceAgainstSchemaException(
+                    "Annotation can't be done. The candidate instance is invalid against the provided schema."
+            );
         }
         try (FileWriter file = new FileWriter(outputPath)) {
             TYSONObject rootObject = (TYSONObject) schemaItem.annotate(fileItem);

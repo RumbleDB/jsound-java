@@ -179,6 +179,7 @@ public abstract class TypeDescriptor {
         return false;
     }
 
+    //SHOULD IMPLEMENT ALL THE SUBTYPE DEFINITIONS FOR ALL THE TYPES
     public boolean isSubtypeOf(TypeDescriptor typeDescriptor) {
         return false;
     }

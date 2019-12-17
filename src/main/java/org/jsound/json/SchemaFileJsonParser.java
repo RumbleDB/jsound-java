@@ -198,7 +198,11 @@ public class SchemaFileJsonParser {
             case UNION:
                 return buildUnionTypeDescriptor(name);
             default:
-                throw new InvalidKindException("Kind should be one of \"atomic\", \"object\", \"array\", \"union\". " + kind + " was given instead.");
+                throw new InvalidKindException(
+                        "Kind should be one of \"atomic\", \"object\", \"array\", \"union\". "
+                            + kind
+                            + " was given instead."
+                );
         }
     }
 
@@ -371,7 +375,11 @@ public class SchemaFileJsonParser {
         try {
             return Kinds.valueOf(kind.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new InvalidKindException("Kind should be one of \"atomic\", \"object\", \"array\", \"union\". " + kind + " was given instead.");
+            throw new InvalidKindException(
+                    "Kind should be one of \"atomic\", \"object\", \"array\", \"union\". "
+                        + kind
+                        + " was given instead."
+            );
         }
     }
 
@@ -399,13 +407,18 @@ public class SchemaFileJsonParser {
     }
 
     public static UnionFacets createUnionFacets(String typeName) throws IOException {
-        UnionFacets unionFacets = (UnionFacets) createFacets(UnionTypeDescriptor._allowedFacets, new UnionFacets(), typeName);
+        UnionFacets unionFacets = (UnionFacets) createFacets(
+            UnionTypeDescriptor._allowedFacets,
+            new UnionFacets(),
+            typeName
+        );
         if (unionFacets.getUnionContent() == null)
             throw new InvalidSchemaException("Union type " + typeName + " must have the \"content\" facet defined.");
         return unionFacets;
     }
 
-    public static Facets createFacets(Set<FacetTypes> allowedFacets, Facets facets, String typeName) throws IOException {
+    public static Facets createFacets(Set<FacetTypes> allowedFacets, Facets facets, String typeName)
+            throws IOException {
         String key;
         while ((key = object.readObject()) != null) {
             try {

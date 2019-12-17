@@ -74,37 +74,45 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         return recursivelyValidate(item);
     }
 
-//    private void checkClosedFacetCorrectness(boolean closedIsSetToFalse) {
-//        if (!this.closedIsChecked && closedIsSetToFalse) {
-//            if (this.baseType != null) {
-//                if (this.baseType.getTypeDescriptor().getFacets().isClosed())
-//                    throw new ClosedSetBackToFalseException(
-//                            "The \"closed\" facet for type "
-//                                + this.getName()
-//                                + " cannot be set back to false since it was set to true in its baseType "
-//                                + this.baseType.getTypeDescriptor().getName()
-//                                + "."
-//                    );
-//                ((ObjectTypeDescriptor) this.baseType.getTypeDescriptor()).checkClosedFacetCorrectness(closedIsSetToFalse);
-//            }
-//        }
-//        this.closedIsChecked = true;
-//    }
+    // private void checkClosedFacetCorrectness(boolean closedIsSetToFalse) {
+    // if (!this.closedIsChecked && closedIsSetToFalse) {
+    // if (this.baseType != null) {
+    // if (this.baseType.getTypeDescriptor().getFacets().isClosed())
+    // throw new ClosedSetBackToFalseException(
+    // "The \"closed\" facet for type "
+    // + this.getName()
+    // + " cannot be set back to false since it was set to true in its baseType "
+    // + this.baseType.getTypeDescriptor().getName()
+    // + "."
+    // );
+    // ((ObjectTypeDescriptor) this.baseType.getTypeDescriptor()).checkClosedFacetCorrectness(closedIsSetToFalse);
+    // }
+    // }
+    // this.closedIsChecked = true;
+    // }
 
     private boolean checkClosedFacet() {
         boolean objectDescriptorIsClosed;
         if (baseType == null || this.getFacets().isClosed() || this.closedIsChecked) {
             objectDescriptorIsClosed = this.getFacets().isClosed();
         } else {
-            objectDescriptorIsClosed = ((ObjectTypeDescriptor) this.baseType.getTypeDescriptor()).checkClosedFacet(); //THERE IS A BASETYPE THAT SET CLOSED TO TRUE
+            objectDescriptorIsClosed = ((ObjectTypeDescriptor) this.baseType.getTypeDescriptor()).checkClosedFacet(); // THERE
+                                                                                                                      // IS
+                                                                                                                      // A
+                                                                                                                      // BASETYPE
+                                                                                                                      // THAT
+                                                                                                                      // SET
+                                                                                                                      // CLOSED
+                                                                                                                      // TO
+                                                                                                                      // TRUE
             if (objectDescriptorIsClosed) {
-                if (this.getFacets().getDefinedFacets().contains(CLOSED)) //CLOSED WAS EXPLICITLY SET BACK TO FALSE
+                if (this.getFacets().getDefinedFacets().contains(CLOSED)) // CLOSED WAS EXPLICITLY SET BACK TO FALSE
                     throw new ClosedSetBackToFalseException(
                             "The \"closed\" facet for type "
-                                    + this.getName()
-                                    + " cannot be set back to false since it was set to true in its baseType "
-                                    + this.baseType.getTypeDescriptor().getName()
-                                    + "."
+                                + this.getName()
+                                + " cannot be set back to false since it was set to true in its baseType "
+                                + this.baseType.getTypeDescriptor().getName()
+                                + "."
                     );
                 else
                     this.getFacets().setClosed(true);
@@ -118,8 +126,14 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         if (this.getFacets().isClosed()) {
             for (String key : objectItem.getItemMap().keySet()) {
                 if (!this.getFacets().getObjectContent().containsKey(key)) {
-                    throw new ClosedNotRespectedException("Type " + this.getName() +
-                            " is closed, and the \"content\" facet does not allow for field " + key + ".");
+                    throw new ClosedNotRespectedException(
+                            "Type "
+                                + this.getName()
+                                +
+                                " is closed, and the \"content\" facet does not allow for field "
+                                + key
+                                + "."
+                    );
                 }
             }
         }
@@ -150,10 +164,29 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     private void checkRequiredField(FieldDescriptor fieldDescriptor) {
         if (!fieldDescriptor.requiredIsChecked) {
             if (this.baseType != null) {
-                if (this.baseType.getTypeDescriptor().getFacets().getObjectContent().containsKey(fieldDescriptor.getName())) {
-                    if (this.baseType.getTypeDescriptor().getFacets().getObjectContent().get(fieldDescriptor.getName()).isRequired())
-                        throw new RequiredSertBackToFalseException("Field " + fieldDescriptor.getName() + " for type " +
-                                this.getName() + " cannot be set back to false. It is set to true in baseType " + this.baseType.getTypeDescriptor().getName() + ".");
+                if (
+                    this.baseType.getTypeDescriptor()
+                        .getFacets()
+                        .getObjectContent()
+                        .containsKey(fieldDescriptor.getName())
+                ) {
+                    if (
+                        this.baseType.getTypeDescriptor()
+                            .getFacets()
+                            .getObjectContent()
+                            .get(fieldDescriptor.getName())
+                            .isRequired()
+                    )
+                        throw new RequiredSertBackToFalseException(
+                                "Field "
+                                    + fieldDescriptor.getName()
+                                    + " for type "
+                                    +
+                                    this.getName()
+                                    + " cannot be set back to false. It is set to true in baseType "
+                                    + this.baseType.getTypeDescriptor().getName()
+                                    + "."
+                        );
                 }
                 ((ObjectTypeDescriptor) this.baseType.getTypeDescriptor()).checkRequiredField(fieldDescriptor);
             }

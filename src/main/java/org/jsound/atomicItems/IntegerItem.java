@@ -23,6 +23,11 @@ public class IntegerItem extends AtomicItem {
     }
 
     @Override
+    public BigDecimal getDecimalValue() {
+        return new BigDecimal(this._value);
+    }
+
+    @Override
     public BigDecimal castToDecimalValue() {
         return BigDecimal.valueOf(this._value);
     }

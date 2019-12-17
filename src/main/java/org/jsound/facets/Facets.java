@@ -59,7 +59,9 @@ public class Facets {
 
     public static String getStringFromObject(String key) throws IOException {
         if (!object.whatIsNext().equals(ValueType.STRING))
-            throw new UnexpectedTypeException(key + " should be a string; " + object.whatIsNext().name().toLowerCase() + " was provided instead.");
+            throw new UnexpectedTypeException(
+                    key + " should be a string; " + object.whatIsNext().name().toLowerCase() + " was provided instead."
+            );
         return object.readString();
     }
 
