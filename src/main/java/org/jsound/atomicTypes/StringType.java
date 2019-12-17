@@ -28,14 +28,25 @@ public class StringType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         if (!item.isString())
             return false;
         if (this.getFacets() == null)
             return true;
-        if (!validateLengthFacets(item))
+        if (!validateLengthFacets(item, isEnumerationItem))
             return false;
         return recursivelyValidate(item);
+    }
+
+
+    @Override
+    protected boolean validateItemAgainstEnumeration(Item item) throws Exception {
+        String string = item.getStringValue();
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            if (string.equals(enumItem.getStringValue()))
+                return true;
+        }
+        return false;
     }
 
     @Override

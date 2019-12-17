@@ -40,7 +40,7 @@ public class IntegerType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         Integer integerValue;
         try {
             if (item.isString())
@@ -53,7 +53,7 @@ public class IntegerType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new IntegerItem(integerValue);
-        if (!validateBoundariesFacets(item))
+        if (!validateBoundariesFacets(item, isEnumerationItem))
             return false;
         if (!validateDigitsFacets(item))
             return false;
@@ -85,7 +85,7 @@ public class IntegerType extends AtomicTypeDescriptor {
     }
 
     @Override
-    protected boolean validateEnumeration(Item item) {
+    protected boolean validateItemAgainstEnumeration(Item item) {
         Integer integerValue = item.getIntegerValue();
         for (Item enumItem : this.getFacets().getEnumeration()) {
             if (integerValue.compareTo(getIntegerFromItem(enumItem)) == 0)

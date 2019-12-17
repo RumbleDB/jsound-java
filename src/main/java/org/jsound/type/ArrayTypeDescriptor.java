@@ -1,6 +1,5 @@
 package org.jsound.type;
 
-import jsound.exceptions.InvalidEnumValueException;
 import jsound.exceptions.InvalidSchemaException;
 import org.jsound.facets.ArrayFacets;
 import org.jsound.facets.FacetTypes;
@@ -43,7 +42,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         if (!item.isArray())
             return false;
         ArrayItem arrayItem = (ArrayItem) item;
@@ -62,7 +61,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
                         return false;
                     break;
                 case ENUMERATION:
-                    if (!validateEnumeration(arrayItem))
+                    if (!validateEnumeration(arrayItem, isEnumerationItem))
                         return false;
                     break;
                 default:
@@ -75,26 +74,13 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     private boolean validateContent(ArrayItem arrayItem) {
         TypeDescriptor arrayItemType = this.getFacets().getArrayContent().getType().getTypeDescriptor();
         for (Item itemInArray : arrayItem.getItems()) {
-            if (!arrayItemType.validate(itemInArray))
+            if (!arrayItemType.validate(itemInArray, false))
                 return false;
         }
 
         if (arrayItem.getItems().isEmpty() || !arrayItem.getItems().get(0).isObject())
             return true;
         return this.isUniqueSatisfied(arrayItem.getItems());
-    }
-
-    private boolean validateEnumeration(ArrayItem arrayItem) {
-        if (this.getFacets().getEnumeration() == null)
-            return true;
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (!enumItem.isArray())
-                throw new InvalidEnumValueException("Value " + enumItem.getStringValue() + " in enumeration is not in the type value space for type " + this.getName() + ".");
-            ArrayItem enumArrayItem = (ArrayItem) enumItem;
-            if (arrayItem.equals(enumArrayItem))
-                return true;
-        }
-        return false;
     }
 
     @Override

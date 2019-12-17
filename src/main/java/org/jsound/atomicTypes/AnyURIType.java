@@ -29,7 +29,7 @@ public class AnyURIType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         URI uri;
         try {
             uri = URI.create(item.getStringValue());
@@ -39,13 +39,13 @@ public class AnyURIType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new AnyURIItem(uri);
-        if (!validateLengthFacets(item))
+        if (!validateLengthFacets(item, isEnumerationItem))
             return false;
         return recursivelyValidate(item);
     }
 
     @Override
-    protected boolean validateEnumeration(Item item) throws IllegalArgumentException {
+    protected boolean validateItemAgainstEnumeration(Item item) throws IllegalArgumentException {
         URI uri = item.getAnyURIValue();
         for (Item enumItem : this.getFacets().getEnumeration()) {
             if (uri.equals(URI.create(enumItem.getStringValue())))

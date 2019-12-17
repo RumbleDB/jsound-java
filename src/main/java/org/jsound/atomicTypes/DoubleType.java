@@ -31,7 +31,7 @@ public class DoubleType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         Double doubleValue;
         try {
             if (item.isString())
@@ -44,7 +44,7 @@ public class DoubleType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new DoubleItem(doubleValue);
-        if (!validateBoundariesFacets(item))
+        if (!validateBoundariesFacets(item, isEnumerationItem))
             return false;
         return recursivelyValidate(item);
     }
@@ -74,7 +74,7 @@ public class DoubleType extends AtomicTypeDescriptor {
     }
 
     @Override
-    protected boolean validateEnumeration(Item item) {
+    protected boolean validateItemAgainstEnumeration(Item item) {
         Double doubleValue = item.getDoubleValue();
         for (Item enumItem : this.getFacets().getEnumeration()) {
             if (doubleValue.compareTo(getDoubleFromItem(enumItem)) == 0)

@@ -41,7 +41,7 @@ public class DecimalType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         BigDecimal decimalValue;
         try {
             if (item.isString())
@@ -54,7 +54,7 @@ public class DecimalType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new DecimalItem(decimalValue);
-        if (!validateBoundariesFacets(item))
+        if (!validateBoundariesFacets(item, isEnumerationItem))
             return false;
         if (!validateDigitsFacets(item))
             return false;
@@ -86,7 +86,7 @@ public class DecimalType extends AtomicTypeDescriptor {
     }
 
     @Override
-    protected boolean validateEnumeration(Item item) {
+    protected boolean validateItemAgainstEnumeration(Item item) {
         BigDecimal decimalValue = item.getDecimalValue();
         for (Item enumItem : this.getFacets().getEnumeration()) {
             if (decimalValue.compareTo(getDecimalFromItem(enumItem)) == 0)

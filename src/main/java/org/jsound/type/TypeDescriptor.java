@@ -1,5 +1,6 @@
 package org.jsound.type;
 
+import jsound.exceptions.InvalidEnumValueException;
 import jsound.exceptions.LessRestrictiveFacetException;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
@@ -12,6 +13,7 @@ public abstract class TypeDescriptor {
     private ItemTypes type;
     private String name;
     public TypeOrReference baseType;
+    private boolean enumerationIsValid = false;
 
     TypeDescriptor(ItemTypes type, String name) {
         this.type = type;
@@ -121,14 +123,14 @@ public abstract class TypeDescriptor {
 
     public abstract Set<FacetTypes> getAllowedFacets();
 
-    public abstract boolean validate(Item item);
+    public abstract boolean validate(Item item, boolean isEnumerationItem);
 
     public abstract TysonItem annotate(Item item);
 
     public boolean recursivelyValidate(Item item) {
         if (this.baseType == null)
             return true;
-        if (!this.baseType.getTypeDescriptor().validate(item))
+        if (!this.baseType.getTypeDescriptor().validate(item, false))
             throw new LessRestrictiveFacetException(
                     "Facet for type "
                         + this.getName()
@@ -137,5 +139,43 @@ public abstract class TypeDescriptor {
                         + "."
             );
         return true;
+    }
+
+    private void validateEnumerationValues() {
+        if (!this.enumerationIsValid) {
+            for (Item enumItem : this.getFacets().getEnumeration()) {
+                if (!this.validate(enumItem, true)) {
+                    throw new InvalidEnumValueException(
+                            "Value "
+                                + enumItem.getStringValue()
+                                + " in enumeration is not in the type value space for type "
+                                + this.getName()
+                                + "."
+                    );
+                }
+            }
+            this.enumerationIsValid = true;
+        }
+    }
+
+    protected boolean validateEnumeration(Item item, boolean isEnumerationItem) {
+        if (isEnumerationItem)
+            return true;
+        validateEnumerationValues();
+        try {
+            return validateItemAgainstEnumeration(item);
+        } catch (Exception e) {
+            throw new InvalidEnumValueException(
+                    "A value in enumeration is not in the type value space for type " + this.getName() + "."
+            );
+        }
+    }
+
+    protected boolean validateItemAgainstEnumeration(Item item) throws Exception {
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            if (item.equals(enumItem))
+                return true;
+        }
+        return false;
     }
 }

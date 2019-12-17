@@ -30,7 +30,7 @@ public class HexBinaryType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         byte[] hexValue;
         try {
             hexValue = Hex.decodeHex(item.getStringValue().toCharArray());
@@ -40,13 +40,13 @@ public class HexBinaryType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new HexBinaryItem(hexValue, item.getStringValue());
-        if (!validateLengthFacets(item))
+        if (!validateLengthFacets(item, isEnumerationItem))
             return false;
         return recursivelyValidate(item);
     }
 
     @Override
-    protected boolean validateEnumeration(Item item) throws DecoderException {
+    protected boolean validateItemAgainstEnumeration(Item item) throws DecoderException {
         byte[] hexValue = item.getBinaryValue();
         for (Item enumItem : this.getFacets().getEnumeration()) {
             if (Arrays.equals(hexValue, Hex.decodeHex(enumItem.getStringValue().toCharArray())))

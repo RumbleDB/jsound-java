@@ -1,6 +1,5 @@
 package org.jsound.type;
 
-import jsound.exceptions.InvalidEnumValueException;
 import jsound.exceptions.InvalidSchemaException;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.ObjectFacets;
@@ -45,7 +44,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         if (!item.isObject())
             return false;
         ObjectItem objectItem = (ObjectItem) item;
@@ -60,7 +59,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                         return false;
                     break;
                 case ENUMERATION:
-                    if (!validateEnumeration(objectItem))
+                    if (!validateEnumeration(objectItem, isEnumerationItem))
                         return false;
                     break;
                 default:
@@ -81,28 +80,15 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         return true;
     }
 
-    private boolean validateEnumeration(ObjectItem objectItem) {
-        if (this.getFacets().getEnumeration() == null)
-            return true;
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (!enumItem.isObject())
-                throw new InvalidEnumValueException("Value " + enumItem.getStringValue() + " in enumeration is not in the type value space for type " + this.getName() + ".");
-            ObjectItem enumObjectItem = (ObjectItem) enumItem;
-            if (objectItem.equals(enumObjectItem))
-                return true;
-        }
-        return false;
-    }
-
     private boolean validateContentFacet(ObjectItem objectItem) {
         for (String fieldName : this.getFacets().getObjectContent().keySet()) {
             FieldDescriptor fieldDescriptor = this.getFacets().getObjectContent().get(fieldName);
             if (objectItem.getItemMap().containsKey(fieldName)) {
                 if (
-                        !fieldDescriptor
-                                .getTypeOrReference()
-                                .getTypeDescriptor()
-                                .validate(objectItem.getItemMap().get(fieldName))
+                    !fieldDescriptor
+                        .getTypeOrReference()
+                        .getTypeDescriptor()
+                        .validate(objectItem.getItemMap().get(fieldName), false)
                 )
                     return false;
             } else if (fieldDescriptor.isRequired() && fieldDescriptor.getDefaultValue() == null)
@@ -116,8 +102,8 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     private boolean validateDefaultValue(FieldDescriptor fieldDescriptor) {
         if (fieldDescriptor.getDefaultValue() != null) {
             return fieldDescriptor.getTypeOrReference()
-                    .getTypeDescriptor()
-                    .validate(fieldDescriptor.getDefaultValue());
+                .getTypeDescriptor()
+                .validate(fieldDescriptor.getDefaultValue(), false);
         }
         return true;
     }

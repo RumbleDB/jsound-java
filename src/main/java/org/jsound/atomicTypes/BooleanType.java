@@ -21,7 +21,7 @@ public class BooleanType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         return item.isBoolean() || (item.isString() && StringUtils.isBooleanLiteral(item.getStringValue()));
     }
 

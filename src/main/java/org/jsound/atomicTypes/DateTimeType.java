@@ -36,7 +36,7 @@ public class DateTimeType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         DateTime dateTime;
         try {
             dateTime = getDateTimeFromItem(item);
@@ -46,7 +46,7 @@ public class DateTimeType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new DateTimeItem(dateTime);
-        if (!validateBoundariesFacets(item))
+        if (!validateBoundariesFacets(item, isEnumerationItem))
             return false;
         if (this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE) && !checkExplicitTimezone(item))
             return false;
@@ -87,7 +87,7 @@ public class DateTimeType extends AtomicTypeDescriptor {
     }
 
     @Override
-    protected boolean validateEnumeration(Item item) {
+    protected boolean validateItemAgainstEnumeration(Item item) {
         DateTime dateTime = item.getDateTime();
         for (Item enumItem : this.getFacets().getEnumeration()) {
             if (dateTime.equals(getDateTimeFromItem(enumItem)))

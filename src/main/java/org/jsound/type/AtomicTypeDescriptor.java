@@ -1,6 +1,5 @@
 package org.jsound.type;
 
-import jsound.exceptions.InvalidEnumValueException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.atomicTypes.AnyURIType;
 import org.jsound.atomicTypes.Base64BinaryType;
@@ -88,7 +87,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         return false;
     }
 
@@ -170,7 +169,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         }
     }
 
-    protected boolean validateLengthFacets(Item item) {
+    protected boolean validateLengthFacets(Item item, boolean isEnumerationItem) {
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case LENGTH:
@@ -186,12 +185,8 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
                         return false;
                     break;
                 case ENUMERATION:
-                    try {
-                        if (!validateEnumeration(item))
-                            return false;
-                    } catch (Exception e) {
-                        throw new InvalidEnumValueException("A value in enumeration is not in the type value space for type " + this.getName() + ".");
-                    }
+                    if (!validateEnumeration(item, isEnumerationItem))
+                        return false;
                     break;
                 default:
                     break;
@@ -200,7 +195,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         return true;
     }
 
-    protected boolean validateBoundariesFacets(Item item) {
+    protected boolean validateBoundariesFacets(Item item, boolean isEnumerationItem) {
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case MIN_INCLUSIVE:
@@ -220,12 +215,8 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
                         return false;
                     break;
                 case ENUMERATION:
-                    try {
-                        if (!validateEnumeration(item))
-                            return false;
-                    } catch (Exception e) {
-                        throw new InvalidEnumValueException("A value in enumeration is not in the type value space for type " + this.getName() + ".");
-                    }
+                    if (!validateEnumeration(item, isEnumerationItem))
+                        return false;
                     break;
                 default:
                     break;
@@ -265,15 +256,6 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     }
 
     protected boolean validateMaxExclusive(Item item) {
-        return false;
-    }
-
-    protected boolean validateEnumeration(Item item) throws Exception {
-        String string = item.getStringValue();
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (string.equals(enumItem.getStringValue()))
-                return true;
-        }
         return false;
     }
 }

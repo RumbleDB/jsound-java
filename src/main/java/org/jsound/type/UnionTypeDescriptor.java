@@ -40,7 +40,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
@@ -48,7 +48,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
                         return false;
                     break;
                 case ENUMERATION:
-                    if (!validateEnumeration(item))
+                    if (!validateEnumeration(item, isEnumerationItem))
                         return false;
                     break;
                 default:
@@ -60,18 +60,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     private boolean validateContentFacet(Item item) {
         for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-            if (typeOrReference.getTypeDescriptor().validate(item))
-                return true;
-        }
-        return false;
-    }
-
-    private boolean validateEnumeration(Item item) {
-        if (this.getFacets().getEnumeration() == null)
-            return true;
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            // TODO: validate enumItem against UnionTypeDescriptor
-            if (item.equals(enumItem))
+            if (typeOrReference.getTypeDescriptor().validate(item, false))
                 return true;
         }
         return false;
@@ -80,7 +69,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     @Override
     public TysonItem annotate(Item item) {
         for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-            if (typeOrReference.getTypeDescriptor().validate(item))
+            if (typeOrReference.getTypeDescriptor().validate(item, false))
                 return new TYSONValue(typeOrReference.getTypeDescriptor().getName(), item);
         }
         throw new InvalidSchemaException(

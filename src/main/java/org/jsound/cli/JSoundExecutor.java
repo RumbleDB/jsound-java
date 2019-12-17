@@ -2,7 +2,6 @@ package org.jsound.cli;
 
 import com.jsoniter.JsonIterator;
 import jsound.exceptions.CliException;
-import jsound.exceptions.ResourceNotFoundException;
 import org.jsound.item.Item;
 import org.jsound.json.CompactSchemaFileJsonParser;
 import org.jsound.json.InstanceFileJsonParser;
@@ -28,17 +27,17 @@ public abstract class JSoundExecutor {
     public static Map<String, TypeDescriptor> schema = new HashMap<>();
     public static JsonIterator object;
 
-    public static void initializeApplication(String schemaPath, String filePath, String rootType, boolean compact) {
+    public static void initializeApplication(String schemaPath, String filePath, String rootType, boolean compact)
+            throws IOException {
         if (initialized)
             return;
         String schemaString, fileString;
 
         try {
-            Thread.sleep(3000);
             schemaString = new String(Files.readAllBytes(Paths.get(schemaPath)));
             fileString = new String(Files.readAllBytes(Paths.get(filePath)));
-        } catch (InterruptedException | IOException e) {
-            throw new ResourceNotFoundException(e.getMessage());
+        } catch (IOException e) {
+            throw new IOException("There was an error when reading the instance or the schema files.");
         }
 
         object = JsonIterator.parse(schemaString);

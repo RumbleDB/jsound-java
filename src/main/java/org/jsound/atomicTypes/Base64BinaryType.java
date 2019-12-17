@@ -29,7 +29,7 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item) {
+    public boolean validate(Item item, boolean isEnumerationItem) {
         byte[] base64BinaryValue;
         try {
             base64BinaryValue = Base64.decodeBase64(item.getStringValue());
@@ -39,13 +39,13 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new Base64BinaryItem(base64BinaryValue, item.getStringValue());
-        if (!validateLengthFacets(item))
+        if (!validateLengthFacets(item, isEnumerationItem))
             return false;
         return recursivelyValidate(item);
     }
 
     @Override
-    protected boolean validateEnumeration(Item item) {
+    protected boolean validateItemAgainstEnumeration(Item item) {
         byte[] base64 = item.getBinaryValue();
         for (Item enumItem : this.getFacets().getEnumeration()) {
             if (Arrays.equals(base64, Base64.decodeBase64(enumItem.getStringValue())))
