@@ -16,7 +16,7 @@ public class AtomicFacets extends Facets {
     public TimezoneFacet explicitTimezone = null;
 
     @Override
-    public void setFacet(FacetTypes facetType) throws IOException {
+    public void setFacet(FacetTypes facetType, String typeName) throws IOException {
         definedFacets.add(facetType);
         switch (facetType) {
             case LENGTH:
@@ -57,12 +57,12 @@ public class AtomicFacets extends Facets {
                 break;
             case EXPLICIT_TIMEZONE:
                 checkField(this.explicitTimezone, "explicitTimezone");
-                this.explicitTimezone = TimezoneFacet.valueOf(getStringFromObject().toUpperCase());
+                this.explicitTimezone = TimezoneFacet.valueOf(getStringFromObject("explicitTimezone").toUpperCase());
                 break;
             case ENUMERATION:
             case METADATA:
             case CONSTRAINTS:
-                super.setFacet(facetType);
+                super.setFacet(facetType, typeName);
         }
     }
 

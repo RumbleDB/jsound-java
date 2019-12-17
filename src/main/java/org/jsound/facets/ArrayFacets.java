@@ -19,7 +19,7 @@ public class ArrayFacets extends Facets {
     public Integer minLength = null, maxLength = null;
 
     @Override
-    public void setFacet(FacetTypes facetType) throws IOException {
+    public void setFacet(FacetTypes facetType, String typeName) throws IOException {
         definedFacets.add(facetType);
         switch (facetType) {
             case CONTENT:
@@ -37,7 +37,7 @@ public class ArrayFacets extends Facets {
             case ENUMERATION:
             case METADATA:
             case CONSTRAINTS:
-                super.setFacet(facetType);
+                super.setFacet(facetType, typeName);
         }
     }
 

@@ -2,6 +2,7 @@ package org.jsound.facets;
 
 import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
+import jsound.exceptions.MissingNameOrTypeException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.json.SchemaFileJsonParser;
 import org.jsound.type.FieldDescriptor;
@@ -21,12 +22,12 @@ public class ObjectFacets extends Facets {
     private Boolean closed = null;
 
     @Override
-    public void setFacet(FacetTypes facetType) throws IOException {
+    public void setFacet(FacetTypes facetType, String typeName) throws IOException {
         definedFacets.add(facetType);
         switch (facetType) {
             case CONTENT:
                 checkField(this.objectContent, "objectContent");
-                this.setObjectContentFromObject();
+                this.setObjectContentFromObject(typeName);
                 break;
             case CLOSED:
                 checkField(this.closed, "closed");
@@ -35,11 +36,11 @@ public class ObjectFacets extends Facets {
             case ENUMERATION:
             case METADATA:
             case CONSTRAINTS:
-                super.setFacet(facetType);
+                super.setFacet(facetType, typeName);
         }
     }
 
-    private void setObjectContentFromObject() throws IOException {
+    private void setObjectContentFromObject(String typeName) throws IOException {
         String key;
         Map<String, FieldDescriptor> fieldDescriptors = new LinkedHashMap<>();
         while (object.readArray()) {
@@ -47,7 +48,7 @@ public class ObjectFacets extends Facets {
             while ((key = object.readObject()) != null) {
                 switch (key) {
                     case "name":
-                        String name = getStringFromObject();
+                        String name = getStringFromObject("name");
                         if (fieldDescriptors.containsKey(name))
                             throw new InvalidSchemaException("The field descriptor " + name + " was already defined.");
                         fieldDescriptor.setName(name);
@@ -67,6 +68,9 @@ public class ObjectFacets extends Facets {
                     default:
                         throw new InvalidSchemaException(key + " is not a valid property for the field descriptor.");
                 }
+            }
+            if (fieldDescriptor.getName() == null) {
+                throw new MissingNameOrTypeException("Field \"name\" is missing in object content for type " + typeName);
             }
             fieldDescriptors.put(fieldDescriptor.getName(), fieldDescriptor);
         }
@@ -91,11 +95,16 @@ public class ObjectFacets extends Facets {
         this.objectContent = objectContent;
     }
 
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+
     @Override
     public Map<String, FieldDescriptor> getObjectContent() {
         return objectContent;
     }
 
+    @Override
     public boolean isClosed() {
         return closed != null ? closed : false;
     }

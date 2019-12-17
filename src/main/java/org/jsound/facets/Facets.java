@@ -26,7 +26,7 @@ public class Facets {
 
     public Set<FacetTypes> definedFacets = new HashSet<>();
 
-    public void setFacet(FacetTypes facetType) throws IOException {
+    public void setFacet(FacetTypes facetType, String typeName) throws IOException {
         definedFacets.add(facetType);
         switch (facetType) {
             case ENUMERATION:
@@ -57,13 +57,10 @@ public class Facets {
             throw new InvalidSchemaException("Field " + fieldName + " is already defined");
     }
 
-    public static String getStringFromObject() throws IOException {
+    public static String getStringFromObject(String key) throws IOException {
         if (!object.whatIsNext().equals(ValueType.STRING))
-            throw new UnexpectedTypeException("Invalid string " + object.read().toString());
-        String result = object.readString();
-        if (result == null)
-            throw new InvalidSchemaException("Invalid null value.");
-        return result;
+            throw new UnexpectedTypeException(key + " should be a string; " + object.whatIsNext().name().toLowerCase() + " was provided instead.");
+        return object.readString();
     }
 
     private static List<Item> getEnumerationFromObject() throws IOException {
@@ -81,9 +78,13 @@ public class Facets {
             throw new UnexpectedTypeException("Constraints should be an array.");
         List<String> constraints = new ArrayList<>();
         while (object.readArray()) {
-            constraints.add(getStringFromObject());
+            constraints.add(getStringFromObject("Each constraint"));
         }
         return constraints;
+    }
+
+    public boolean isClosed() {
+        return false;
     }
 
     public Map<String, FieldDescriptor> getObjectContent() {

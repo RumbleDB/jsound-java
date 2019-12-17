@@ -8,6 +8,7 @@ public class FieldDescriptor {
     private Boolean required = false;
     private Item defaultValue;
     private Boolean unique = false;
+    public boolean requiredIsChecked = false;
 
     public void setName(String name) {
         this.name = name;

@@ -96,6 +96,7 @@ public class CompactSchemaFileJsonParser {
             setFieldDescriptorType(fieldDescriptor);
             if (allowNull) {
                 UnionFacets unionTypeFacets = new UnionFacets();
+                unionTypeFacets.setUnionContent("");
                 if (fieldDescriptor.getTypeOrReference().getStringType() != null)
                     unionTypeFacets.getUnionContent()
                         .getTypes()

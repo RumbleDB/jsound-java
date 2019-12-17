@@ -17,6 +17,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Collections.singletonList(CONTENT));
     private final UnionFacets facets;
+    private boolean contentIsValid = false;
 
     public UnionTypeDescriptor(String name, UnionFacets facets) {
         super(ItemTypes.VALUE, name);

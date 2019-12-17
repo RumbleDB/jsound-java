@@ -178,4 +178,8 @@ public abstract class TypeDescriptor {
         }
         return false;
     }
+
+    public boolean isSubtypeOf(TypeDescriptor typeDescriptor) {
+        return false;
+    }
 }

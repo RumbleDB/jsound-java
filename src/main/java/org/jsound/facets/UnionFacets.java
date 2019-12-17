@@ -14,12 +14,8 @@ import static org.jsound.json.CompactSchemaFileJsonParser.compactSchema;
 public class UnionFacets extends Facets {
     private UnionContentDescriptor unionContent;
 
-    public UnionFacets() {
-        unionContent = new UnionContentDescriptor();
-    }
-
     @Override
-    public void setFacet(FacetTypes facetType) throws IOException {
+    public void setFacet(FacetTypes facetType, String typeName) throws IOException {
         definedFacets.add(facetType);
         switch (facetType) {
             case CONTENT:
@@ -29,7 +25,7 @@ public class UnionFacets extends Facets {
             case ENUMERATION:
             case METADATA:
             case CONSTRAINTS:
-                super.setFacet(facetType);
+                super.setFacet(facetType, typeName);
         }
     }
 
