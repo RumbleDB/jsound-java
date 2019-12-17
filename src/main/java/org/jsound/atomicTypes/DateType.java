@@ -62,7 +62,7 @@ public class DateType extends AtomicTypeDescriptor {
         if (this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE) && !checkExplicitTimezone(item))
             return false;
 
-        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+        return recursivelyValidate(item);
     }
 
     private boolean checkExplicitTimezone(Item item) {
@@ -99,7 +99,7 @@ public class DateType extends AtomicTypeDescriptor {
 
     @Override
     protected boolean validateEnumeration(Item item) {
-        DateTime date = getDateFromItem(item);
+        DateTime date = item.getDateTime();
         for (Item enumItem : this.getFacets().getEnumeration()) {
             if (date.equals(getDateFromItem(enumItem)))
                 return true;

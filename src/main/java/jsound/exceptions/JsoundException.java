@@ -17,13 +17,7 @@ public class JsoundException extends RuntimeException {
 
     JsoundException(String message, ErrorCodes errorCode) {
         super("Error [err: " + errorCode + " ] " + message);
-        ErrorCodes tmpErrorCode1;
-        try {
-            tmpErrorCode1 = ErrorCodes.valueOf(errorCode.getErrorCode());
-        } catch (IllegalArgumentException e) {
-            tmpErrorCode1 = ErrorCodes.RUNTIME_EXCEPTION_ERROR_CODE;
-        }
-        this.errorCode = tmpErrorCode1;
+        this.errorCode = errorCode;
         this.errorMessage = message;
     }
 

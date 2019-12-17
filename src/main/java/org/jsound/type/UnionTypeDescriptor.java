@@ -20,7 +20,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     public UnionTypeDescriptor(String name, UnionFacets facets) {
         super(ItemTypes.VALUE, name);
-        this.baseType = new TypeOrReference(this);
+        this.baseType = null;
         this.facets = facets;
     }
 
@@ -41,10 +41,37 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     @Override
     public boolean validate(Item item) {
-        TypeDescriptor typeDescriptor;
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case CONTENT:
+                    if (!validateContentFacet(item))
+                        return false;
+                    break;
+                case ENUMERATION:
+                    if (!validateEnumeration(item))
+                        return false;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return recursivelyValidate(item);
+    }
+
+    private boolean validateContentFacet(Item item) {
         for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-            typeDescriptor = typeOrReference.getTypeDescriptor();
-            if (typeDescriptor.validate(item))
+            if (typeOrReference.getTypeDescriptor().validate(item))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean validateEnumeration(Item item) {
+        if (this.getFacets().getEnumeration() == null)
+            return true;
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            // TODO: validate enumItem against UnionTypeDescriptor
+            if (item.equals(enumItem))
                 return true;
         }
         return false;
@@ -52,11 +79,9 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     @Override
     public TysonItem annotate(Item item) {
-        TypeDescriptor typeDescriptor;
         for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-            typeDescriptor = typeOrReference.getTypeDescriptor();
-            if (typeDescriptor.validate(item))
-                return new TYSONValue(typeDescriptor.getName(), item);
+            if (typeOrReference.getTypeDescriptor().validate(item))
+                return new TYSONValue(typeOrReference.getTypeDescriptor().getName(), item);
         }
         throw new InvalidSchemaException(
                 item.getStringValue() + " cannot is not valid against any type of union " + this.getName()

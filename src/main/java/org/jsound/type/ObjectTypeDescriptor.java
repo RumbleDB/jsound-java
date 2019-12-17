@@ -1,5 +1,6 @@
 package org.jsound.type;
 
+import jsound.exceptions.InvalidEnumValueException;
 import jsound.exceptions.InvalidSchemaException;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.ObjectFacets;
@@ -24,7 +25,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
 
     public ObjectTypeDescriptor(String name, ObjectFacets facets) {
         super(ItemTypes.OBJECT, name);
-        this.baseType = new TypeOrReference(this);
+        this.baseType = null;
         this.facets = facets;
     }
 
@@ -47,12 +48,29 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     public boolean validate(Item item) {
         if (!item.isObject())
             return false;
-        ObjectItem objectItem;
-        try {
-            objectItem = (ObjectItem) item;
-        } catch (ClassCastException e) {
-            return false;
+        ObjectItem objectItem = (ObjectItem) item;
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case CONTENT:
+                    if (!validateContentFacet(objectItem))
+                        return false;
+                    break;
+                case CLOSED:
+                    if (!validateClosedFacet(objectItem))
+                        return false;
+                    break;
+                case ENUMERATION:
+                    if (!validateEnumeration(objectItem))
+                        return false;
+                    break;
+                default:
+                    break;
+            }
         }
+        return recursivelyValidate(item);
+    }
+
+    private boolean validateClosedFacet(ObjectItem objectItem) {
         if (this.getFacets().isClosed()) {
             for (String key : objectItem.getItemMap().keySet()) {
                 if (!this.getFacets().getObjectContent().containsKey(key)) {
@@ -60,23 +78,48 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                 }
             }
         }
+        return true;
+    }
+
+    private boolean validateEnumeration(ObjectItem objectItem) {
+        if (this.getFacets().getEnumeration() == null)
+            return true;
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            if (!enumItem.isObject())
+                throw new InvalidEnumValueException("Value " + enumItem.getStringValue() + " in enumeration is not in the type value space for type " + this.getName() + ".");
+            ObjectItem enumObjectItem = (ObjectItem) enumItem;
+            if (objectItem.equals(enumObjectItem))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean validateContentFacet(ObjectItem objectItem) {
         for (String fieldName : this.getFacets().getObjectContent().keySet()) {
             FieldDescriptor fieldDescriptor = this.getFacets().getObjectContent().get(fieldName);
             if (objectItem.getItemMap().containsKey(fieldName)) {
                 if (
-                    !fieldDescriptor
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .validate(objectItem.getItemMap().get(fieldName))
+                        !fieldDescriptor
+                                .getTypeOrReference()
+                                .getTypeDescriptor()
+                                .validate(objectItem.getItemMap().get(fieldName))
                 )
                     return false;
             } else if (fieldDescriptor.isRequired() && fieldDescriptor.getDefaultValue() == null)
                 return false;
-            if (fieldDescriptor.getDefaultValue() != null)
-                if (!fieldDescriptor.getTypeOrReference().getTypeDescriptor().validate(fieldDescriptor.getDefaultValue()))
-                    return false;
+            if (!validateDefaultValue(fieldDescriptor))
+                return false;
         }
-        return this.baseType.getTypeDescriptor().equals(this) || this.baseType.getTypeDescriptor().validate(item);
+        return true;
+    }
+
+    private boolean validateDefaultValue(FieldDescriptor fieldDescriptor) {
+        if (fieldDescriptor.getDefaultValue() != null) {
+            return fieldDescriptor.getTypeOrReference()
+                    .getTypeDescriptor()
+                    .validate(fieldDescriptor.getDefaultValue());
+        }
+        return true;
     }
 
     @Override
@@ -94,7 +137,9 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
             if (objectItem.getItemMap().containsKey(fieldName)) {
                 object.put(
                     fieldName,
-                    fieldDescriptor.getTypeOrReference().getTypeDescriptor().annotate(objectItem.getItemMap().get(fieldName))
+                    fieldDescriptor.getTypeOrReference()
+                        .getTypeDescriptor()
+                        .annotate(objectItem.getItemMap().get(fieldName))
                 );
             } else if (fieldDescriptor.getDefaultValue() != null) {
                 object.put(
@@ -106,7 +151,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
 
         for (String key : objectItem.getItemMap().keySet()) {
             if (!this.getFacets().getObjectContent().containsKey(key)) {
-                if (!this.baseType.getTypeDescriptor().equals(this))
+                if (this.baseType != null)
                     object.put(key, this.baseType.getTypeDescriptor().annotate(objectItem.getItemMap().get(key)));
                 else
                     object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key)));

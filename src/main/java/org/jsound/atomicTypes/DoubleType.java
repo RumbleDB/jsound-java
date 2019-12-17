@@ -46,7 +46,7 @@ public class DoubleType extends AtomicTypeDescriptor {
         item = new DoubleItem(doubleValue);
         if (!validateBoundariesFacets(item))
             return false;
-        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+        return recursivelyValidate(item);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.jsound.type;
 
+import jsound.exceptions.LessRestrictiveFacetException;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
 import org.jsound.item.Item;
@@ -110,10 +111,10 @@ public abstract class TypeDescriptor {
         this.type = type;
     }
 
-    public TypeDescriptor getBaseType() {
-        return this.equals(baseType.getTypeDescriptor())
+    public TypeDescriptor getRootBaseType() {
+        return this.baseType == null
             ? this
-            : baseType.getTypeDescriptor().getBaseType();
+            : baseType.getTypeDescriptor().getRootBaseType();
     }
 
     public abstract Facets getFacets();
@@ -123,4 +124,18 @@ public abstract class TypeDescriptor {
     public abstract boolean validate(Item item);
 
     public abstract TysonItem annotate(Item item);
+
+    public boolean recursivelyValidate(Item item) {
+        if (this.baseType == null)
+            return true;
+        if (!this.baseType.getTypeDescriptor().validate(item))
+            throw new LessRestrictiveFacetException(
+                    "Facet for type "
+                        + this.getName()
+                        + " is less restrictive than that of its baseType "
+                        + this.baseType.getTypeDescriptor().getName()
+                        + "."
+            );
+        return true;
+    }
 }

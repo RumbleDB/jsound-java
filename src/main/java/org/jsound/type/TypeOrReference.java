@@ -1,6 +1,6 @@
 package org.jsound.type;
 
-import jsound.exceptions.InvalidSchemaException;
+import jsound.exceptions.TypeNotResolvedException;
 
 import static org.jsound.cli.JSoundExecutor.schema;
 
@@ -21,7 +21,7 @@ public class TypeOrReference {
         if (type == null) {
             type = schema.getOrDefault(stringType, null);
             if (type == null)
-                throw new InvalidSchemaException("Type " + stringType + " does not exist.");
+                throw new TypeNotResolvedException("Type " + stringType + " could not be resolved.");
         }
         return type;
     }

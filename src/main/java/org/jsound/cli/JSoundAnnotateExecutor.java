@@ -1,5 +1,6 @@
 package org.jsound.cli;
 
+import jsound.exceptions.JsoundException;
 import jsound.exceptions.ResourceNotFoundException;
 import org.jsound.config.JSoundRuntimeConfiguration;
 import org.tyson.TYSONObject;
@@ -18,7 +19,7 @@ class JSoundAnnotateExecutor extends JSoundExecutor {
             file.write(rootObject.toTYSONString());
         } catch (IOException e) {
             throw new ResourceNotFoundException("The specified output path is not valid.");
-        } catch (Exception e) {
+        } catch (JsoundException e) {
             System.out.println("Annotation failed ❌ : could not annotate the file with the provided the schema.");
             return false;
         }

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ApplicationInitTest {
     static String filePath = "src/main/resources/peopleFile.json";
-    static String schemaPath  = "src/main/resources/peopleSchema.json";
+    static String schemaPath = "src/main/resources/peopleSchema.json";
     static String rootType = "directory";
     public static boolean compact = true;
 
@@ -74,14 +74,54 @@ public class ApplicationInitTest {
     public void testUnionTypeField() {
         assertTrue(person.containsKey("birthDate"));
         assertTrue(person.get("birthDate").getTypeOrReference().getType().isUnionType());
-        assertTrue(person.get("birthDate").getTypeOrReference().getTypeDescriptor().getFacets().getUnionContent().getTypes().get(0).getType().isDateType());
-        assertTrue(person.get("birthDate").getTypeOrReference().getType().getFacets().getUnionContent().getTypes().get(1).getType().isDateTimeType());
+        assertTrue(
+            person.get("birthDate")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isDateType()
+        );
+        assertTrue(
+            person.get("birthDate")
+                .getTypeOrReference()
+                .getType()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isDateTimeType()
+        );
     }
 
     @Test
     public void testFieldWithQuestionMark() {
         assertTrue(person.containsKey("maritalStatus"));
-        assertTrue(person.get("maritalStatus").getTypeOrReference().getTypeDescriptor().getFacets().getUnionContent().getTypes().get(0).getType().isStringType());
-        assertTrue(person.get("maritalStatus").getTypeOrReference().getType().getFacets().getUnionContent().getTypes().get(1).getType().isNullType());
+        assertTrue(
+            person.get("maritalStatus")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isStringType()
+        );
+        assertTrue(
+            person.get("maritalStatus")
+                .getTypeOrReference()
+                .getType()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
+        );
     }
 }

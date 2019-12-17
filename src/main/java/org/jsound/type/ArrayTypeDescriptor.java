@@ -1,5 +1,6 @@
 package org.jsound.type;
 
+import jsound.exceptions.InvalidEnumValueException;
 import jsound.exceptions.InvalidSchemaException;
 import org.jsound.facets.ArrayFacets;
 import org.jsound.facets.FacetTypes;
@@ -27,7 +28,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
 
     public ArrayTypeDescriptor(String name, ArrayFacets facets) {
         super(ItemTypes.ARRAY, name);
-        this.baseType = new TypeOrReference(this);
+        this.baseType = null;
         this.facets = facets;
     }
 
@@ -45,16 +46,11 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     public boolean validate(Item item) {
         if (!item.isArray())
             return false;
-        ArrayItem arrayItem;
-        try {
-            arrayItem = (ArrayItem) item;
-        } catch (ClassCastException e) {
-            return false;
-        }
+        ArrayItem arrayItem = (ArrayItem) item;
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
-                    if (!checkContent(arrayItem))
+                    if (!validateContent(arrayItem))
                         return false;
                     break;
                 case MIN_LENGTH:
@@ -65,12 +61,18 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
                     if (arrayItem.getItems().size() > this.getFacets().maxLength)
                         return false;
                     break;
+                case ENUMERATION:
+                    if (!validateEnumeration(arrayItem))
+                        return false;
+                    break;
+                default:
+                    break;
             }
         }
-        return this.baseType.getTypeDescriptor().equals(this) || this.baseType.getTypeDescriptor().validate(item);
+        return recursivelyValidate(item);
     }
 
-    private boolean checkContent(ArrayItem arrayItem) {
+    private boolean validateContent(ArrayItem arrayItem) {
         TypeDescriptor arrayItemType = this.getFacets().getArrayContent().getType().getTypeDescriptor();
         for (Item itemInArray : arrayItem.getItems()) {
             if (!arrayItemType.validate(itemInArray))
@@ -80,6 +82,19 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         if (arrayItem.getItems().isEmpty() || !arrayItem.getItems().get(0).isObject())
             return true;
         return this.isUniqueSatisfied(arrayItem.getItems());
+    }
+
+    private boolean validateEnumeration(ArrayItem arrayItem) {
+        if (this.getFacets().getEnumeration() == null)
+            return true;
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            if (!enumItem.isArray())
+                throw new InvalidEnumValueException("Value " + enumItem.getStringValue() + " in enumeration is not in the type value space for type " + this.getName() + ".");
+            ArrayItem enumArrayItem = (ArrayItem) enumItem;
+            if (arrayItem.equals(enumArrayItem))
+                return true;
+        }
+        return false;
     }
 
     @Override

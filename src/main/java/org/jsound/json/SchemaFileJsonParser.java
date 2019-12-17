@@ -2,9 +2,12 @@ package org.jsound.json;
 
 import com.jsoniter.ValueType;
 import jsound.exceptions.AlreadyExistingTypeException;
+import jsound.exceptions.InvalidKindException;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
+import jsound.exceptions.MissingKindException;
 import jsound.exceptions.OverrideBuiltinTypeException;
+import jsound.exceptions.TypeNotResolvedException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.atomicTypes.AnyURIType;
 import org.jsound.atomicTypes.Base64BinaryType;
@@ -97,8 +100,12 @@ public class SchemaFileJsonParser {
                 );
             }
             if (baseTypeDescriptor == null)
-                throw new InvalidSchemaException(
-                        "The type " + typeDescriptor.baseType.getStringType() + " does not exist."
+                throw new TypeNotResolvedException(
+                        "BaseType "
+                            + typeDescriptor.baseType.getStringType()
+                            + " for type "
+                            + typeDescriptor.getName()
+                            + " could not be resolved."
                 );
             if (baseTypeDescriptor.baseType.getType() == null)
                 typeDescriptor.baseType = new TypeOrReference(checkType(baseTypeDescriptor));
@@ -171,7 +178,9 @@ public class SchemaFileJsonParser {
         }
 
         if (!"kind".equals(object.readObject()))
-            throw new InvalidSchemaException("Please specify the \"kind\" before other properties.");
+            throw new MissingKindException(
+                    "Field \"kind\" is missing for object " + name + " or is defined after other properties."
+            );
 
         return buildTypeDescriptor(name);
     }
@@ -188,7 +197,7 @@ public class SchemaFileJsonParser {
             case UNION:
                 return buildUnionTypeDescriptor(name);
         }
-        throw new InvalidSchemaException("Invalid kind.");
+        throw new InvalidKindException("Invalid value for field \"kind\" for type " + name + ".");
     }
 
     private static TypeDescriptor buildAtomicTypeDescriptor(String name) throws IOException {
@@ -369,7 +378,9 @@ public class SchemaFileJsonParser {
             AtomicTypes.valueOf(name);
             throw new OverrideBuiltinTypeException("Builtin types are reserved and cannot be overriden or redefined.");
         } catch (IllegalArgumentException e) {
-            throw new AlreadyExistingTypeException("Two types may not have the same name within an assembled schema set.");
+            throw new AlreadyExistingTypeException(
+                    "Two types may not have the same name within an assembled schema set."
+            );
         }
     }
 

@@ -3,9 +3,9 @@ package org.jsound.atomicTypes;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+import org.jsound.atomicItems.DurationItem;
 import org.jsound.atomicItems.YearMonthDurationItem;
 import org.jsound.facets.AtomicFacets;
-import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
 
@@ -27,19 +27,8 @@ public class YearMonthDurationType extends DurationType {
     }
 
     @Override
-    public boolean validate(Item item) {
-        Period period;
-        try {
-            period = getPeriodFromItem(item);
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-        if (this.getFacets() == null)
-            return true;
-        item = new YearMonthDurationItem(period);
-        if (!validateBoundariesFacets(item))
-            return false;
-        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+    protected DurationItem createDurationItem(Period period) {
+        return new YearMonthDurationItem(period);
     }
 
     @Override

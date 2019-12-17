@@ -41,7 +41,7 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
         item = new Base64BinaryItem(base64BinaryValue, item.getStringValue());
         if (!validateLengthFacets(item))
             return false;
-        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+        return recursivelyValidate(item);
     }
 
     @Override

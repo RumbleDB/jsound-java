@@ -35,7 +35,7 @@ public class StringType extends AtomicTypeDescriptor {
             return true;
         if (!validateLengthFacets(item))
             return false;
-        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+        return recursivelyValidate(item);
     }
 
     @Override

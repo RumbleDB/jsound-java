@@ -68,15 +68,19 @@ public class DurationType extends AtomicTypeDescriptor {
         }
         if (this.getFacets() == null)
             return true;
-        item = new DurationItem(period);
+        item = createDurationItem(period);
         if (!validateBoundariesFacets(item))
             return false;
-        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+        return recursivelyValidate(item);
+    }
+
+    protected DurationItem createDurationItem(Period period) {
+        return new DurationItem(period);
     }
 
     @Override
     protected boolean validateEnumeration(Item item) {
-        Period period = getPeriodFromItem(item);
+        Period period = item.getDuration();
         for (Item enumItem : this.getFacets().getEnumeration()) {
             if (period.equals(getPeriodFromItem(enumItem)))
                 return true;

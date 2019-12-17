@@ -1,6 +1,7 @@
 package org.jsound.type;
 
-import jsound.exceptions.InvalidSchemaException;
+import jsound.exceptions.InvalidEnumValueException;
+import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.atomicTypes.AnyURIType;
 import org.jsound.atomicTypes.Base64BinaryType;
 import org.jsound.atomicTypes.BooleanType;
@@ -62,7 +63,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
 
     protected AtomicTypeDescriptor(ItemTypes type, String name, AtomicFacets facets) {
         super(type, name);
-        this.baseType = new TypeOrReference(this);
+        this.baseType = null;
         this.facets = facets;
     }
 
@@ -83,7 +84,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
 
     @Override
     public Set<FacetTypes> getAllowedFacets() {
-        return this.getBaseType().getAllowedFacets();
+        return this.getRootBaseType().getAllowedFacets();
     }
 
     @Override
@@ -164,8 +165,9 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
                 if (shouldcreateAtomicFacets)
                     facets = createAtomicFacets(AnyURIType._allowedFacets);
                 return new AnyURIType(name, facets);
+            default:
+                throw new UnexpectedTypeException("Unexpected value: " + atomicType);
         }
-        throw new InvalidSchemaException("Invalid atomic baseType");
     }
 
     protected boolean validateLengthFacets(Item item) {
@@ -188,8 +190,10 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
                         if (!validateEnumeration(item))
                             return false;
                     } catch (Exception e) {
-                        return false;
+                        throw new InvalidEnumValueException("A value in enumeration is not in the type value space for type " + this.getName() + ".");
                     }
+                    break;
+                default:
                     break;
             }
         }
@@ -220,8 +224,10 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
                         if (!validateEnumeration(item))
                             return false;
                     } catch (Exception e) {
-                        return false;
+                        throw new InvalidEnumValueException("A value in enumeration is not in the type value space for type " + this.getName() + ".");
                     }
+                    break;
+                default:
                     break;
             }
         }
@@ -238,6 +244,8 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
                 case FRACTION_DIGITS:
                     if (item.castToDecimalValue().scale() > this.getFacets().fractionDigits)
                         return false;
+                    break;
+                default:
                     break;
             }
         }

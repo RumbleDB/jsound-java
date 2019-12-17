@@ -58,7 +58,7 @@ public class DecimalType extends AtomicTypeDescriptor {
             return false;
         if (!validateDigitsFacets(item))
             return false;
-        return this.equals(this.baseType.getTypeDescriptor()) || this.baseType.getTypeDescriptor().validate(item);
+        return recursivelyValidate(item);
     }
 
     @Override
