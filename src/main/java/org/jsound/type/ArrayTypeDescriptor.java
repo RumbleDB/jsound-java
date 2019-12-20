@@ -1,6 +1,7 @@
 package org.jsound.type;
 
 import jsound.exceptions.InvalidSchemaException;
+import jsound.exceptions.LessRestrictiveFacetException;
 import org.jsound.facets.ArrayFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.ArrayItem;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.jsound.facets.FacetTypes.CONTENT;
+import static org.jsound.facets.FacetTypes.ENUMERATION;
 import static org.jsound.facets.FacetTypes.MAX_LENGTH;
 import static org.jsound.facets.FacetTypes.MIN_LENGTH;
 
@@ -132,6 +134,89 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
                         }
                     }
                 }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void isSubtypeOf(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor == null)
+            this.subtypeIsValid = true;
+        if (this.subtypeIsValid)
+            return;
+        if (!typeDescriptor.isArrayType())
+            throw new LessRestrictiveFacetException("Type "
+                    + this.getName()
+                    + " is not subtype of "
+                    + typeDescriptor.getName());
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case CONTENT:
+                    isArrayContentMoreRestrictive((ArrayTypeDescriptor) typeDescriptor);
+                    break;
+                case MIN_LENGTH:
+                case MAX_LENGTH:
+                    areLengthFacetsMoreRestrictive((ArrayTypeDescriptor) typeDescriptor);
+                    break;
+                case ENUMERATION:
+                    isEnumerationMoreRestrictive(((ArrayTypeDescriptor) typeDescriptor).getFacets());
+                    break;
+            }
+        }
+
+        this.subtypeIsValid = true;
+        if (this.baseType != null)
+            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
+    }
+
+    private void areLengthFacetsMoreRestrictive(ArrayTypeDescriptor typeDescriptor) {
+        if (this.getFacets().getDefinedFacets().contains(MIN_LENGTH) &&
+                typeDescriptor.getFacets().getDefinedFacets().contains(MIN_LENGTH) &&
+                this.getFacets().minLength < typeDescriptor.getFacets().minLength)
+            throw new InvalidSchemaException("Facet minLength for type "
+                    + this.getName()
+                    + " is less restrictive than that of its baseType.");
+        if (this.getFacets().getDefinedFacets().contains(MAX_LENGTH) &&
+                typeDescriptor.getFacets().getDefinedFacets().contains(MAX_LENGTH) &&
+                this.getFacets().maxLength > typeDescriptor.getFacets().maxLength)
+            throw new InvalidSchemaException("Facet maxLength for type "
+                    + this.getName()
+                    + " is less restrictive than that of its baseType.");
+    }
+
+    private void isArrayContentMoreRestrictive(ArrayTypeDescriptor typeDescriptor) {
+        if (!typeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
+            return;
+        this.getFacets().getArrayContent().getType().getTypeDescriptor().isSubtypeOf(
+                typeDescriptor.getFacets().getArrayContent().getType().getTypeDescriptor());
+    }
+
+    protected boolean isEnumerationMoreRestrictive(ArrayFacets facets) {
+        if (!facets.getDefinedFacets().contains(ENUMERATION))
+            return enumerationRestrictsMinLength(facets);
+        for (Item item : this.getFacets().getEnumeration()) {
+            if (!facets.getEnumeration().contains(item))
+                return false;
+        }
+        return true;
+    }
+
+    private boolean enumerationRestrictsMinLength(ArrayFacets facets) {
+        if (facets.getDefinedFacets().contains(MIN_LENGTH)) {
+            for (Item item : this.getFacets().getEnumeration()) {
+                if (item.getItems().size() < (facets.minLength))
+                    return false;
+            }
+        }
+        return enumerationRestrictsMaxLength(facets);
+    }
+
+    private boolean enumerationRestrictsMaxLength(ArrayFacets facets) {
+        if (facets.getDefinedFacets().contains(MAX_LENGTH)) {
+            for (Item item : this.getFacets().getEnumeration()) {
+                if (item.getItems().size() > facets.maxLength)
+                    return false;
             }
         }
         return true;

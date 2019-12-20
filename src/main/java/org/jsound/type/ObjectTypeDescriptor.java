@@ -3,7 +3,7 @@ package org.jsound.type;
 import jsound.exceptions.ClosedNotRespectedException;
 import jsound.exceptions.ClosedSetBackToFalseException;
 import jsound.exceptions.InvalidSchemaException;
-import jsound.exceptions.RequiredSertBackToFalseException;
+import jsound.exceptions.LessRestrictiveFacetException;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.ObjectFacets;
 import org.jsound.item.Item;
@@ -59,7 +59,6 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                         return false;
                     break;
                 case CLOSED:
-                    checkClosedFacet();
                     if (!validateClosedFacet(objectItem))
                         return false;
                     break;
@@ -91,37 +90,6 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     // this.closedIsChecked = true;
     // }
 
-    private boolean checkClosedFacet() {
-        boolean objectDescriptorIsClosed;
-        if (baseType == null || this.getFacets().isClosed() || this.closedIsChecked) {
-            objectDescriptorIsClosed = this.getFacets().isClosed();
-        } else {
-            objectDescriptorIsClosed = ((ObjectTypeDescriptor) this.baseType.getTypeDescriptor()).checkClosedFacet(); // THERE
-                                                                                                                      // IS
-                                                                                                                      // A
-                                                                                                                      // BASETYPE
-                                                                                                                      // THAT
-                                                                                                                      // SET
-                                                                                                                      // CLOSED
-                                                                                                                      // TO
-                                                                                                                      // TRUE
-            if (objectDescriptorIsClosed) {
-                if (this.getFacets().getDefinedFacets().contains(CLOSED)) // CLOSED WAS EXPLICITLY SET BACK TO FALSE
-                    throw new ClosedSetBackToFalseException(
-                            "The \"closed\" facet for type "
-                                + this.getName()
-                                + " cannot be set back to false since it was set to true in its baseType "
-                                + this.baseType.getTypeDescriptor().getName()
-                                + "."
-                    );
-                else
-                    this.getFacets().setClosed(true);
-            }
-        }
-        this.closedIsChecked = true;
-        return objectDescriptorIsClosed;
-    }
-
     private boolean validateClosedFacet(ObjectItem objectItem) {
         if (this.getFacets().isClosed()) {
             for (String key : objectItem.getItemMap().keySet()) {
@@ -129,8 +97,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                     throw new ClosedNotRespectedException(
                             "Type "
                                 + this.getName()
-                                +
-                                " is closed, and the \"content\" facet does not allow for field "
+                                + " is closed, and the \"content\" facet does not allow for field "
                                 + key
                                 + "."
                     );
@@ -153,52 +120,6 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                     return false;
             } else if (fieldDescriptor.isRequired() && fieldDescriptor.getDefaultValue() == null)
                 return false;
-            else if (!fieldDescriptor.isRequired())
-                checkRequiredField(fieldDescriptor);
-            if (!validateDefaultValue(fieldDescriptor))
-                return false;
-        }
-        return true;
-    }
-
-    private void checkRequiredField(FieldDescriptor fieldDescriptor) {
-        if (!fieldDescriptor.requiredIsChecked) {
-            if (this.baseType != null) {
-                if (
-                    this.baseType.getTypeDescriptor()
-                        .getFacets()
-                        .getObjectContent()
-                        .containsKey(fieldDescriptor.getName())
-                ) {
-                    if (
-                        this.baseType.getTypeDescriptor()
-                            .getFacets()
-                            .getObjectContent()
-                            .get(fieldDescriptor.getName())
-                            .isRequired()
-                    )
-                        throw new RequiredSertBackToFalseException(
-                                "Field "
-                                    + fieldDescriptor.getName()
-                                    + " for type "
-                                    +
-                                    this.getName()
-                                    + " cannot be set back to false. It is set to true in baseType "
-                                    + this.baseType.getTypeDescriptor().getName()
-                                    + "."
-                        );
-                }
-                ((ObjectTypeDescriptor) this.baseType.getTypeDescriptor()).checkRequiredField(fieldDescriptor);
-            }
-        }
-        fieldDescriptor.requiredIsChecked = true;
-    }
-
-    private boolean validateDefaultValue(FieldDescriptor fieldDescriptor) {
-        if (fieldDescriptor.getDefaultValue() != null) {
-            return fieldDescriptor.getTypeOrReference()
-                .getTypeDescriptor()
-                .validate(fieldDescriptor.getDefaultValue(), false);
         }
         return true;
     }
@@ -244,5 +165,62 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     @Override
     public ObjectFacets getFacets() {
         return facets;
+    }
+
+    @Override
+    public void isSubtypeOf(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor == null)
+            this.subtypeIsValid = true;
+        if (this.subtypeIsValid)
+            return;
+        if (!typeDescriptor.isObjectType())
+            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + typeDescriptor.getName());
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case CONTENT:
+                    isObjectContentMoreRestrictive((ObjectTypeDescriptor) typeDescriptor);
+                    break;
+                case CLOSED:
+                    checkClosedFacet();
+                    break;
+            }
+        }
+        this.subtypeIsValid = true;
+        if (this.baseType != null)
+            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
+    }
+
+    private void isObjectContentMoreRestrictive(ObjectTypeDescriptor typeDescriptor) {
+        if (!typeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
+            return;
+        for (FieldDescriptor fieldDescriptor : this.getFacets().getObjectContent().values()) {
+            if (typeDescriptor.getFacets().getObjectContent().containsKey(fieldDescriptor.getName()))
+                fieldDescriptor.isMoreRestrictive(typeDescriptor);
+            fieldDescriptor.validateDefaultValue();
+        }
+    }
+
+    private boolean checkClosedFacet() {
+        boolean objectDescriptorIsClosed;
+        if (baseType == null || this.getFacets().isClosed() || this.closedIsChecked) {
+            objectDescriptorIsClosed = this.getFacets().isClosed();
+        } else {
+            //THERE IS A BASETYPE THAT SET CLOSED TO TRUE
+            objectDescriptorIsClosed = ((ObjectTypeDescriptor) this.baseType.getTypeDescriptor()).checkClosedFacet();
+            if (objectDescriptorIsClosed) {
+                if (this.getFacets().closedIsSet) // CLOSED WAS EXPLICITLY SET BACK TO FALSE
+                    throw new ClosedSetBackToFalseException(
+                            "The \"closed\" facet for type "
+                                    + this.getName()
+                                    + " cannot be set back to false since it was set to true in its baseType "
+                                    + this.baseType.getTypeDescriptor().getName()
+                                    + "."
+                    );
+                else
+                    this.getFacets().setClosed(true);
+            }
+        }
+        this.closedIsChecked = true;
+        return objectDescriptorIsClosed;
     }
 }

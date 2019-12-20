@@ -118,7 +118,7 @@ public class SchemaFileJsonParser {
             }
 
             for (FacetTypes facetType : typeDescriptor.getFacets().getDefinedFacets()) {
-                if (!baseTypeDescriptor.getAllowedFacets().contains(facetType))
+                if (!baseTypeDescriptor.getAllowedFacets().contains(facetType) && !commonFacets.contains(facetType))
                     throw new InvalidSchemaException(
                             "Facet " + facetType.name() + " is not valid for type " + typeDescriptor.getName() + "."
                     );
@@ -162,7 +162,7 @@ public class SchemaFileJsonParser {
             case NULL:
                 return new NullType(atomicTypeDescriptor);
         }
-        throw new InvalidSchemaException("Unrecognized basetype.");
+        throw new InvalidSchemaException("Unrecognized baseType.");
     }
 
     public static TypeDescriptor getTypeDescriptor(boolean isNested) throws IOException {

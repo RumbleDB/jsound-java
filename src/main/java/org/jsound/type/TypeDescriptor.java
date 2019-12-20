@@ -14,6 +14,7 @@ public abstract class TypeDescriptor {
     private String name;
     public TypeOrReference baseType;
     private boolean enumerationIsValid = false;
+    protected boolean subtypeIsValid = false;
 
     TypeDescriptor(ItemTypes type, String name) {
         this.type = type;
@@ -179,8 +180,5 @@ public abstract class TypeDescriptor {
         return false;
     }
 
-    //SHOULD IMPLEMENT ALL THE SUBTYPE DEFINITIONS FOR ALL THE TYPES
-    public boolean isSubtypeOf(TypeDescriptor typeDescriptor) {
-        return false;
-    }
+    public void isSubtypeOf(TypeDescriptor typeDescriptor) {}
 }

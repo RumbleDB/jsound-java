@@ -20,6 +20,7 @@ public class ObjectFacets extends Facets {
 
     private Map<String, FieldDescriptor> objectContent = null;
     private Boolean closed = null;
+    public boolean closedIsSet = false;
 
     @Override
     public void setFacet(FacetTypes facetType, String typeName) throws IOException {
@@ -32,6 +33,7 @@ public class ObjectFacets extends Facets {
             case CLOSED:
                 checkField(this.closed, "closed");
                 this.closed = getBooleanFromObject();
+                this.closedIsSet = true;
                 break;
             case ENUMERATION:
             case METADATA:

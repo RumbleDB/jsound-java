@@ -1,5 +1,6 @@
 package org.jsound.type;
 
+import jsound.exceptions.LessRestrictiveFacetException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.atomicTypes.AnyURIType;
 import org.jsound.atomicTypes.Base64BinaryType;
@@ -258,4 +259,69 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     protected boolean validateMaxExclusive(Item item) {
         return false;
     }
+
+    protected void areBoundariesMoreRestrictive(AtomicFacets facets) {
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case MIN_INCLUSIVE:
+                    if (!isMinInclusiveMoreRestrictive(facets))
+                        throw new LessRestrictiveFacetException("Facet minInclusive for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                case MIN_EXCLUSIVE:
+                    if (!isMinExclusiveMoreRestrictive(facets))
+                        throw new LessRestrictiveFacetException("Facet minExclusive for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                case MAX_INCLUSIVE:
+                    if (!isMaxInclusiveMoreRestrictive(facets))
+                        throw new LessRestrictiveFacetException("Facet maxInclusive for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                case MAX_EXCLUSIVE:
+                    if (!isMaxExclusiveMoreRestrictive(facets))
+                        throw new LessRestrictiveFacetException("Facet maxExclusive for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                case ENUMERATION:
+                    if (!isEnumerationMoreRestrictive(facets))
+                        throw new LessRestrictiveFacetException(this.getName() + " is not more restrictive than its baseType.");
+            }
+        }
+    }
+
+    protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
+        return false;
+    }
+
+    protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
+        return false;
+    }
+
+    protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
+        return false;
+    }
+
+    protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
+        return false;
+    }
+
+    protected boolean isEnumerationMoreRestrictive(AtomicFacets facets) {
+        return false;
+    }
+
+    protected void areDigitsFacetsMoreRestrictive(AtomicFacets facets) {
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case TOTAL_DIGITS:
+                    if (!isTotalDigitsMoreRestrictive(facets))
+                        throw new LessRestrictiveFacetException("Facet totalDigits for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                case FRACTION_DIGITS:
+                    if (!isFractionDigitsMoreRestrictive(facets))
+                        throw new LessRestrictiveFacetException("Facet fractionDigits for type " + this.getName() + " is not more restrictive than that of its baseType.");
+            }
+        }
+    }
+
+    protected boolean isFractionDigitsMoreRestrictive(AtomicFacets facets) {
+        return false;
+    }
+
+    protected boolean isTotalDigitsMoreRestrictive(AtomicFacets facets) {
+        return false;
+    }
+
+
 }

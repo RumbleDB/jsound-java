@@ -6,6 +6,7 @@ import org.joda.time.Period;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Item {
@@ -83,6 +84,10 @@ public abstract class Item {
     }
 
     public Map<String, Item> getItemMap() {
+        return null;
+    }
+
+    public List<Item> getItems() {
         return null;
     }
 

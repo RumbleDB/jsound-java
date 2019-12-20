@@ -13,6 +13,7 @@ public class ArrayItem extends Item {
         this._items = items;
     }
 
+    @Override
     public List<Item> getItems() {
         return _items;
     }
