@@ -30,6 +30,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         super(ItemTypes.OBJECT, name);
         this.baseType = null;
         this.facets = facets;
+        this.subtypeIsValid = true;
     }
 
     public ObjectTypeDescriptor(String name, TypeOrReference baseType, ObjectFacets facets) {
@@ -168,17 +169,17 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public void isSubtypeOf(TypeDescriptor typeDescriptor) {
-        if (typeDescriptor == null)
-            this.subtypeIsValid = true;
+    public void checkBaseType() {
         if (this.subtypeIsValid)
             return;
-        if (!typeDescriptor.isObjectType())
-            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + typeDescriptor.getName());
+        ObjectTypeDescriptor baseTypeDescriptor = (ObjectTypeDescriptor) this.baseType.getTypeDescriptor();
+        if (!baseTypeDescriptor.isObjectType())
+            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
+                    .getName());
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
-                    isObjectContentMoreRestrictive((ObjectTypeDescriptor) typeDescriptor);
+                    isObjectContentMoreRestrictive(baseTypeDescriptor);
                     break;
                 case CLOSED:
                     checkClosedFacet();
@@ -186,16 +187,15 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
             }
         }
         this.subtypeIsValid = true;
-        if (this.baseType != null)
-            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
+        baseTypeDescriptor.checkBaseType();
     }
 
-    private void isObjectContentMoreRestrictive(ObjectTypeDescriptor typeDescriptor) {
-        if (!typeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
+    private void isObjectContentMoreRestrictive(ObjectTypeDescriptor baseTypeDescriptor) {
+        if (!baseTypeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
             return;
         for (FieldDescriptor fieldDescriptor : this.getFacets().getObjectContent().values()) {
-            if (typeDescriptor.getFacets().getObjectContent().containsKey(fieldDescriptor.getName()))
-                fieldDescriptor.isMoreRestrictive(typeDescriptor);
+            if (baseTypeDescriptor.getFacets().getObjectContent().containsKey(fieldDescriptor.getName()))
+                fieldDescriptor.isMoreRestrictive(baseTypeDescriptor);
             fieldDescriptor.validateDefaultValue();
         }
     }

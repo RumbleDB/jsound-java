@@ -15,7 +15,8 @@ public abstract class JSoundValidateExecutor extends JSoundExecutor {
 
     private static void checkSubtypeCorrectness() {
         for (TypeDescriptor typeDescriptor : schema.values()) {
-            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
+            typeDescriptor.resolveAllFacets();
+            typeDescriptor.checkBaseType();
         }
     }
 }

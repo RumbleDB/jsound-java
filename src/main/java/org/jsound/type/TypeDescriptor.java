@@ -162,7 +162,7 @@ public abstract class TypeDescriptor {
     protected boolean validateEnumeration(Item item, boolean isEnumerationItem) {
         if (isEnumerationItem)
             return true;
-        validateEnumerationValues();
+        validateEnumerationValues(); // This should be outside as it should be computed only once in the typechecking
         try {
             return validateItemAgainstEnumeration(item);
         } catch (Exception e) {
@@ -180,5 +180,7 @@ public abstract class TypeDescriptor {
         return false;
     }
 
-    public void isSubtypeOf(TypeDescriptor typeDescriptor) {}
+    public void resolveAllFacets() {}
+
+    public void checkBaseType() {}
 }

@@ -23,6 +23,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
         super(ItemTypes.VALUE, name);
         this.baseType = null;
         this.facets = facets;
+        this.subtypeIsValid = true;
     }
 
     public UnionTypeDescriptor(String name, TypeOrReference baseType, UnionFacets facets) {

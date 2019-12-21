@@ -7,7 +7,6 @@ import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -92,17 +91,16 @@ public class DoubleType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void isSubtypeOf(TypeDescriptor typeDescriptor) {
-        if (typeDescriptor == null)
-            this.subtypeIsValid = true;
+    public void checkBaseType() {
         if (this.subtypeIsValid)
             return;
-        if (!typeDescriptor.isDoubleType())
-            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + typeDescriptor.getName());
-        areBoundariesMoreRestrictive(((AtomicTypeDescriptor) typeDescriptor).getFacets());
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
+        if (!baseTypeDescriptor.isDoubleType())
+            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
+                    .getName());
+        areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
         this.subtypeIsValid = true;
-        if (this.baseType != null)
-            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
+        baseTypeDescriptor.checkBaseType();
     }
 
     @Override

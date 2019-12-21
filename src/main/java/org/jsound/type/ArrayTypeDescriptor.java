@@ -31,6 +31,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         super(ItemTypes.ARRAY, name);
         this.baseType = null;
         this.facets = facets;
+        this.subtypeIsValid = true;
     }
 
     public ArrayTypeDescriptor(String name, TypeOrReference baseType, ArrayFacets facets) {
@@ -140,56 +141,54 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public void isSubtypeOf(TypeDescriptor typeDescriptor) {
-        if (typeDescriptor == null)
-            this.subtypeIsValid = true;
+    public void checkBaseType() {
         if (this.subtypeIsValid)
             return;
-        if (!typeDescriptor.isArrayType())
+        ArrayTypeDescriptor baseTypeDescriptor = (ArrayTypeDescriptor) this.baseType.getTypeDescriptor();
+        if (!baseTypeDescriptor.isArrayType())
             throw new LessRestrictiveFacetException("Type "
                     + this.getName()
                     + " is not subtype of "
-                    + typeDescriptor.getName());
+                    + baseTypeDescriptor.getName());
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
-                    isArrayContentMoreRestrictive((ArrayTypeDescriptor) typeDescriptor);
+                    isArrayContentMoreRestrictive(baseTypeDescriptor);
                     break;
                 case MIN_LENGTH:
                 case MAX_LENGTH:
-                    areLengthFacetsMoreRestrictive((ArrayTypeDescriptor) typeDescriptor);
+                    areLengthFacetsMoreRestrictive(baseTypeDescriptor);
                     break;
                 case ENUMERATION:
-                    isEnumerationMoreRestrictive(((ArrayTypeDescriptor) typeDescriptor).getFacets());
+                    isEnumerationMoreRestrictive(baseTypeDescriptor.getFacets());
                     break;
             }
         }
 
         this.subtypeIsValid = true;
-        if (this.baseType != null)
-            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
+        baseTypeDescriptor.checkBaseType();
     }
 
-    private void areLengthFacetsMoreRestrictive(ArrayTypeDescriptor typeDescriptor) {
+    private void areLengthFacetsMoreRestrictive(ArrayTypeDescriptor baseTypeDescriptor) {
         if (this.getFacets().getDefinedFacets().contains(MIN_LENGTH) &&
-                typeDescriptor.getFacets().getDefinedFacets().contains(MIN_LENGTH) &&
-                this.getFacets().minLength < typeDescriptor.getFacets().minLength)
+                baseTypeDescriptor.getFacets().getDefinedFacets().contains(MIN_LENGTH) &&
+                this.getFacets().minLength < baseTypeDescriptor.getFacets().minLength)
             throw new InvalidSchemaException("Facet minLength for type "
                     + this.getName()
                     + " is less restrictive than that of its baseType.");
         if (this.getFacets().getDefinedFacets().contains(MAX_LENGTH) &&
-                typeDescriptor.getFacets().getDefinedFacets().contains(MAX_LENGTH) &&
-                this.getFacets().maxLength > typeDescriptor.getFacets().maxLength)
+                baseTypeDescriptor.getFacets().getDefinedFacets().contains(MAX_LENGTH) &&
+                this.getFacets().maxLength > baseTypeDescriptor.getFacets().maxLength)
             throw new InvalidSchemaException("Facet maxLength for type "
                     + this.getName()
                     + " is less restrictive than that of its baseType.");
     }
 
-    private void isArrayContentMoreRestrictive(ArrayTypeDescriptor typeDescriptor) {
-        if (!typeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
+    private void isArrayContentMoreRestrictive(ArrayTypeDescriptor baseTypeDescriptor) {
+        if (!baseTypeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
             return;
-        this.getFacets().getArrayContent().getType().getTypeDescriptor().isSubtypeOf(
-                typeDescriptor.getFacets().getArrayContent().getType().getTypeDescriptor());
+        this.getFacets().getArrayContent().getType().getTypeDescriptor().checkBaseType(
+        );
     }
 
     protected boolean isEnumerationMoreRestrictive(ArrayFacets facets) {

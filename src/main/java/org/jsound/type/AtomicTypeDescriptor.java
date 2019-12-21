@@ -66,6 +66,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         super(type, name);
         this.baseType = null;
         this.facets = facets;
+        this.subtypeIsValid = true;
     }
 
     public AtomicTypeDescriptor(ItemTypes type, String name, TypeOrReference baseType, AtomicFacets facets) {

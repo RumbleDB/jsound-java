@@ -7,7 +7,6 @@ import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -57,17 +56,16 @@ public class AnyURIType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void isSubtypeOf(TypeDescriptor typeDescriptor) {
-        if (typeDescriptor == null)
-            this.subtypeIsValid = true;
+    public void checkBaseType() {
         if (this.subtypeIsValid)
             return;
-        if (!typeDescriptor.isAnyURIType())
-            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + typeDescriptor.getName());
-        areLengthFacetsMoreRestrictive(((AtomicTypeDescriptor) typeDescriptor).getFacets());
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
+        if (!baseTypeDescriptor.isAnyURIType())
+            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
+                    .getName());
+        areLengthFacetsMoreRestrictive(baseTypeDescriptor.getFacets());
         this.subtypeIsValid = true;
-        if (this.baseType != null)
-            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
+        baseTypeDescriptor.checkBaseType();
     }
 
     @Override

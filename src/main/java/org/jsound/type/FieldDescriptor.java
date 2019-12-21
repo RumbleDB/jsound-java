@@ -54,16 +54,16 @@ public class FieldDescriptor {
         return defaultValue;
     }
 
-    public void isMoreRestrictive(ObjectTypeDescriptor typeDescriptor) {
-        this.getTypeOrReference().getTypeDescriptor().isSubtypeOf(
-                typeDescriptor.getFacets().getObjectContent().get(this.getName()).getTypeOrReference().getTypeDescriptor());
+    public void isMoreRestrictive(ObjectTypeDescriptor baseTypeDescriptor) {
+        this.getTypeOrReference().getTypeDescriptor().checkBaseType(
+        );
         if (!this.isRequired() && this.requiredIsSet)
-            checkRequiredField(typeDescriptor);
+            checkRequiredField(baseTypeDescriptor);
     }
 
-    private void checkRequiredField(ObjectTypeDescriptor typeDescriptor) {
+    private void checkRequiredField(ObjectTypeDescriptor baseTypeDescriptor) {
         if (!this.requiredIsChecked) {
-            FieldDescriptor fieldDescriptor = typeDescriptor.getFacets().getObjectContent().getOrDefault(this.getName(), null);
+            FieldDescriptor fieldDescriptor = baseTypeDescriptor.getFacets().getObjectContent().getOrDefault(this.getName(), null);
             if (fieldDescriptor == null)
                 return;
             if (fieldDescriptor.isRequired())
@@ -71,11 +71,11 @@ public class FieldDescriptor {
                     "Field "
                             + this.getName()
                             + " cannot be set back to false. It is set to true in baseType "
-                            + typeDescriptor.getName()
+                            + baseTypeDescriptor.getName()
                             + "."
                 );
-            if (typeDescriptor.baseType != null)
-                fieldDescriptor.checkRequiredField((ObjectTypeDescriptor) typeDescriptor.baseType.getTypeDescriptor());
+            if (baseTypeDescriptor.baseType != null)
+                fieldDescriptor.checkRequiredField((ObjectTypeDescriptor) baseTypeDescriptor.baseType.getTypeDescriptor());
         }
         this.requiredIsChecked = true;
     }
