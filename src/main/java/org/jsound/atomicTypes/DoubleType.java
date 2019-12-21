@@ -91,8 +91,8 @@ public class DoubleType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType() {
-        checkBoundariesFacet();
+    public void checkBaseType(TypeDescriptor typeDescriptor) {
+        checkBoundariesFacet(typeDescriptor);
     }
 
     @Override

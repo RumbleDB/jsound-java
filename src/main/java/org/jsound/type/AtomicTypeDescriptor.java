@@ -350,10 +350,10 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
             || facets.fractionDigits.equals(this.getFacets().fractionDigits);
     }
 
-    protected void areLengthFacetsMoreRestrictive() {
+    protected void areLengthFacetsMoreRestrictive(TypeDescriptor typeDescriptor) {
         if (this.subtypeIsValid)
             return;
-        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) typeDescriptor;
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case LENGTH:
@@ -480,20 +480,20 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         return typeDescriptor.isAtomicType();
     }
 
-    protected void checkBoundariesAndDigitsFacets() {
+    protected void checkBoundariesAndDigitsFacets(TypeDescriptor typeDescriptor) {
         if (this.subtypeIsValid)
             return;
-        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) typeDescriptor;
         areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
         areDigitsFacetsMoreRestrictive(baseTypeDescriptor.getFacets());
         this.subtypeIsValid = true;
         baseTypeDescriptor.checkBaseType();
     }
 
-    protected void checkBoundariesAndTimezoneFacets() {
+    protected void checkBoundariesAndTimezoneFacets(TypeDescriptor typeDescriptor) {
         if (this.subtypeIsValid)
             return;
-        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) typeDescriptor;
         areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
         if (this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE))
             isExplicitTimezoneMoreRestrictive(baseTypeDescriptor.getFacets());
@@ -501,10 +501,10 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         baseTypeDescriptor.checkBaseType();
     }
 
-    protected void checkBoundariesFacet() {
+    protected void checkBoundariesFacet(TypeDescriptor typeDescriptor) {
         if (this.subtypeIsValid)
             return;
-        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) typeDescriptor;
         areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
         this.subtypeIsValid = true;
         baseTypeDescriptor.checkBaseType();

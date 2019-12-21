@@ -57,8 +57,8 @@ public class HexBinaryType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType() {
-        areLengthFacetsMoreRestrictive();
+    public void checkBaseType(TypeDescriptor typeDescriptor) {
+        areLengthFacetsMoreRestrictive(typeDescriptor);
     }
 
 

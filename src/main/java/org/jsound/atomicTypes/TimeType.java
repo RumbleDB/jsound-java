@@ -111,8 +111,8 @@ public class TimeType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType() {
-        checkBoundariesAndTimezoneFacets();
+    public void checkBaseType(TypeDescriptor typeDescriptor) {
+        checkBoundariesAndTimezoneFacets(typeDescriptor);
     }
 
     @Override

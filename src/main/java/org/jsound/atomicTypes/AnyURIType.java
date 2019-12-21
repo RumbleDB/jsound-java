@@ -56,8 +56,8 @@ public class AnyURIType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType() {
-        areLengthFacetsMoreRestrictive();
+    public void checkBaseType(TypeDescriptor typeDescriptor) {
+        areLengthFacetsMoreRestrictive(typeDescriptor);
     }
 
     @Override

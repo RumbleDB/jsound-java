@@ -141,10 +141,10 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public void checkBaseType() {
+    public void checkBaseType(TypeDescriptor typeDescriptor) {
         if (this.subtypeIsValid)
             return;
-        ArrayTypeDescriptor baseTypeDescriptor = (ArrayTypeDescriptor) this.baseType.getTypeDescriptor();
+        ArrayTypeDescriptor baseTypeDescriptor = (ArrayTypeDescriptor) typeDescriptor;
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:

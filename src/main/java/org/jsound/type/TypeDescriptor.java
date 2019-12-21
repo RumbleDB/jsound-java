@@ -210,10 +210,12 @@ public abstract class TypeDescriptor {
         }
     }
 
-    public void checkBaseType() {
+    public void checkBaseType(TypeDescriptor typeDescriptor) {
     }
 
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkBaseType() {
+        if (this.baseType != null)
+            checkBaseType(this.baseType.getTypeDescriptor());
     }
 
     protected abstract boolean hasCompatibleType(TypeDescriptor typeDescriptor);

@@ -103,8 +103,8 @@ public class DecimalType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType() {
-        checkBoundariesAndDigitsFacets();
+    public void checkBaseType(TypeDescriptor typeDescriptor) {
+        checkBoundariesAndDigitsFacets(typeDescriptor);
     }
 
     @Override

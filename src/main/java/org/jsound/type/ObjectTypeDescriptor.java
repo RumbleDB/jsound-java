@@ -154,10 +154,10 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public void checkBaseType() {
+    public void checkBaseType(TypeDescriptor typeDescriptor) {
         if (this.subtypeIsValid)
             return;
-        ObjectTypeDescriptor baseTypeDescriptor = (ObjectTypeDescriptor) this.baseType.getTypeDescriptor();
+        ObjectTypeDescriptor baseTypeDescriptor = (ObjectTypeDescriptor) typeDescriptor;
         if (!baseTypeDescriptor.isObjectType())
             throw new LessRestrictiveFacetException(
                     "Type "
