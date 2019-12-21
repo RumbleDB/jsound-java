@@ -31,7 +31,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         super(ItemTypes.OBJECT, name);
         this.baseType = null;
         this.facets = facets;
-        this.subtypeIsValid = true;
+        this.baseTypeIsChecked = true;
         this.hasResolvedAllFacets = true;
     }
 
@@ -155,7 +155,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
 
     @Override
     public void checkBaseType(TypeDescriptor typeDescriptor) {
-        if (this.subtypeIsValid)
+        if (this.baseTypeIsChecked)
             return;
         ObjectTypeDescriptor baseTypeDescriptor = (ObjectTypeDescriptor) typeDescriptor;
         if (!baseTypeDescriptor.isObjectType())
@@ -176,7 +176,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                     break;
             }
         }
-        this.subtypeIsValid = true;
+        this.baseTypeIsChecked = true;
         baseTypeDescriptor.checkBaseType();
     }
 

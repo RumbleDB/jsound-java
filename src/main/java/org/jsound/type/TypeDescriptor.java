@@ -16,7 +16,7 @@ public abstract class TypeDescriptor {
     private String name;
     public TypeOrReference baseType;
     private boolean enumerationIsValid = false;
-    protected boolean subtypeIsValid = false;
+    protected boolean baseTypeIsChecked = false;
     protected boolean hasResolvedAllFacets = false;
 
     TypeDescriptor(ItemTypes type, String name) {

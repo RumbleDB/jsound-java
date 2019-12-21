@@ -30,7 +30,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         super(ItemTypes.ARRAY, name);
         this.baseType = null;
         this.facets = facets;
-        this.subtypeIsValid = true;
+        this.baseTypeIsChecked = true;
         this.hasResolvedAllFacets = true;
     }
 
@@ -142,7 +142,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
 
     @Override
     public void checkBaseType(TypeDescriptor typeDescriptor) {
-        if (this.subtypeIsValid)
+        if (this.baseTypeIsChecked)
             return;
         ArrayTypeDescriptor baseTypeDescriptor = (ArrayTypeDescriptor) typeDescriptor;
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
@@ -160,7 +160,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
             }
         }
 
-        this.subtypeIsValid = true;
+        this.baseTypeIsChecked = true;
         baseTypeDescriptor.checkBaseType();
     }
 

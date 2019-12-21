@@ -18,20 +18,18 @@ import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class ObjectFacets extends Facets {
 
-    private Map<String, FieldDescriptor> objectContent = null;
+    private Map<String, FieldDescriptor> objectContent = new LinkedHashMap<>();
     private Boolean closed = null;
     public boolean closedIsSet = false;
 
     @Override
     public void setFacet(FacetTypes facetType, String typeName) throws IOException {
-        definedFacets.add(facetType);
+        checkField(facetType);
         switch (facetType) {
             case CONTENT:
-                checkField(this.objectContent, "objectContent");
                 this.setObjectContentFromObject(typeName);
                 break;
             case CLOSED:
-                checkField(this.closed, "closed");
                 this.closed = getBooleanFromObject();
                 this.closedIsSet = true;
                 break;
@@ -40,18 +38,18 @@ public class ObjectFacets extends Facets {
             case CONSTRAINTS:
                 super.setFacet(facetType, typeName);
         }
+        definedFacets.add(facetType);
     }
 
     private void setObjectContentFromObject(String typeName) throws IOException {
         String key;
-        Map<String, FieldDescriptor> fieldDescriptors = new LinkedHashMap<>();
         while (object.readArray()) {
             FieldDescriptor fieldDescriptor = new FieldDescriptor();
             while ((key = object.readObject()) != null) {
                 switch (key) {
                     case "name":
                         String name = getStringFromObject("name");
-                        if (fieldDescriptors.containsKey(name))
+                        if (objectContent.containsKey(name))
                             throw new InvalidSchemaException("The field descriptor " + name + " was already defined.");
                         fieldDescriptor.setName(name);
                         break;
@@ -76,9 +74,8 @@ public class ObjectFacets extends Facets {
                         "Field \"name\" is missing in object content for type " + typeName
                 );
             }
-            fieldDescriptors.put(fieldDescriptor.getName(), fieldDescriptor);
+            objectContent.put(fieldDescriptor.getName(), fieldDescriptor);
         }
-        this.objectContent = fieldDescriptors;
     }
 
     private static void setFieldDescriptorType(FieldDescriptor fieldDescriptor) throws IOException {
@@ -92,11 +89,6 @@ public class ObjectFacets extends Facets {
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
         else
             fieldDescriptor.setType(new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor(true)));
-    }
-
-    public void setObjectContent(Map<String, FieldDescriptor> objectContent) {
-        definedFacets.add(FacetTypes.CONTENT);
-        this.objectContent = objectContent;
     }
 
     public void setClosed(boolean closed) {

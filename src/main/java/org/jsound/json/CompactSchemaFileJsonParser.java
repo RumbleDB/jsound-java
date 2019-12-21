@@ -7,6 +7,7 @@ import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.atomicTypes.NullType;
 import org.jsound.facets.ArrayFacets;
 import org.jsound.facets.AtomicFacets;
+import org.jsound.facets.FacetTypes;
 import org.jsound.facets.ObjectFacets;
 import org.jsound.facets.UnionFacets;
 import org.jsound.item.ItemFactory;
@@ -20,7 +21,6 @@ import org.jsound.type.UnionTypeDescriptor;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.jsound.cli.JSoundExecutor.object;
@@ -87,11 +87,10 @@ public class CompactSchemaFileJsonParser {
 
     private static ObjectTypeDescriptor buildObjectType(String name, ObjectFacets facets) throws IOException {
         String key;
-        Map<String, FieldDescriptor> fieldDescriptors = new LinkedHashMap<>();
         while ((key = object.readObject()) != null) {
             FieldDescriptor fieldDescriptor = new FieldDescriptor();
             boolean allowNull = setMarkers(fieldDescriptor, key);
-            if (fieldDescriptors.containsKey(fieldDescriptor.getName()))
+            if (facets.getObjectContent().containsKey(fieldDescriptor.getName()))
                 throw new InvalidSchemaException("The field descriptor " + name + " was already defined.");
             setFieldDescriptorType(fieldDescriptor);
             if (allowNull) {
@@ -110,9 +109,9 @@ public class CompactSchemaFileJsonParser {
                     .add(new TypeOrReference(new NullType(null, new AtomicFacets())));
                 fieldDescriptor.setType(new TypeOrReference(new UnionTypeDescriptor(name, unionTypeFacets)));
             }
-            fieldDescriptors.put(fieldDescriptor.getName(), fieldDescriptor);
+            facets.getObjectContent().put(fieldDescriptor.getName(), fieldDescriptor);
         }
-        facets.setObjectContent(fieldDescriptors);
+        facets.getDefinedFacets().add(FacetTypes.CONTENT);
         return new ObjectTypeDescriptor(name, facets);
     }
 

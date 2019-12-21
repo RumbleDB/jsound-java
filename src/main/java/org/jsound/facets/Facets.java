@@ -27,21 +27,19 @@ public class Facets {
     public Set<FacetTypes> definedFacets = new HashSet<>();
 
     public void setFacet(FacetTypes facetType, String typeName) throws IOException {
-        definedFacets.add(facetType);
+        checkField(facetType);
         switch (facetType) {
             case ENUMERATION:
-                checkField(this.enumeration, "enumeration");
                 this.enumeration = getEnumerationFromObject();
                 break;
             case METADATA:
-                checkField(this.metadata, "metadata");
                 this.metadata = getItemFromObject(object);
                 break;
             case CONSTRAINTS:
-                checkField(this.constraints, "maxLength");
                 this.constraints = getConstraintsTypeFromObject();
                 break;
         }
+        definedFacets.add(facetType);
     }
 
     public Set<FacetTypes> getDefinedFacets() {
@@ -52,9 +50,9 @@ public class Facets {
         return enumeration;
     }
 
-    static void checkField(Object key, String fieldName) {
-        if (key != null)
-            throw new InvalidSchemaException("Field " + fieldName + " is already defined");
+    public void checkField(FacetTypes facetType) {
+        if (this.getDefinedFacets().contains(facetType))
+            throw new InvalidSchemaException("Field " + facetType.getTypeName() + " is already defined");
     }
 
     public static String getStringFromObject(String key) throws IOException {

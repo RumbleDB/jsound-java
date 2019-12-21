@@ -66,7 +66,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         super(type, name);
         this.baseType = null;
         this.facets = facets;
-        this.subtypeIsValid = true;
+        this.baseTypeIsChecked = true;
         this.hasResolvedAllFacets = true;
     }
 
@@ -351,7 +351,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     }
 
     protected void areLengthFacetsMoreRestrictive(TypeDescriptor typeDescriptor) {
-        if (this.subtypeIsValid)
+        if (this.baseTypeIsChecked)
             return;
         AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) typeDescriptor;
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
@@ -393,7 +393,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
                         );
             }
         }
-        this.subtypeIsValid = true;
+        this.baseTypeIsChecked = true;
         baseTypeDescriptor.checkBaseType();
     }
 
@@ -481,32 +481,32 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     }
 
     protected void checkBoundariesAndDigitsFacets(TypeDescriptor typeDescriptor) {
-        if (this.subtypeIsValid)
+        if (this.baseTypeIsChecked)
             return;
         AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) typeDescriptor;
         areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
         areDigitsFacetsMoreRestrictive(baseTypeDescriptor.getFacets());
-        this.subtypeIsValid = true;
+        this.baseTypeIsChecked = true;
         baseTypeDescriptor.checkBaseType();
     }
 
     protected void checkBoundariesAndTimezoneFacets(TypeDescriptor typeDescriptor) {
-        if (this.subtypeIsValid)
+        if (this.baseTypeIsChecked)
             return;
         AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) typeDescriptor;
         areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
         if (this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE))
             isExplicitTimezoneMoreRestrictive(baseTypeDescriptor.getFacets());
-        this.subtypeIsValid = true;
+        this.baseTypeIsChecked = true;
         baseTypeDescriptor.checkBaseType();
     }
 
     protected void checkBoundariesFacet(TypeDescriptor typeDescriptor) {
-        if (this.subtypeIsValid)
+        if (this.baseTypeIsChecked)
             return;
         AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) typeDescriptor;
         areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
-        this.subtypeIsValid = true;
+        this.baseTypeIsChecked = true;
         baseTypeDescriptor.checkBaseType();
     }
 }
