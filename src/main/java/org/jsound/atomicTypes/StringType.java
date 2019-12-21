@@ -1,10 +1,12 @@
 package org.jsound.atomicTypes;
 
+import jsound.exceptions.LessRestrictiveFacetException;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
+import org.jsound.type.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -48,6 +50,21 @@ public class StringType extends AtomicTypeDescriptor {
         }
         return false;
     }
+
+    @Override
+    public void isSubtypeOf(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor == null)
+            this.subtypeIsValid = true;
+        if (this.subtypeIsValid)
+            return;
+        if (!typeDescriptor.isStringType())
+            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + typeDescriptor.getName());
+        areLengthFacetsMoreRestrictive(((AtomicTypeDescriptor) typeDescriptor).getFacets());
+        this.subtypeIsValid = true;
+        if (this.baseType != null)
+            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
+    }
+
 
     @Override
     public Set<FacetTypes> getAllowedFacets() {

@@ -1,5 +1,6 @@
 package org.jsound.atomicTypes;
 
+import jsound.exceptions.LessRestrictiveFacetException;
 import org.joda.time.Instant;
 import org.joda.time.Period;
 import org.joda.time.format.ISOPeriodFormat;
@@ -10,6 +11,7 @@ import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
+import org.jsound.type.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -119,5 +121,43 @@ public class DurationType extends AtomicTypeDescriptor {
 
     protected PeriodFormatter getPeriodFormatter() {
         return ISOPeriodFormat.standard();
+    }
+
+    @Override
+    public void isSubtypeOf(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor == null)
+            this.subtypeIsValid = true;
+        if (this.subtypeIsValid)
+            return;
+        if (!typeDescriptor.isDurationType())
+            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + typeDescriptor.getName());
+        areBoundariesMoreRestrictive(((AtomicTypeDescriptor) typeDescriptor).getFacets());
+        this.subtypeIsValid = true;
+        if (this.baseType != null)
+            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
+    }
+
+    @Override
+    protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
+        return facets.getDefinedFacets().contains(MIN_INCLUSIVE) &&
+                subtractPeriods(getPeriodFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
+    }
+
+    @Override
+    protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
+        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE) &&
+                subtractPeriods(getPeriodFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
+    }
+
+    @Override
+    protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
+        return facets.getDefinedFacets().contains(MAX_INCLUSIVE) &&
+                subtractPeriods(getPeriodFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
+    }
+
+    @Override
+    protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
+        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE) &&
+                subtractPeriods(getPeriodFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 }

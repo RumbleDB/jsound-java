@@ -1,5 +1,6 @@
 package org.jsound.atomicTypes;
 
+import jsound.exceptions.LessRestrictiveFacetException;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.ISODateTimeFormat;
@@ -10,6 +11,7 @@ import org.jsound.facets.TimezoneFacet;
 import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
+import org.jsound.type.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -107,6 +109,46 @@ public class TimeType extends AtomicTypeDescriptor {
         if (!item.getStringValue().endsWith("Z") && time.getZone() == DateTimeZone.getDefault())
             return time.withZoneRetainFields(DateTimeZone.UTC);
         return time;
+    }
+
+    @Override
+    public void isSubtypeOf(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor == null)
+            this.subtypeIsValid = true;
+        if (this.subtypeIsValid)
+            return;
+        if (!typeDescriptor.isTimeType())
+            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + typeDescriptor.getName());
+        areBoundariesMoreRestrictive(((AtomicTypeDescriptor) typeDescriptor).getFacets());
+        if (this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE))
+            isExplicitTimezoneMoreRestrictive(((AtomicTypeDescriptor) typeDescriptor).getFacets());
+        this.subtypeIsValid = true;
+        if (this.baseType != null)
+            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
+    }
+
+    @Override
+    protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
+        return facets.getDefinedFacets().contains(MIN_INCLUSIVE) &&
+                subtractTime(getTimeFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
+    }
+
+    @Override
+    protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
+        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE) &&
+                subtractTime(getTimeFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
+    }
+
+    @Override
+    protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
+        return facets.getDefinedFacets().contains(MAX_INCLUSIVE) &&
+                subtractTime(getTimeFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
+    }
+
+    @Override
+    protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
+        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE) &&
+                subtractTime(getTimeFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

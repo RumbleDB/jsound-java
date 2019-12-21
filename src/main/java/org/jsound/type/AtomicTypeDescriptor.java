@@ -19,6 +19,7 @@ import org.jsound.atomicTypes.TimeType;
 import org.jsound.atomicTypes.YearMonthDurationType;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
+import org.jsound.facets.TimezoneFacet;
 import org.jsound.item.Item;
 import org.tyson.TYSONValue;
 import org.tyson.TysonItem;
@@ -323,5 +324,29 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         return false;
     }
 
+    protected void areLengthFacetsMoreRestrictive(AtomicFacets facets) {
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case LENGTH:
+                    if (facets.getDefinedFacets().contains(LENGTH) && !this.getFacets().length.equals(facets.length))
+                        throw new LessRestrictiveFacetException("Facet length for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                case MIN_LENGTH:
+                    if (facets.getDefinedFacets().contains(MIN_LENGTH) && this.getFacets().minLength.compareTo(facets.minLength) > 0)
+                        throw new LessRestrictiveFacetException("Facet minLength for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                case MAX_LENGTH:
+                    if (facets.getDefinedFacets().contains(MAX_LENGTH) && this.getFacets().maxLength.compareTo(facets.maxLength) < 0)
+                        throw new LessRestrictiveFacetException("Facet maxLength for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                case ENUMERATION:
+                    if (!isEnumerationMoreRestrictive(facets))
+                        throw new LessRestrictiveFacetException(this.getName() + " is not more restrictive than its baseType.");
+            }
+        }
+    }
 
+    protected void isExplicitTimezoneMoreRestrictive(AtomicFacets facets) {
+        if (facets.getDefinedFacets().contains(EXPLICIT_TIMEZONE) &&
+                !((this.getFacets().explicitTimezone.equals(TimezoneFacet.REQUIRED) || this.getFacets().explicitTimezone.equals(TimezoneFacet.PROHIBITED)) &&
+                        facets.explicitTimezone.equals(TimezoneFacet.OPTIONAL)))
+            throw new LessRestrictiveFacetException("Facet explicitTimezone for type " + this.getName() + " is not more restrictive than that of its baseType.");
+    }
 }

@@ -137,7 +137,7 @@ public class IntegerType extends AtomicTypeDescriptor {
     @Override
     protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
         return facets.getDefinedFacets().contains(MIN_EXCLUSIVE) &&
-                compareIntegers(getIntegerFromItem(this.getFacets().minExclusive), facets.minExclusive) <= 0;
+                compareIntegers(getIntegerFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
     }
 
     @Override
@@ -149,7 +149,7 @@ public class IntegerType extends AtomicTypeDescriptor {
     @Override
     protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
         return facets.getDefinedFacets().contains(MAX_EXCLUSIVE) &&
-                compareIntegers(getIntegerFromItem(this.getFacets().maxExclusive), facets.maxExclusive) >= 0;
+                compareIntegers(getIntegerFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

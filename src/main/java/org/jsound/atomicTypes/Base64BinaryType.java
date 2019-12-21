@@ -1,5 +1,6 @@
 package org.jsound.atomicTypes;
 
+import jsound.exceptions.LessRestrictiveFacetException;
 import org.apache.commons.codec.binary.Base64;
 import org.jsound.atomicItems.Base64BinaryItem;
 import org.jsound.facets.AtomicFacets;
@@ -7,6 +8,7 @@ import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
+import org.jsound.type.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -42,6 +44,20 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
         if (!validateLengthFacets(item, isEnumerationItem))
             return false;
         return recursivelyValidate(item);
+    }
+
+    @Override
+    public void isSubtypeOf(TypeDescriptor typeDescriptor) {
+        if (typeDescriptor == null)
+            this.subtypeIsValid = true;
+        if (this.subtypeIsValid)
+            return;
+        if (!typeDescriptor.isBase64BinaryType())
+            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + typeDescriptor.getName());
+        areLengthFacetsMoreRestrictive(((AtomicTypeDescriptor) typeDescriptor).getFacets());
+        this.subtypeIsValid = true;
+        if (this.baseType != null)
+            typeDescriptor.isSubtypeOf(typeDescriptor.baseType.getTypeDescriptor());
     }
 
     @Override
