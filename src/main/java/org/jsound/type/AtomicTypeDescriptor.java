@@ -268,19 +268,37 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
             switch (facetType) {
                 case MIN_INCLUSIVE:
                     if (!isMinInclusiveMoreRestrictive(facets))
-                        throw new LessRestrictiveFacetException("Facet minInclusive for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                        throw new LessRestrictiveFacetException(
+                                "Facet minInclusive for type "
+                                    + this.getName()
+                                    + " is not more restrictive than that of its baseType."
+                        );
                 case MIN_EXCLUSIVE:
                     if (!isMinExclusiveMoreRestrictive(facets))
-                        throw new LessRestrictiveFacetException("Facet minExclusive for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                        throw new LessRestrictiveFacetException(
+                                "Facet minExclusive for type "
+                                    + this.getName()
+                                    + " is not more restrictive than that of its baseType."
+                        );
                 case MAX_INCLUSIVE:
                     if (!isMaxInclusiveMoreRestrictive(facets))
-                        throw new LessRestrictiveFacetException("Facet maxInclusive for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                        throw new LessRestrictiveFacetException(
+                                "Facet maxInclusive for type "
+                                    + this.getName()
+                                    + " is not more restrictive than that of its baseType."
+                        );
                 case MAX_EXCLUSIVE:
                     if (!isMaxExclusiveMoreRestrictive(facets))
-                        throw new LessRestrictiveFacetException("Facet maxExclusive for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                        throw new LessRestrictiveFacetException(
+                                "Facet maxExclusive for type "
+                                    + this.getName()
+                                    + " is not more restrictive than that of its baseType."
+                        );
                 case ENUMERATION:
                     if (!isEnumerationMoreRestrictive(facets))
-                        throw new LessRestrictiveFacetException(this.getName() + " is not more restrictive than its baseType.");
+                        throw new LessRestrictiveFacetException(
+                                this.getName() + " is not more restrictive than its baseType."
+                        );
             }
         }
     }
@@ -301,31 +319,35 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         return false;
     }
 
-    protected boolean isEnumerationMoreRestrictive(AtomicFacets facets) {
-        return false;
-    }
-
     protected void areDigitsFacetsMoreRestrictive(AtomicFacets facets) {
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case TOTAL_DIGITS:
                     if (!isTotalDigitsMoreRestrictive(facets))
-                        throw new LessRestrictiveFacetException("Facet totalDigits for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                        throw new LessRestrictiveFacetException(
+                                "Facet totalDigits for type "
+                                    + this.getName()
+                                    + " is not more restrictive than that of its baseType."
+                        );
                 case FRACTION_DIGITS:
                     if (!isFractionDigitsMoreRestrictive(facets))
-                        throw new LessRestrictiveFacetException("Facet fractionDigits for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                        throw new LessRestrictiveFacetException(
+                                "Facet fractionDigits for type "
+                                    + this.getName()
+                                    + " is not more restrictive than that of its baseType."
+                        );
             }
         }
     }
 
     protected boolean isTotalDigitsMoreRestrictive(AtomicFacets facets) {
         return !facets.getDefinedFacets().contains(TOTAL_DIGITS)
-                || facets.totalDigits.equals(this.getFacets().totalDigits);
+            || facets.totalDigits.equals(this.getFacets().totalDigits);
     }
 
     protected boolean isFractionDigitsMoreRestrictive(AtomicFacets facets) {
         return !facets.getDefinedFacets().contains(FRACTION_DIGITS)
-                || facets.fractionDigits.equals(this.getFacets().fractionDigits);
+            || facets.fractionDigits.equals(this.getFacets().fractionDigits);
     }
 
     protected void areLengthFacetsMoreRestrictive() {
@@ -335,17 +357,40 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case LENGTH:
-                    if (baseTypeDescriptor.facets.getDefinedFacets().contains(LENGTH) && !this.getFacets().length.equals(baseTypeDescriptor.facets.length))
-                        throw new LessRestrictiveFacetException("Facet length for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                    if (
+                        baseTypeDescriptor.facets.getDefinedFacets().contains(LENGTH)
+                            && !this.getFacets().length.equals(baseTypeDescriptor.facets.length)
+                    )
+                        throw new LessRestrictiveFacetException(
+                                "Facet length for type "
+                                    + this.getName()
+                                    + " is not more restrictive than that of its baseType."
+                        );
                 case MIN_LENGTH:
-                    if (baseTypeDescriptor.facets.getDefinedFacets().contains(MIN_LENGTH) && this.getFacets().minLength.compareTo(baseTypeDescriptor.facets.minLength) > 0)
-                        throw new LessRestrictiveFacetException("Facet minLength for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                    if (
+                        baseTypeDescriptor.facets.getDefinedFacets().contains(MIN_LENGTH)
+                            && this.getFacets().minLength.compareTo(baseTypeDescriptor.facets.minLength) > 0
+                    )
+                        throw new LessRestrictiveFacetException(
+                                "Facet minLength for type "
+                                    + this.getName()
+                                    + " is not more restrictive than that of its baseType."
+                        );
                 case MAX_LENGTH:
-                    if (baseTypeDescriptor.facets.getDefinedFacets().contains(MAX_LENGTH) && this.getFacets().maxLength.compareTo(baseTypeDescriptor.facets.maxLength) < 0)
-                        throw new LessRestrictiveFacetException("Facet maxLength for type " + this.getName() + " is not more restrictive than that of its baseType.");
+                    if (
+                        baseTypeDescriptor.facets.getDefinedFacets().contains(MAX_LENGTH)
+                            && this.getFacets().maxLength.compareTo(baseTypeDescriptor.facets.maxLength) < 0
+                    )
+                        throw new LessRestrictiveFacetException(
+                                "Facet maxLength for type "
+                                    + this.getName()
+                                    + " is not more restrictive than that of its baseType."
+                        );
                 case ENUMERATION:
                     if (!isEnumerationMoreRestrictive(facets))
-                        throw new LessRestrictiveFacetException(this.getName() + " is not more restrictive than its baseType.");
+                        throw new LessRestrictiveFacetException(
+                                this.getName() + " is not more restrictive than its baseType."
+                        );
             }
         }
         this.subtypeIsValid = true;
@@ -353,10 +398,19 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     }
 
     protected void isExplicitTimezoneMoreRestrictive(AtomicFacets facets) {
-        if (facets.getDefinedFacets().contains(EXPLICIT_TIMEZONE) &&
-                !((this.getFacets().explicitTimezone.equals(TimezoneFacet.REQUIRED) || this.getFacets().explicitTimezone.equals(TimezoneFacet.PROHIBITED)) &&
-                        facets.explicitTimezone.equals(TimezoneFacet.OPTIONAL)))
-            throw new LessRestrictiveFacetException("Facet explicitTimezone for type " + this.getName() + " is not more restrictive than that of its baseType.");
+        if (
+            facets.getDefinedFacets().contains(EXPLICIT_TIMEZONE)
+                &&
+                !((this.getFacets().explicitTimezone.equals(TimezoneFacet.REQUIRED)
+                    || this.getFacets().explicitTimezone.equals(TimezoneFacet.PROHIBITED))
+                    &&
+                    facets.explicitTimezone.equals(TimezoneFacet.OPTIONAL))
+        )
+            throw new LessRestrictiveFacetException(
+                    "Facet explicitTimezone for type "
+                        + this.getName()
+                        + " is not more restrictive than that of its baseType."
+            );
     }
 
     protected void resolveAtomicFacets(AtomicTypeDescriptor baseTypeDescriptor) {
@@ -409,8 +463,13 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
             return;
         AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
         if (!this.hasCompatibleType(baseTypeDescriptor))
-            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
-                    .getName());
+            throw new LessRestrictiveFacetException(
+                    "Type "
+                        + this.getName()
+                        + " is not subtype of "
+                        + baseTypeDescriptor
+                            .getName()
+            );
         baseTypeDescriptor.resolveAllFacets();
         resolveAtomicFacets(baseTypeDescriptor);
         this.hasResolvedAllFacets = true;

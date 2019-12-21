@@ -76,23 +76,6 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         return recursivelyValidate(item);
     }
 
-    // private void checkClosedFacetCorrectness(boolean closedIsSetToFalse) {
-    // if (!this.closedIsChecked && closedIsSetToFalse) {
-    // if (this.baseType != null) {
-    // if (this.baseType.getTypeDescriptor().getFacets().isClosed())
-    // throw new ClosedSetBackToFalseException(
-    // "The \"closed\" facet for type "
-    // + this.getName()
-    // + " cannot be set back to false since it was set to true in its baseType "
-    // + this.baseType.getTypeDescriptor().getName()
-    // + "."
-    // );
-    // ((ObjectTypeDescriptor) this.baseType.getTypeDescriptor()).checkClosedFacetCorrectness(closedIsSetToFalse);
-    // }
-    // }
-    // this.closedIsChecked = true;
-    // }
-
     private boolean validateClosedFacet(ObjectItem objectItem) {
         if (this.getFacets().isClosed()) {
             for (String key : objectItem.getItemMap().keySet()) {
@@ -176,15 +159,20 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
             return;
         ObjectTypeDescriptor baseTypeDescriptor = (ObjectTypeDescriptor) this.baseType.getTypeDescriptor();
         if (!baseTypeDescriptor.isObjectType())
-            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
-                    .getName());
+            throw new LessRestrictiveFacetException(
+                    "Type "
+                        + this.getName()
+                        + " is not subtype of "
+                        + baseTypeDescriptor
+                            .getName()
+            );
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
                     isObjectContentMoreRestrictive(baseTypeDescriptor);
                     break;
-                case CLOSED:
-                    checkClosedFacet();
+                case ENUMERATION:
+                    isEnumerationMoreRestrictive(baseTypeDescriptor.facets);
                     break;
             }
         }
@@ -193,37 +181,13 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     }
 
     private void isObjectContentMoreRestrictive(ObjectTypeDescriptor baseTypeDescriptor) {
+        validateDefaultValues();
         if (!baseTypeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
             return;
         for (FieldDescriptor fieldDescriptor : this.getFacets().getObjectContent().values()) {
             if (baseTypeDescriptor.getFacets().getObjectContent().containsKey(fieldDescriptor.getName()))
                 fieldDescriptor.isMoreRestrictive(baseTypeDescriptor);
-            fieldDescriptor.validateDefaultValue();
         }
-    }
-
-    private boolean checkClosedFacet() {
-        boolean objectDescriptorIsClosed;
-        if (baseType == null || this.getFacets().isClosed() || this.closedIsChecked) {
-            objectDescriptorIsClosed = this.getFacets().isClosed();
-        } else {
-            //THERE IS A BASETYPE THAT SET CLOSED TO TRUE
-            objectDescriptorIsClosed = ((ObjectTypeDescriptor) this.baseType.getTypeDescriptor()).checkClosedFacet();
-            if (objectDescriptorIsClosed) {
-                if (this.getFacets().closedIsSet) // CLOSED WAS EXPLICITLY SET BACK TO FALSE
-                    throw new ClosedSetBackToFalseException(
-                            "The \"closed\" facet for type "
-                                    + this.getName()
-                                    + " cannot be set back to false since it was set to true in its baseType "
-                                    + this.baseType.getTypeDescriptor().getName()
-                                    + "."
-                    );
-                else
-                    this.getFacets().setClosed(true);
-            }
-        }
-        this.closedIsChecked = true;
-        return objectDescriptorIsClosed;
     }
 
     @Override
@@ -232,8 +196,13 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
             return;
         ObjectTypeDescriptor baseTypeDescriptor = (ObjectTypeDescriptor) this.baseType.getTypeDescriptor();
         if (!this.hasCompatibleType(baseTypeDescriptor))
-            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
-                    .getName());
+            throw new LessRestrictiveFacetException(
+                    "Type "
+                        + this.getName()
+                        + " is not subtype of "
+                        + baseTypeDescriptor
+                            .getName()
+            );
         baseTypeDescriptor.resolveAllFacets();
         resolveObjectFacets(baseTypeDescriptor);
         this.hasResolvedAllFacets = true;
@@ -244,6 +213,18 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
             if (!this.getFacets().getDefinedFacets().contains(facetTypes)) {
                 switch (facetTypes) {
                     case CLOSED:
+                        if (
+                            this.getFacets().closedIsSet
+                                && !this.getFacets().isClosed()
+                                && baseTypeDescriptor.getFacets().isClosed()
+                        )
+                            throw new ClosedSetBackToFalseException(
+                                    "The \"closed\" facet for type "
+                                        + this.getName()
+                                        + " cannot be set back to false since it was set to true in its baseType "
+                                        + this.baseType.getTypeDescriptor().getName()
+                                        + "."
+                            );
                         this.getFacets().setClosed(baseTypeDescriptor.getFacets().isClosed());
                         break;
                     case CONTENT:
@@ -263,14 +244,17 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         for (FieldDescriptor fieldDescriptor : baseTypeDescriptor.getFacets().getObjectContent().values()) {
             if (!this.getFacets().getObjectContent().containsKey(fieldDescriptor.getName()))
                 this.getFacets().getObjectContent().put(fieldDescriptor.name, fieldDescriptor);
-            else if (fieldDescriptor.isRequired() && !this.getFacets().getObjectContent().get(fieldDescriptor.getName()).isRequired())
-                    throw new RequiredSertBackToFalseException(
-                            "Field "
-                                    + this.getName()
-                                    + " cannot be set back to false. It is set to true in baseType "
-                                    + baseTypeDescriptor.getName()
-                                    + "."
-                    );
+            else if (
+                fieldDescriptor.isRequired()
+                    && !this.getFacets().getObjectContent().get(fieldDescriptor.getName()).isRequired()
+            )
+                throw new RequiredSertBackToFalseException(
+                        "Field "
+                            + this.getName()
+                            + " cannot be set back to false. It is set to true in baseType "
+                            + baseTypeDescriptor.getName()
+                            + "."
+                );
 
         }
     }
@@ -278,5 +262,22 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     @Override
     protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
         return typeDescriptor.isObjectType();
+    }
+
+    private void validateDefaultValues() {
+        for (FieldDescriptor fieldDescriptor : this.getFacets().getObjectContent().values()) {
+            if (fieldDescriptor.getDefaultValue() != null) {
+                if (
+                    !fieldDescriptor.getTypeOrReference()
+                        .getTypeDescriptor()
+                        .validate(fieldDescriptor.getDefaultValue(), false)
+                )
+                    throw new InvalidSchemaException(
+                            "The default value for field "
+                                + this.getName()
+                                + " is not valid against its type."
+                    );
+            }
+        }
     }
 }

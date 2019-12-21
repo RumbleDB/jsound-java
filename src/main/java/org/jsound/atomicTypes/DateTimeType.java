@@ -118,26 +118,30 @@ public class DateTimeType extends AtomicTypeDescriptor {
 
     @Override
     protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_INCLUSIVE) &&
-                subtractDateTime(getDateTimeFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
+        return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
+            &&
+            subtractDateTime(getDateTimeFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
     }
 
     @Override
     protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE) &&
-                subtractDateTime(getDateTimeFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
+        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
+            &&
+            subtractDateTime(getDateTimeFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
     }
 
     @Override
     protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_INCLUSIVE) &&
-                subtractDateTime(getDateTimeFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
+        return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
+            &&
+            subtractDateTime(getDateTimeFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
     }
 
     @Override
     protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE) &&
-                subtractDateTime(getDateTimeFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
+        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
+            &&
+            subtractDateTime(getDateTimeFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

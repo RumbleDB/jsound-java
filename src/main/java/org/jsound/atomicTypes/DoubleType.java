@@ -97,26 +97,30 @@ public class DoubleType extends AtomicTypeDescriptor {
 
     @Override
     protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_INCLUSIVE) &&
-                compareDoubles(getDoubleFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
+        return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
+            &&
+            compareDoubles(getDoubleFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
     }
 
     @Override
     protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE) &&
-                compareDoubles(getDoubleFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
+        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
+            &&
+            compareDoubles(getDoubleFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
     }
 
     @Override
     protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_INCLUSIVE) &&
-                compareDoubles(getDoubleFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
+        return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
+            &&
+            compareDoubles(getDoubleFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
     }
 
     @Override
     protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE) &&
-                compareDoubles(getDoubleFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
+        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
+            &&
+            compareDoubles(getDoubleFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

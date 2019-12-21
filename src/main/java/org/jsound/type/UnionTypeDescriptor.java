@@ -47,7 +47,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
-                    //checkContentCorrectness();
+                    // checkContentCorrectness();
                     if (!validateContentFacet(item))
                         return false;
                     break;
@@ -69,33 +69,6 @@ public class UnionTypeDescriptor extends TypeDescriptor {
         }
         return false;
     }
-
-//    private boolean checkUnionContentSubtype(TypeDescriptor typeDescriptor) {
-//        for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-//            if (typeDescriptor.isSubtypeOf(typeOrReference.getTypeDescriptor()))
-//                return true;
-//        }
-//        return this.baseType != null
-//                && ((UnionTypeDescriptor) this.baseType.getTypeDescriptor()).checkUnionContentSubtype(typeDescriptor);
-//    }
-//
-//    private void checkContentCorrectness() {
-//        for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-//            if (this.baseType != null) {
-//                if (
-//                    !((UnionTypeDescriptor) this.baseType.getTypeDescriptor()).checkUnionContentSubtype(
-//                        typeOrReference.getTypeDescriptor()
-//                    )
-//                )
-//                    throw new InvalidSchemaException(
-//                            typeOrReference.getTypeDescriptor().getName()
-//                                + " is not subtype of any of the types in "
-//                                + this.baseType.getTypeDescriptor().getName()
-//                                + "'s content."
-//                    );
-//            }
-//        }
-//    }
 
     @Override
     public TysonItem annotate(Item item) {

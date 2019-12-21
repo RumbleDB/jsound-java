@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.jsound.facets.FacetTypes.ENUMERATION;
 import static org.jsound.facets.FacetTypes.FRACTION_DIGITS;
 import static org.jsound.facets.FacetTypes.MAX_EXCLUSIVE;
 import static org.jsound.facets.FacetTypes.MAX_INCLUSIVE;
@@ -119,77 +118,30 @@ public class IntegerType extends AtomicTypeDescriptor {
 
     @Override
     protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_INCLUSIVE) &&
-                compareIntegers(getIntegerFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
+        return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
+            &&
+            compareIntegers(getIntegerFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
     }
 
     @Override
     protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE) &&
-                compareIntegers(getIntegerFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
+        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
+            &&
+            compareIntegers(getIntegerFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
     }
 
     @Override
     protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_INCLUSIVE) &&
-                compareIntegers(getIntegerFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
+        return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
+            &&
+            compareIntegers(getIntegerFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
     }
 
     @Override
     protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE) &&
-                compareIntegers(getIntegerFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
-    }
-
-    @Override
-    protected boolean isEnumerationMoreRestrictive(AtomicFacets facets) {
-        if (!facets.getDefinedFacets().contains(ENUMERATION))
-            return enumerationRestrictsMinInclusive(facets);
-        for (Item item : this.getFacets().getEnumeration()) {
-            if (!facets.getEnumeration().contains(item))
-                return false;
-        }
-        return true;
-    }
-
-    private boolean enumerationRestrictsMinInclusive(AtomicFacets facets) {
-        if (facets.getDefinedFacets().contains(MIN_INCLUSIVE)) {
-            for (Item item : this.getFacets().getEnumeration()) {
-                if (compareIntegers(getIntegerFromItem(item), facets.minInclusive) < 0)
-                    return false;
-            }
-        }
-        return enumerationRestrictsMinExclusive(facets);
-    }
-
-    private boolean enumerationRestrictsMinExclusive(AtomicFacets facets) {
-        if (facets.getDefinedFacets().contains(MIN_EXCLUSIVE)) {
-            for (Item item : this.getFacets().getEnumeration()) {
-                if (compareIntegers(getIntegerFromItem(item), facets.minExclusive) <= 0)
-                    return false;
-            }
-        }
-        return enumerationRestrictsMaxInclusive(facets);
-    }
-
-    private boolean enumerationRestrictsMaxInclusive(AtomicFacets facets) {
-        if (facets.getDefinedFacets().contains(MAX_INCLUSIVE)) {
-            for (Item item : this.getFacets().getEnumeration()) {
-                if (compareIntegers(getIntegerFromItem(item), facets.maxInclusive) > 0)
-                    return false;
-            }
-        }
-        return enumerationRestrictsMaxExclusive(facets);
-    }
-
-    private boolean enumerationRestrictsMaxExclusive(AtomicFacets facets) {
-        if (facets.getDefinedFacets().contains(MAX_EXCLUSIVE)) {
-            for (Item item : this.getFacets().getEnumeration()) {
-                if (compareIntegers(getIntegerFromItem(item), facets.maxExclusive) >= 0)
-                    return false;
-            }
-        }
-        return true;
+        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
+            &&
+            compareIntegers(getIntegerFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

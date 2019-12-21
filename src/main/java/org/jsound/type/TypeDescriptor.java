@@ -9,6 +9,8 @@ import org.tyson.TysonItem;
 
 import java.util.Set;
 
+import static org.jsound.facets.FacetTypes.ENUMERATION;
+
 public abstract class TypeDescriptor {
     private ItemTypes type;
     private String name;
@@ -143,27 +145,37 @@ public abstract class TypeDescriptor {
         return true;
     }
 
-    private void validateEnumerationValues() {
-        if (!this.enumerationIsValid) {
-            for (Item enumItem : this.getFacets().getEnumeration()) {
-                if (!this.validate(enumItem, true)) {
-                    throw new InvalidEnumValueException(
-                            "Value "
-                                + enumItem.getStringValue()
-                                + " in enumeration is not in the type value space for type "
-                                + this.getName()
-                                + "."
-                    );
-                }
+    protected boolean isEnumerationMoreRestrictive(Facets facets) {
+        validateEnumerationValues();
+        if (facets.getDefinedFacets().contains(ENUMERATION)) {
+            for (Item item : this.getFacets().getEnumeration()) {
+                if (!facets.getEnumeration().contains(item))
+                    return false;
             }
-            this.enumerationIsValid = true;
         }
+        return true;
+    }
+
+    private void validateEnumerationValues() {
+        if (this.enumerationIsValid)
+            return;
+        for (Item enumItem : this.getFacets().getEnumeration()) {
+            if (!this.validate(enumItem, true)) {
+                throw new InvalidEnumValueException(
+                        "Value "
+                            + enumItem.getStringValue()
+                            + " in enumeration is not in the type value space for type "
+                            + this.getName()
+                            + "."
+                );
+            }
+        }
+        this.enumerationIsValid = true;
     }
 
     protected boolean validateEnumeration(Item item, boolean isEnumerationItem) {
         if (isEnumerationItem)
             return true;
-        validateEnumerationValues(); // This should be outside as it should be computed only once in the typechecking
         try {
             return validateItemAgainstEnumeration(item);
         } catch (Exception e) {
@@ -181,7 +193,8 @@ public abstract class TypeDescriptor {
         return false;
     }
 
-    public void resolveAllFacets() {}
+    public void resolveAllFacets() {
+    }
 
     public void resolveCommonFacets(TypeDescriptor typeDescriptor, FacetTypes facetType) {
         switch (facetType) {
@@ -197,7 +210,11 @@ public abstract class TypeDescriptor {
         }
     }
 
-    public void checkBaseType() {}
+    public void checkBaseType() {
+    }
+
+    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    }
 
     protected abstract boolean hasCompatibleType(TypeDescriptor typeDescriptor);
 }

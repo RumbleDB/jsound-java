@@ -109,26 +109,30 @@ public class DecimalType extends AtomicTypeDescriptor {
 
     @Override
     protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_INCLUSIVE) &&
-                compareDecimals(getDecimalFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
+        return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
+            &&
+            compareDecimals(getDecimalFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
     }
 
     @Override
     protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE) &&
-                compareDecimals(getDecimalFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
+        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
+            &&
+            compareDecimals(getDecimalFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
     }
 
     @Override
     protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_INCLUSIVE) &&
-                compareDecimals(getDecimalFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
+        return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
+            &&
+            compareDecimals(getDecimalFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
     }
 
     @Override
     protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE) &&
-                compareDecimals(getDecimalFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
+        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
+            &&
+            compareDecimals(getDecimalFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override
