@@ -67,6 +67,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         this.baseType = null;
         this.facets = facets;
         this.subtypeIsValid = true;
+        this.hasResolvedAllFacets = true;
     }
 
     public AtomicTypeDescriptor(ItemTypes type, String name, TypeOrReference baseType, AtomicFacets facets) {
@@ -317,31 +318,38 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         }
     }
 
-    protected boolean isFractionDigitsMoreRestrictive(AtomicFacets facets) {
-        return false;
-    }
-
     protected boolean isTotalDigitsMoreRestrictive(AtomicFacets facets) {
-        return false;
+        return !facets.getDefinedFacets().contains(TOTAL_DIGITS)
+                || facets.totalDigits.equals(this.getFacets().totalDigits);
     }
 
-    protected void areLengthFacetsMoreRestrictive(AtomicFacets facets) {
+    protected boolean isFractionDigitsMoreRestrictive(AtomicFacets facets) {
+        return !facets.getDefinedFacets().contains(FRACTION_DIGITS)
+                || facets.fractionDigits.equals(this.getFacets().fractionDigits);
+    }
+
+    protected void areLengthFacetsMoreRestrictive() {
+        if (this.subtypeIsValid)
+            return;
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case LENGTH:
-                    if (facets.getDefinedFacets().contains(LENGTH) && !this.getFacets().length.equals(facets.length))
+                    if (baseTypeDescriptor.facets.getDefinedFacets().contains(LENGTH) && !this.getFacets().length.equals(baseTypeDescriptor.facets.length))
                         throw new LessRestrictiveFacetException("Facet length for type " + this.getName() + " is not more restrictive than that of its baseType.");
                 case MIN_LENGTH:
-                    if (facets.getDefinedFacets().contains(MIN_LENGTH) && this.getFacets().minLength.compareTo(facets.minLength) > 0)
+                    if (baseTypeDescriptor.facets.getDefinedFacets().contains(MIN_LENGTH) && this.getFacets().minLength.compareTo(baseTypeDescriptor.facets.minLength) > 0)
                         throw new LessRestrictiveFacetException("Facet minLength for type " + this.getName() + " is not more restrictive than that of its baseType.");
                 case MAX_LENGTH:
-                    if (facets.getDefinedFacets().contains(MAX_LENGTH) && this.getFacets().maxLength.compareTo(facets.maxLength) < 0)
+                    if (baseTypeDescriptor.facets.getDefinedFacets().contains(MAX_LENGTH) && this.getFacets().maxLength.compareTo(baseTypeDescriptor.facets.maxLength) < 0)
                         throw new LessRestrictiveFacetException("Facet maxLength for type " + this.getName() + " is not more restrictive than that of its baseType.");
                 case ENUMERATION:
                     if (!isEnumerationMoreRestrictive(facets))
                         throw new LessRestrictiveFacetException(this.getName() + " is not more restrictive than its baseType.");
             }
         }
+        this.subtypeIsValid = true;
+        baseTypeDescriptor.checkBaseType();
     }
 
     protected void isExplicitTimezoneMoreRestrictive(AtomicFacets facets) {
@@ -349,5 +357,97 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
                 !((this.getFacets().explicitTimezone.equals(TimezoneFacet.REQUIRED) || this.getFacets().explicitTimezone.equals(TimezoneFacet.PROHIBITED)) &&
                         facets.explicitTimezone.equals(TimezoneFacet.OPTIONAL)))
             throw new LessRestrictiveFacetException("Facet explicitTimezone for type " + this.getName() + " is not more restrictive than that of its baseType.");
+    }
+
+    protected void resolveAtomicFacets(AtomicTypeDescriptor baseTypeDescriptor) {
+        for (FacetTypes facetTypes : baseTypeDescriptor.getFacets().getDefinedFacets()) {
+            if (!this.getFacets().getDefinedFacets().contains(facetTypes)) {
+                switch (facetTypes) {
+                    case LENGTH:
+                        this.getFacets().length = baseTypeDescriptor.getFacets().length;
+                        break;
+                    case MIN_LENGTH:
+                        this.getFacets().minLength = baseTypeDescriptor.getFacets().minLength;
+                        break;
+                    case MAX_LENGTH:
+                        this.getFacets().maxLength = baseTypeDescriptor.getFacets().maxLength;
+                        break;
+                    case MIN_INCLUSIVE:
+                        this.getFacets().minInclusive = baseTypeDescriptor.getFacets().minInclusive;
+                        break;
+                    case MAX_INCLUSIVE:
+                        this.getFacets().maxInclusive = baseTypeDescriptor.getFacets().maxInclusive;
+                        break;
+                    case MIN_EXCLUSIVE:
+                        this.getFacets().minExclusive = baseTypeDescriptor.getFacets().minExclusive;
+                        break;
+                    case MAX_EXCLUSIVE:
+                        this.getFacets().maxExclusive = baseTypeDescriptor.getFacets().maxExclusive;
+                        break;
+                    case TOTAL_DIGITS:
+                        this.getFacets().totalDigits = baseTypeDescriptor.getFacets().totalDigits;
+                        break;
+                    case FRACTION_DIGITS:
+                        this.getFacets().fractionDigits = baseTypeDescriptor.getFacets().fractionDigits;
+                        break;
+                    case EXPLICIT_TIMEZONE:
+                        this.getFacets().explicitTimezone = baseTypeDescriptor.getFacets().explicitTimezone;
+                        break;
+                    case ENUMERATION:
+                    case METADATA:
+                    case CONSTRAINTS:
+                        resolveCommonFacets(baseTypeDescriptor, facetTypes);
+                        break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void resolveAllFacets() {
+        if (this.hasResolvedAllFacets)
+            return;
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
+        if (!this.hasCompatibleType(baseTypeDescriptor))
+            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
+                    .getName());
+        baseTypeDescriptor.resolveAllFacets();
+        resolveAtomicFacets(baseTypeDescriptor);
+        this.hasResolvedAllFacets = true;
+    }
+
+    @Override
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isAtomicType();
+    }
+
+    protected void checkBoundariesAndDigitsFacets() {
+        if (this.subtypeIsValid)
+            return;
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
+        areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
+        areDigitsFacetsMoreRestrictive(baseTypeDescriptor.getFacets());
+        this.subtypeIsValid = true;
+        baseTypeDescriptor.checkBaseType();
+    }
+
+    protected void checkBoundariesAndTimezoneFacets() {
+        if (this.subtypeIsValid)
+            return;
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
+        areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
+        if (this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE))
+            isExplicitTimezoneMoreRestrictive(baseTypeDescriptor.getFacets());
+        this.subtypeIsValid = true;
+        baseTypeDescriptor.checkBaseType();
+    }
+
+    protected void checkBoundariesFacet() {
+        if (this.subtypeIsValid)
+            return;
+        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
+        areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
+        this.subtypeIsValid = true;
+        baseTypeDescriptor.checkBaseType();
     }
 }

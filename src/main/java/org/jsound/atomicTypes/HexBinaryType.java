@@ -1,6 +1,5 @@
 package org.jsound.atomicTypes;
 
-import jsound.exceptions.LessRestrictiveFacetException;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.jsound.atomicItems.HexBinaryItem;
@@ -9,6 +8,7 @@ import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
+import org.jsound.type.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -58,15 +58,7 @@ public class HexBinaryType extends AtomicTypeDescriptor {
 
     @Override
     public void checkBaseType() {
-        if (this.subtypeIsValid)
-            return;
-        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
-        if (!baseTypeDescriptor.isHexBinaryType())
-            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
-                    .getName());
-        areLengthFacetsMoreRestrictive(baseTypeDescriptor.getFacets());
-        this.subtypeIsValid = true;
-        baseTypeDescriptor.checkBaseType();
+        areLengthFacetsMoreRestrictive();
     }
 
 
@@ -78,5 +70,10 @@ public class HexBinaryType extends AtomicTypeDescriptor {
     @Override
     public boolean isHexBinaryType() {
         return true;
+    }
+
+    @Override
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isHexBinaryType();
     }
 }

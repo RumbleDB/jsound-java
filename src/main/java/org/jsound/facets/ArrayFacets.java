@@ -15,7 +15,7 @@ import static org.jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static org.jsound.json.CompactSchemaFileJsonParser.getTypeFromObject;
 
 public class ArrayFacets extends Facets {
-    private ArrayContentDescriptor arrayContent = null;
+    public ArrayContentDescriptor arrayContent = null;
     public Integer minLength = null, maxLength = null;
 
     @Override

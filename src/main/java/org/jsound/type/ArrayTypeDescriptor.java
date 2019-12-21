@@ -32,6 +32,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         this.baseType = null;
         this.facets = facets;
         this.subtypeIsValid = true;
+        this.hasResolvedAllFacets = true;
     }
 
     public ArrayTypeDescriptor(String name, TypeOrReference baseType, ArrayFacets facets) {
@@ -145,11 +146,6 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         if (this.subtypeIsValid)
             return;
         ArrayTypeDescriptor baseTypeDescriptor = (ArrayTypeDescriptor) this.baseType.getTypeDescriptor();
-        if (!baseTypeDescriptor.isArrayType())
-            throw new LessRestrictiveFacetException("Type "
-                    + this.getName()
-                    + " is not subtype of "
-                    + baseTypeDescriptor.getName());
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
@@ -219,5 +215,46 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
             }
         }
         return true;
+    }
+
+    @Override
+    public void resolveAllFacets() {
+        if (this.hasResolvedAllFacets)
+            return;
+        ArrayTypeDescriptor baseTypeDescriptor = (ArrayTypeDescriptor) this.baseType.getTypeDescriptor();
+        if (!this.hasCompatibleType(baseTypeDescriptor))
+            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
+                    .getName());
+        baseTypeDescriptor.resolveAllFacets();
+        resolveArrayFacets(baseTypeDescriptor);
+        this.hasResolvedAllFacets = true;
+    }
+
+    private void resolveArrayFacets(ArrayTypeDescriptor baseTypeDescriptor) {
+        for (FacetTypes facetTypes : baseTypeDescriptor.getFacets().getDefinedFacets()) {
+            if (!this.getFacets().getDefinedFacets().contains(facetTypes)) {
+                switch (facetTypes) {
+                    case MIN_LENGTH:
+                        this.getFacets().minLength = baseTypeDescriptor.getFacets().minLength;
+                        break;
+                    case MAX_LENGTH:
+                        this.getFacets().maxLength = baseTypeDescriptor.getFacets().maxLength;
+                        break;
+                    case CONTENT:
+                        this.getFacets().arrayContent = baseTypeDescriptor.getFacets().arrayContent;
+                        break;
+                    case ENUMERATION:
+                    case METADATA:
+                    case CONSTRAINTS:
+                        resolveCommonFacets(baseTypeDescriptor, facetTypes);
+                        break;
+                }
+            }
+        }
+    }
+
+    @Override
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isArrayType();
     }
 }

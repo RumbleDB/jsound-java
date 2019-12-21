@@ -1,12 +1,12 @@
 package org.jsound.atomicTypes;
 
-import jsound.exceptions.LessRestrictiveFacetException;
 import org.jsound.atomicItems.DecimalItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
+import org.jsound.type.TypeDescriptor;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -104,16 +104,7 @@ public class DecimalType extends AtomicTypeDescriptor {
 
     @Override
     public void checkBaseType() {
-        if (this.subtypeIsValid)
-            return;
-        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
-        if (!baseTypeDescriptor.isDecimalType())
-            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
-                    .getName());
-        areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
-        areDigitsFacetsMoreRestrictive(baseTypeDescriptor.getFacets());
-        this.subtypeIsValid = true;
-        baseTypeDescriptor.checkBaseType();
+        checkBoundariesAndDigitsFacets();
     }
 
     @Override
@@ -148,5 +139,10 @@ public class DecimalType extends AtomicTypeDescriptor {
     @Override
     public boolean isDecimalType() {
         return true;
+    }
+
+    @Override
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isDecimalType();
     }
 }

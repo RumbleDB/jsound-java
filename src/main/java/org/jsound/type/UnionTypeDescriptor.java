@@ -24,6 +24,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
         this.baseType = null;
         this.facets = facets;
         this.subtypeIsValid = true;
+        this.hasResolvedAllFacets = true;
     }
 
     public UnionTypeDescriptor(String name, TypeOrReference baseType, UnionFacets facets) {
@@ -110,5 +111,10 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     @Override
     public UnionFacets getFacets() {
         return facets;
+    }
+
+    @Override
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isUnionType();
     }
 }

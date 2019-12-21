@@ -5,6 +5,7 @@ import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
+import org.jsound.type.TypeDescriptor;
 import org.jsound.utils.StringUtils;
 
 import java.util.Collections;
@@ -33,5 +34,10 @@ public class NullType extends AtomicTypeDescriptor {
     @Override
     public boolean isNullType() {
         return true;
+    }
+
+    @Override
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isNullType();
     }
 }

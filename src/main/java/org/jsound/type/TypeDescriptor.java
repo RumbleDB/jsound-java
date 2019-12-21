@@ -15,6 +15,7 @@ public abstract class TypeDescriptor {
     public TypeOrReference baseType;
     private boolean enumerationIsValid = false;
     protected boolean subtypeIsValid = false;
+    protected boolean hasResolvedAllFacets = false;
 
     TypeDescriptor(ItemTypes type, String name) {
         this.type = type;
@@ -182,5 +183,21 @@ public abstract class TypeDescriptor {
 
     public void resolveAllFacets() {}
 
+    public void resolveCommonFacets(TypeDescriptor typeDescriptor, FacetTypes facetType) {
+        switch (facetType) {
+            case ENUMERATION:
+                this.getFacets().enumeration = typeDescriptor.getFacets().enumeration;
+                break;
+            case METADATA:
+                this.getFacets().metadata = typeDescriptor.getFacets().metadata;
+                break;
+            case CONSTRAINTS:
+                this.getFacets().constraints = typeDescriptor.getFacets().constraints;
+                break;
+        }
+    }
+
     public void checkBaseType() {}
+
+    protected abstract boolean hasCompatibleType(TypeDescriptor typeDescriptor);
 }

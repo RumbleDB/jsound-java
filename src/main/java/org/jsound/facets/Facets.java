@@ -20,9 +20,9 @@ import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class Facets {
 
-    private Item metadata = null;
-    private List<Item> enumeration = null;
-    private List<String> constraints = null;
+    public Item metadata = null;
+    public List<Item> enumeration = null;
+    public List<String> constraints = null;
 
     public Set<FacetTypes> definedFacets = new HashSet<>();
 

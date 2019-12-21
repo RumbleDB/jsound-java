@@ -8,6 +8,7 @@ import org.jsound.atomicItems.YearMonthDurationItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
+import org.jsound.type.TypeDescriptor;
 
 public class YearMonthDurationType extends DurationType {
 
@@ -39,5 +40,10 @@ public class YearMonthDurationType extends DurationType {
     @Override
     public boolean isYearMonthDurationType() {
         return true;
+    }
+
+    @Override
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isYearMonthDurationType();
     }
 }

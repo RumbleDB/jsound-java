@@ -1,6 +1,5 @@
 package org.jsound.atomicTypes;
 
-import jsound.exceptions.LessRestrictiveFacetException;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
@@ -13,6 +12,7 @@ import org.jsound.facets.TimezoneFacet;
 import org.jsound.item.Item;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
+import org.jsound.type.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -124,17 +124,7 @@ public class DateType extends AtomicTypeDescriptor {
 
     @Override
     public void checkBaseType() {
-        if (this.subtypeIsValid)
-            return;
-        AtomicTypeDescriptor baseTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
-        if (!baseTypeDescriptor.isDateType())
-            throw new LessRestrictiveFacetException("Type " + this.getName() + " is not subtype of " + baseTypeDescriptor
-                    .getName());
-        areBoundariesMoreRestrictive(baseTypeDescriptor.getFacets());
-        if (this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE))
-            isExplicitTimezoneMoreRestrictive(baseTypeDescriptor.getFacets());
-        this.subtypeIsValid = true;
-        baseTypeDescriptor.checkBaseType();
+        checkBoundariesAndTimezoneFacets();
     }
 
     @Override
@@ -169,5 +159,10 @@ public class DateType extends AtomicTypeDescriptor {
     @Override
     public boolean isDateType() {
         return true;
+    }
+
+    @Override
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isDateType();
     }
 }

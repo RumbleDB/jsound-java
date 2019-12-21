@@ -8,6 +8,7 @@ import org.jsound.atomicItems.DurationItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.type.AtomicTypeDescriptor;
 import org.jsound.type.ItemTypes;
+import org.jsound.type.TypeDescriptor;
 
 public class DayTimeDurationType extends DurationType {
 
@@ -44,5 +45,10 @@ public class DayTimeDurationType extends DurationType {
     @Override
     public boolean isDayTimeDurationType() {
         return true;
+    }
+
+    @Override
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isDayTimeDurationType();
     }
 }
