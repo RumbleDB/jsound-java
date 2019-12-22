@@ -5,9 +5,9 @@ import org.jsound.atomicItems.Base64BinaryItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,7 +30,7 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         byte[] base64BinaryValue;
         try {
             base64BinaryValue = Base64.decodeBase64(item.getStringValue());
@@ -40,13 +40,11 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new Base64BinaryItem(base64BinaryValue, item.getStringValue());
-        if (!validateLengthFacets(item, isEnumerationItem))
-            return false;
-        return recursivelyValidate(item);
+        return validateLengthFacets(item, isEnumValue);
     }
 
     @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
         areLengthFacetsMoreRestrictive(typeDescriptor);
     }
 

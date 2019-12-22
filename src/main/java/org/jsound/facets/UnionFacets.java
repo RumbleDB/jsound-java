@@ -2,12 +2,12 @@ package org.jsound.facets;
 
 import com.jsoniter.ValueType;
 import org.jsound.json.SchemaFileJsonParser;
-import org.jsound.type.TypeOrReference;
-import org.jsound.type.UnionContentDescriptor;
+import org.jsound.typedescriptors.TypeOrReference;
+import org.jsound.typedescriptors.union.UnionContentDescriptor;
 
 import java.io.IOException;
 
-import static org.jsound.cli.JSoundExecutor.object;
+import static org.jsound.cli.JSoundExecutor.jsonSchemaIterator;
 import static org.jsound.cli.JSoundExecutor.schema;
 import static org.jsound.json.CompactSchemaFileJsonParser.compactSchema;
 
@@ -30,9 +30,9 @@ public class UnionFacets extends Facets {
     }
 
     private void setUnionContentFromObject() throws IOException {
-        while (object.readArray()) {
-            if (object.whatIsNext().equals(ValueType.STRING)) {
-                String type = object.readString();
+        while (jsonSchemaIterator.readArray()) {
+            if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
+                String type = jsonSchemaIterator.readString();
                 if (schema.containsKey(type))
                     unionContent.getTypes().add(new TypeOrReference(schema.get(type)));
                 else

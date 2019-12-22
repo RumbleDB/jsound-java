@@ -20,4 +20,9 @@ public class DurationItem extends AtomicItem {
     public String getStringValue() {
         return this._value.toString();
     }
+
+    @Override
+    public boolean isDuration() {
+        return true;
+    }
 }

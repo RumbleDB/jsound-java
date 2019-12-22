@@ -20,4 +20,8 @@ public class TimeItem extends AtomicItem {
         return this._value.toString();
     }
 
+    @Override
+    public boolean isTimeItem() {
+        return true;
+    }
 }

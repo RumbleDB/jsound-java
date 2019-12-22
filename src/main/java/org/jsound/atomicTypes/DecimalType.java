@@ -4,9 +4,9 @@ import org.jsound.atomicItems.DecimalItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -42,7 +42,7 @@ public class DecimalType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         BigDecimal decimalValue;
         try {
             if (item.isString())
@@ -55,35 +55,16 @@ public class DecimalType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new DecimalItem(decimalValue);
-        if (!validateBoundariesFacets(item, isEnumerationItem))
-            return false;
-        if (!validateDigitsFacets(item))
-            return false;
-        return recursivelyValidate(item);
+        return validateBoundariesFacets(item, isEnumValue) && validateDigitsFacets(item);
     }
 
     @Override
-    protected boolean validateMinInclusive(Item item) {
-        return compareDecimals(item.getDecimalValue(), this.getFacets().minInclusive) >= 0;
+    protected int compare(Item item1, Item item2) {
+        return compareDecimal(item1, item2);
     }
 
-    @Override
-    protected boolean validateMinExclusive(Item item) {
-        return compareDecimals(item.getDecimalValue(), this.getFacets().minExclusive) > 0;
-    }
-
-    @Override
-    protected boolean validateMaxInclusive(Item item) {
-        return compareDecimals(item.getDecimalValue(), this.getFacets().maxInclusive) <= 0;
-    }
-
-    @Override
-    protected boolean validateMaxExclusive(Item item) {
-        return compareDecimals(item.getDecimalValue(), this.getFacets().maxExclusive) < 0;
-    }
-
-    private int compareDecimals(BigDecimal itemValue, Item constraint) {
-        return itemValue.compareTo(getDecimalFromItem(constraint));
+    private int compareDecimal(Item decimalItem, Item constraint) {
+        return getDecimalFromItem(decimalItem).compareTo(getDecimalFromItem(constraint));
     }
 
     @Override
@@ -103,36 +84,8 @@ public class DecimalType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
         checkBoundariesAndDigitsFacets(typeDescriptor);
-    }
-
-    @Override
-    protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
-            &&
-            compareDecimals(getDecimalFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
-            &&
-            compareDecimals(getDecimalFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
-            &&
-            compareDecimals(getDecimalFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
-    }
-
-    @Override
-    protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
-            &&
-            compareDecimals(getDecimalFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

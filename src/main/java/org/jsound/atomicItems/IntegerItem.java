@@ -13,11 +13,6 @@ public class IntegerItem extends AtomicItem {
     }
 
     @Override
-    public boolean isInteger() {
-        return true;
-    }
-
-    @Override
     public Integer getIntegerValue() {
         return _value;
     }

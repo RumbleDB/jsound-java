@@ -13,11 +13,6 @@ public class DecimalItem extends AtomicItem {
     }
 
     @Override
-    public boolean isDecimal() {
-        return true;
-    }
-
-    @Override
     public BigDecimal getDecimalValue() {
         return _value;
     }

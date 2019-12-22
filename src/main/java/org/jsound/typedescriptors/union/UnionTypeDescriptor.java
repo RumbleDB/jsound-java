@@ -1,9 +1,12 @@
-package org.jsound.type;
+package org.jsound.typedescriptors.union;
 
 import jsound.exceptions.InvalidSchemaException;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.UnionFacets;
 import org.jsound.item.Item;
+import org.jsound.typedescriptors.TypeDescriptor;
+import org.jsound.typedescriptors.TypeOrReference;
+import org.jsound.types.ItemTypes;
 import org.tyson.TYSONValue;
 import org.tyson.TysonItem;
 
@@ -20,10 +23,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     public UnionTypeDescriptor(String name, UnionFacets facets) {
         super(ItemTypes.VALUE, name);
-        this.baseType = null;
         this.facets = facets;
-        this.baseTypeIsChecked = true;
-        this.hasResolvedAllFacets = true;
     }
 
     public UnionTypeDescriptor(String name, TypeOrReference baseType, UnionFacets facets) {
@@ -42,23 +42,22 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
-                    // checkContentCorrectness();
                     if (!validateContentFacet(item))
                         return false;
                     break;
                 case ENUMERATION:
-                    if (!validateEnumeration(item, isEnumerationItem))
+                    if (!validateEnumeration(item, isEnumValue))
                         return false;
                     break;
                 default:
                     break;
             }
         }
-        return recursivelyValidate(item);
+        return true;
     }
 
     private boolean validateContentFacet(Item item) {
@@ -76,7 +75,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
                 return new TYSONValue(typeOrReference.getTypeDescriptor().getName(), item);
         }
         throw new InvalidSchemaException(
-                item.getStringValue() + " cannot is not valid against any type of union " + this.getName()
+                item.getStringValue() + " is not valid against any type of union " + this.getName()
         );
     }
 

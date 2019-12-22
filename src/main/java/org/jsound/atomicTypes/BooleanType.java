@@ -3,9 +3,9 @@ package org.jsound.atomicTypes;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 import org.jsound.utils.StringUtils;
 
 import java.util.Collections;
@@ -22,7 +22,7 @@ public class BooleanType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         return item.isBoolean() || (item.isString() && StringUtils.isBooleanLiteral(item.getStringValue()));
     }
 

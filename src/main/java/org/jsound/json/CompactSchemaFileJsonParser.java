@@ -1,5 +1,6 @@
 package org.jsound.json;
 
+import com.jsoniter.JsonIterator;
 import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
@@ -10,23 +11,22 @@ import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.ObjectFacets;
 import org.jsound.facets.UnionFacets;
-import org.jsound.item.ItemFactory;
-import org.jsound.type.ArrayTypeDescriptor;
-import org.jsound.type.AtomicTypes;
-import org.jsound.type.FieldDescriptor;
-import org.jsound.type.ObjectTypeDescriptor;
-import org.jsound.type.TypeDescriptor;
-import org.jsound.type.TypeOrReference;
-import org.jsound.type.UnionTypeDescriptor;
+import org.jsound.typedescriptors.TypeOrReference;
+import org.jsound.typedescriptors.array.ArrayTypeDescriptor;
+import org.jsound.typedescriptors.object.FieldDescriptor;
+import org.jsound.typedescriptors.object.ObjectTypeDescriptor;
+import org.jsound.typedescriptors.union.UnionTypeDescriptor;
+import org.jsound.types.AtomicTypes;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.jsound.cli.JSoundExecutor.object;
+import static org.jsound.cli.JSoundExecutor.jsonSchemaIterator;
 import static org.jsound.cli.JSoundExecutor.schema;
+import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 import static org.jsound.json.SchemaFileJsonParser.throwExistingTypeException;
-import static org.jsound.type.AtomicTypeDescriptor.buildAtomicType;
+import static org.jsound.typedescriptors.atomic.AtomicTypeDescriptor.buildAtomicType;
 
 
 public class CompactSchemaFileJsonParser {
@@ -36,41 +36,30 @@ public class CompactSchemaFileJsonParser {
     public static void createSchema() {
 
         try {
-            if (!object.whatIsNext().equals(ValueType.OBJECT)) {
+            if (!jsonSchemaIterator.whatIsNext().equals(ValueType.OBJECT)) {
                 throw new InvalidSchemaException("The schema root object must be a JSON object");
             }
 
             String typeName;
-            while ((typeName = object.readObject()) != null) {
+            while ((typeName = jsonSchemaIterator.readObject()) != null) {
                 if (compactSchema.containsKey(typeName))
                     throwExistingTypeException(typeName);
                 compactSchema.put(typeName, getTypeFromObject(typeName));
             }
             for (String key : compactSchema.keySet()) {
                 if (schema.get(key) == null)
-                    getType(key);
+                    SchemaDefinitionUtils.resolveTypeDescriptors(key);
             }
         } catch (IOException e) {
             throw new JsoundException("Error parsing the JSON file");
         }
     }
 
-    private static TypeDescriptor getType(String key) {
-        TypeOrReference typeOrReference = compactSchema.get(key);
-        TypeDescriptor typeDescriptor;
-        if (typeOrReference.getType() == null)
-            typeDescriptor = getType(typeOrReference.getStringType());
-        else
-            typeDescriptor = typeOrReference.getType();
-        schema.put(key, typeDescriptor);
-        return typeDescriptor;
-    }
-
     public static TypeOrReference getTypeFromObject(String name) {
         try {
-            switch (object.whatIsNext()) {
+            switch (jsonSchemaIterator.whatIsNext()) {
                 case STRING:
-                    return parseType(name, object.readString());
+                    return parseType(name, jsonSchemaIterator.readString());
                 case OBJECT:
                     return new TypeOrReference(buildObjectType(name, new ObjectFacets()));
                 case ARRAY:
@@ -87,7 +76,7 @@ public class CompactSchemaFileJsonParser {
 
     private static ObjectTypeDescriptor buildObjectType(String name, ObjectFacets facets) throws IOException {
         String key;
-        while ((key = object.readObject()) != null) {
+        while ((key = jsonSchemaIterator.readObject()) != null) {
             FieldDescriptor fieldDescriptor = new FieldDescriptor();
             boolean allowNull = setMarkers(fieldDescriptor, key);
             if (facets.getObjectContent().containsKey(fieldDescriptor.getName()))
@@ -95,7 +84,6 @@ public class CompactSchemaFileJsonParser {
             setFieldDescriptorType(fieldDescriptor);
             if (allowNull) {
                 UnionFacets unionTypeFacets = new UnionFacets();
-                unionTypeFacets.setUnionContent("");
                 if (fieldDescriptor.getTypeOrReference().getStringType() != null)
                     unionTypeFacets.getUnionContent()
                         .getTypes()
@@ -116,17 +104,17 @@ public class CompactSchemaFileJsonParser {
     }
 
     private static void setFieldDescriptorType(FieldDescriptor fieldDescriptor) throws IOException {
-        if (object.whatIsNext().equals(ValueType.STRING)) {
-            String fieldValue = object.readString();
+        if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
+            String fieldValue = jsonSchemaIterator.readString();
             String fieldType = fieldValue.split("=")[0];
             if (fieldValue.contains("=")) {
-                fieldDescriptor.setDefaultValue(ItemFactory.getInstance().createStringItem(fieldValue.split("=")[1]));
+                fieldDescriptor.setDefaultValue(getItemFromObject(JsonIterator.parse(fieldValue.split("=")[1])));
             }
             if (compactSchema.containsKey(fieldType))
                 fieldDescriptor.setType(compactSchema.get(fieldType));
             else
                 fieldDescriptor.setType(parseType(fieldDescriptor.name, fieldType));
-        } else if (!object.whatIsNext().equals(ValueType.OBJECT))
+        } else if (!jsonSchemaIterator.whatIsNext().equals(ValueType.OBJECT))
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
         else
             fieldDescriptor.setType(getTypeFromObject(fieldDescriptor.name));

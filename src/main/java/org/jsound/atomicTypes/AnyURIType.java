@@ -4,9 +4,9 @@ import org.jsound.atomicItems.AnyURIItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -30,7 +30,7 @@ public class AnyURIType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         URI uri;
         try {
             uri = URI.create(item.getStringValue());
@@ -40,9 +40,7 @@ public class AnyURIType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new AnyURIItem(uri);
-        if (!validateLengthFacets(item, isEnumerationItem))
-            return false;
-        return recursivelyValidate(item);
+        return validateLengthFacets(item, isEnumValue);
     }
 
     @Override
@@ -56,7 +54,7 @@ public class AnyURIType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
         areLengthFacetsMoreRestrictive(typeDescriptor);
     }
 

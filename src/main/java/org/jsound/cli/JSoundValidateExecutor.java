@@ -1,7 +1,7 @@
 package org.jsound.cli;
 
 
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 import java.io.IOException;
 

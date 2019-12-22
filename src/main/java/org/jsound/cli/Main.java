@@ -15,7 +15,7 @@ public class Main {
                     JSoundRuntimeConfiguration.getInstance().getSchema(),
                     JSoundRuntimeConfiguration.getInstance().getFile(),
                     JSoundRuntimeConfiguration.getInstance().getRootType(),
-                    JSoundRuntimeConfiguration.getInstance().getCompact()
+                    JSoundRuntimeConfiguration.getInstance().isCompact()
                 );
                 System.out.println(
                     isValid
@@ -25,19 +25,20 @@ public class Main {
             } else if (configuration.isAnnotate()) {
                 if (configuration.getOutputPath() == null)
                     throw new CliException("Missing output path argument");
-                if (
-                    !JSoundAnnotateExecutor.annotate(
+                try {
+                    JSoundAnnotateExecutor.annotate(
                         JSoundRuntimeConfiguration.getInstance().getSchema(),
                         JSoundRuntimeConfiguration.getInstance().getFile(),
                         JSoundRuntimeConfiguration.getInstance().getRootType(),
                         JSoundRuntimeConfiguration.getInstance().getOutputPath(),
-                        JSoundRuntimeConfiguration.getInstance().getCompact()
-                    )
-                )
-                    System.out.println("Validation failed ❌ : the file is not valid against the schema.");
-                else {
+                        JSoundRuntimeConfiguration.getInstance().isCompact()
+                    );
                     System.out.println("Validation completed successfully! ✅");
                     System.out.println("Annotation completed successfully! ✅");
+                } catch (JsoundException e) {
+                    System.out.println(
+                        "Annotation failed ❌ : could not annotate the file with the provided the schema."
+                    );
                 }
             } else
                 System.out.println("Please specify if you want to validate or annotate the file against the schema");

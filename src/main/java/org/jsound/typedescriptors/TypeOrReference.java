@@ -1,4 +1,4 @@
-package org.jsound.type;
+package org.jsound.typedescriptors;
 
 import jsound.exceptions.TypeNotResolvedException;
 

@@ -4,9 +4,9 @@ import org.jsound.atomicItems.DoubleItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -32,7 +32,7 @@ public class DoubleType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         Double doubleValue;
         try {
             if (item.isString())
@@ -45,33 +45,16 @@ public class DoubleType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new DoubleItem(doubleValue);
-        if (!validateBoundariesFacets(item, isEnumerationItem))
-            return false;
-        return recursivelyValidate(item);
+        return validateBoundariesFacets(item, isEnumValue);
     }
 
     @Override
-    protected boolean validateMinInclusive(Item item) {
-        return compareDoubles(item.getDoubleValue(), this.getFacets().minInclusive) >= 0;
+    protected int compare(Item item1, Item item2) {
+        return compareDoubles(item1, item2);
     }
 
-    @Override
-    protected boolean validateMinExclusive(Item item) {
-        return compareDoubles(item.getDoubleValue(), this.getFacets().minExclusive) > 0;
-    }
-
-    @Override
-    protected boolean validateMaxInclusive(Item item) {
-        return compareDoubles(item.getDoubleValue(), this.getFacets().maxInclusive) <= 0;
-    }
-
-    @Override
-    protected boolean validateMaxExclusive(Item item) {
-        return compareDoubles(item.getDoubleValue(), this.getFacets().maxExclusive) < 0;
-    }
-
-    private int compareDoubles(Double itemValue, Item constraint) {
-        return itemValue.compareTo(getDoubleFromItem(constraint));
+    private int compareDoubles(Item item, Item constraint) {
+        return getDoubleFromItem(item).compareTo(getDoubleFromItem(constraint));
     }
 
     @Override
@@ -91,36 +74,8 @@ public class DoubleType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
         checkBoundariesFacet(typeDescriptor);
-    }
-
-    @Override
-    protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
-            &&
-            compareDoubles(getDoubleFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
-            &&
-            compareDoubles(getDoubleFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
-            &&
-            compareDoubles(getDoubleFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
-    }
-
-    @Override
-    protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
-            &&
-            compareDoubles(getDoubleFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

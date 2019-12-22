@@ -3,9 +3,9 @@ package org.jsound.atomicTypes;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -29,19 +29,13 @@ public class StringType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
-        if (!item.isString())
-            return false;
-        if (this.getFacets() == null)
-            return true;
-        if (!validateLengthFacets(item, isEnumerationItem))
-            return false;
-        return recursivelyValidate(item);
+    public boolean validate(Item item, boolean isEnumValue) {
+        return item.isString() && (this.getFacets() == null || validateLengthFacets(item, isEnumValue));
     }
 
 
     @Override
-    protected boolean validateItemAgainstEnumeration(Item item) throws Exception {
+    protected boolean validateItemAgainstEnumeration(Item item) {
         String string = item.getStringValue();
         for (Item enumItem : this.getFacets().getEnumeration()) {
             if (string.equals(enumItem.getStringValue()))
@@ -51,7 +45,7 @@ public class StringType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
         areLengthFacetsMoreRestrictive(typeDescriptor);
     }
 

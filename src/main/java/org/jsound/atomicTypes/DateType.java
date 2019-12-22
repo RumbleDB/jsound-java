@@ -8,11 +8,10 @@ import org.joda.time.format.DateTimeParser;
 import org.jsound.atomicItems.DateItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
-import org.jsound.facets.TimezoneFacet;
 import org.jsound.item.Item;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -48,7 +47,7 @@ public class DateType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         DateTime date;
         try {
             date = getDateFromItem(item);
@@ -58,44 +57,10 @@ public class DateType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new DateItem(date);
-        if (!validateBoundariesFacets(item, isEnumerationItem))
+        if (!validateBoundariesFacets(item, isEnumValue))
             return false;
-        if (this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE) && !checkExplicitTimezone(item))
-            return false;
-
-        return recursivelyValidate(item);
-    }
-
-    private boolean checkExplicitTimezone(Item item) {
-        DateTime date = DateTime.parse(
-            item.getStringValue(),
-            _formatter
-        );
-        return (item.getStringValue().endsWith("Z")
-            || date.getZone() != DateTimeZone.getDefault()
-            || !this.getFacets().explicitTimezone.equals(TimezoneFacet.REQUIRED))
-            && ((!item.getStringValue().endsWith("Z") && date.getZone() == DateTimeZone.getDefault())
-                || !this.getFacets().explicitTimezone.equals(TimezoneFacet.PROHIBITED));
-    }
-
-    @Override
-    protected boolean validateMinInclusive(Item item) {
-        return subtractDate(item.getDateTime(), this.getFacets().minInclusive) >= 0;
-    }
-
-    @Override
-    protected boolean validateMinExclusive(Item item) {
-        return subtractDate(item.getDateTime(), this.getFacets().minExclusive) > 0;
-    }
-
-    @Override
-    protected boolean validateMaxInclusive(Item item) {
-        return subtractDate(item.getDateTime(), this.getFacets().maxInclusive) <= 0;
-    }
-
-    @Override
-    protected boolean validateMaxExclusive(Item item) {
-        return subtractDate(item.getDateTime(), this.getFacets().maxExclusive) < 0;
+        return !this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE)
+            || DateTimeType.checkExplicitTimezone(item, this.getFacets().explicitTimezone, _formatter);
     }
 
     @Override
@@ -108,11 +73,18 @@ public class DateType extends AtomicTypeDescriptor {
         return false;
     }
 
-    private long subtractDate(DateTime itemDate, Item constraintItem) {
-        return itemDate.getMillis() - getDateFromItem(constraintItem).getMillis();
+    @Override
+    protected int compare(Item item1, Item item2) {
+        return compareDate(item1, item2);
+    }
+
+    private int compareDate(Item dateItem, Item constraintItem) {
+        return getDateFromItem(dateItem).compareTo(getDateFromItem(constraintItem));
     }
 
     private DateTime getDateFromItem(Item item) {
+        if (item.isDateItem())
+            return item.getDateTime();
         DateTime date = DateTime.parse(
             item.getStringValue(),
             _formatter
@@ -123,36 +95,8 @@ public class DateType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
         checkBoundariesAndTimezoneFacets(typeDescriptor);
-    }
-
-    @Override
-    protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
-            &&
-            subtractDate(getDateFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
-            &&
-            subtractDate(getDateFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
-            &&
-            subtractDate(getDateFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
-    }
-
-    @Override
-    protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
-            &&
-            subtractDate(getDateFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

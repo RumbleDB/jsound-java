@@ -1,4 +1,4 @@
-package org.jsound.type;
+package org.jsound.typedescriptors.object;
 
 import jsound.exceptions.ClosedNotRespectedException;
 import jsound.exceptions.ClosedSetBackToFalseException;
@@ -9,6 +9,9 @@ import org.jsound.facets.FacetTypes;
 import org.jsound.facets.ObjectFacets;
 import org.jsound.item.Item;
 import org.jsound.item.ObjectItem;
+import org.jsound.typedescriptors.TypeDescriptor;
+import org.jsound.typedescriptors.TypeOrReference;
+import org.jsound.types.ItemTypes;
 import org.tyson.TYSONObject;
 import org.tyson.TYSONValue;
 import org.tyson.TysonItem;
@@ -25,14 +28,10 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
 
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(CONTENT, CLOSED));
     private final ObjectFacets facets;
-    private boolean closedIsChecked = false;
 
     public ObjectTypeDescriptor(String name, ObjectFacets facets) {
         super(ItemTypes.OBJECT, name);
-        this.baseType = null;
         this.facets = facets;
-        this.baseTypeIsChecked = true;
-        this.hasResolvedAllFacets = true;
     }
 
     public ObjectTypeDescriptor(String name, TypeOrReference baseType, ObjectFacets facets) {
@@ -51,7 +50,17 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isObjectType();
+    }
+
+    @Override
+    public ObjectFacets getFacets() {
+        return facets;
+    }
+
+    @Override
+    public boolean validate(Item item, boolean isEnumValue) {
         if (!item.isObject())
             return false;
         ObjectItem objectItem = (ObjectItem) item;
@@ -66,28 +75,11 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                         return false;
                     break;
                 case ENUMERATION:
-                    if (!validateEnumeration(objectItem, isEnumerationItem))
+                    if (!validateEnumeration(objectItem, isEnumValue))
                         return false;
                     break;
                 default:
                     break;
-            }
-        }
-        return recursivelyValidate(item);
-    }
-
-    private boolean validateClosedFacet(ObjectItem objectItem) {
-        if (this.getFacets().isClosed()) {
-            for (String key : objectItem.getItemMap().keySet()) {
-                if (!this.getFacets().getObjectContent().containsKey(key)) {
-                    throw new ClosedNotRespectedException(
-                            "Type "
-                                + this.getName()
-                                + " is closed, and the \"content\" facet does not allow for field "
-                                + key
-                                + "."
-                    );
-                }
             }
         }
         return true;
@@ -110,13 +102,30 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         return true;
     }
 
+    private boolean validateClosedFacet(ObjectItem objectItem) {
+        if (this.getFacets().isClosed()) {
+            for (String key : objectItem.getItemMap().keySet()) {
+                if (!this.getFacets().getObjectContent().containsKey(key)) {
+                    throw new ClosedNotRespectedException(
+                            "Type "
+                                + this.getName()
+                                + " is closed, and the \"content\" facet does not allow for field "
+                                + key
+                                + "."
+                    );
+                }
+            }
+        }
+        return true;
+    }
+
     @Override
     public TysonItem annotate(Item item) {
         ObjectItem objectItem;
         try {
             objectItem = (ObjectItem) item;
         } catch (ClassCastException e) {
-            throw new InvalidSchemaException("Annotation not possible. Need an object.");
+            throw new InvalidSchemaException("Annotation not possible. An object is needed.");
         }
 
         TYSONObject object = new TYSONObject(this.getName());
@@ -138,46 +147,104 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         }
 
         for (String key : objectItem.getItemMap().keySet()) {
-            if (!this.getFacets().getObjectContent().containsKey(key)) {
-                if (this.baseType != null)
-                    object.put(key, this.baseType.getTypeDescriptor().annotate(objectItem.getItemMap().get(key)));
-                else
-                    object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key)));
-            }
+            if (!this.getFacets().getObjectContent().containsKey(key))
+                object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key)));
         }
         return object;
     }
 
     @Override
-    public ObjectFacets getFacets() {
-        return facets;
-    }
-
-    @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
-        if (this.baseTypeIsChecked)
+    public void resolveAllFacets() {
+        if (this.hasResolvedAllFacets)
             return;
-        ObjectTypeDescriptor baseTypeDescriptor = (ObjectTypeDescriptor) typeDescriptor;
-        if (!baseTypeDescriptor.isObjectType())
+        ObjectTypeDescriptor objectTypeDescriptor = (ObjectTypeDescriptor) this.baseType.getTypeDescriptor();
+        if (!this.hasCompatibleType(objectTypeDescriptor))
             throw new LessRestrictiveFacetException(
                     "Type "
                         + this.getName()
-                        + " is not subtype of "
-                        + baseTypeDescriptor
-                            .getName()
+                        + " is not compatible with type "
+                        + objectTypeDescriptor.getName()
+            );
+        objectTypeDescriptor.resolveAllFacets();
+        resolveObjectFacets(objectTypeDescriptor);
+        this.hasResolvedAllFacets = true;
+    }
+
+    private void resolveObjectFacets(ObjectTypeDescriptor typeDescriptor) {
+        for (FacetTypes facetTypes : typeDescriptor.getFacets().getDefinedFacets()) {
+            if (!this.getFacets().getDefinedFacets().contains(facetTypes)) {
+                switch (facetTypes) {
+                    case CLOSED:
+                        if (
+                            this.getFacets().closedIsSet
+                                && !this.getFacets().isClosed()
+                                && typeDescriptor.getFacets().isClosed()
+                        )
+                            throw new ClosedSetBackToFalseException(
+                                    "The \"closed\" facet for type "
+                                        + this.getName()
+                                        + " cannot be set back to false since it was set to true in its baseType "
+                                        + this.baseType.getTypeDescriptor().getName()
+                                        + "."
+                            );
+                        this.getFacets().setClosed(typeDescriptor.getFacets().isClosed());
+                        break;
+                    case ENUMERATION:
+                    case METADATA:
+                    case CONSTRAINTS:
+                        resolveCommonFacets(typeDescriptor, facetTypes);
+                        break;
+                }
+            }
+        }
+        if (typeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
+            this.inheritBaseTypeContent(typeDescriptor);
+    }
+
+    private void inheritBaseTypeContent(ObjectTypeDescriptor typeDescriptor) {
+        for (FieldDescriptor fieldDescriptor : typeDescriptor.getFacets().getObjectContent().values()) {
+            if (!this.getFacets().getObjectContent().containsKey(fieldDescriptor.getName()))
+                this.getFacets().getObjectContent().put(fieldDescriptor.name, fieldDescriptor);
+            else if (
+                fieldDescriptor.isRequired()
+                    && this.getFacets().getObjectContent().get(fieldDescriptor.getName()).requiredIsSet()
+                    && !this.getFacets().getObjectContent().get(fieldDescriptor.getName()).isRequired()
+            )
+                throw new RequiredSertBackToFalseException(
+                        "Field "
+                            + this.getName()
+                            + " cannot be set back to false. It is set to true in baseType "
+                            + typeDescriptor.getName()
+                            + "."
+                );
+
+        }
+    }
+
+    @Override
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
+        if (this.baseTypeIsChecked)
+            return;
+        ObjectTypeDescriptor objectTypeDescriptor = (ObjectTypeDescriptor) typeDescriptor;
+        if (!objectTypeDescriptor.isObjectType())
+            throw new LessRestrictiveFacetException(
+                    "Type "
+                        + this.getName()
+                        + " is not compatible with type "
+                        + objectTypeDescriptor.getName()
             );
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
-                    isObjectContentMoreRestrictive(baseTypeDescriptor);
+                    isObjectContentMoreRestrictive(objectTypeDescriptor);
                     break;
                 case ENUMERATION:
-                    isEnumerationMoreRestrictive(baseTypeDescriptor.facets);
+                    isEnumerationMoreRestrictive(objectTypeDescriptor.facets);
                     break;
             }
         }
         this.baseTypeIsChecked = true;
-        baseTypeDescriptor.checkBaseType();
+        objectTypeDescriptor.checkBaseType();
     }
 
     private void isObjectContentMoreRestrictive(ObjectTypeDescriptor baseTypeDescriptor) {
@@ -190,83 +257,9 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
         }
     }
 
-    @Override
-    public void resolveAllFacets() {
-        if (this.hasResolvedAllFacets)
-            return;
-        ObjectTypeDescriptor baseTypeDescriptor = (ObjectTypeDescriptor) this.baseType.getTypeDescriptor();
-        if (!this.hasCompatibleType(baseTypeDescriptor))
-            throw new LessRestrictiveFacetException(
-                    "Type "
-                        + this.getName()
-                        + " is not subtype of "
-                        + baseTypeDescriptor
-                            .getName()
-            );
-        baseTypeDescriptor.resolveAllFacets();
-        resolveObjectFacets(baseTypeDescriptor);
-        this.hasResolvedAllFacets = true;
-    }
-
-    private void resolveObjectFacets(ObjectTypeDescriptor baseTypeDescriptor) {
-        for (FacetTypes facetTypes : baseTypeDescriptor.getFacets().getDefinedFacets()) {
-            if (!this.getFacets().getDefinedFacets().contains(facetTypes)) {
-                switch (facetTypes) {
-                    case CLOSED:
-                        if (
-                            this.getFacets().closedIsSet
-                                && !this.getFacets().isClosed()
-                                && baseTypeDescriptor.getFacets().isClosed()
-                        )
-                            throw new ClosedSetBackToFalseException(
-                                    "The \"closed\" facet for type "
-                                        + this.getName()
-                                        + " cannot be set back to false since it was set to true in its baseType "
-                                        + this.baseType.getTypeDescriptor().getName()
-                                        + "."
-                            );
-                        this.getFacets().setClosed(baseTypeDescriptor.getFacets().isClosed());
-                        break;
-                    case CONTENT:
-                        this.inheritBaseTypeContent(baseTypeDescriptor);
-                        break;
-                    case ENUMERATION:
-                    case METADATA:
-                    case CONSTRAINTS:
-                        resolveCommonFacets(baseTypeDescriptor, facetTypes);
-                        break;
-                }
-            }
-        }
-    }
-
-    private void inheritBaseTypeContent(ObjectTypeDescriptor baseTypeDescriptor) {
-        for (FieldDescriptor fieldDescriptor : baseTypeDescriptor.getFacets().getObjectContent().values()) {
-            if (!this.getFacets().getObjectContent().containsKey(fieldDescriptor.getName()))
-                this.getFacets().getObjectContent().put(fieldDescriptor.name, fieldDescriptor);
-            else if (
-                fieldDescriptor.isRequired()
-                    && !this.getFacets().getObjectContent().get(fieldDescriptor.getName()).isRequired()
-            )
-                throw new RequiredSertBackToFalseException(
-                        "Field "
-                            + this.getName()
-                            + " cannot be set back to false. It is set to true in baseType "
-                            + baseTypeDescriptor.getName()
-                            + "."
-                );
-
-        }
-    }
-
-    @Override
-    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
-        return typeDescriptor.isObjectType();
-    }
-
     private void validateDefaultValues() {
         for (FieldDescriptor fieldDescriptor : this.getFacets().getObjectContent().values()) {
-            if (fieldDescriptor.getDefaultValue() != null) {
+            if (fieldDescriptor.getDefaultValue() != null && !fieldDescriptor.defaultIsChecked) {
                 if (
                     !fieldDescriptor.getTypeOrReference()
                         .getTypeDescriptor()
@@ -277,6 +270,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                                 + this.getName()
                                 + " is not valid against its type."
                     );
+                fieldDescriptor.defaultIsChecked = true;
             }
         }
     }

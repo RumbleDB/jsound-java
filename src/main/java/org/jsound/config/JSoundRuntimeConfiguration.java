@@ -33,23 +33,8 @@ public class JSoundRuntimeConfiguration {
         return instance;
     }
 
-    public String getConfigurationArgument(String key) {
-        return this._arguments.getOrDefault(key, null);
-    }
-
     public String getOutputPath() {
         return this._arguments.getOrDefault("output", null);
-    }
-
-    public boolean getOverwrite() {
-        if (this._arguments.containsKey("overwrite"))
-            return this._arguments.get("overwrite").equals("yes");
-        else
-            return false;
-    }
-
-    public String getLogPath() {
-        return this._arguments.getOrDefault("log-path", null);
     }
 
     public String getFile() {
@@ -64,30 +49,24 @@ public class JSoundRuntimeConfiguration {
         return this._arguments.getOrDefault("root", null);
     }
 
-    public boolean getCompact() {
+    public boolean isCompact() {
         return Boolean.parseBoolean(this._arguments.getOrDefault("compact", null));
     }
 
     public boolean isValidate() {
-        if (this._arguments.containsKey("validate"))
-            return this._arguments.get("validate").equals("yes");
-        else
-            return false;
+        return Boolean.parseBoolean(this._arguments.getOrDefault("validate", null));
     }
 
     public boolean isAnnotate() {
-        if (this._arguments.containsKey("annotate"))
-            return this._arguments.get("annotate").equals("yes");
-        else
-            return false;
+        return Boolean.parseBoolean(this._arguments.getOrDefault("annotate", null));
     }
 
     public void hasNecessaryArguments() {
         if (getSchema() == null)
             throw new CliException("Missing schema argument");
         if (getFile() == null)
-            throw new CliException("Missing JSON file argument");
+            throw new CliException("Missing instance file argument");
         if (getRootType() == null)
-            throw new CliException("Missing root atomicTypes argument");
+            throw new CliException("Missing type to validate the instance file against.");
     }
 }

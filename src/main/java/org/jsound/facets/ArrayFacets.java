@@ -3,12 +3,13 @@ package org.jsound.facets;
 import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
 import org.jsound.json.SchemaFileJsonParser;
-import org.jsound.type.ArrayContentDescriptor;
-import org.jsound.type.TypeOrReference;
+import org.jsound.typedescriptors.array.ArrayContentDescriptor;
+import org.jsound.typedescriptors.TypeDescriptor;
+import org.jsound.typedescriptors.TypeOrReference;
 
 import java.io.IOException;
 
-import static org.jsound.cli.JSoundExecutor.object;
+import static org.jsound.cli.JSoundExecutor.jsonSchemaIterator;
 import static org.jsound.cli.JSoundExecutor.schema;
 import static org.jsound.facets.AtomicFacets.getIntegerFromObject;
 import static org.jsound.facets.FacetTypes.CONTENT;
@@ -16,7 +17,9 @@ import static org.jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static org.jsound.json.CompactSchemaFileJsonParser.getTypeFromObject;
 
 public class ArrayFacets extends Facets {
-    public ArrayContentDescriptor arrayContent = null;
+    public ArrayContentDescriptor arrayContent = new ArrayContentDescriptor(
+            new TypeOrReference(TypeDescriptor.getValueInstance())
+    );
     public Integer minLength = null, maxLength = null;
 
     @Override
@@ -42,11 +45,11 @@ public class ArrayFacets extends Facets {
 
     public void setArrayContentFromObject() throws IOException {
         int size = 0;
-        while (object.readArray()) {
+        while (jsonSchemaIterator.readArray()) {
             if (size > 0)
                 throw new InvalidSchemaException("Can only specify one atomicTypes for the array content atomicTypes.");
-            if (object.whatIsNext().equals(ValueType.STRING)) {
-                String contentType = object.readString();
+            if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
+                String contentType = jsonSchemaIterator.readString();
                 if (schema.containsKey(contentType))
                     this.arrayContent = new ArrayContentDescriptor(new TypeOrReference(schema.get(contentType)));
                 else
@@ -64,12 +67,12 @@ public class ArrayFacets extends Facets {
     public void setArrayContent(String name) throws IOException {
         definedFacets.add(CONTENT);
         int size = 0;
-        while (object.readArray()) {
+        while (jsonSchemaIterator.readArray()) {
             if (size > 0)
-                throw new InvalidSchemaException("Can only specify one atomicTypes for the array content atomicTypes.");
-            if (object.whatIsNext().equals(ValueType.STRING)) {
-                String contentType = object.readString();
-                if (schema.containsKey(contentType))
+                throw new InvalidSchemaException("Can only specify one content type for array type " + name + ".");
+            if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
+                String contentType = jsonSchemaIterator.readString();
+                if (compactSchema.containsKey(contentType))
                     this.arrayContent = new ArrayContentDescriptor(compactSchema.get(contentType));
                 else
                     this.arrayContent = new ArrayContentDescriptor(new TypeOrReference(contentType));
@@ -77,7 +80,7 @@ public class ArrayFacets extends Facets {
             size++;
         }
         if (size == 0)
-            throw new InvalidSchemaException("You must specify the content atomicTypes for array.");
+            throw new InvalidSchemaException("You must specify the content type for array for type " + name + ".");
         arrayContent = new ArrayContentDescriptor(getTypeFromObject(name));
     }
 

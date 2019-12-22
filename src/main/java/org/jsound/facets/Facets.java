@@ -4,9 +4,9 @@ import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.item.Item;
-import org.jsound.type.ArrayContentDescriptor;
-import org.jsound.type.FieldDescriptor;
-import org.jsound.type.UnionContentDescriptor;
+import org.jsound.typedescriptors.array.ArrayContentDescriptor;
+import org.jsound.typedescriptors.object.FieldDescriptor;
+import org.jsound.typedescriptors.union.UnionContentDescriptor;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.jsound.cli.JSoundExecutor.object;
+import static org.jsound.cli.JSoundExecutor.jsonSchemaIterator;
 import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class Facets {
 
     public Item metadata = null;
-    public List<Item> enumeration = null;
+    public List<Item> enumeration = new ArrayList<>();;
     public List<String> constraints = null;
 
     public Set<FacetTypes> definedFacets = new HashSet<>();
@@ -30,10 +30,10 @@ public class Facets {
         checkField(facetType);
         switch (facetType) {
             case ENUMERATION:
-                this.enumeration = getEnumerationFromObject();
+                setEnumerationFromObject();
                 break;
             case METADATA:
-                this.metadata = getItemFromObject(object);
+                this.metadata = getItemFromObject(jsonSchemaIterator);
                 break;
             case CONSTRAINTS:
                 this.constraints = getConstraintsTypeFromObject();
@@ -56,35 +56,32 @@ public class Facets {
     }
 
     public static String getStringFromObject(String key) throws IOException {
-        if (!object.whatIsNext().equals(ValueType.STRING))
+        if (!jsonSchemaIterator.whatIsNext().equals(ValueType.STRING))
             throw new UnexpectedTypeException(
-                    key + " should be a string; " + object.whatIsNext().name().toLowerCase() + " was provided instead."
+                    key
+                        + " should be a string; "
+                        + jsonSchemaIterator.whatIsNext().name().toLowerCase()
+                        + " was provided instead."
             );
-        return object.readString();
+        return jsonSchemaIterator.readString();
     }
 
-    private static List<Item> getEnumerationFromObject() throws IOException {
-        if (!object.whatIsNext().equals(ValueType.ARRAY))
+    private void setEnumerationFromObject() throws IOException {
+        if (!jsonSchemaIterator.whatIsNext().equals(ValueType.ARRAY))
             throw new UnexpectedTypeException("Enumeration should be an array.");
-        List<Item> enumerationItemTypes = new ArrayList<>();
-        while (object.readArray()) {
-            enumerationItemTypes.add(getItemFromObject(object));
+        while (jsonSchemaIterator.readArray()) {
+            this.enumeration.add(getItemFromObject(jsonSchemaIterator));
         }
-        return enumerationItemTypes;
     }
 
     private static List<String> getConstraintsTypeFromObject() throws IOException {
-        if (!object.whatIsNext().equals(ValueType.ARRAY))
+        if (!jsonSchemaIterator.whatIsNext().equals(ValueType.ARRAY))
             throw new UnexpectedTypeException("Constraints should be an array.");
         List<String> constraints = new ArrayList<>();
-        while (object.readArray()) {
+        while (jsonSchemaIterator.readArray()) {
             constraints.add(getStringFromObject("Each constraint"));
         }
         return constraints;
-    }
-
-    public boolean isClosed() {
-        return false;
     }
 
     public Map<String, FieldDescriptor> getObjectContent() {

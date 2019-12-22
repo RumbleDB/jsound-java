@@ -1,4 +1,4 @@
-package org.jsound.type;
+package org.jsound.typedescriptors.array;
 
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.LessRestrictiveFacetException;
@@ -6,6 +6,11 @@ import org.jsound.facets.ArrayFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.ArrayItem;
 import org.jsound.item.Item;
+import org.jsound.typedescriptors.TypeDescriptor;
+import org.jsound.typedescriptors.TypeOrReference;
+import org.jsound.typedescriptors.object.FieldDescriptor;
+import org.jsound.typedescriptors.object.ObjectTypeDescriptor;
+import org.jsound.types.ItemTypes;
 import org.tyson.TYSONArray;
 import org.tyson.TysonItem;
 
@@ -28,10 +33,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
 
     public ArrayTypeDescriptor(String name, ArrayFacets facets) {
         super(ItemTypes.ARRAY, name);
-        this.baseType = null;
         this.facets = facets;
-        this.baseTypeIsChecked = true;
-        this.hasResolvedAllFacets = true;
     }
 
     public ArrayTypeDescriptor(String name, TypeOrReference baseType, ArrayFacets facets) {
@@ -45,7 +47,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         if (!item.isArray())
             return false;
         ArrayItem arrayItem = (ArrayItem) item;
@@ -64,14 +66,14 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
                         return false;
                     break;
                 case ENUMERATION:
-                    if (!validateEnumeration(arrayItem, isEnumerationItem))
+                    if (!validateEnumeration(arrayItem, isEnumValue))
                         return false;
                     break;
                 default:
                     break;
             }
         }
-        return recursivelyValidate(item);
+        return true;
     }
 
     private boolean validateContent(ArrayItem arrayItem) {
@@ -81,9 +83,8 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
                 return false;
         }
 
-        if (arrayItem.getItems().isEmpty() || !arrayItem.getItems().get(0).isObject())
-            return true;
-        return this.isUniqueSatisfied(arrayItem.getItems());
+        return !this.getFacets().getArrayContent().getType().getTypeDescriptor().isObjectType()
+            || this.isUniqueSatisfied(arrayItem.getItems());
     }
 
     @Override
@@ -92,7 +93,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         try {
             arrayItem = (ArrayItem) item;
         } catch (ClassCastException e) {
-            throw new InvalidSchemaException("Cannot annotate. Need an array item.");
+            throw new InvalidSchemaException("Cannot annotate. An array is needed.");
         }
         TypeDescriptor arrayItemType = this.getFacets().getArrayContent().getType().getTypeDescriptor();
         TYSONArray array = new TYSONArray(this.getName());
@@ -112,13 +113,17 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         return facets;
     }
 
+    @Override
+    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+        return typeDescriptor.isArrayType();
+    }
+
     private boolean isUniqueSatisfied(List<Item> arrayItems) {
         Map<String, Set<Item>> fieldsValues = new HashMap<>();
-        ObjectTypeDescriptor objectType;
-        if (this.getFacets().getArrayContent().getType().getTypeDescriptor().isObjectType()) {
-            objectType = (ObjectTypeDescriptor) this.getFacets().getArrayContent().getType().getTypeDescriptor();
-        } else
-            return true;
+        ObjectTypeDescriptor objectType = (ObjectTypeDescriptor) this.getFacets()
+            .getArrayContent()
+            .getType()
+            .getTypeDescriptor();
         Map<String, FieldDescriptor> fields = objectType.getFacets().getObjectContent();
         for (String fieldName : fields.keySet()) {
             if (fields.get(fieldName).isUnique()) {
@@ -138,69 +143,6 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
             }
         }
         return true;
-    }
-
-    @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
-        if (this.baseTypeIsChecked)
-            return;
-        ArrayTypeDescriptor baseTypeDescriptor = (ArrayTypeDescriptor) typeDescriptor;
-        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
-            switch (facetType) {
-                case CONTENT:
-                    isArrayContentMoreRestrictive(baseTypeDescriptor);
-                    break;
-                case MIN_LENGTH:
-                case MAX_LENGTH:
-                    areLengthFacetsMoreRestrictive(baseTypeDescriptor);
-                    break;
-                case ENUMERATION:
-                    isEnumerationMoreRestrictive(baseTypeDescriptor.getFacets());
-                    break;
-            }
-        }
-
-        this.baseTypeIsChecked = true;
-        baseTypeDescriptor.checkBaseType();
-    }
-
-    private void areLengthFacetsMoreRestrictive(ArrayTypeDescriptor baseTypeDescriptor) {
-        if (
-            this.getFacets().getDefinedFacets().contains(MIN_LENGTH)
-                &&
-                baseTypeDescriptor.getFacets().getDefinedFacets().contains(MIN_LENGTH)
-                &&
-                this.getFacets().minLength < baseTypeDescriptor.getFacets().minLength
-        )
-            throw new InvalidSchemaException(
-                    "Facet minLength for type "
-                        + this.getName()
-                        + " is less restrictive than that of its baseType."
-            );
-        if (
-            this.getFacets().getDefinedFacets().contains(MAX_LENGTH)
-                &&
-                baseTypeDescriptor.getFacets().getDefinedFacets().contains(MAX_LENGTH)
-                &&
-                this.getFacets().maxLength > baseTypeDescriptor.getFacets().maxLength
-        )
-            throw new InvalidSchemaException(
-                    "Facet maxLength for type "
-                        + this.getName()
-                        + " is less restrictive than that of its baseType."
-            );
-    }
-
-    private void isArrayContentMoreRestrictive(ArrayTypeDescriptor baseTypeDescriptor) {
-        if (!baseTypeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
-            return;
-        this.getFacets()
-            .getArrayContent()
-            .getType()
-            .getTypeDescriptor()
-            .checkBaseType(
-                baseTypeDescriptor.getFacets().getArrayContent().getType().getTypeDescriptor()
-            );
     }
 
     @Override
@@ -245,7 +187,61 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
-        return typeDescriptor.isArrayType();
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
+        if (this.baseTypeIsChecked)
+            return;
+        ArrayTypeDescriptor arrayTypeDescriptor = (ArrayTypeDescriptor) typeDescriptor;
+        for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
+            switch (facetType) {
+                case CONTENT:
+                    isArrayContentMoreRestrictive(arrayTypeDescriptor);
+                    break;
+                case MIN_LENGTH:
+                case MAX_LENGTH:
+                    areLengthFacetsMoreRestrictive(arrayTypeDescriptor);
+                    break;
+                case ENUMERATION:
+                    isEnumerationMoreRestrictive(arrayTypeDescriptor.getFacets());
+                    break;
+            }
+        }
+
+        this.baseTypeIsChecked = true;
+        arrayTypeDescriptor.checkBaseType();
+    }
+
+    private void isArrayContentMoreRestrictive(ArrayTypeDescriptor typeDescriptor) {
+        if (!typeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
+            return;
+        this.getFacets()
+            .getArrayContent()
+            .getType()
+            .getTypeDescriptor()
+            .checkAgainstTypeDescriptor(
+                typeDescriptor.getFacets().getArrayContent().getType().getTypeDescriptor()
+            );
+    }
+
+    private void areLengthFacetsMoreRestrictive(ArrayTypeDescriptor baseTypeDescriptor) {
+        if (
+            this.getFacets().getDefinedFacets().contains(MIN_LENGTH)
+                && baseTypeDescriptor.getFacets().getDefinedFacets().contains(MIN_LENGTH)
+                && this.getFacets().minLength < baseTypeDescriptor.getFacets().minLength
+        )
+            throw new InvalidSchemaException(
+                    "Facet minLength for type "
+                        + this.getName()
+                        + " is less restrictive than that of its baseType."
+            );
+        if (
+            this.getFacets().getDefinedFacets().contains(MAX_LENGTH)
+                && baseTypeDescriptor.getFacets().getDefinedFacets().contains(MAX_LENGTH)
+                && this.getFacets().maxLength > baseTypeDescriptor.getFacets().maxLength
+        )
+            throw new InvalidSchemaException(
+                    "Facet maxLength for type "
+                        + this.getName()
+                        + " is less restrictive than that of its baseType."
+            );
     }
 }

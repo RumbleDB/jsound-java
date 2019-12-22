@@ -6,11 +6,10 @@ import org.joda.time.format.ISODateTimeFormat;
 import org.jsound.atomicItems.TimeItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
-import org.jsound.facets.TimezoneFacet;
 import org.jsound.item.Item;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -37,7 +36,7 @@ public class TimeType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         DateTime time;
         try {
             time = getTimeFromItem(item);
@@ -47,43 +46,14 @@ public class TimeType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new TimeItem(time);
-        if (!validateBoundariesFacets(item, isEnumerationItem))
+        if (!validateBoundariesFacets(item, isEnumValue))
             return false;
-        if (this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE) && !checkExplicitTimezone(item))
-            return false;
-        return recursivelyValidate(item);
-    }
-
-    private boolean checkExplicitTimezone(Item item) {
-        DateTime time = DateTime.parse(
-            item.getStringValue(),
-            ISODateTimeFormat.timeParser().withOffsetParsed()
-        );
-        return (item.getStringValue().endsWith("Z")
-            || time.getZone() != DateTimeZone.getDefault()
-            || !this.getFacets().explicitTimezone.equals(TimezoneFacet.REQUIRED))
-            && ((!item.getStringValue().endsWith("Z") && time.getZone() == DateTimeZone.getDefault())
-                || !this.getFacets().explicitTimezone.equals(TimezoneFacet.PROHIBITED));
-    }
-
-    @Override
-    protected boolean validateMinInclusive(Item item) {
-        return subtractTime(item.getDateTime(), this.getFacets().minInclusive) >= 0;
-    }
-
-    @Override
-    protected boolean validateMinExclusive(Item item) {
-        return subtractTime(item.getDateTime(), this.getFacets().minExclusive) > 0;
-    }
-
-    @Override
-    protected boolean validateMaxInclusive(Item item) {
-        return subtractTime(item.getDateTime(), this.getFacets().maxInclusive) <= 0;
-    }
-
-    @Override
-    protected boolean validateMaxExclusive(Item item) {
-        return subtractTime(item.getDateTime(), this.getFacets().maxExclusive) < 0;
+        return !this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE)
+            || DateTimeType.checkExplicitTimezone(
+                item,
+                this.getFacets().explicitTimezone,
+                ISODateTimeFormat.timeParser().withOffsetParsed()
+            );
     }
 
     @Override
@@ -96,11 +66,18 @@ public class TimeType extends AtomicTypeDescriptor {
         return false;
     }
 
-    private long subtractTime(DateTime itemTime, Item constraintItem) {
-        return itemTime.getMillis() - getTimeFromItem(constraintItem).getMillis();
+    @Override
+    protected int compare(Item item1, Item item2) {
+        return compareTime(item1, item2);
+    }
+
+    private int compareTime(Item timeItem, Item constraintItem) {
+        return getTimeFromItem(timeItem).compareTo(getTimeFromItem(constraintItem));
     }
 
     private DateTime getTimeFromItem(Item item) {
+        if (item.isTimeItem())
+            return item.getDateTime();
         DateTime time = DateTime.parse(
             item.getStringValue(),
             ISODateTimeFormat.timeParser().withOffsetParsed()
@@ -111,36 +88,8 @@ public class TimeType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
         checkBoundariesAndTimezoneFacets(typeDescriptor);
-    }
-
-    @Override
-    protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
-            &&
-            subtractTime(getTimeFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
-            &&
-            subtractTime(getTimeFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
-            &&
-            subtractTime(getTimeFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
-    }
-
-    @Override
-    protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
-            &&
-            subtractTime(getTimeFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

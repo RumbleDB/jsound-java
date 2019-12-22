@@ -1,13 +1,16 @@
-package org.jsound.type;
+package org.jsound.typedescriptors.object;
 
 import org.jsound.item.Item;
+import org.jsound.typedescriptors.TypeOrReference;
 
 public class FieldDescriptor {
     public String name;
     private TypeOrReference type;
     private Boolean required = false;
-    private Item defaultValue;
-    private Boolean unique = false;
+    private Item defaultValue = null;
+    private boolean unique = false;
+    private boolean requiredIsSet = false;
+    boolean defaultIsChecked = false;
 
     public void setName(String name) {
         this.name = name;
@@ -18,6 +21,7 @@ public class FieldDescriptor {
     }
 
     public void setRequired(Boolean required) {
+        this.requiredIsSet = true;
         this.required = required;
     }
 
@@ -49,11 +53,15 @@ public class FieldDescriptor {
         return defaultValue;
     }
 
+    public boolean requiredIsSet() {
+        return requiredIsSet;
+    }
+
     public void isMoreRestrictive(ObjectTypeDescriptor baseTypeDescriptor) {
         this.getTypeOrReference().getTypeDescriptor().checkBaseType();
         this.getTypeOrReference()
             .getTypeDescriptor()
-            .checkBaseType(
+            .checkAgainstTypeDescriptor(
                 baseTypeDescriptor.getFacets()
                     .getObjectContent()
                     .get(this.getName())

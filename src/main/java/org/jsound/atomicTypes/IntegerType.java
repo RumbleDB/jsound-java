@@ -4,9 +4,9 @@ import org.jsound.atomicItems.IntegerItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -41,7 +41,7 @@ public class IntegerType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         Integer integerValue;
         try {
             if (item.isString())
@@ -54,35 +54,16 @@ public class IntegerType extends AtomicTypeDescriptor {
         if (this.getFacets() == null)
             return true;
         item = new IntegerItem(integerValue);
-        if (!validateBoundariesFacets(item, isEnumerationItem))
-            return false;
-        if (!validateDigitsFacets(item))
-            return false;
-        return recursivelyValidate(item);
+        return validateBoundariesFacets(item, isEnumValue) && validateDigitsFacets(item);
     }
 
     @Override
-    protected boolean validateMinInclusive(Item item) {
-        return compareIntegers(item.getIntegerValue(), this.getFacets().minInclusive) >= 0;
+    protected int compare(Item item1, Item item2) {
+        return compareIntegers(item1, item2);
     }
 
-    @Override
-    protected boolean validateMinExclusive(Item item) {
-        return compareIntegers(item.getIntegerValue(), this.getFacets().minExclusive) > 0;
-    }
-
-    @Override
-    protected boolean validateMaxInclusive(Item item) {
-        return compareIntegers(item.getIntegerValue(), this.getFacets().maxInclusive) <= 0;
-    }
-
-    @Override
-    protected boolean validateMaxExclusive(Item item) {
-        return compareIntegers(item.getIntegerValue(), this.getFacets().maxExclusive) < 0;
-    }
-
-    private static int compareIntegers(Integer itemValue, Item constraint) {
-        return itemValue.compareTo(getIntegerFromItem(constraint));
+    private static int compareIntegers(Item integerItem, Item constraint) {
+        return getIntegerFromItem(integerItem).compareTo(getIntegerFromItem(constraint));
     }
 
     @Override
@@ -112,36 +93,8 @@ public class IntegerType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
         checkBoundariesAndDigitsFacets(typeDescriptor);
-    }
-
-    @Override
-    protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
-            &&
-            compareIntegers(getIntegerFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
-            &&
-            compareIntegers(getIntegerFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
-            &&
-            compareIntegers(getIntegerFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
-    }
-
-    @Override
-    protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
-            &&
-            compareIntegers(getIntegerFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

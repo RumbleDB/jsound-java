@@ -19,4 +19,9 @@ public class DateTimeItem extends AtomicItem {
     public String getStringValue() {
         return this._value.toString();
     }
+
+    @Override
+    public boolean isDateTimeItem() {
+        return true;
+    }
 }

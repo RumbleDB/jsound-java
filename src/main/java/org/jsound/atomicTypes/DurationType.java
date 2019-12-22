@@ -8,9 +8,9 @@ import org.jsound.atomicItems.DurationItem;
 import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.item.Item;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -60,19 +60,17 @@ public class DurationType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumerationItem) {
+    public boolean validate(Item item, boolean isEnumValue) {
         Period period;
         try {
-            period = getPeriodFromItem(item);
+            period = getDurationFromItem(item);
         } catch (IllegalArgumentException e) {
             return false;
         }
         if (this.getFacets() == null)
             return true;
         item = createDurationItem(period);
-        if (!validateBoundariesFacets(item, isEnumerationItem))
-            return false;
-        return recursivelyValidate(item);
+        return validateBoundariesFacets(item, isEnumValue);
     }
 
     protected DurationItem createDurationItem(Period period) {
@@ -83,37 +81,29 @@ public class DurationType extends AtomicTypeDescriptor {
     protected boolean validateItemAgainstEnumeration(Item item) {
         Period period = item.getDuration();
         for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (period.equals(getPeriodFromItem(enumItem)))
+            if (period.equals(getDurationFromItem(enumItem)))
                 return true;
         }
         return false;
     }
 
     @Override
-    protected boolean validateMinInclusive(Item item) {
-        return subtractPeriods(item.getDuration(), this.getFacets().minInclusive) >= 0;
+    protected int compare(Item item1, Item item2) {
+        return compareDuration(item1, item2);
     }
 
-    @Override
-    protected boolean validateMinExclusive(Item item) {
-        return subtractPeriods(item.getDuration(), this.getFacets().minExclusive) > 0;
+    private int compareDuration(Item durationItem, Item constraintItem) {
+        return Long.compare(
+            getDurationFromItem(durationItem).minus(getDurationFromItem(constraintItem))
+                .toDurationFrom(Instant.now())
+                .getMillis(),
+            0L
+        );
     }
 
-    @Override
-    protected boolean validateMaxInclusive(Item item) {
-        return subtractPeriods(item.getDuration(), this.getFacets().maxInclusive) <= 0;
-    }
-
-    @Override
-    protected boolean validateMaxExclusive(Item item) {
-        return subtractPeriods(item.getDuration(), this.getFacets().maxExclusive) < 0;
-    }
-
-    private long subtractPeriods(Period itemPeriod, Item constraintItem) {
-        return itemPeriod.minus(getPeriodFromItem(constraintItem)).toDurationFrom(Instant.now()).getMillis();
-    }
-
-    protected Period getPeriodFromItem(Item item) {
+    protected Period getDurationFromItem(Item item) {
+        if (item.isDuration())
+            return item.getDuration();
         Period period = Period.parse(getPositivePeriod(item.getStringValue()), this.getPeriodFormatter());
         return item.getStringValue().startsWith("-") ? period.negated() : period;
     }
@@ -123,36 +113,8 @@ public class DurationType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
         checkBoundariesFacet(typeDescriptor);
-    }
-
-    @Override
-    protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
-            &&
-            subtractPeriods(getPeriodFromItem(this.getFacets().minInclusive), facets.minInclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
-            &&
-            subtractPeriods(getPeriodFromItem(this.getFacets().minExclusive), facets.minExclusive) < 0;
-    }
-
-    @Override
-    protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
-            &&
-            subtractPeriods(getPeriodFromItem(this.getFacets().maxInclusive), facets.maxInclusive) > 0;
-    }
-
-    @Override
-    protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
-            &&
-            subtractPeriods(getPeriodFromItem(this.getFacets().maxExclusive), facets.maxExclusive) > 0;
     }
 
     @Override

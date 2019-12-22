@@ -5,21 +5,21 @@ import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.MissingNameOrTypeException;
 import jsound.exceptions.UnexpectedTypeException;
 import org.jsound.json.SchemaFileJsonParser;
-import org.jsound.type.FieldDescriptor;
-import org.jsound.type.TypeOrReference;
+import org.jsound.typedescriptors.object.FieldDescriptor;
+import org.jsound.typedescriptors.TypeOrReference;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.jsound.cli.JSoundExecutor.object;
+import static org.jsound.cli.JSoundExecutor.jsonSchemaIterator;
 import static org.jsound.cli.JSoundExecutor.schema;
 import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class ObjectFacets extends Facets {
 
     private Map<String, FieldDescriptor> objectContent = new LinkedHashMap<>();
-    private Boolean closed = null;
+    private boolean closed = false;
     public boolean closedIsSet = false;
 
     @Override
@@ -43,9 +43,9 @@ public class ObjectFacets extends Facets {
 
     private void setObjectContentFromObject(String typeName) throws IOException {
         String key;
-        while (object.readArray()) {
+        while (jsonSchemaIterator.readArray()) {
             FieldDescriptor fieldDescriptor = new FieldDescriptor();
-            while ((key = object.readObject()) != null) {
+            while ((key = jsonSchemaIterator.readObject()) != null) {
                 switch (key) {
                     case "name":
                         String name = getStringFromObject("name");
@@ -63,7 +63,7 @@ public class ObjectFacets extends Facets {
                         fieldDescriptor.setUnique(getBooleanFromObject());
                         break;
                     case "default":
-                        fieldDescriptor.setDefaultValue(getItemFromObject(object));
+                        fieldDescriptor.setDefaultValue(getItemFromObject(jsonSchemaIterator));
                         break;
                     default:
                         throw new InvalidSchemaException(key + " is not a valid property for the field descriptor.");
@@ -79,13 +79,13 @@ public class ObjectFacets extends Facets {
     }
 
     private static void setFieldDescriptorType(FieldDescriptor fieldDescriptor) throws IOException {
-        if (object.whatIsNext().equals(ValueType.STRING)) {
-            String fieldType = object.readString();
+        if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
+            String fieldType = jsonSchemaIterator.readString();
             if (schema.containsKey(fieldType))
                 fieldDescriptor.setType(new TypeOrReference(schema.get(fieldType)));
             else
                 fieldDescriptor.setType(new TypeOrReference(fieldType));
-        } else if (!object.whatIsNext().equals(ValueType.OBJECT))
+        } else if (!jsonSchemaIterator.whatIsNext().equals(ValueType.OBJECT))
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
         else
             fieldDescriptor.setType(new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor(true)));
@@ -100,14 +100,13 @@ public class ObjectFacets extends Facets {
         return objectContent;
     }
 
-    @Override
     public boolean isClosed() {
-        return closed != null ? closed : false;
+        return closed;
     }
 
     public static boolean getBooleanFromObject() throws IOException {
-        if (!object.whatIsNext().equals(ValueType.BOOLEAN))
-            throw new UnexpectedTypeException("Invalid string " + object.read().toString());
-        return object.readBoolean();
+        if (!jsonSchemaIterator.whatIsNext().equals(ValueType.BOOLEAN))
+            throw new UnexpectedTypeException("Invalid string " + jsonSchemaIterator.read().toString());
+        return jsonSchemaIterator.readBoolean();
     }
 }

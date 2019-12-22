@@ -11,11 +11,6 @@ public class DoubleItem extends AtomicItem {
     }
 
     @Override
-    public boolean isDouble() {
-        return true;
-    }
-
-    @Override
     public Double getDoubleValue() {
         return _value;
     }

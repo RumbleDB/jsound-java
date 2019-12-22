@@ -6,7 +6,7 @@ import org.jsound.item.Item;
 
 import java.io.IOException;
 
-import static org.jsound.cli.JSoundExecutor.object;
+import static org.jsound.cli.JSoundExecutor.jsonSchemaIterator;
 import static org.jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class AtomicFacets extends Facets {
@@ -29,16 +29,16 @@ public class AtomicFacets extends Facets {
                 this.maxLength = getIntegerFromObject();
                 break;
             case MIN_INCLUSIVE:
-                this.minInclusive = getItemFromObject(object);
+                this.minInclusive = getItemFromObject(jsonSchemaIterator);
                 break;
             case MAX_INCLUSIVE:
-                this.maxInclusive = getItemFromObject(object);
+                this.maxInclusive = getItemFromObject(jsonSchemaIterator);
                 break;
             case MIN_EXCLUSIVE:
-                this.minExclusive = getItemFromObject(object);
+                this.minExclusive = getItemFromObject(jsonSchemaIterator);
                 break;
             case MAX_EXCLUSIVE:
-                this.maxExclusive = getItemFromObject(object);
+                this.maxExclusive = getItemFromObject(jsonSchemaIterator);
                 break;
             case TOTAL_DIGITS:
                 this.totalDigits = getIntegerFromObject();
@@ -60,8 +60,8 @@ public class AtomicFacets extends Facets {
     }
 
     protected static Integer getIntegerFromObject() throws IOException {
-        if (!object.whatIsNext().equals(ValueType.NUMBER))
-            throw new UnexpectedTypeException("Invalid number " + object.read().toString());
-        return object.readInt();
+        if (!jsonSchemaIterator.whatIsNext().equals(ValueType.NUMBER))
+            throw new UnexpectedTypeException("Invalid number " + jsonSchemaIterator.read().toString());
+        return jsonSchemaIterator.readInt();
     }
 }

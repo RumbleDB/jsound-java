@@ -6,9 +6,9 @@ import org.joda.time.format.PeriodFormatterBuilder;
 import org.jsound.atomicItems.DayTimeDurationItem;
 import org.jsound.atomicItems.DurationItem;
 import org.jsound.facets.AtomicFacets;
-import org.jsound.type.AtomicTypeDescriptor;
-import org.jsound.type.ItemTypes;
-import org.jsound.type.TypeDescriptor;
+import org.jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.jsound.types.ItemTypes;
+import org.jsound.typedescriptors.TypeDescriptor;
 
 public class DayTimeDurationType extends DurationType {
 

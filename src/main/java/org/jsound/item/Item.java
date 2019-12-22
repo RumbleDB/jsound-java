@@ -15,23 +15,23 @@ public abstract class Item {
         return false;
     }
 
-    public boolean isInteger() {
-        return false;
-    }
-
-    public boolean isDecimal() {
-        return false;
-    }
-
-    public boolean isDouble() {
-        return false;
-    }
-
     public boolean isBoolean() {
         return false;
     }
 
-    public boolean isYearMonthDurationItem() {
+    public boolean isDateTimeItem() {
+        return false;
+    }
+
+    public boolean isDateItem() {
+        return false;
+    }
+
+    public boolean isTimeItem() {
+        return false;
+    }
+
+    public boolean isDuration() {
         return false;
     }
 

@@ -1,8 +1,8 @@
 package parsing.compact;
 
 import org.jsound.cli.JSoundExecutor;
-import org.jsound.type.AtomicTypes;
-import org.jsound.type.FieldDescriptor;
+import org.jsound.types.AtomicTypes;
+import org.jsound.typedescriptors.object.FieldDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

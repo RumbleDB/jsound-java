@@ -1,12 +1,15 @@
-package org.jsound.type;
+package org.jsound.typedescriptors;
 
 import jsound.exceptions.InvalidEnumValueException;
-import jsound.exceptions.LessRestrictiveFacetException;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.Facets;
 import org.jsound.item.Item;
+import org.jsound.types.ItemTypes;
+import org.tyson.TYSONValue;
 import org.tyson.TysonItem;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.jsound.facets.FacetTypes.ENUMERATION;
@@ -18,15 +21,56 @@ public abstract class TypeDescriptor {
     private boolean enumerationIsValid = false;
     protected boolean baseTypeIsChecked = false;
     protected boolean hasResolvedAllFacets = false;
+    private static TypeDescriptor valueInstance;
 
-    TypeDescriptor(ItemTypes type, String name) {
+    public TypeDescriptor(ItemTypes type, String name) {
         this.type = type;
         this.name = name;
+        this.baseType = null;
+        this.baseTypeIsChecked = true;
+        this.hasResolvedAllFacets = true;
     }
 
-    TypeDescriptor(ItemTypes type, String name, TypeOrReference baseType) {
-        this(type, name);
+    public TypeDescriptor(ItemTypes type, String name, TypeOrReference baseType) {
+        this.type = type;
+        this.name = name;
         this.baseType = baseType;
+    }
+
+    private TypeDescriptor() {
+        this.type = ItemTypes.VALUE;
+    }
+
+    public static TypeDescriptor getValueInstance() {
+        if (valueInstance == null) {
+            valueInstance = new TypeDescriptor() {
+                @Override
+                public Facets getFacets() {
+                    return new Facets();
+                }
+
+                @Override
+                public Set<FacetTypes> getAllowedFacets() {
+                    return new HashSet<>(Arrays.asList(FacetTypes.values()));
+                }
+
+                @Override
+                public boolean validate(Item item, boolean isEnumValue) {
+                    return true;
+                }
+
+                @Override
+                public TysonItem annotate(Item item) {
+                    return new TYSONValue(null, item);
+                }
+
+                @Override
+                protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+                    return true;
+                }
+            };
+        }
+        return valueInstance;
     }
 
     public boolean isAtomicType() {
@@ -127,23 +171,9 @@ public abstract class TypeDescriptor {
 
     public abstract Set<FacetTypes> getAllowedFacets();
 
-    public abstract boolean validate(Item item, boolean isEnumerationItem);
+    public abstract boolean validate(Item item, boolean isEnumValue);
 
     public abstract TysonItem annotate(Item item);
-
-    public boolean recursivelyValidate(Item item) {
-        if (this.baseType == null)
-            return true;
-        if (!this.baseType.getTypeDescriptor().validate(item, false))
-            throw new LessRestrictiveFacetException(
-                    "Facet for type "
-                        + this.getName()
-                        + " is less restrictive than that of its baseType "
-                        + this.baseType.getTypeDescriptor().getName()
-                        + "."
-            );
-        return true;
-    }
 
     protected boolean isEnumerationMoreRestrictive(Facets facets) {
         validateEnumerationValues();
@@ -210,12 +240,12 @@ public abstract class TypeDescriptor {
         }
     }
 
-    public void checkBaseType(TypeDescriptor typeDescriptor) {
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
     }
 
     public void checkBaseType() {
         if (this.baseType != null)
-            checkBaseType(this.baseType.getTypeDescriptor());
+            checkAgainstTypeDescriptor(this.baseType.getTypeDescriptor());
     }
 
     protected abstract boolean hasCompatibleType(TypeDescriptor typeDescriptor);
