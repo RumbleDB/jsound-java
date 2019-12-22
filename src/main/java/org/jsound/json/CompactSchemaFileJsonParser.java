@@ -11,6 +11,7 @@ import org.jsound.facets.AtomicFacets;
 import org.jsound.facets.FacetTypes;
 import org.jsound.facets.ObjectFacets;
 import org.jsound.facets.UnionFacets;
+import org.jsound.item.ItemFactory;
 import org.jsound.typedescriptors.TypeOrReference;
 import org.jsound.typedescriptors.array.ArrayTypeDescriptor;
 import org.jsound.typedescriptors.object.FieldDescriptor;
@@ -55,7 +56,7 @@ public class CompactSchemaFileJsonParser {
         }
     }
 
-    public static TypeOrReference getTypeFromObject(String name) {
+    public static TypeOrReference getTypeFromObject(String name) throws IOException {
         try {
             switch (jsonSchemaIterator.whatIsNext()) {
                 case STRING:
@@ -108,7 +109,11 @@ public class CompactSchemaFileJsonParser {
             String fieldValue = jsonSchemaIterator.readString();
             String fieldType = fieldValue.split("=")[0];
             if (fieldValue.contains("=")) {
-                fieldDescriptor.setDefaultValue(getItemFromObject(JsonIterator.parse(fieldValue.split("=")[1])));
+                try {
+                    fieldDescriptor.setDefaultValue(getItemFromObject(JsonIterator.parse(fieldValue.split("=")[1])));
+                } catch (JsoundException e) {
+                    fieldDescriptor.setDefaultValue(ItemFactory.getInstance().createStringItem(fieldValue.split("=")[1]));
+                }
             }
             if (compactSchema.containsKey(fieldType))
                 fieldDescriptor.setType(compactSchema.get(fieldType));

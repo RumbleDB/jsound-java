@@ -81,7 +81,8 @@ public class ArrayFacets extends Facets {
         }
         if (size == 0)
             throw new InvalidSchemaException("You must specify the content type for array for type " + name + ".");
-        arrayContent = new ArrayContentDescriptor(getTypeFromObject(name));
+        if (arrayContent == null)
+            arrayContent = new ArrayContentDescriptor(getTypeFromObject(name));
     }
 
     @Override

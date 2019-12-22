@@ -54,7 +54,9 @@ public abstract class JSoundExecutor {
         else
             SchemaFileJsonParser.createSchema();
 
-        schemaItem = schema.get(rootType);
+        schemaItem = schema.getOrDefault(rootType, null);
+        if (schemaItem == null)
+            throw new CliException("The specified root type was not defined in the schema.");
         fileItem = InstanceFileJsonParser.getItemFromObject(fileObject);
     }
 }

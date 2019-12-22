@@ -2,9 +2,7 @@
 	"directory": {
 		"people": "persons"
 	}, 
-	"persons": [
-		"person"
-	], 
+	"persons": ["person"], 
 	"person": {
 		"first!": "string", 
 		"last": "string=N/A", 
