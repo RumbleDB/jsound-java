@@ -242,29 +242,9 @@ public class SchemaFileJsonParser {
     }
 
     private static TypeDescriptor buildUnionTypeDescriptor(String name) throws IOException {
-        String baseTypeString;
         String key = jsonSchemaIterator.readObject();
         if (key == null)
             return new UnionTypeDescriptor(name, new UnionFacets());
-        if ("baseType".equals(key)) {
-            baseTypeString = getStringFromObject("baseType");
-            if (schema.containsKey(baseTypeString)) {
-                TypeDescriptor typeDescriptor = schema.get(baseTypeString);
-                if (!typeDescriptor.isUnionType())
-                    throw new InvalidSchemaException("The baseType must be of type union.");
-                return new UnionTypeDescriptor(
-                        name,
-                        new TypeOrReference(typeDescriptor),
-                        createUnionFacets(name)
-                );
-            } else if ("union".equals(baseTypeString))
-                return new UnionTypeDescriptor(name, createUnionFacets(name));
-            return new UnionTypeDescriptor(
-                    name,
-                    new TypeOrReference(baseTypeString),
-                    createUnionFacets(name)
-            );
-        }
         try {
             FacetTypes facetTypes = FacetTypes.valueOf(key.toUpperCase());
             if (!(UnionTypeDescriptor._allowedFacets.contains(facetTypes) || commonFacets.contains(facetTypes)))
@@ -314,17 +294,6 @@ public class SchemaFileJsonParser {
 
     public static ArrayFacets createArrayFacets(String typeName) throws IOException {
         return (ArrayFacets) createFacets(ArrayTypeDescriptor._allowedFacets, new ArrayFacets(), typeName);
-    }
-
-    public static UnionFacets createUnionFacets(String typeName) throws IOException {
-        UnionFacets unionFacets = (UnionFacets) createFacets(
-            UnionTypeDescriptor._allowedFacets,
-            new UnionFacets(),
-            typeName
-        );
-        if (unionFacets.getUnionContent() == null)
-            throw new InvalidSchemaException("Union type " + typeName + " must have the \"content\" facet defined.");
-        return unionFacets;
     }
 
     public static Facets createFacets(Set<FacetTypes> allowedFacets, Facets facets, String typeName)

@@ -223,8 +223,7 @@ public abstract class TypeDescriptor {
         return false;
     }
 
-    public void resolveAllFacets() {
-    }
+    public void resolveAllFacets() {}
 
     public void resolveCommonFacets(TypeDescriptor typeDescriptor, FacetTypes facetType) {
         switch (facetType) {
@@ -240,8 +239,7 @@ public abstract class TypeDescriptor {
         }
     }
 
-    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
-    }
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {}
 
     public void checkBaseType() {
         if (this.baseType != null)
