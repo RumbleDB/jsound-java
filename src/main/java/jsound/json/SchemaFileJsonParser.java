@@ -132,8 +132,7 @@ public class SchemaFileJsonParser {
             TypeDescriptor typeDescriptor = schema.get(baseTypeString);
             if (!typeDescriptor.isAtomicType())
                 throw new InvalidSchemaException("The baseType must be atomic.");
-            AtomicTypeDescriptor
-                    atomicTypeDescriptor = new AtomicTypeDescriptor(
+            AtomicTypeDescriptor atomicTypeDescriptor = new AtomicTypeDescriptor(
                     typeDescriptor.getType(),
                     name,
                     new TypeOrReference(typeDescriptor),
@@ -143,8 +142,7 @@ public class SchemaFileJsonParser {
             return atomicTypeDescriptor;
         } else if ("atomic".equals(baseTypeString))
             throw new InvalidSchemaException("BaseType cannot be atomic.");
-        AtomicTypeDescriptor
-                atomicTypeDescriptor = new AtomicTypeDescriptor(
+        AtomicTypeDescriptor atomicTypeDescriptor = new AtomicTypeDescriptor(
                 ItemTypes.ATOMIC,
                 name,
                 new TypeOrReference(baseTypeString),
@@ -281,7 +279,8 @@ public class SchemaFileJsonParser {
         }
     }
 
-    public static jsound.facets.AtomicFacets createAtomicFacets(Set<FacetTypes> allowedFacets, String typeName) throws IOException {
+    public static jsound.facets.AtomicFacets createAtomicFacets(Set<FacetTypes> allowedFacets, String typeName)
+            throws IOException {
         return (jsound.facets.AtomicFacets) createFacets(allowedFacets, new AtomicFacets(), typeName);
     }
 

@@ -108,9 +108,13 @@ public class CompactSchemaFileJsonParser {
             String fieldType = fieldValue.split("=")[0];
             if (fieldValue.contains("=")) {
                 try {
-                    fieldDescriptor.setDefaultValue(InstanceFileJsonParser.getItemFromObject(JsonIterator.parse(fieldValue.split("=")[1])));
+                    fieldDescriptor.setDefaultValue(
+                        InstanceFileJsonParser.getItemFromObject(JsonIterator.parse(fieldValue.split("=")[1]))
+                    );
                 } catch (JsoundException e) {
-                    fieldDescriptor.setDefaultValue(ItemFactory.getInstance().createStringItem(fieldValue.split("=")[1]));
+                    fieldDescriptor.setDefaultValue(
+                        ItemFactory.getInstance().createStringItem(fieldValue.split("=")[1])
+                    );
                 }
             }
             if (compactSchema.containsKey(fieldType))
@@ -143,7 +147,9 @@ public class CompactSchemaFileJsonParser {
             return new TypeOrReference(new UnionTypeDescriptor(name, facets));
         }
         try {
-            return new TypeOrReference(AtomicTypeDescriptor.buildAtomicType(AtomicTypes.valueOf(typeString.toUpperCase()), name, false));
+            return new TypeOrReference(
+                    AtomicTypeDescriptor.buildAtomicType(AtomicTypes.valueOf(typeString.toUpperCase()), name, false)
+            );
         } catch (IllegalArgumentException e) {
             if (compactSchema.containsKey(typeString))
                 return compactSchema.get(typeString);

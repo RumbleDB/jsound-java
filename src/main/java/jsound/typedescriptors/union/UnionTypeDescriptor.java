@@ -25,7 +25,9 @@ public class UnionTypeDescriptor extends TypeDescriptor {
         super(ItemTypes.VALUE, name);
         this.facets = facets;
         if (facets.getUnionContent() == null)
-            throw new InvalidSchemaException("Union type " + this.getName() + " must have the \"content\" facet defined.");
+            throw new InvalidSchemaException(
+                    "Union type " + this.getName() + " must have the \"content\" facet defined."
+            );
     }
 
     @Override

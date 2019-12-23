@@ -44,8 +44,7 @@ public class ObjectFacets extends Facets {
     private void setObjectContentFromObject(String typeName) throws IOException {
         String key;
         while (jsonSchemaIterator.readArray()) {
-            FieldDescriptor
-                    fieldDescriptor = new FieldDescriptor();
+            FieldDescriptor fieldDescriptor = new FieldDescriptor();
             while ((key = jsonSchemaIterator.readObject()) != null) {
                 switch (key) {
                     case "name":

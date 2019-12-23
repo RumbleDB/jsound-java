@@ -16,10 +16,10 @@ import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static jsound.json.CompactSchemaFileJsonParser.getTypeFromObject;
 
 public class ArrayFacets extends Facets {
-    public jsound.typedescriptors.array.ArrayContentDescriptor
-            arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(
-            new TypeOrReference(TypeDescriptor.getValueInstance())
-    );
+    public jsound.typedescriptors.array.ArrayContentDescriptor arrayContent =
+        new jsound.typedescriptors.array.ArrayContentDescriptor(
+                new TypeOrReference(TypeDescriptor.getValueInstance())
+        );
     public Integer minLength = null, maxLength = null;
 
     @Override
@@ -51,9 +51,13 @@ public class ArrayFacets extends Facets {
             if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
                 String contentType = jsonSchemaIterator.readString();
                 if (schema.containsKey(contentType))
-                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(new TypeOrReference(schema.get(contentType)));
+                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(
+                            new TypeOrReference(schema.get(contentType))
+                    );
                 else
-                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(new TypeOrReference(contentType));
+                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(
+                            new TypeOrReference(contentType)
+                    );
             }
             size++;
         }
@@ -73,9 +77,13 @@ public class ArrayFacets extends Facets {
             if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
                 String contentType = jsonSchemaIterator.readString();
                 if (compactSchema.containsKey(contentType))
-                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(compactSchema.get(contentType));
+                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(
+                            compactSchema.get(contentType)
+                    );
                 else
-                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(new TypeOrReference(contentType));
+                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(
+                            new TypeOrReference(contentType)
+                    );
             }
             size++;
         }

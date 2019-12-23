@@ -70,7 +70,10 @@ public class SchemaDefinitionUtils {
             }
 
             for (FacetTypes facetType : typeDescriptor.getFacets().getDefinedFacets()) {
-                if (!baseTypeDescriptor.getAllowedFacets().contains(facetType) && !SchemaFileJsonParser.commonFacets.contains(facetType))
+                if (
+                    !baseTypeDescriptor.getAllowedFacets().contains(facetType)
+                        && !SchemaFileJsonParser.commonFacets.contains(facetType)
+                )
                     throw new InvalidSchemaException(
                             "Facet " + facetType.name() + " is not valid for type " + typeDescriptor.getName() + "."
                     );

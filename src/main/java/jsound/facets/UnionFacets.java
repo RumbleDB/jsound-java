@@ -12,8 +12,7 @@ import static org.api.executors.JSoundExecutor.schema;
 import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 
 public class UnionFacets extends Facets {
-    private UnionContentDescriptor
-            unionContent = new UnionContentDescriptor();
+    private UnionContentDescriptor unionContent = new UnionContentDescriptor();
 
     @Override
     public void setFacet(FacetTypes facetType, String typeName) throws IOException {
