@@ -1,6 +1,6 @@
 package jsound.tyson;
 
-import org.json.simple.JSONValue;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -52,7 +52,7 @@ public class TYSONObject extends LinkedHashMap<String, TysonItem> implements Tys
         if (key == null) {
             sb.append("null");
         } else {
-            sb.append(JSONValue.escape(key));
+            sb.append(StringEscapeUtils.escapeJava(key));
         }
 
         sb.append('"').append(": ");
