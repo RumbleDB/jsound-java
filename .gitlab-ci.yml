@@ -1,0 +1,26 @@
+image: maven:latest
+
+stages:
+  - build
+  - test
+  - checkformat
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+build:
+  stage: build
+  script:
+    - mvn clean compile assembly:single
+
+test:
+  stage: test
+  script:
+    - mvn test
+
+checkformat:
+  stage: checkformat
+  script:
+    - mvn spotless:check
