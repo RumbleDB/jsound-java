@@ -46,7 +46,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.jsound.cli.Main</mainClass>
+                            <mainClass>org.cli.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

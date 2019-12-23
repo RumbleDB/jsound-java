@@ -1,8 +1,8 @@
 package parsing.compact;
 
-import org.jsound.cli.JSoundExecutor;
-import org.jsound.types.AtomicTypes;
-import org.jsound.typedescriptors.object.FieldDescriptor;
+import org.api.executors.JSoundExecutor;
+import jsound.types.AtomicTypes;
+import jsound.typedescriptors.object.FieldDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.jsound.cli.JSoundExecutor.schema;
+import static org.api.executors.JSoundExecutor.schema;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
