@@ -1,17 +1,18 @@
 package parsing.compact;
 
-import org.jsound.cli.JSoundExecutor;
-import org.jsound.types.AtomicTypes;
-import org.jsound.typedescriptors.object.FieldDescriptor;
+import org.api.executors.JSoundExecutor;
+import jsound.types.AtomicTypes;
+import jsound.typedescriptors.object.FieldDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.jsound.cli.JSoundExecutor.schema;
+import static org.api.executors.JSoundExecutor.schema;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -24,7 +25,7 @@ public class ApplicationInitTest {
     private static Map<String, FieldDescriptor> person;
 
     @BeforeClass
-    public static void initializeApplication() {
+    public static void initializeApplication() throws IOException {
         JSoundExecutor.initializeApplication(schemaPath, filePath, rootType, compact);
         person = schema.get("person").getFacets().getObjectContent();
     }
