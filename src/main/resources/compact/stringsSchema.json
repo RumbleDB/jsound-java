@@ -1,0 +1,18 @@
+{ 
+	"rootType" : {
+		"strings": "arrayOfStrings"
+	},
+        "stringType": "string",
+	"stringObj" : {
+                "myString": "string",
+                "!requiredString": "string",
+                "nullableString?": "string",
+                "stringWithDefault": "string=defString1",
+                "!requiredStringWithDefault": "string=defString2",
+                "anotherString": "stringType",
+                "@uniqueString": "string"
+	},
+	"arrayOfStrings": [
+		"stringObj"
+	]
+}

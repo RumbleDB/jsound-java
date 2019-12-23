@@ -23,4 +23,12 @@ public class TYSONValue implements TysonItem {
     public String toTYSONString() {
         return toTYSONString(this);
     }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public Item getItemValue() {
+        return itemValue;
+    }
 }

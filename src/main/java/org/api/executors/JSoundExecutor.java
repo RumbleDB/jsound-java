@@ -21,8 +21,8 @@ import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 
 public abstract class JSoundExecutor {
 
-    static TypeDescriptor schemaItem;
-    static Item fileItem;
+    public static TypeDescriptor schemaItem;
+    public static Item fileItem;
     public static Map<String, TypeDescriptor> schema = new HashMap<>();
     public static JsonIterator jsonSchemaIterator;
 

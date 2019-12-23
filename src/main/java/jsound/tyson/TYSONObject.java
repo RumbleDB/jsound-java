@@ -85,4 +85,8 @@ public class TYSONObject extends LinkedHashMap<String, TysonItem> implements Tys
         tabCounter--;
         format(sb);
     }
+
+    public String getTypeName() {
+        return typeName;
+    }
 }

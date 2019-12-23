@@ -1,5 +1,5 @@
 { 
-	"randomTypes" : {
+	"allTypes" : {
 		"types": "arrayOfTypes"
 	}, 
 	"durationType" : "duration|yearMonthDuration|dayTimeDuration", 

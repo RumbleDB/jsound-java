@@ -17,8 +17,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ApplicationInitTest {
-    static String filePath = "src/main/resources/peopleFile.json";
-    static String schemaPath = "src/main/resources/peopleSchema.json";
+    static String filePath = "src/main/resources/compact/peopleFile.json";
+    static String schemaPath = "src/main/resources/compact/peopleSchema.json";
     static String rootType = "directory";
     public static boolean compact = true;
 
