@@ -1,0 +1,23 @@
+{ 
+	"randomTypes" : {
+		"types": "arrayOfTypes"
+	}, 
+	"durationType" : "duration|yearMonthDuration|dayTimeDuration", 
+	"dateTimeType": "dateTime|date|time",
+	"binaryType": "hexBinary|base64Binary",
+	"arrayOfBinaries" : [
+		"binaryType"
+	],
+	"type" : {
+		"myDurationType": "durationType", 
+		"myDateTimeType": "dateTimeType",
+		"myBinaryTypes": "arrayOfBinaries",
+		"nullDurationType?": "durationType",
+		"!requiredDateTimeType": "dateTimeType",
+		"@uniqueBinaryType": "binaryType",
+		"durationTypeWithDefault": "durationType=P1Y2M3DT4H5M6.789S"
+	},
+	"arrayOfTypes": [
+		"type"
+	]
+}
