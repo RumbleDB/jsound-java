@@ -6,8 +6,7 @@ import org.jsound.config.JSoundRuntimeConfiguration;
 
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
-        Thread.sleep(3000);
+    public static void main(String[] args) {
         JSoundRuntimeConfiguration configuration = JSoundRuntimeConfiguration.createJSoundRuntimeConfiguration(args);
         try {
             configuration.hasNecessaryArguments();

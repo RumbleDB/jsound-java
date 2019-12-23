@@ -6,6 +6,7 @@ import org.jsound.typedescriptors.object.FieldDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class ApplicationInitTest {
     private static Map<String, FieldDescriptor> person;
 
     @BeforeClass
-    public static void initializeApplication() {
+    public static void initializeApplication() throws IOException {
         JSoundExecutor.initializeApplication(schemaPath, filePath, rootType, compact);
         person = schema.get("person").getFacets().getObjectContent();
     }
