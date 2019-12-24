@@ -1,0 +1,36 @@
+{
+	"hexBinaries": [
+		{
+			"requiredHexBinary": "0123456789abcdef",
+			"myHexBinary": "AaBb"
+		},
+		{
+			"requiredHexBinary": "acd399",
+			"nullableHexBinary": null
+		},
+		{
+			"requiredHexBinary": "0fb8",
+			"nullableHexBinary": "cb50"
+		},
+		{
+			"requiredHexBinary": "abcdEF",
+			"hexBinaryWithDefault": "abc12345"
+		},
+		{
+			"requiredHexBinary": "9521",
+			"requiredHexBinaryWithDefault": "aBCd12"
+		},
+		{
+			"requiredHexBinary": "def9",
+			"anotherHexBinary": "0123"
+		},
+		{
+			"requiredHexBinary": "abe490",
+			"uniqueHexBinary": "0efD21"
+		}, 
+		{
+			"requiredHexBinary": "bec3EA",
+			"uniqueHexBinary": "AAAA"
+		}
+	]
+}

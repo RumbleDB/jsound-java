@@ -10,7 +10,7 @@ public class FieldDescriptor {
     private Item defaultValue = null;
     private boolean unique = false;
     private boolean requiredIsSet = false;
-    boolean defaultIsChecked = false;
+    public boolean defaultIsChecked = false;
 
     public void setName(String name) {
         this.name = name;

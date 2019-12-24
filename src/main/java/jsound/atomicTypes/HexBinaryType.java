@@ -34,8 +34,8 @@ public class HexBinaryType extends AtomicTypeDescriptor {
     public boolean validate(Item item, boolean isEnumValue) {
         byte[] hexValue;
         try {
-            hexValue = Hex.decodeHex(item.getStringValue().toCharArray());
-        } catch (DecoderException e) {
+            hexValue = HexBinaryItem.parseHexBinaryString(item.getStringValue());
+        } catch (IllegalArgumentException e) {
             return false;
         }
         if (this.getFacets() == null)

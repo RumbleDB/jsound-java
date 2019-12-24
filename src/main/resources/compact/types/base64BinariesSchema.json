@@ -1,0 +1,18 @@
+{ 
+	"rootType" : {
+		"base64Binaries": "arrayOfBase64Binaries"
+	},
+        "base64BinaryType": "base64Binary",
+	"base64BinaryObj" : {
+                "myBase64Binary": "base64Binary",
+                "!requiredBase64Binary": "base64Binary",
+                "nullableBase64Binary?": "base64Binary",
+                "base64BinaryWithDefault": "base64Binary=abcdef",
+                "!requiredBase64BinaryWithDefault": "base64Binary=abcdefgh",
+                "anotherBase64Binary": "base64BinaryType",
+                "@uniqueBase64Binary": "base64Binary"
+	},
+	"arrayOfBase64Binaries": [
+		"base64BinaryObj"
+	]
+}

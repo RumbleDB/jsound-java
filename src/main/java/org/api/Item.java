@@ -11,11 +11,11 @@ import java.util.Map;
 
 public abstract class Item {
 
-    public boolean isString() {
+    public boolean isStringItem() {
         return false;
     }
 
-    public boolean isBoolean() {
+    public boolean isBooleanItem() {
         return false;
     }
 
@@ -31,19 +31,27 @@ public abstract class Item {
         return false;
     }
 
-    public boolean isDuration() {
+    public boolean isDurationItem() {
         return false;
     }
 
-    public boolean isNull() {
+    public boolean isBase64BinaryItem() {
         return false;
     }
 
-    public boolean isObject() {
+    public boolean isHexBinaryItem() {
         return false;
     }
 
-    public boolean isArray() {
+    public boolean isNullItem() {
+        return false;
+    }
+
+    public boolean isObjectItem() {
+        return false;
+    }
+
+    public boolean isArrayItem() {
         return false;
     }
 

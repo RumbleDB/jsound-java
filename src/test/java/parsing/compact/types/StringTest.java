@@ -6,24 +6,25 @@ import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
 import jsound.tyson.TysonItem;
 import org.api.executors.JSoundExecutor;
-import org.api.executors.JSoundValidateExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import parsing.BaseTest;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
+import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
 import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-public class StringTest {
-    static String filePath = "src/main/resources/compact/stringsFile.json";
-    static String schemaPath = "src/main/resources/compact/stringsSchema.json";
+public class StringTest extends BaseTest {
+    static String filePath = "src/main/resources/compact/types/stringsFile.json";
+    static String schemaPath = "src/main/resources/compact/types/stringsSchema.json";
     static String rootType = "rootType";
     public static boolean compact = true;
 
@@ -31,7 +32,7 @@ public class StringTest {
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        JSoundExecutor.initializeApplication(schemaPath, filePath, rootType, compact);
+        BaseTest.initializeApplication(schemaPath, filePath, rootType, compact);
         stringObj = schema.get("stringObj").getFacets().getObjectContent();
     }
 
@@ -48,14 +49,34 @@ public class StringTest {
         assertTrue(stringObj.get("requiredString").getTypeOrReference().getTypeDescriptor().isStringType());
         assertTrue(stringObj.get("requiredString").isRequired());
         assertTrue(stringObj.get("nullableString").getTypeOrReference().getTypeDescriptor().isUnionType());
-        assertTrue(stringObj.get("nullableString").getTypeOrReference().getTypeDescriptor().getFacets().getUnionContent().getTypes().get(0).getType().isStringType());
-        assertTrue(stringObj.get("nullableString").getTypeOrReference().getTypeDescriptor().getFacets().getUnionContent().getTypes().get(1).getType().isNullType());
+        assertTrue(
+            stringObj.get("nullableString")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isStringType()
+        );
+        assertTrue(
+            stringObj.get("nullableString")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
+        );
         assertTrue(stringObj.get("stringWithDefault").getTypeOrReference().getTypeDescriptor().isStringType());
-        assertTrue(stringObj.get("stringWithDefault").getDefaultValue().isString());
+        assertTrue(stringObj.get("stringWithDefault").getDefaultValue().isStringItem());
         assertEquals("defString1", stringObj.get("stringWithDefault").getDefaultValue().getStringValue());
         assertTrue(stringObj.get("requiredStringWithDefault").getTypeOrReference().getTypeDescriptor().isStringType());
         assertTrue(stringObj.get("requiredStringWithDefault").isRequired());
-        assertTrue(stringObj.get("requiredStringWithDefault").getDefaultValue().isString());
+        assertTrue(stringObj.get("requiredStringWithDefault").getDefaultValue().isStringItem());
         assertEquals("defString2", stringObj.get("requiredStringWithDefault").getDefaultValue().getStringValue());
         assertTrue(stringObj.get("uniqueString").isUnique());
     }
@@ -76,34 +97,42 @@ public class StringTest {
 
             assertTrue(object.containsKey("requiredString"));
             assertEquals("string", ((TYSONValue) object.get("requiredString")).getTypeName());
-            assertTrue(((TYSONValue) object.get("requiredString")).getItemValue().isString());
+            assertTrue(((TYSONValue) object.get("requiredString")).getItemValue().isStringItem());
 
             assertTrue(object.containsKey("stringWithDefault"));
             assertEquals("string", ((TYSONValue) object.get("stringWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) object.get("stringWithDefault")).getItemValue().isString());
+            assertTrue(((TYSONValue) object.get("stringWithDefault")).getItemValue().isStringItem());
 
             assertTrue(object.containsKey("requiredStringWithDefault"));
             assertEquals("string", ((TYSONValue) object.get("requiredStringWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) object.get("requiredStringWithDefault")).getItemValue().isString());
+            assertTrue(((TYSONValue) object.get("requiredStringWithDefault")).getItemValue().isStringItem());
         }
 
-        assertTrue(((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableString"))).getItemValue().isNull());
-        assertTrue(((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableString"))).getItemValue().isString());
+        assertTrue(
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableString"))).getItemValue().isNullItem()
+        );
+        assertTrue(
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableString"))).getItemValue().isStringItem()
+        );
         assertEquals(
-                "override1",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("stringWithDefault"))).getItemValue()
-                        .getStringValue());
+            "override1",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("stringWithDefault"))).getItemValue()
+                .getStringValue()
+        );
 
         assertEquals(
-                "override2",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredStringWithDefault"))).getItemValue()
-                        .getStringValue());
+            "override2",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredStringWithDefault"))).getItemValue()
+                .getStringValue()
+        );
         assertEquals(
-                "stringType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherString"))).getTypeName());
+            "stringType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherString"))).getTypeName()
+        );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueString"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueString"))).getItemValue());
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueString"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueString"))).getItemValue()
+        );
 
     }
 }

@@ -22,7 +22,7 @@ public class DurationItem extends AtomicItem {
     }
 
     @Override
-    public boolean isDuration() {
+    public boolean isDurationItem() {
         return true;
     }
 }

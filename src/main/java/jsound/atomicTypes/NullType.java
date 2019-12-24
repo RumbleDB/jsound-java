@@ -23,7 +23,7 @@ public class NullType extends AtomicTypeDescriptor {
 
     @Override
     public boolean validate(Item item, boolean isEnumValue) {
-        return item.isNull() || (item.isString() && StringUtils.isNullLiteral(item.getStringValue()));
+        return item.isNullItem() || (item.isStringItem() && StringUtils.isNullLiteral(item.getStringValue()));
     }
 
     @Override

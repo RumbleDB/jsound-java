@@ -2,6 +2,7 @@ package jsound.json;
 
 import com.jsoniter.JsonIterator;
 import com.jsoniter.ValueType;
+import com.jsoniter.spi.Slice;
 import jsound.atomicTypes.NullType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
@@ -107,13 +108,20 @@ public class CompactSchemaFileJsonParser {
             String fieldValue = jsonSchemaIterator.readString();
             String fieldType = fieldValue.split("=")[0];
             if (fieldValue.contains("=")) {
-                try {
+                String defaultValue = fieldValue.split("=")[1];
+                if (defaultValue.startsWith("{") || defaultValue.startsWith("[")) {
+                    try {
+                        fieldDescriptor.setDefaultValue(
+                            InstanceFileJsonParser.getItemFromObject(JsonIterator.parse(defaultValue))
+                        );
+                    } catch (JsoundException e) {
+                        fieldDescriptor.setDefaultValue(
+                            ItemFactory.getInstance().createStringItem(defaultValue)
+                        );
+                    }
+                } else {
                     fieldDescriptor.setDefaultValue(
-                        InstanceFileJsonParser.getItemFromObject(JsonIterator.parse(fieldValue.split("=")[1]))
-                    );
-                } catch (JsoundException e) {
-                    fieldDescriptor.setDefaultValue(
-                        ItemFactory.getInstance().createStringItem(fieldValue.split("=")[1])
+                        ItemFactory.getInstance().createStringItem(defaultValue)
                     );
                 }
             }

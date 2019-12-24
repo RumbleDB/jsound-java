@@ -35,7 +35,7 @@ public class DoubleType extends AtomicTypeDescriptor {
     public boolean validate(Item item, boolean isEnumValue) {
         Double doubleValue;
         try {
-            if (item.isString())
+            if (item.isStringItem())
                 doubleValue = Double.parseDouble(item.getStringValue());
             else
                 doubleValue = item.getDoubleValue();
@@ -68,7 +68,7 @@ public class DoubleType extends AtomicTypeDescriptor {
     }
 
     private Double getDoubleFromItem(Item item) {
-        return item.isString()
+        return item.isStringItem()
             ? Double.parseDouble(item.getStringValue())
             : item.getDoubleValue();
     }

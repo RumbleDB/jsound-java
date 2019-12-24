@@ -61,7 +61,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
 
     @Override
     public boolean validate(Item item, boolean isEnumValue) {
-        if (!item.isObject())
+        if (!item.isObjectItem())
             return false;
         ObjectItem objectItem = (ObjectItem) item;
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
@@ -248,30 +248,11 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     }
 
     private void isObjectContentMoreRestrictive(ObjectTypeDescriptor baseTypeDescriptor) {
-        validateDefaultValues();
         if (!baseTypeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
             return;
         for (FieldDescriptor fieldDescriptor : this.getFacets().getObjectContent().values()) {
             if (baseTypeDescriptor.getFacets().getObjectContent().containsKey(fieldDescriptor.getName()))
                 fieldDescriptor.isMoreRestrictive(baseTypeDescriptor);
-        }
-    }
-
-    private void validateDefaultValues() {
-        for (FieldDescriptor fieldDescriptor : this.getFacets().getObjectContent().values()) {
-            if (fieldDescriptor.getDefaultValue() != null && !fieldDescriptor.defaultIsChecked) {
-                if (
-                    !fieldDescriptor.getTypeOrReference()
-                        .getTypeDescriptor()
-                        .validate(fieldDescriptor.getDefaultValue(), false)
-                )
-                    throw new InvalidSchemaException(
-                            "The default value for field "
-                                + this.getName()
-                                + " is not valid against its type."
-                    );
-                fieldDescriptor.defaultIsChecked = true;
-            }
         }
     }
 }

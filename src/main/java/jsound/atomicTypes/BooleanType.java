@@ -23,7 +23,7 @@ public class BooleanType extends AtomicTypeDescriptor {
 
     @Override
     public boolean validate(Item item, boolean isEnumValue) {
-        return item.isBoolean() || (item.isString() && StringUtils.isBooleanLiteral(item.getStringValue()));
+        return item.isBooleanItem() || (item.isStringItem() && StringUtils.isBooleanLiteral(item.getStringValue()));
     }
 
     @Override

@@ -102,7 +102,7 @@ public class DurationType extends AtomicTypeDescriptor {
     }
 
     protected Period getDurationFromItem(Item item) {
-        if (item.isDuration())
+        if (item.isDurationItem())
             return item.getDuration();
         Period period = Period.parse(getPositivePeriod(item.getStringValue()), this.getPeriodFormatter());
         return item.getStringValue().startsWith("-") ? period.negated() : period;

@@ -1,0 +1,36 @@
+{
+	"base64Binaries": [
+		{
+			"requiredBase64Binary": "0123456789abcdef",
+			"myBase64Binary": "AaBb"
+		},
+		{
+			"requiredBase64Binary": "0 FB8 0F+9",
+			"nullableBase64Binary": null
+		},
+		{
+			"requiredBase64Binary": "0F+40A==",
+			"nullableBase64Binary": "Q Q = ="
+		},
+		{
+			"requiredBase64Binary": "abcdEFGH",
+			"base64BinaryWithDefault": "abc12345"
+		},
+		{
+			"requiredBase64Binary": "ZW FzdX JlLg ==",
+			"requiredBase64BinaryWithDefault": "a b c ="
+		},
+		{
+			"requiredBase64Binary": "d ef9",
+			"anotherBase64Binary": "0123"
+		},
+		{
+			"requiredBase64Binary": "bGVhc3VyZS4=",
+			"uniqueBase64Binary": "cGxlYXN1cmUu"
+		}, 
+		{
+			"requiredBase64Binary": "YXN1cmUu",
+			"uniqueBase64Binary": "c3VyZS4="
+		}
+	]
+}

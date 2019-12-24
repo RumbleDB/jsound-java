@@ -30,7 +30,7 @@ public class StringType extends AtomicTypeDescriptor {
 
     @Override
     public boolean validate(Item item, boolean isEnumValue) {
-        return item.isString() && (this.getFacets() == null || validateLengthFacets(item, isEnumValue));
+        return item.isStringItem() && (this.getFacets() == null || validateLengthFacets(item, isEnumValue));
     }
 
 

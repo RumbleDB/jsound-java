@@ -12,7 +12,7 @@ public class StringItem extends AtomicItem {
     }
 
     @Override
-    public boolean isString() {
+    public boolean isStringItem() {
         return true;
     }
 

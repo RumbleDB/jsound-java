@@ -1,9 +1,11 @@
 package org.api;
 
 import jsound.exceptions.InvalidEnumValueException;
+import jsound.exceptions.InvalidSchemaException;
 import jsound.facets.FacetTypes;
 import jsound.facets.Facets;
 import jsound.typedescriptors.TypeOrReference;
+import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.types.ItemTypes;
 import jsound.tyson.TYSONValue;
 import jsound.tyson.TysonItem;
@@ -12,6 +14,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static jsound.facets.FacetTypes.CONTENT;
 import static jsound.facets.FacetTypes.ENUMERATION;
 
 public abstract class TypeDescriptor {
@@ -198,19 +201,32 @@ public abstract class TypeDescriptor {
     }
 
     public void checkBaseType() {
+        if (this.getFacets() != null) {
+            if (this.getFacets().getDefinedFacets().contains(ENUMERATION))
+                validateEnumerationValues();
+            if (this.isObjectType() && this.getFacets().getDefinedFacets().contains(CONTENT))
+                validateDefaultValues();
+        }
         if (this.baseType != null)
             checkAgainstTypeDescriptor(this.baseType.getTypeDescriptor());
     }
 
-    protected boolean isEnumerationMoreRestrictive(Facets facets) {
-        validateEnumerationValues();
-        if (facets.getDefinedFacets().contains(ENUMERATION)) {
-            for (Item item : this.getFacets().getEnumeration()) {
-                if (!facets.getEnumeration().contains(item))
-                    return false;
+    private void validateDefaultValues() {
+        for (FieldDescriptor fieldDescriptor : this.getFacets().getObjectContent().values()) {
+            if (fieldDescriptor.getDefaultValue() != null && !fieldDescriptor.defaultIsChecked) {
+                if (
+                        !fieldDescriptor.getTypeOrReference()
+                                .getTypeDescriptor()
+                                .validate(fieldDescriptor.getDefaultValue(), false)
+                )
+                    throw new InvalidSchemaException(
+                            "The default value for field "
+                                    + this.getName()
+                                    + " is not valid against its type."
+                    );
+                fieldDescriptor.defaultIsChecked = true;
             }
         }
-        return true;
     }
 
     private void validateEnumerationValues() {
@@ -220,14 +236,24 @@ public abstract class TypeDescriptor {
             if (!this.validate(enumItem, true)) {
                 throw new InvalidEnumValueException(
                         "Value "
-                            + enumItem.getStringValue()
-                            + " in enumeration is not in the type value space for type "
-                            + this.getName()
-                            + "."
+                                + enumItem.getStringValue()
+                                + " in enumeration is not in the type value space for type "
+                                + this.getName()
+                                + "."
                 );
             }
         }
         this.enumerationIsValid = true;
+    }
+
+    protected boolean isEnumerationMoreRestrictive(Facets facets) {
+        if (facets.getDefinedFacets().contains(ENUMERATION)) {
+            for (Item item : this.getFacets().getEnumeration()) {
+                if (!facets.getEnumeration().contains(item))
+                    return false;
+            }
+        }
+        return true;
     }
 
     protected boolean validateEnumeration(Item item, boolean isEnumerationItem) {

@@ -18,7 +18,7 @@ public class ObjectItem extends Item {
     }
 
     @Override
-    public boolean isObject() {
+    public boolean isObjectItem() {
         return true;
     }
 

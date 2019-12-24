@@ -48,7 +48,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
 
     @Override
     public boolean validate(Item item, boolean isEnumValue) {
-        if (!item.isArray())
+        if (!item.isArrayItem())
             return false;
         ArrayItem arrayItem = (ArrayItem) item;
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {

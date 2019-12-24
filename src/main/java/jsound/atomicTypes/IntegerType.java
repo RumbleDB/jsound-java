@@ -44,7 +44,7 @@ public class IntegerType extends AtomicTypeDescriptor {
     public boolean validate(Item item, boolean isEnumValue) {
         Integer integerValue;
         try {
-            if (item.isString())
+            if (item.isStringItem())
                 integerValue = Integer.parseInt(item.getStringValue());
             else
                 integerValue = item.getIntegerValue();
@@ -77,7 +77,7 @@ public class IntegerType extends AtomicTypeDescriptor {
     }
 
     private static Integer getIntegerFromItem(Item item) {
-        return item.isString()
+        return item.isStringItem()
             ? Integer.parseInt(item.getStringValue())
             : item.getIntegerValue();
     }

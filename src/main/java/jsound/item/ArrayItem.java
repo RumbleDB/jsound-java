@@ -20,7 +20,7 @@ public class ArrayItem extends Item {
     }
 
     @Override
-    public boolean isArray() {
+    public boolean isArrayItem() {
         return true;
     }
 

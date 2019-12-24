@@ -60,7 +60,7 @@ public class ApplicationInitTest {
     public void testFieldWithDefaultValue() {
         assertTrue(person.containsKey("last"));
         assertTrue(person.get("last").getTypeOrReference().getTypeDescriptor().isStringType());
-        assertTrue(person.get("last").getDefaultValue().isString());
+        assertTrue(person.get("last").getDefaultValue().isStringItem());
         assertEquals("N/A", person.get("last").getDefaultValue().getStringValue());
     }
 

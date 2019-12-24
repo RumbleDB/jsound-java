@@ -45,7 +45,7 @@ public class DecimalType extends AtomicTypeDescriptor {
     public boolean validate(Item item, boolean isEnumValue) {
         BigDecimal decimalValue;
         try {
-            if (item.isString())
+            if (item.isStringItem())
                 decimalValue = new BigDecimal(item.getStringValue());
             else
                 decimalValue = item.getDecimalValue();
@@ -78,7 +78,7 @@ public class DecimalType extends AtomicTypeDescriptor {
     }
 
     private BigDecimal getDecimalFromItem(Item item) {
-        return item.isString()
+        return item.isStringItem()
             ? new BigDecimal(item.getStringValue())
             : item.getDecimalValue();
     }

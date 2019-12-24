@@ -1,0 +1,15 @@
+{ 
+	"rootType" : {
+		"objects": "arrayOfObjects"
+	},
+	"anotherObject": {
+		"hello": "string"
+	},
+	"myObjectType" : {
+                "myObject": "anotherObject={\"hello\": \"zio\"}",
+                "!requiredObject": "anotherObject"
+	},
+	"arrayOfObjects": [
+		"myObjectType"
+	]
+}

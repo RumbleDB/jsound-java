@@ -1,0 +1,19 @@
+{
+	"objects": [
+		{
+			"requiredObject": {
+				"hello": "dear",
+				"bella": 1e3
+			},
+			"myObject": {
+				"hello": "abcd"
+			}
+		},
+		{
+			"requiredObject": {
+				"hello": "dear",
+				"bella": 1e3
+			}
+		}
+	]
+}

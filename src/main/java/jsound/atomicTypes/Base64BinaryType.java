@@ -33,8 +33,8 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
     public boolean validate(Item item, boolean isEnumValue) {
         byte[] base64BinaryValue;
         try {
-            base64BinaryValue = Base64.decodeBase64(item.getStringValue());
-        } catch (Exception e) {
+            base64BinaryValue = Base64BinaryItem.parseBase64BinaryString(item.getStringValue());
+        } catch (IllegalArgumentException e) {
             return false;
         }
         if (this.getFacets() == null)

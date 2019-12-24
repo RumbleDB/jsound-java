@@ -12,7 +12,7 @@ public class BooleanItem extends AtomicItem {
     }
 
     @Override
-    public boolean isBoolean() {
+    public boolean isBooleanItem() {
         return true;
     }
 

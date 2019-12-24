@@ -7,7 +7,7 @@ public class NullItem extends AtomicItem {
     public NullItem() {
     }
 
-    public boolean isNull() {
+    public boolean isNullItem() {
         return true;
     }
 
