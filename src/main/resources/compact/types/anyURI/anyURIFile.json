@@ -1,0 +1,36 @@
+{
+	"anyURIs": [
+		{
+			"requiredAnyURI": "http://datypic.com",
+			"myAnyURI": "mailto:info@datypic.com"
+		},
+		{
+			"requiredAnyURI": "../%C3%A9dition.html",
+			"nullableAnyURI": null
+		},
+		{
+			"requiredAnyURI": "../Ã©dition.html",
+			"nullableAnyURI": "http://datypic.com/prod.html#shirt"
+		},
+		{
+			"requiredAnyURI": "../prod.html#shirt",
+			"anyURIWithDefault": "urn:example:org"
+		},
+		{
+			"requiredAnyURI": "anyString",
+			"requiredAnyURIWithDefault": "https://www.w3.org/TR/xquery-30/#id-expressions-on-datatypes"
+		},
+		{
+			"requiredAnyURI": "http://www.jsound-spec.org/publish/en-US/JSound-C/2.0/html-single/JSound-C/index.html#chap-Introduction",
+			"anotherAnyURI": "http://www.jsound-spec.org/"
+		},
+		{
+			"requiredAnyURI": "http://www.jsound-spec.org/publish/en-US/JSound/2.0/html-single/JSound/index.html#idm111=",
+			"uniqueAnyURI": "../arinaldi.html"
+		}, 
+		{
+			"requiredAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java",
+			"uniqueAnyURI": "space allowed ?"
+		}
+	]
+}
