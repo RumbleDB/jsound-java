@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.atomicItems.DecimalItem;
@@ -42,20 +43,19 @@ public class DecimalType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         BigDecimal decimalValue;
         try {
-            if (item.isStringItem())
-                decimalValue = new BigDecimal(item.getStringValue());
+            if (itemWrapper.isStringItem())
+                decimalValue = new BigDecimal(itemWrapper.getStringValue());
             else
-                decimalValue = item.getDecimalValue();
+                decimalValue = itemWrapper.getDecimalValue();
         } catch (NumberFormatException e) {
             return false;
         }
-        if (this.getFacets() == null)
-            return true;
-        item = new DecimalItem(decimalValue);
-        return validateBoundariesFacets(item, isEnumValue) && validateDigitsFacets(item);
+        itemWrapper.setItem(new DecimalItem(decimalValue));
+        return this.getFacets() == null || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue) && validateDigitsFacets(
+                itemWrapper.getItem());
     }
 
     @Override
@@ -70,8 +70,8 @@ public class DecimalType extends AtomicTypeDescriptor {
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) {
         BigDecimal decimalValue = item.getDecimalValue();
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (decimalValue.compareTo(getDecimalFromItem(enumItem)) == 0)
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
+            if (decimalValue.compareTo(getDecimalFromItem(enumItem.getItem())) == 0)
                 return true;
         }
         return false;

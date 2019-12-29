@@ -2,20 +2,21 @@ package jsound.item;
 
 import jsound.tyson.TYSONObject;
 import org.api.Item;
+import org.api.ItemWrapper;
 
 import java.util.List;
 
 public class ArrayItem extends Item {
 
-    private List<Item> _items;
+    private List<ItemWrapper> _items;
 
-    ArrayItem(List<Item> items) {
+    ArrayItem(List<ItemWrapper> items) {
         super();
         this._items = items;
     }
 
     @Override
-    public List<Item> getItems() {
+    public List<ItemWrapper> getItems() {
         return _items;
     }
 
@@ -30,14 +31,14 @@ public class ArrayItem extends Item {
         boolean first = true;
         sb.append('[');
         TYSONObject.newLineIncreaseCounter(sb);
-        for (Item item : _items) {
+        for (ItemWrapper itemWrapper : _items) {
             if (first) {
                 first = false;
             } else {
                 sb.append(", ");
                 TYSONObject.newLine(sb);
             }
-            sb.append(item.getStringAnnotation());
+            sb.append(itemWrapper.getStringAnnotation());
         }
         TYSONObject.newLineDecreaseCounter(sb);
         sb.append(']');
@@ -47,8 +48,8 @@ public class ArrayItem extends Item {
 
     public int hashCode() {
         int result = _items.size();
-        for (Item item : _items) {
-            result += item.hashCode();
+        for (ItemWrapper itemWrapper : _items) {
+            result += itemWrapper.getItem().hashCode();
         }
         return result;
     }

@@ -5,16 +5,13 @@ import jsound.tyson.TYSONArray;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
 import jsound.tyson.TysonItem;
-import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import parsing.BaseTest;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
-import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
 import static org.api.executors.JSoundExecutor.schemaItem;
@@ -23,8 +20,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class StringTest extends BaseTest {
-    static String filePath = "src/main/resources/compact/types/stringsFile.json";
-    static String schemaPath = "src/main/resources/compact/types/stringsSchema.json";
+    static String filePath = "src/main/resources/compact/types/string/stringFile.json";
+    static String schemaPath = "src/main/resources/compact/types/string/stringSchema.json";
     static String rootType = "rootType";
     public static boolean compact = true;
 

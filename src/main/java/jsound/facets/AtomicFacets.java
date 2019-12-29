@@ -3,6 +3,7 @@ package jsound.facets;
 import com.jsoniter.ValueType;
 import jsound.exceptions.UnexpectedTypeException;
 import org.api.Item;
+import org.api.ItemWrapper;
 
 import java.io.IOException;
 
@@ -11,7 +12,7 @@ import static jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class AtomicFacets extends Facets {
     public Integer length = null, minLength = null, maxLength = null;
-    public Item minInclusive = null, maxInclusive = null, minExclusive = null, maxExclusive = null;
+    public ItemWrapper minInclusive = null, maxInclusive = null, minExclusive = null, maxExclusive = null;
     public Integer totalDigits = null, fractionDigits = null;
     public jsound.facets.TimezoneFacet explicitTimezone = null;
 

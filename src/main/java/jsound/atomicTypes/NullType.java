@@ -1,10 +1,11 @@
 package jsound.atomicTypes;
 
+import jsound.item.ItemFactory;
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
-import org.api.Item;
 import jsound.types.ItemTypes;
 import jsound.utils.StringUtils;
 
@@ -22,8 +23,12 @@ public class NullType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
-        return item.isNullItem() || (item.isStringItem() && StringUtils.isNullLiteral(item.getStringValue()));
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
+        boolean result = itemWrapper.isNullItem() || (itemWrapper.isStringItem() && StringUtils.isNullLiteral(
+                itemWrapper.getStringValue()));
+        if (!itemWrapper.isNullItem())
+            itemWrapper.setItem(ItemFactory.getInstance().createNullItem());
+        return result;
     }
 
     @Override

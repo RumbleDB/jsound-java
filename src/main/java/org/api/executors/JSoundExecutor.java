@@ -8,6 +8,7 @@ import jsound.json.InstanceFileJsonParser;
 import jsound.json.SchemaFileJsonParser;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.types.AtomicTypes;
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
 
@@ -22,7 +23,7 @@ import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 public abstract class JSoundExecutor {
 
     public static TypeDescriptor schemaItem;
-    public static Item fileItem;
+    public static ItemWrapper fileItem;
     public static Map<String, TypeDescriptor> schema = new HashMap<>();
     public static JsonIterator jsonSchemaIterator;
 
@@ -58,5 +59,13 @@ public abstract class JSoundExecutor {
         if (schemaItem == null)
             throw new CliException("The specified root type was not defined in the schema.");
         fileItem = InstanceFileJsonParser.getItemFromObject(fileObject);
+        checkSubtypeCorrectness();
+    }
+
+    private static void checkSubtypeCorrectness() {
+        for (TypeDescriptor typeDescriptor : schema.values()) {
+            typeDescriptor.resolveAllFacets();
+            typeDescriptor.checkBaseType();
+        }
     }
 }

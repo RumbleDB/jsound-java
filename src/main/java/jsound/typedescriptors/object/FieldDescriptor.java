@@ -2,12 +2,13 @@ package jsound.typedescriptors.object;
 
 import org.api.Item;
 import jsound.typedescriptors.TypeOrReference;
+import org.api.ItemWrapper;
 
 public class FieldDescriptor {
     public String name;
     private TypeOrReference type;
-    private Boolean required = false;
-    private Item defaultValue = null;
+    private boolean required = false;
+    private ItemWrapper defaultValue = null;
     private boolean unique = false;
     private boolean requiredIsSet = false;
     public boolean defaultIsChecked = false;
@@ -25,7 +26,7 @@ public class FieldDescriptor {
         this.required = required;
     }
 
-    public void setDefaultValue(Item defaultValue) {
+    public void setDefaultValue(ItemWrapper defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -49,7 +50,7 @@ public class FieldDescriptor {
         return unique;
     }
 
-    public Item getDefaultValue() {
+    public ItemWrapper getDefaultValue() {
         return defaultValue;
     }
 

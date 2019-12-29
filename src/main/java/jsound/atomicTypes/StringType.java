@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.facets.AtomicFacets;
@@ -29,15 +30,15 @@ public class StringType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
-        return item.isStringItem() && (this.getFacets() == null || validateLengthFacets(item, isEnumValue));
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
+        return itemWrapper.isStringItem() && (this.getFacets() == null || validateLengthFacets(itemWrapper.getItem(), isEnumValue));
     }
 
 
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) {
         String string = item.getStringValue();
-        for (Item enumItem : this.getFacets().getEnumeration()) {
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
             if (string.equals(enumItem.getStringValue()))
                 return true;
         }

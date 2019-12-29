@@ -7,6 +7,7 @@ import jsound.typedescriptors.array.ArrayContentDescriptor;
 import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.typedescriptors.union.UnionContentDescriptor;
 import org.api.Item;
+import org.api.ItemWrapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,8 +21,8 @@ import static jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class Facets {
 
-    public Item metadata = null;
-    public List<Item> enumeration = new ArrayList<>();;
+    public ItemWrapper metadata = null;
+    public List<ItemWrapper> enumeration = new ArrayList<>();;
     public List<String> constraints = null;
 
     public Set<jsound.facets.FacetTypes> definedFacets = new HashSet<>();
@@ -46,7 +47,7 @@ public class Facets {
         return definedFacets;
     }
 
-    public List<Item> getEnumeration() {
+    public List<ItemWrapper> getEnumeration() {
         return enumeration;
     }
 

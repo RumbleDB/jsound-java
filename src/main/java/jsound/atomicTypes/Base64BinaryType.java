@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import org.apache.commons.codec.binary.Base64;
@@ -30,17 +31,15 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         byte[] base64BinaryValue;
         try {
-            base64BinaryValue = Base64BinaryItem.parseBase64BinaryString(item.getStringValue());
+            base64BinaryValue = Base64BinaryItem.parseBase64BinaryString(itemWrapper.getStringValue());
         } catch (IllegalArgumentException e) {
             return false;
         }
-        if (this.getFacets() == null)
-            return true;
-        item = new Base64BinaryItem(base64BinaryValue, item.getStringValue());
-        return validateLengthFacets(item, isEnumValue);
+        itemWrapper.setItem(new Base64BinaryItem(base64BinaryValue, itemWrapper.getStringValue()));
+        return this.getFacets() == null || validateLengthFacets(itemWrapper.getItem(), isEnumValue);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) {
         byte[] base64 = item.getBinaryValue();
-        for (Item enumItem : this.getFacets().getEnumeration()) {
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
             if (Arrays.equals(base64, Base64.decodeBase64(enumItem.getStringValue())))
                 return true;
         }

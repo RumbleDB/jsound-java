@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import org.joda.time.Instant;
@@ -60,17 +61,15 @@ public class DurationType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         Period period;
         try {
-            period = getDurationFromItem(item);
+            period = getDurationFromItem(itemWrapper.getItem());
         } catch (IllegalArgumentException e) {
             return false;
         }
-        if (this.getFacets() == null)
-            return true;
-        item = createDurationItem(period);
-        return validateBoundariesFacets(item, isEnumValue);
+        itemWrapper.setItem(createDurationItem(period));
+        return this.getFacets() == null || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue);
     }
 
     protected DurationItem createDurationItem(Period period) {
@@ -80,8 +79,8 @@ public class DurationType extends AtomicTypeDescriptor {
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) {
         Period period = item.getDuration();
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (period.equals(getDurationFromItem(enumItem)))
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
+            if (period.equals(getDurationFromItem(enumItem.getItem())))
                 return true;
         }
         return false;

@@ -3,7 +3,7 @@ package jsound.typedescriptors.union;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.facets.FacetTypes;
 import jsound.facets.UnionFacets;
-import org.api.Item;
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.types.ItemTypes;
@@ -41,15 +41,15 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
-                    if (!validateContentFacet(item))
+                    if (!validateContentFacet(itemWrapper))
                         return false;
                     break;
                 case ENUMERATION:
-                    if (!validateEnumeration(item, isEnumValue))
+                    if (!validateEnumeration(itemWrapper.getItem(), isEnumValue))
                         return false;
                     break;
                 default:
@@ -59,22 +59,22 @@ public class UnionTypeDescriptor extends TypeDescriptor {
         return true;
     }
 
-    private boolean validateContentFacet(Item item) {
+    private boolean validateContentFacet(ItemWrapper itemWrapper) {
         for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-            if (typeOrReference.getTypeDescriptor().validate(item, false))
+            if (typeOrReference.getTypeDescriptor().validate(itemWrapper, false))
                 return true;
         }
         return false;
     }
 
     @Override
-    public TysonItem annotate(Item item) {
+    public TysonItem annotate(ItemWrapper itemWrapper) {
         for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-            if (typeOrReference.getTypeDescriptor().validate(item, false))
-                return new TYSONValue(typeOrReference.getTypeDescriptor().getName(), item);
+            if (typeOrReference.getTypeDescriptor().validate(itemWrapper, false))
+                return new TYSONValue(typeOrReference.getTypeDescriptor().getName(), itemWrapper.getItem());
         }
         throw new InvalidSchemaException(
-                item.getStringValue() + " is not valid against any type of union " + this.getName()
+                itemWrapper.getItem().getStringValue() + " is not valid against any type of union " + this.getName()
         );
     }
 

@@ -7,6 +7,7 @@ import jsound.atomicItems.IntegerItem;
 import jsound.atomicItems.NullItem;
 import jsound.atomicItems.StringItem;
 import org.api.Item;
+import org.api.ItemWrapper;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -53,11 +54,11 @@ public class ItemFactory {
         return _nullItem;
     }
 
-    public Item createObjectItem(Map<String, Item> itemMap) {
+    public Item createObjectItem(Map<String, ItemWrapper> itemMap) {
         return new ObjectItem(itemMap);
     }
 
-    public Item createArrayItem(List<Item> values) {
+    public Item createArrayItem(List<ItemWrapper> values) {
         return new ArrayItem(values);
     }
 }

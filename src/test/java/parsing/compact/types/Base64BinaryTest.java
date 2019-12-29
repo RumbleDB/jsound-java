@@ -20,8 +20,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class Base64BinaryTest extends BaseTest {
-    static String filePath = "src/main/resources/compact/types/base64BinariesFile.json";
-    static String schemaPath = "src/main/resources/compact/types/base64BinariesSchema.json";
+    static String filePath = "src/main/resources/compact/types/base64Binary/base64BinaryFile.json";
+    static String schemaPath = "src/main/resources/compact/types/base64Binary/base64BinarySchema.json";
     static String rootType = "rootType";
     public static boolean compact = true;
 
@@ -73,8 +73,8 @@ public class Base64BinaryTest extends BaseTest {
         assertTrue(
             base64BinaryObj.get("base64BinaryWithDefault").getTypeOrReference().getTypeDescriptor().isBase64BinaryType()
         );
-        assertTrue(base64BinaryObj.get("base64BinaryWithDefault").getDefaultValue().isStringItem());
-        assertEquals("abcdef", base64BinaryObj.get("base64BinaryWithDefault").getDefaultValue().getStringValue());
+        assertTrue(base64BinaryObj.get("base64BinaryWithDefault").getDefaultValue().isBase64BinaryItem());
+        assertEquals("abcd", base64BinaryObj.get("base64BinaryWithDefault").getDefaultValue().getStringValue());
         assertTrue(
             base64BinaryObj.get("requiredBase64BinaryWithDefault")
                 .getTypeOrReference()
@@ -82,7 +82,7 @@ public class Base64BinaryTest extends BaseTest {
                 .isBase64BinaryType()
         );
         assertTrue(base64BinaryObj.get("requiredBase64BinaryWithDefault").isRequired());
-        assertTrue(base64BinaryObj.get("requiredBase64BinaryWithDefault").getDefaultValue().isStringItem());
+        assertTrue(base64BinaryObj.get("requiredBase64BinaryWithDefault").getDefaultValue().isBase64BinaryItem());
         assertEquals(
             "abcdefgh",
             base64BinaryObj.get("requiredBase64BinaryWithDefault").getDefaultValue().getStringValue()
@@ -106,22 +106,22 @@ public class Base64BinaryTest extends BaseTest {
 
             assertTrue(object.containsKey("requiredBase64Binary"));
             assertEquals("base64Binary", ((TYSONValue) object.get("requiredBase64Binary")).getTypeName());
-            assertTrue(((TYSONValue) object.get("requiredBase64Binary")).getItemValue().isStringItem());
+            assertTrue(((TYSONValue) object.get("requiredBase64Binary")).getItemValue().isBase64BinaryItem());
 
             assertTrue(object.containsKey("base64BinaryWithDefault"));
             assertEquals("base64Binary", ((TYSONValue) object.get("base64BinaryWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) object.get("base64BinaryWithDefault")).getItemValue().isStringItem());
+            assertTrue(((TYSONValue) object.get("base64BinaryWithDefault")).getItemValue().isBase64BinaryItem());
 
             assertTrue(object.containsKey("requiredBase64BinaryWithDefault"));
             assertEquals("base64Binary", ((TYSONValue) object.get("requiredBase64BinaryWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) object.get("requiredBase64BinaryWithDefault")).getItemValue().isStringItem());
+            assertTrue(((TYSONValue) object.get("requiredBase64BinaryWithDefault")).getItemValue().isBase64BinaryItem());
         }
 
         assertTrue(
             ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableBase64Binary"))).getItemValue().isNullItem()
         );
         assertTrue(
-            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableBase64Binary"))).getItemValue().isStringItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableBase64Binary"))).getItemValue().isBase64BinaryItem()
         );
         assertEquals(
             "abc12345",

@@ -8,6 +8,7 @@ import jsound.facets.ArrayFacets;
 import jsound.facets.FacetTypes;
 import jsound.item.ArrayItem;
 import org.api.Item;
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.types.ItemTypes;
@@ -47,10 +48,10 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
-        if (!item.isArrayItem())
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
+        if (!itemWrapper.getItem().isArrayItem())
             return false;
-        ArrayItem arrayItem = (ArrayItem) item;
+        ArrayItem arrayItem = (ArrayItem) itemWrapper.getItem();
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
@@ -78,7 +79,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
 
     private boolean validateContent(ArrayItem arrayItem) {
         TypeDescriptor arrayItemType = this.getFacets().getArrayContent().getType().getTypeDescriptor();
-        for (Item itemInArray : arrayItem.getItems()) {
+        for (ItemWrapper itemInArray : arrayItem.getItems()) {
             if (!arrayItemType.validate(itemInArray, false))
                 return false;
         }
@@ -88,16 +89,16 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public TysonItem annotate(Item item) {
+    public TysonItem annotate(ItemWrapper itemWrapper) {
         ArrayItem arrayItem;
         try {
-            arrayItem = (ArrayItem) item;
+            arrayItem = (ArrayItem) itemWrapper.getItem();
         } catch (ClassCastException e) {
             throw new InvalidSchemaException("Cannot annotate. An array is needed.");
         }
         TypeDescriptor arrayItemType = this.getFacets().getArrayContent().getType().getTypeDescriptor();
         TYSONArray array = new TYSONArray(this.getName());
-        for (Item itemInArray : arrayItem.getItems()) {
+        for (ItemWrapper itemInArray : arrayItem.getItems()) {
             array.add(arrayItemType.annotate(itemInArray));
         }
         return array;
@@ -118,7 +119,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         return typeDescriptor.isArrayType();
     }
 
-    private boolean isUniqueSatisfied(List<Item> arrayItems) {
+    private boolean isUniqueSatisfied(List<ItemWrapper> arrayItems) {
         Map<String, Set<Item>> fieldsValues = new HashMap<>();
         ObjectTypeDescriptor objectType = (ObjectTypeDescriptor) this.getFacets()
             .getArrayContent()
@@ -127,16 +128,16 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
         Map<String, FieldDescriptor> fields = objectType.getFacets().getObjectContent();
         for (String fieldName : fields.keySet()) {
             if (fields.get(fieldName).isUnique()) {
-                for (Item item : arrayItems) {
-                    if (item.getItemMap().containsKey(fieldName)) {
-                        Item value = item.getItemMap().get(fieldName);
+                for (ItemWrapper itemWrapper : arrayItems) {
+                    if (itemWrapper.getItem().getItemMap().containsKey(fieldName)) {
+                        ItemWrapper value = itemWrapper.getItem().getItemMap().get(fieldName);
                         if (fieldsValues.containsKey(fieldName)) {
-                            if (fieldsValues.get(fieldName).contains(value)) {
+                            if (fieldsValues.get(fieldName).contains(value.getItem())) {
                                 return false;
                             }
-                            fieldsValues.get(fieldName).add(value);
+                            fieldsValues.get(fieldName).add(value.getItem());
                         } else {
-                            fieldsValues.put(fieldName, new HashSet<>(Collections.singleton(value)));
+                            fieldsValues.put(fieldName, new HashSet<>(Collections.singleton(value.getItem())));
                         }
                     }
                 }

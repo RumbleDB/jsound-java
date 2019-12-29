@@ -1,10 +1,11 @@
 package jsound.atomicTypes;
 
+import jsound.item.ItemFactory;
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
-import org.api.Item;
 import jsound.types.ItemTypes;
 import jsound.utils.StringUtils;
 
@@ -22,8 +23,12 @@ public class BooleanType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
-        return item.isBooleanItem() || (item.isStringItem() && StringUtils.isBooleanLiteral(item.getStringValue()));
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
+        boolean result = itemWrapper.isBooleanItem() || (itemWrapper.isStringItem() && StringUtils.isBooleanLiteral(
+                itemWrapper.getStringValue()));
+        if (!itemWrapper.isBooleanItem())
+            itemWrapper.setItem(ItemFactory.getInstance().createBooleanItem(Boolean.parseBoolean(itemWrapper.getStringValue())));
+        return result;
     }
 
     @Override

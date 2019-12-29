@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import org.apache.commons.codec.DecoderException;
@@ -31,23 +32,21 @@ public class HexBinaryType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         byte[] hexValue;
         try {
-            hexValue = HexBinaryItem.parseHexBinaryString(item.getStringValue());
+            hexValue = HexBinaryItem.parseHexBinaryString(itemWrapper.getStringValue());
         } catch (IllegalArgumentException e) {
             return false;
         }
-        if (this.getFacets() == null)
-            return true;
-        item = new HexBinaryItem(hexValue, item.getStringValue());
-        return validateLengthFacets(item, isEnumValue);
+        itemWrapper.setItem(new HexBinaryItem(hexValue, itemWrapper.getStringValue()));
+        return this.getFacets() == null || validateLengthFacets(itemWrapper.getItem(), isEnumValue);
     }
 
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) throws DecoderException {
         byte[] hexValue = item.getBinaryValue();
-        for (Item enumItem : this.getFacets().getEnumeration()) {
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
             if (Arrays.equals(hexValue, Hex.decodeHex(enumItem.getStringValue().toCharArray())))
                 return true;
         }

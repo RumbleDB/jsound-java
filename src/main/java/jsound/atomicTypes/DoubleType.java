@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.atomicItems.DoubleItem;
@@ -32,20 +33,18 @@ public class DoubleType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         Double doubleValue;
         try {
-            if (item.isStringItem())
-                doubleValue = Double.parseDouble(item.getStringValue());
+            if (itemWrapper.isStringItem())
+                doubleValue = Double.parseDouble(itemWrapper.getStringValue());
             else
-                doubleValue = item.getDoubleValue();
+                doubleValue = itemWrapper.getDoubleValue();
         } catch (NumberFormatException e) {
             return false;
         }
-        if (this.getFacets() == null)
-            return true;
-        item = new DoubleItem(doubleValue);
-        return validateBoundariesFacets(item, isEnumValue);
+        itemWrapper.setItem(new DoubleItem(doubleValue));
+        return this.getFacets() == null || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue);
     }
 
     @Override
@@ -60,8 +59,8 @@ public class DoubleType extends AtomicTypeDescriptor {
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) {
         Double doubleValue = item.getDoubleValue();
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (doubleValue.compareTo(getDoubleFromItem(enumItem)) == 0)
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
+            if (doubleValue.compareTo(getDoubleFromItem(enumItem.getItem())) == 0)
                 return true;
         }
         return false;

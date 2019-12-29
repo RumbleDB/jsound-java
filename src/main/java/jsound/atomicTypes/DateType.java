@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import org.joda.time.DateTime;
@@ -47,27 +48,27 @@ public class DateType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         DateTime date;
         try {
-            date = getDateFromItem(item);
+            date = getDateFromItem(itemWrapper.getItem());
         } catch (IllegalArgumentException e) {
             return false;
         }
+        itemWrapper.setItem(new DateItem(date));
         if (this.getFacets() == null)
             return true;
-        item = new DateItem(date);
-        if (!validateBoundariesFacets(item, isEnumValue))
+        if (!validateBoundariesFacets(itemWrapper.getItem(), isEnumValue))
             return false;
         return !this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE)
-            || DateTimeType.checkExplicitTimezone(item, this.getFacets().explicitTimezone, _formatter);
+            || DateTimeType.checkExplicitTimezone(itemWrapper.getItem(), this.getFacets().explicitTimezone, _formatter);
     }
 
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) {
         DateTime date = item.getDateTime();
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (date.equals(getDateFromItem(enumItem)))
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
+            if (date.equals(getDateFromItem(enumItem.getItem())))
                 return true;
         }
         return false;

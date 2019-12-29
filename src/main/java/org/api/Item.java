@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Item {
+    private Item _specificItem = this;
 
     public boolean isStringItem() {
         return false;
@@ -55,6 +56,14 @@ public abstract class Item {
         return false;
     }
 
+    public void setItem(Item item) {
+        this._specificItem = item;
+    }
+
+    public Item getItem() {
+        return _specificItem;
+    }
+
     public Integer getIntegerValue() {
         throw new UnexpectedTypeException(this.getStringValue() + " does not have an integer.");
     }
@@ -91,11 +100,11 @@ public abstract class Item {
         throw new UnexpectedTypeException(this.getStringValue() + " does not have a period.");
     }
 
-    public Map<String, Item> getItemMap() {
+    public Map<String, ItemWrapper> getItemMap() {
         return null;
     }
 
-    public List<Item> getItems() {
+    public List<ItemWrapper> getItems() {
         return null;
     }
 

@@ -20,8 +20,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class HexBinaryTest extends BaseTest {
-    static String filePath = "src/main/resources/compact/types/hexBinariesFile.json";
-    static String schemaPath = "src/main/resources/compact/types/hexBinariesSchema.json";
+    static String filePath = "src/main/resources/compact/types/hexBinary/hexBinaryFile.json";
+    static String schemaPath = "src/main/resources/compact/types/hexBinary/hexBinarySchema.json";
     static String rootType = "rootType";
     public static boolean compact = true;
 
@@ -69,13 +69,13 @@ public class HexBinaryTest extends BaseTest {
                 .isNullType()
         );
         assertTrue(hexBinaryObj.get("hexBinaryWithDefault").getTypeOrReference().getTypeDescriptor().isHexBinaryType());
-        assertTrue(hexBinaryObj.get("hexBinaryWithDefault").getDefaultValue().isStringItem());
+        assertTrue(hexBinaryObj.get("hexBinaryWithDefault").getDefaultValue().isHexBinaryItem());
         assertEquals("0123abcd", hexBinaryObj.get("hexBinaryWithDefault").getDefaultValue().getStringValue());
         assertTrue(
             hexBinaryObj.get("requiredHexBinaryWithDefault").getTypeOrReference().getTypeDescriptor().isHexBinaryType()
         );
         assertTrue(hexBinaryObj.get("requiredHexBinaryWithDefault").isRequired());
-        assertTrue(hexBinaryObj.get("requiredHexBinaryWithDefault").getDefaultValue().isStringItem());
+        assertTrue(hexBinaryObj.get("requiredHexBinaryWithDefault").getDefaultValue().isHexBinaryItem());
         assertEquals("aaBB", hexBinaryObj.get("requiredHexBinaryWithDefault").getDefaultValue().getStringValue());
         assertTrue(hexBinaryObj.get("uniqueHexBinary").isUnique());
     }
@@ -96,22 +96,22 @@ public class HexBinaryTest extends BaseTest {
 
             assertTrue(object.containsKey("requiredHexBinary"));
             assertEquals("hexBinary", ((TYSONValue) object.get("requiredHexBinary")).getTypeName());
-            assertTrue(((TYSONValue) object.get("requiredHexBinary")).getItemValue().isStringItem());
+            assertTrue(((TYSONValue) object.get("requiredHexBinary")).getItemValue().isHexBinaryItem());
 
             assertTrue(object.containsKey("hexBinaryWithDefault"));
             assertEquals("hexBinary", ((TYSONValue) object.get("hexBinaryWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) object.get("hexBinaryWithDefault")).getItemValue().isStringItem());
+            assertTrue(((TYSONValue) object.get("hexBinaryWithDefault")).getItemValue().isHexBinaryItem());
 
             assertTrue(object.containsKey("requiredHexBinaryWithDefault"));
             assertEquals("hexBinary", ((TYSONValue) object.get("requiredHexBinaryWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) object.get("requiredHexBinaryWithDefault")).getItemValue().isStringItem());
+            assertTrue(((TYSONValue) object.get("requiredHexBinaryWithDefault")).getItemValue().isHexBinaryItem());
         }
 
         assertTrue(
             ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableHexBinary"))).getItemValue().isNullItem()
         );
         assertTrue(
-            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableHexBinary"))).getItemValue().isStringItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableHexBinary"))).getItemValue().isHexBinaryItem()
         );
         assertEquals(
             "abc12345",

@@ -21,6 +21,7 @@ import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
 import jsound.facets.TimezoneFacet;
 import org.api.Item;
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.types.AtomicTypes;
@@ -92,13 +93,13 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         return false;
     }
 
     @Override
-    public TysonItem annotate(Item item) {
-        return new TYSONValue(this.getName(), item);
+    public TysonItem annotate(ItemWrapper itemWrapper) {
+        return new TYSONValue(this.getName(), itemWrapper.getItem());
     }
 
     protected int compare(Item item1, Item item2) {
@@ -258,19 +259,19 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     }
 
     protected boolean validateMinInclusive(Item item) {
-        return this.compare(item, this.getFacets().minInclusive) >= 0;
+        return this.compare(item, this.getFacets().minInclusive.getItem()) >= 0;
     }
 
     protected boolean validateMinExclusive(Item item) {
-        return this.compare(item, this.getFacets().minExclusive) > 0;
+        return this.compare(item, this.getFacets().minExclusive.getItem()) > 0;
     }
 
     protected boolean validateMaxInclusive(Item item) {
-        return this.compare(item, this.getFacets().maxInclusive) <= 0;
+        return this.compare(item, this.getFacets().maxInclusive.getItem()) <= 0;
     }
 
     protected boolean validateMaxExclusive(Item item) {
-        return this.compare(item, this.getFacets().maxExclusive) < 0;
+        return this.compare(item, this.getFacets().maxExclusive.getItem()) < 0;
     }
 
     @Override
@@ -474,25 +475,25 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
 
     protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
         return facets.getDefinedFacets().contains(MIN_INCLUSIVE)
-            && compare(this.getFacets().minInclusive, facets.minInclusive) < 0;
+            && compare(this.getFacets().minInclusive.getItem(), facets.minInclusive.getItem()) < 0;
     }
 
     protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
         return facets.getDefinedFacets().contains(MIN_EXCLUSIVE)
             &&
-            compare(this.getFacets().minExclusive, facets.minExclusive) < 0;
+            compare(this.getFacets().minExclusive.getItem(), facets.minExclusive.getItem()) < 0;
     }
 
     protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
         return facets.getDefinedFacets().contains(MAX_INCLUSIVE)
             &&
-            compare(this.getFacets().maxInclusive, facets.maxInclusive) > 0;
+            compare(this.getFacets().maxInclusive.getItem(), facets.maxInclusive.getItem()) > 0;
     }
 
     protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
         return facets.getDefinedFacets().contains(MAX_EXCLUSIVE)
             &&
-            compare(this.getFacets().maxExclusive, facets.maxExclusive) > 0;
+            compare(this.getFacets().maxExclusive.getItem(), facets.maxExclusive.getItem()) > 0;
     }
 
     protected boolean isTotalDigitsMoreRestrictive(AtomicFacets facets) {

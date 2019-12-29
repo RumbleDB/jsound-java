@@ -58,13 +58,13 @@ public abstract class TypeDescriptor {
                 }
 
                 @Override
-                public boolean validate(Item item, boolean isEnumValue) {
+                public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
                     return true;
                 }
 
                 @Override
-                public TysonItem annotate(Item item) {
-                    return new TYSONValue(null, item);
+                public TysonItem annotate(ItemWrapper itemWrapper) {
+                    return new TYSONValue(null, itemWrapper.getItem());
                 }
 
                 @Override
@@ -176,9 +176,9 @@ public abstract class TypeDescriptor {
 
     protected abstract boolean hasCompatibleType(TypeDescriptor typeDescriptor);
 
-    public abstract boolean validate(Item item, boolean isEnumValue);
+    public abstract boolean validate(ItemWrapper itemWrapper, boolean isEnumValue);
 
-    public abstract TysonItem annotate(Item item);
+    public abstract TysonItem annotate(ItemWrapper itemWrapper);
 
     public void resolveAllFacets() {
     }
@@ -232,11 +232,11 @@ public abstract class TypeDescriptor {
     private void validateEnumerationValues() {
         if (this.enumerationIsValid)
             return;
-        for (Item enumItem : this.getFacets().getEnumeration()) {
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
             if (!this.validate(enumItem, true)) {
                 throw new InvalidEnumValueException(
                         "Value "
-                                + enumItem.getStringValue()
+                                + enumItem.getItem().getStringValue()
                                 + " in enumeration is not in the type value space for type "
                                 + this.getName()
                                 + "."
@@ -248,8 +248,8 @@ public abstract class TypeDescriptor {
 
     protected boolean isEnumerationMoreRestrictive(Facets facets) {
         if (facets.getDefinedFacets().contains(ENUMERATION)) {
-            for (Item item : this.getFacets().getEnumeration()) {
-                if (!facets.getEnumeration().contains(item))
+            for (ItemWrapper itemWrapper : this.getFacets().getEnumeration()) {
+                if (!facets.getEnumeration().contains(itemWrapper))
                     return false;
             }
         }
@@ -269,8 +269,8 @@ public abstract class TypeDescriptor {
     }
 
     protected boolean validateItemAgainstEnumeration(Item item) throws Exception {
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (item.equals(enumItem))
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
+            if (item.equals(enumItem.getItem()))
                 return true;
         }
         return false;

@@ -7,8 +7,8 @@ import jsound.exceptions.LessRestrictiveFacetException;
 import jsound.exceptions.RequiredSertBackToFalseException;
 import jsound.facets.FacetTypes;
 import jsound.facets.ObjectFacets;
-import org.api.Item;
 import jsound.item.ObjectItem;
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.types.ItemTypes;
@@ -60,10 +60,10 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
-        if (!item.isObjectItem())
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
+        if (!itemWrapper.getItem().isObjectItem())
             return false;
-        ObjectItem objectItem = (ObjectItem) item;
+        ObjectItem objectItem = (ObjectItem) itemWrapper.getItem();
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case CONTENT:
@@ -120,10 +120,10 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public TysonItem annotate(Item item) {
+    public TysonItem annotate(ItemWrapper itemWrapper) {
         ObjectItem objectItem;
         try {
-            objectItem = (ObjectItem) item;
+            objectItem = (ObjectItem) itemWrapper.getItem();
         } catch (ClassCastException e) {
             throw new InvalidSchemaException("Annotation not possible. An object is needed.");
         }
@@ -148,7 +148,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
 
         for (String key : objectItem.getItemMap().keySet()) {
             if (!this.getFacets().getObjectContent().containsKey(key))
-                object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key)));
+                object.put(key, new TYSONValue(null, objectItem.getItemMap().get(key).getItem()));
         }
         return object;
     }

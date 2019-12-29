@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.atomicItems.AnyURIItem;
@@ -30,24 +31,22 @@ public class AnyURIType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         URI uri;
         try {
-            uri = URI.create(item.getStringValue());
+            uri = URI.create(itemWrapper.getStringValue().replaceAll("\\s+",""));
         } catch (IllegalArgumentException e) {
             return false;
         }
-        if (this.getFacets() == null)
-            return true;
-        item = new AnyURIItem(uri);
-        return validateLengthFacets(item, isEnumValue);
+        itemWrapper.setItem(new AnyURIItem(itemWrapper.getStringValue(), uri));
+        return this.getFacets() == null || validateLengthFacets(itemWrapper.getItem(), isEnumValue);
     }
 
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) throws IllegalArgumentException {
         URI uri = item.getAnyURIValue();
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (uri.equals(URI.create(enumItem.getStringValue())))
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
+            if (uri.equals(URI.create(enumItem.getStringValue().replaceAll("\\s+",""))))
                 return true;
         }
         return false;

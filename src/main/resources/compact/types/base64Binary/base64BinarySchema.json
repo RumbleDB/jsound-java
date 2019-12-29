@@ -7,7 +7,7 @@
                 "myBase64Binary": "base64Binary",
                 "!requiredBase64Binary": "base64Binary",
                 "nullableBase64Binary?": "base64Binary",
-                "base64BinaryWithDefault": "base64Binary=abcdef",
+                "base64BinaryWithDefault": "base64Binary=abcd",
                 "!requiredBase64BinaryWithDefault": "base64Binary=abcdefgh",
                 "anotherBase64Binary": "base64BinaryType",
                 "@uniqueBase64Binary": "base64Binary"

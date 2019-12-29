@@ -2,18 +2,19 @@ package jsound.item;
 
 import jsound.tyson.TYSONObject;
 import org.api.Item;
+import org.api.ItemWrapper;
 
 import java.util.Map;
 
 public class ObjectItem extends Item {
-    private Map<String, Item> _itemMap;
+    private Map<String, ItemWrapper> _itemMap;
 
-    ObjectItem(Map<String, Item> itemMap) {
+    ObjectItem(Map<String, ItemWrapper> itemMap) {
         this._itemMap = itemMap;
     }
 
     @Override
-    public Map<String, Item> getItemMap() {
+    public Map<String, ItemWrapper> getItemMap() {
         return this._itemMap;
     }
 

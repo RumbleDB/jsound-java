@@ -5,9 +5,11 @@ import jsound.item.AtomicItem;
 import java.net.URI;
 
 public class AnyURIItem extends AtomicItem {
+    String _stringValue;
     URI _value;
 
-    public AnyURIItem(URI value) {
+    public AnyURIItem(String stringValue, URI value) {
+        this._stringValue = stringValue;
         this._value = value;
     }
 
@@ -18,6 +20,6 @@ public class AnyURIItem extends AtomicItem {
 
     @Override
     public String getStringValue() {
-        return this._value.toASCIIString();
+        return this._stringValue;
     }
 }

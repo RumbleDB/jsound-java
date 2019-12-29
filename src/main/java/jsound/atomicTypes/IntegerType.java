@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.atomicItems.IntegerItem;
@@ -41,20 +42,19 @@ public class IntegerType extends AtomicTypeDescriptor {
     }
 
     @Override
-    public boolean validate(Item item, boolean isEnumValue) {
+    public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         Integer integerValue;
         try {
-            if (item.isStringItem())
-                integerValue = Integer.parseInt(item.getStringValue());
+            if (itemWrapper.isStringItem())
+                integerValue = Integer.parseInt(itemWrapper.getStringValue());
             else
-                integerValue = item.getIntegerValue();
+                integerValue = itemWrapper.getIntegerValue();
         } catch (NumberFormatException e) {
             return false;
         }
-        if (this.getFacets() == null)
-            return true;
-        item = new IntegerItem(integerValue);
-        return validateBoundariesFacets(item, isEnumValue) && validateDigitsFacets(item);
+        itemWrapper.setItem(new IntegerItem(integerValue));
+        return this.getFacets() == null || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue) && validateDigitsFacets(
+                itemWrapper.getItem());
     }
 
     @Override
@@ -69,8 +69,8 @@ public class IntegerType extends AtomicTypeDescriptor {
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) {
         Integer integerValue = item.getIntegerValue();
-        for (Item enumItem : this.getFacets().getEnumeration()) {
-            if (integerValue.compareTo(getIntegerFromItem(enumItem)) == 0)
+        for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
+            if (integerValue.compareTo(getIntegerFromItem(enumItem.getItem())) == 0)
                 return true;
         }
         return false;

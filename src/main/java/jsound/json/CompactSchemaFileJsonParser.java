@@ -20,6 +20,8 @@ import jsound.typedescriptors.object.ObjectTypeDescriptor;
 import jsound.typedescriptors.union.UnionTypeDescriptor;
 import jsound.types.AtomicTypes;
 import jsound.item.ItemFactory;
+import org.api.Item;
+import org.api.ItemWrapper;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -116,13 +118,13 @@ public class CompactSchemaFileJsonParser {
                         );
                     } catch (JsoundException e) {
                         fieldDescriptor.setDefaultValue(
-                            ItemFactory.getInstance().createStringItem(defaultValue)
-                        );
+                            new ItemWrapper(ItemFactory.getInstance().createStringItem(defaultValue)
+                        ));
                     }
                 } else {
                     fieldDescriptor.setDefaultValue(
-                        ItemFactory.getInstance().createStringItem(defaultValue)
-                    );
+                        new ItemWrapper(ItemFactory.getInstance().createStringItem(defaultValue)
+                        ));
                 }
             }
             if (compactSchema.containsKey(fieldType))

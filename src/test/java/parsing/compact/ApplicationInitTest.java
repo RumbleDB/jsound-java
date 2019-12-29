@@ -5,6 +5,7 @@ import jsound.types.AtomicTypes;
 import jsound.typedescriptors.object.FieldDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import parsing.BaseTest;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -16,7 +17,7 @@ import static org.api.executors.JSoundExecutor.schema;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ApplicationInitTest {
+public class ApplicationInitTest extends BaseTest {
     static String filePath = "src/main/resources/compact/peopleFile.json";
     static String schemaPath = "src/main/resources/compact/peopleSchema.json";
     static String rootType = "directory";
@@ -26,7 +27,7 @@ public class ApplicationInitTest {
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        JSoundExecutor.initializeApplication(schemaPath, filePath, rootType, compact);
+        BaseTest.initializeApplication(schemaPath, filePath, rootType, compact);
         person = schema.get("person").getFacets().getObjectContent();
     }
 

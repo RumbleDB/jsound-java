@@ -28,7 +28,7 @@ public class HexBinaryItem extends AtomicItem {
 
     @Override
     public String getStringValue() {
-        return Arrays.toString(this._value);
+        return _stringValue;
     }
 
     @Override
