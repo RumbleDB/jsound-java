@@ -41,7 +41,7 @@ public class Base64BinaryTest extends BaseTest {
     }
 
     @Test
-    public void testbase64BinaryObj() {
+    public void testBase64BinaryObj() {
         assertTrue(base64BinaryObj.get("myBase64Binary").getTypeOrReference().getTypeDescriptor().isBase64BinaryType());
         assertTrue(
             base64BinaryObj.get("requiredBase64Binary").getTypeOrReference().getTypeDescriptor().isBase64BinaryType()

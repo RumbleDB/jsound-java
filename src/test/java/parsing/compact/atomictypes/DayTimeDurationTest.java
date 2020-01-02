@@ -41,7 +41,7 @@ public class DayTimeDurationTest extends BaseTest {
     }
 
     @Test
-    public void testdayTimeDurationObj() {
+    public void testDayTimeDurationObj() {
         assertTrue(dayTimeDurationObj.get("myDayTimeDuration").getTypeOrReference().getTypeDescriptor().isDayTimeDurationType());
         assertTrue(dayTimeDurationObj.get("requiredDayTimeDuration").getTypeOrReference().getTypeDescriptor().isDayTimeDurationType());
         assertTrue(dayTimeDurationObj.get("requiredDayTimeDuration").isRequired());
@@ -81,7 +81,7 @@ public class DayTimeDurationTest extends BaseTest {
     }
 
     @Test
-    public void testValidayTimeDuration() {
+    public void testValidate() {
         assertTrue(schemaItem.validate(fileItem, false));
     }
 

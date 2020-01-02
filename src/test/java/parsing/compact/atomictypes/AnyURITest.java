@@ -41,7 +41,7 @@ public class AnyURITest extends BaseTest {
     }
 
     @Test
-    public void testanyURIObj() {
+    public void testAnyURIObj() {
         assertTrue(anyURIObj.get("myAnyURI").getTypeOrReference().getTypeDescriptor().isAnyURIType());
         assertTrue(
                 anyURIObj.get("requiredAnyURI").getTypeOrReference().getTypeDescriptor().isAnyURIType()

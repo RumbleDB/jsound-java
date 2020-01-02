@@ -41,7 +41,7 @@ public class DoubleTest extends BaseTest {
     }
 
     @Test
-    public void testdoubleObj() {
+    public void testDoubleObj() {
         assertTrue(doubleObj.get("myDouble").getTypeOrReference().getTypeDescriptor().isDoubleType());
         assertTrue(doubleObj.get("requiredDouble").getTypeOrReference().getTypeDescriptor().isDoubleType());
         assertTrue(doubleObj.get("requiredDouble").isRequired());
@@ -81,7 +81,7 @@ public class DoubleTest extends BaseTest {
     }
 
     @Test
-    public void testValidouble() {
+    public void testValidate() {
         assertTrue(schemaItem.validate(fileItem, false));
     }
 

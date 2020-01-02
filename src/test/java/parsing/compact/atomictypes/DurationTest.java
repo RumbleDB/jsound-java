@@ -41,7 +41,7 @@ public class DurationTest extends BaseTest {
     }
 
     @Test
-    public void testdurationObj() {
+    public void testDurationObj() {
         assertTrue(durationObj.get("myDuration").getTypeOrReference().getTypeDescriptor().isDurationType());
         assertTrue(durationObj.get("requiredDuration").getTypeOrReference().getTypeDescriptor().isDurationType());
         assertTrue(durationObj.get("requiredDuration").isRequired());
@@ -81,7 +81,7 @@ public class DurationTest extends BaseTest {
     }
 
     @Test
-    public void testValiduration() {
+    public void testValidate() {
         assertTrue(schemaItem.validate(fileItem, false));
     }
 

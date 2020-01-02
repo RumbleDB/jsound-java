@@ -41,7 +41,7 @@ public class IntegerTest extends BaseTest {
     }
 
     @Test
-    public void testintegerObj() {
+    public void testIntegerObj() {
         assertTrue(integerObj.get("myInteger").getTypeOrReference().getTypeDescriptor().isIntegerType());
         assertTrue(integerObj.get("requiredInteger").getTypeOrReference().getTypeDescriptor().isIntegerType());
         assertTrue(integerObj.get("requiredInteger").isRequired());
@@ -81,7 +81,7 @@ public class IntegerTest extends BaseTest {
     }
 
     @Test
-    public void testValiinteger() {
+    public void testValidate() {
         assertTrue(schemaItem.validate(fileItem, false));
     }
 

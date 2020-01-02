@@ -41,7 +41,7 @@ public class TimeTest extends BaseTest {
     }
 
     @Test
-    public void testtimeObj() {
+    public void testTimeObj() {
         assertTrue(timeObj.get("myTime").getTypeOrReference().getTypeDescriptor().isTimeType());
         assertTrue(timeObj.get("requiredTime").getTypeOrReference().getTypeDescriptor().isTimeType());
         assertTrue(timeObj.get("requiredTime").isRequired());
@@ -81,7 +81,7 @@ public class TimeTest extends BaseTest {
     }
 
     @Test
-    public void testValitime() {
+    public void testValidate() {
         assertTrue(schemaItem.validate(fileItem, false));
     }
 

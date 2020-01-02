@@ -41,7 +41,7 @@ public class DecimalTest extends BaseTest {
     }
 
     @Test
-    public void testdecimalObj() {
+    public void testDecimalObj() {
         assertTrue(decimalObj.get("myDecimal").getTypeOrReference().getTypeDescriptor().isDecimalType());
         assertTrue(decimalObj.get("requiredDecimal").getTypeOrReference().getTypeDescriptor().isDecimalType());
         assertTrue(decimalObj.get("requiredDecimal").isRequired());
@@ -81,7 +81,7 @@ public class DecimalTest extends BaseTest {
     }
 
     @Test
-    public void testValidecimal() {
+    public void testValidate() {
         assertTrue(schemaItem.validate(fileItem, false));
     }
 

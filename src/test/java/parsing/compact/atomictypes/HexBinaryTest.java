@@ -41,7 +41,7 @@ public class HexBinaryTest extends BaseTest {
     }
 
     @Test
-    public void testhexBinaryObj() {
+    public void testHexBinaryObj() {
         assertTrue(hexBinaryObj.get("myHexBinary").getTypeOrReference().getTypeDescriptor().isHexBinaryType());
         assertTrue(hexBinaryObj.get("requiredHexBinary").getTypeOrReference().getTypeDescriptor().isHexBinaryType());
         assertTrue(hexBinaryObj.get("requiredHexBinary").isRequired());

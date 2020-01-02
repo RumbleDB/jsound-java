@@ -41,7 +41,7 @@ public class YearMonthDuration extends BaseTest {
     }
 
     @Test
-    public void testyearMonthDurationObj() {
+    public void testYearMonthDurationObj() {
         assertTrue(yearMonthDurationObj.get("myYearMonthDuration").getTypeOrReference().getTypeDescriptor().isYearMonthDurationType());
         assertTrue(yearMonthDurationObj.get("requiredYearMonthDuration").getTypeOrReference().getTypeDescriptor().isYearMonthDurationType());
         assertTrue(yearMonthDurationObj.get("requiredYearMonthDuration").isRequired());
@@ -81,7 +81,7 @@ public class YearMonthDuration extends BaseTest {
     }
 
     @Test
-    public void testValiyearMonthDuration() {
+    public void testValidate() {
         assertTrue(schemaItem.validate(fileItem, false));
     }
 

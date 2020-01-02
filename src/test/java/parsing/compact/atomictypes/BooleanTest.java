@@ -41,7 +41,7 @@ public class BooleanTest extends BaseTest {
     }
 
     @Test
-    public void testbooleanObj() {
+    public void testBooleanObj() {
         assertTrue(booleanObj.get("myBoolean").getTypeOrReference().getTypeDescriptor().isBooleanType());
         assertTrue(booleanObj.get("requiredBoolean").getTypeOrReference().getTypeDescriptor().isBooleanType());
         assertTrue(booleanObj.get("requiredBoolean").isRequired());

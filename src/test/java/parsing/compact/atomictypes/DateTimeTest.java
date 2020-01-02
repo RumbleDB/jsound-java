@@ -41,7 +41,7 @@ public class DateTimeTest extends BaseTest {
     }
 
     @Test
-    public void testdateTimeObj() {
+    public void testDateTimeObj() {
         assertTrue(dateTimeObj.get("myDateTime").getTypeOrReference().getTypeDescriptor().isDateTimeType());
         assertTrue(dateTimeObj.get("requiredDateTime").getTypeOrReference().getTypeDescriptor().isDateTimeType());
         assertTrue(dateTimeObj.get("requiredDateTime").isRequired());
