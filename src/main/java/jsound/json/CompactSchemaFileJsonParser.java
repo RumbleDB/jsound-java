@@ -57,7 +57,7 @@ public class CompactSchemaFileJsonParser {
         }
     }
 
-    public static TypeOrReference getTypeFromObject(String name) throws IOException {
+    public static TypeOrReference getTypeFromObject(String name) {
         try {
             switch (jsonSchemaIterator.whatIsNext()) {
                 case STRING:

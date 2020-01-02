@@ -26,7 +26,7 @@ public class NullType extends AtomicTypeDescriptor {
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         boolean result = itemWrapper.isNullItem() || (itemWrapper.isStringItem() && StringUtils.isNullLiteral(
                 itemWrapper.getStringValue()));
-        if (!itemWrapper.isNullItem())
+        if (result && !itemWrapper.isNullItem())
             itemWrapper.setItem(ItemFactory.getInstance().createNullItem());
         return result;
     }

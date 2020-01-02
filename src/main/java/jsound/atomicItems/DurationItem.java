@@ -6,9 +6,11 @@ import jsound.item.AtomicItem;
 
 public class DurationItem extends AtomicItem {
     Period _value;
+    boolean isNegative;
 
     public DurationItem(Period value) {
         this._value = value;
+        isNegative = this._value.toString().contains("-");
     }
 
     @Override
@@ -18,6 +20,9 @@ public class DurationItem extends AtomicItem {
 
     @Override
     public String getStringValue() {
+        if (this.isNegative) {
+            return '-' + this._value.negated().toString();
+        }
         return this._value.toString();
     }
 

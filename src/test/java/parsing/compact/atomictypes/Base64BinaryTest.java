@@ -1,4 +1,4 @@
-package parsing.compact.types;
+package parsing.compact.atomictypes;
 
 import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.tyson.TYSONArray;
@@ -20,8 +20,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class Base64BinaryTest extends BaseTest {
-    static String filePath = "src/main/resources/compact/types/base64Binary/base64BinaryFile.json";
-    static String schemaPath = "src/main/resources/compact/types/base64Binary/base64BinarySchema.json";
+    static String filePath = "src/main/resources/compact/atomictypes/base64Binary/base64BinaryFile.json";
+    static String schemaPath = "src/main/resources/compact/atomictypes/base64Binary/base64BinarySchema.json";
     static String rootType = "rootType";
     public static boolean compact = true;
 

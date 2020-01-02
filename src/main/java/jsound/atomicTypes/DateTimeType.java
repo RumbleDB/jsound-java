@@ -1,11 +1,11 @@
 package jsound.atomicTypes;
 
+import jsound.types.AtomicTypes;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import jsound.atomicItems.DateTimeItem;
 import jsound.facets.AtomicFacets;
@@ -40,13 +40,11 @@ public class DateTimeType extends AtomicTypeDescriptor {
 
     @Override
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
-        DateTime dateTime;
         try {
-            dateTime = getDateTimeFromItem(itemWrapper.getItem());
+            itemWrapper.setItem(getDateTimeFromItem(itemWrapper.getItem()));
         } catch (IllegalArgumentException e) {
             return false;
         }
-        itemWrapper.setItem(new DateTimeItem(dateTime));
         if (this.getFacets() == null)
             return true;
         if (!validateBoundariesFacets(itemWrapper.getItem(), isEnumValue))
@@ -55,15 +53,12 @@ public class DateTimeType extends AtomicTypeDescriptor {
             || checkExplicitTimezone(
                 itemWrapper.getItem(),
                 this.getFacets().explicitTimezone,
-                ISODateTimeFormat.dateTimeParser().withOffsetParsed()
+               AtomicTypes.DATETIME
             );
     }
 
-    static boolean checkExplicitTimezone(Item item, TimezoneFacet explicitTimezone, DateTimeFormatter formatter) {
-        DateTime dateTime = DateTime.parse(
-            item.getStringValue(),
-            formatter
-        );
+    static boolean checkExplicitTimezone(Item item, TimezoneFacet explicitTimezone, AtomicTypes type) {
+        DateTime dateTime = DateTimeItem.parseDateTime(item.getStringValue(), type);
         return ((!item.getStringValue().endsWith("Z") && dateTime.getZone() == DateTimeZone.getDefault())
             || !explicitTimezone.equals(TimezoneFacet.PROHIBITED))
             && ((item.getStringValue().endsWith("Z")
@@ -77,29 +72,27 @@ public class DateTimeType extends AtomicTypeDescriptor {
     }
 
     private int compareDateTime(Item dateTimeItem, Item constraintItem) {
-        return getDateTimeFromItem(dateTimeItem).compareTo(getDateTimeFromItem(constraintItem));
+        return getDateTimeFromItem(dateTimeItem).getDateTime().compareTo(getDateTimeFromItem(constraintItem).getDateTime());
     }
 
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) {
         DateTime dateTime = item.getDateTime();
         for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
-            if (dateTime.equals(getDateTimeFromItem(enumItem.getItem())))
+            if (dateTime.equals(getDateTimeFromItem(enumItem.getItem()).getDateTime()))
                 return true;
         }
         return false;
     }
 
-    private DateTime getDateTimeFromItem(Item item) {
+    private Item getDateTimeFromItem(Item item) {
         if (item.isDateTimeItem())
-            return item.getDateTime();
-        DateTime dateTime = DateTime.parse(
-            item.getStringValue(),
-            ISODateTimeFormat.dateTimeParser().withOffsetParsed()
-        );
-        if (!item.getStringValue().endsWith("Z") && dateTime.getZone() == DateTimeZone.getDefault())
-            return dateTime.withZoneRetainFields(DateTimeZone.UTC);
-        return dateTime;
+            return item;
+        DateTime dateTime = DateTimeItem.parseDateTime(item.getStringValue(), AtomicTypes.DATETIME);
+        if (!item.getStringValue().endsWith("Z") && dateTime.getZone() == DateTimeZone.getDefault()) {
+            return new DateTimeItem(dateTime.withZoneRetainFields(DateTimeZone.UTC), false);
+        }
+        return new DateTimeItem(dateTime, true);
     }
 
     @Override

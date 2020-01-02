@@ -244,11 +244,11 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         for (FacetTypes facetType : this.getFacets().getDefinedFacets()) {
             switch (facetType) {
                 case TOTAL_DIGITS:
-                    if (item.castToDecimalValue().precision() > this.getFacets().totalDigits)
+                    if (item.getDecimalValue().precision() > this.getFacets().totalDigits)
                         return false;
                     break;
                 case FRACTION_DIGITS:
-                    if (item.castToDecimalValue().scale() > this.getFacets().fractionDigits)
+                    if (item.getDecimalValue().scale() > this.getFacets().fractionDigits)
                         return false;
                     break;
                 default:

@@ -14,6 +14,11 @@ public class AnyURIItem extends AtomicItem {
     }
 
     @Override
+    public boolean isAnyURIItem() {
+        return true;
+    }
+
+    @Override
     public URI getAnyURIValue() {
         return _value;
     }

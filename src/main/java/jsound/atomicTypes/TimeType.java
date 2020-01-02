@@ -1,5 +1,8 @@
 package jsound.atomicTypes;
 
+import jsound.atomicItems.DateItem;
+import jsound.atomicItems.DateTimeItem;
+import jsound.types.AtomicTypes;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
@@ -38,13 +41,11 @@ public class TimeType extends AtomicTypeDescriptor {
 
     @Override
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
-        DateTime time;
         try {
-            time = getTimeFromItem(itemWrapper.getItem());
+            itemWrapper.setItem(getTimeFromItem(itemWrapper.getItem()));
         } catch (IllegalArgumentException e) {
             return false;
         }
-        itemWrapper.setItem(new TimeItem(time));
         if (this.getFacets() == null)
             return true;
         if (!validateBoundariesFacets(itemWrapper.getItem(), isEnumValue))
@@ -53,7 +54,7 @@ public class TimeType extends AtomicTypeDescriptor {
             || DateTimeType.checkExplicitTimezone(
                 itemWrapper.getItem(),
                 this.getFacets().explicitTimezone,
-                ISODateTimeFormat.timeParser().withOffsetParsed()
+                AtomicTypes.TIME
             );
     }
 
@@ -61,7 +62,7 @@ public class TimeType extends AtomicTypeDescriptor {
     protected boolean validateItemAgainstEnumeration(Item item) {
         DateTime time = item.getDateTime();
         for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
-            if (time.equals(getTimeFromItem(enumItem.getItem())))
+            if (time.equals(getTimeFromItem(enumItem.getItem()).getDateTime()))
                 return true;
         }
         return false;
@@ -73,19 +74,17 @@ public class TimeType extends AtomicTypeDescriptor {
     }
 
     private int compareTime(Item timeItem, Item constraintItem) {
-        return getTimeFromItem(timeItem).compareTo(getTimeFromItem(constraintItem));
+        return getTimeFromItem(timeItem).getDateTime().compareTo(getTimeFromItem(constraintItem).getDateTime());
     }
 
-    private DateTime getTimeFromItem(Item item) {
+    private Item getTimeFromItem(Item item) {
         if (item.isTimeItem())
-            return item.getDateTime();
-        DateTime time = DateTime.parse(
-            item.getStringValue(),
-            ISODateTimeFormat.timeParser().withOffsetParsed()
-        );
-        if (!item.getStringValue().endsWith("Z") && time.getZone() == DateTimeZone.getDefault())
-            return time.withZoneRetainFields(DateTimeZone.UTC);
-        return time;
+            return item;
+        DateTime time = DateTimeItem.parseDateTime(item.getStringValue(), AtomicTypes.TIME);
+        if (!item.getStringValue().endsWith("Z") && time.getZone() == DateTimeZone.getDefault()) {
+            return new TimeItem(time.withZoneRetainFields(DateTimeZone.UTC), false);
+        }
+        return new TimeItem(time, true);
     }
 
     @Override

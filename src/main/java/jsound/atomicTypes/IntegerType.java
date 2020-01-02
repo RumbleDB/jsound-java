@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import jsound.exceptions.UnexpectedTypeException;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
@@ -45,11 +46,8 @@ public class IntegerType extends AtomicTypeDescriptor {
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         Integer integerValue;
         try {
-            if (itemWrapper.isStringItem())
-                integerValue = Integer.parseInt(itemWrapper.getStringValue());
-            else
-                integerValue = itemWrapper.getIntegerValue();
-        } catch (NumberFormatException e) {
+            integerValue = getIntegerFromItem(itemWrapper.getItem());
+        } catch (NumberFormatException | UnexpectedTypeException e) {
             return false;
         }
         itemWrapper.setItem(new IntegerItem(integerValue));

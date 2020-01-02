@@ -13,7 +13,7 @@ public class NullItem extends AtomicItem {
 
     @Override
     public String getStringValue() {
-        return null;
+        return "null";
     }
 
     @Override

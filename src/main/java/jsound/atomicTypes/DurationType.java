@@ -5,6 +5,7 @@ import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import org.joda.time.Instant;
 import org.joda.time.Period;
+import org.joda.time.PeriodType;
 import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 import jsound.atomicItems.DurationItem;
@@ -73,7 +74,7 @@ public class DurationType extends AtomicTypeDescriptor {
     }
 
     protected DurationItem createDurationItem(Period period) {
-        return new DurationItem(period);
+        return new DurationItem(period.normalizedStandard(PeriodType.yearMonthDayTime()));
     }
 
     @Override

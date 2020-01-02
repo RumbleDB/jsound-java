@@ -24,12 +24,28 @@ public class ItemWrapper {
         this.item = item;
     }
 
+    public boolean isAnyURIItem() {
+        return this.item.isAnyURIItem();
+    }
+
     public boolean isStringItem() {
         return this.item.isStringItem();
     }
 
     public boolean isBooleanItem() {
         return this.item.isBooleanItem();
+    }
+
+    public boolean isIntegerItem() {
+        return item.isIntegerItem();
+    }
+
+    public boolean isDecimalItem() {
+        return item.isDecimalItem();
+    }
+
+    public boolean isDoubleItem() {
+        return item.isDoubleItem();
     }
 
     public boolean isDateTimeItem() {
@@ -46,6 +62,10 @@ public class ItemWrapper {
 
     public boolean isDurationItem() {
         return this.item.isDurationItem();
+    }
+
+    public boolean isDayTimeDurationItem() {
+        return item.isDayTimeDurationItem();
     }
 
     public boolean isBase64BinaryItem() {
@@ -71,10 +91,6 @@ public class ItemWrapper {
 
     public Integer getIntegerValue() {
         return this.item.getIntegerValue();
-    }
-
-    public BigDecimal castToDecimalValue() {
-        return this.item.castToDecimalValue();
     }
 
     public BigDecimal getDecimalValue() {
@@ -115,5 +131,9 @@ public class ItemWrapper {
 
     public String getStringAnnotation() {
         return this.item.getStringAnnotation();
+    }
+
+    public boolean isYearMonthDurationItem() {
+        return item.isYearMonthDurationItem();
     }
 }

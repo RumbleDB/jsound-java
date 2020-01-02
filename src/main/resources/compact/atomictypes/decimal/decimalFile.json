@@ -1,0 +1,36 @@
+{
+  "decimals": [
+    {
+      "requiredDecimal": 1.21,
+      "myDecimal": "2"
+    },
+    {
+      "requiredDecimal": 3.431321,
+      "nullableDecimal": null
+    },
+    {
+      "requiredDecimal": 4.456,
+      "nullableDecimal": "5.765"
+    },
+    {
+      "requiredDecimal": 6,
+      "decimalWithDefault": "7.65"
+    },
+    {
+      "requiredDecimal": 8.77,
+      "requiredDecimalWithDefault": 9.76537436
+    },
+    {
+      "requiredDecimal": 10,
+      "anotherDecimal": "11.4532"
+    },
+    {
+      "requiredDecimal": 12.4322,
+      "uniqueDecimal": "13.2"
+    },
+    {
+      "requiredDecimal": 9999.9999,
+      "uniqueDecimal": 13.1
+    }
+  ]
+}

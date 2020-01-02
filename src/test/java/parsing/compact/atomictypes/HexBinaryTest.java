@@ -1,4 +1,4 @@
-package parsing.compact.types;
+package parsing.compact.atomictypes;
 
 import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.tyson.TYSONArray;
@@ -20,8 +20,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class HexBinaryTest extends BaseTest {
-    static String filePath = "src/main/resources/compact/types/hexBinary/hexBinaryFile.json";
-    static String schemaPath = "src/main/resources/compact/types/hexBinary/hexBinarySchema.json";
+    static String filePath = "src/main/resources/compact/atomictypes/hexBinary/hexBinaryFile.json";
+    static String schemaPath = "src/main/resources/compact/atomictypes/hexBinary/hexBinarySchema.json";
     static String rootType = "rootType";
     public static boolean compact = true;
 

@@ -10,13 +10,27 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Item {
-    private Item _specificItem = this;
 
+    public boolean isAnyURIItem() {
+        return false;
+    }
     public boolean isStringItem() {
         return false;
     }
 
     public boolean isBooleanItem() {
+        return false;
+    }
+
+    public boolean isIntegerItem() {
+        return false;
+    }
+
+    public boolean isDecimalItem() {
+        return false;
+    }
+
+    public boolean isDoubleItem() {
         return false;
     }
 
@@ -33,6 +47,14 @@ public abstract class Item {
     }
 
     public boolean isDurationItem() {
+        return false;
+    }
+
+    public boolean isDayTimeDurationItem() {
+        return false;
+    }
+
+    public boolean isYearMonthDurationItem() {
         return false;
     }
 
@@ -56,20 +78,8 @@ public abstract class Item {
         return false;
     }
 
-    public void setItem(Item item) {
-        this._specificItem = item;
-    }
-
-    public Item getItem() {
-        return _specificItem;
-    }
-
     public Integer getIntegerValue() {
         throw new UnexpectedTypeException(this.getStringValue() + " does not have an integer.");
-    }
-
-    public BigDecimal castToDecimalValue() {
-        throw new UnexpectedTypeException(this.getStringValue() + " cannot be cast to decimal.");
     }
 
     public BigDecimal getDecimalValue() {

@@ -1,0 +1,32 @@
+{
+  "nulls": [
+    {
+      "requiredNull": null,
+      "myNull": "null"
+    },
+    {
+      "requiredNull": null,
+      "nullableNull": null
+    },
+    {
+      "requiredNull": null,
+      "nullableNull": "null"
+    },
+    {
+      "requiredNull": null,
+      "nullWithDefault": "null"
+    },
+    {
+      "requiredNull": null,
+      "requiredNullWithDefault": null
+    },
+    {
+      "requiredNull": null,
+      "anotherNull": "null"
+    },
+    {
+      "requiredNull": null,
+      "uniqueNull": "null"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "times": [
+    {
+      "requiredTime": "23:12:12",
+      "myTime": "00:00:00"
+    },
+    {
+      "requiredTime": "13:20:00Z",
+      "nullableTime": null
+    },
+    {
+      "requiredTime": "13:20:00-05:00",
+      "nullableTime": "12:11:34+14:00"
+    },
+    {
+      "requiredTime": "19:45:01.011",
+      "timeWithDefault": "20:20:28"
+    },
+    {
+      "requiredTime": "20:20:02.29Z",
+      "requiredTimeWithDefault": "20:01:12.16"
+    },
+    {
+      "requiredTime": "21:12:13+02:00",
+      "anotherTime": "24:00:00"
+    },
+    {
+      "requiredTime": "03:01:10Z",
+      "uniqueTime": "20:11:10-05:00"
+    },
+    {
+      "requiredTime": "21:12:12-14:00",
+      "uniqueTime": "13:22:11.3013Z"
+    }
+  ]
+}

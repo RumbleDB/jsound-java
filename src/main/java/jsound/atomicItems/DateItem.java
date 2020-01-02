@@ -2,12 +2,15 @@ package jsound.atomicItems;
 
 import org.joda.time.DateTime;
 import jsound.item.AtomicItem;
+import org.joda.time.DateTimeZone;
 
 public class DateItem extends AtomicItem {
     DateTime _value;
+    boolean _hasTimeZone;
 
-    public DateItem(DateTime value) {
+    public DateItem(DateTime value, boolean hasTimeZone) {
         this._value = value;
+        this._hasTimeZone = hasTimeZone;
     }
 
     @Override
@@ -17,7 +20,10 @@ public class DateItem extends AtomicItem {
 
     @Override
     public String getStringValue() {
-        return this._value.toString();
+        String value = this._value.toString();
+        String zone = this._value.getZone() == DateTimeZone.UTC ? "Z" : this._value.getZone().toString();
+        int dateTimeSeparatorIndex = value.indexOf("T");
+        return value.substring(0, dateTimeSeparatorIndex) + (_hasTimeZone ? zone : "");
     }
 
     @Override

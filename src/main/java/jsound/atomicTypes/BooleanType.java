@@ -26,7 +26,7 @@ public class BooleanType extends AtomicTypeDescriptor {
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         boolean result = itemWrapper.isBooleanItem() || (itemWrapper.isStringItem() && StringUtils.isBooleanLiteral(
                 itemWrapper.getStringValue()));
-        if (!itemWrapper.isBooleanItem())
+        if (result && !itemWrapper.isBooleanItem())
             itemWrapper.setItem(ItemFactory.getInstance().createBooleanItem(Boolean.parseBoolean(itemWrapper.getStringValue())));
         return result;
     }

@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import jsound.exceptions.UnexpectedTypeException;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
@@ -36,11 +37,8 @@ public class DoubleType extends AtomicTypeDescriptor {
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         Double doubleValue;
         try {
-            if (itemWrapper.isStringItem())
-                doubleValue = Double.parseDouble(itemWrapper.getStringValue());
-            else
-                doubleValue = itemWrapper.getDoubleValue();
-        } catch (NumberFormatException e) {
+            doubleValue = getDoubleFromItem(itemWrapper.getItem());
+        } catch (NumberFormatException | UnexpectedTypeException e) {
             return false;
         }
         itemWrapper.setItem(new DoubleItem(doubleValue));

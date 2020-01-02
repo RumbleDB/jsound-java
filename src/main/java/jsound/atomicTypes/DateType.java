@@ -1,5 +1,7 @@
 package jsound.atomicTypes;
 
+import jsound.atomicItems.DateTimeItem;
+import jsound.types.AtomicTypes;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
@@ -27,14 +29,6 @@ import static jsound.facets.FacetTypes.MIN_INCLUSIVE;
 
 public class DateType extends AtomicTypeDescriptor {
 
-    private static final DateTimeParser dtParser = new DateTimeFormatterBuilder().appendOptional(
-        ((new DateTimeFormatterBuilder()).appendTimeZoneOffset("Z", true, 2, 4).toFormatter()).getParser()
-    ).toParser();
-    private static final DateTimeFormatter _formatter = new DateTimeFormatterBuilder().append(dateElementParser())
-        .appendOptional(dtParser)
-        .toFormatter()
-        .withOffsetParsed();
-
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
             Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE, EXPLICIT_TIMEZONE)
     );
@@ -49,26 +43,24 @@ public class DateType extends AtomicTypeDescriptor {
 
     @Override
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
-        DateTime date;
         try {
-            date = getDateFromItem(itemWrapper.getItem());
+            itemWrapper.setItem(getDateFromItem(itemWrapper.getItem()));
         } catch (IllegalArgumentException e) {
             return false;
         }
-        itemWrapper.setItem(new DateItem(date));
         if (this.getFacets() == null)
             return true;
         if (!validateBoundariesFacets(itemWrapper.getItem(), isEnumValue))
             return false;
         return !this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE)
-            || DateTimeType.checkExplicitTimezone(itemWrapper.getItem(), this.getFacets().explicitTimezone, _formatter);
+            || DateTimeType.checkExplicitTimezone(itemWrapper.getItem(), this.getFacets().explicitTimezone, AtomicTypes.DATE);
     }
 
     @Override
     protected boolean validateItemAgainstEnumeration(Item item) {
         DateTime date = item.getDateTime();
         for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
-            if (date.equals(getDateFromItem(enumItem.getItem())))
+            if (date.equals(getDateFromItem(enumItem.getItem()).getDateTime()))
                 return true;
         }
         return false;
@@ -80,19 +72,17 @@ public class DateType extends AtomicTypeDescriptor {
     }
 
     private int compareDate(Item dateItem, Item constraintItem) {
-        return getDateFromItem(dateItem).compareTo(getDateFromItem(constraintItem));
+        return getDateFromItem(dateItem).getDateTime().compareTo(getDateFromItem(constraintItem).getDateTime());
     }
 
-    private DateTime getDateFromItem(Item item) {
+    private Item getDateFromItem(Item item) {
         if (item.isDateItem())
-            return item.getDateTime();
-        DateTime date = DateTime.parse(
-            item.getStringValue(),
-            _formatter
-        );
-        if (!item.getStringValue().endsWith("Z") && date.getZone() == DateTimeZone.getDefault())
-            return date.withZoneRetainFields(DateTimeZone.UTC);
-        return date;
+            return item;
+        DateTime date = DateTimeItem.parseDateTime(item.getStringValue(), AtomicTypes.DATE);
+        if (!item.getStringValue().endsWith("Z") && date.getZone() == DateTimeZone.getDefault()) {
+            return new DateItem(date.withZoneRetainFields(DateTimeZone.UTC), false);
+        }
+        return new DateItem(date, true);
     }
 
     @Override

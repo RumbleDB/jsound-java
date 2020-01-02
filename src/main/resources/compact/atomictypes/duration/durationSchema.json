@@ -1,0 +1,18 @@
+{
+  "rootType" : {
+    "durations": "arrayOfDurations"
+  },
+  "durationType": "duration",
+  "durationObj" : {
+    "myDuration": "duration",
+    "!requiredDuration": "duration",
+    "nullableDuration?": "duration",
+    "durationWithDefault": "duration=P9Y2M",
+    "!requiredDurationWithDefault": "duration=P1Y7MT5M30S",
+    "anotherDuration": "durationType",
+    "@uniqueDuration": "duration"
+  },
+  "arrayOfDurations": [
+    "durationObj"
+  ]
+}

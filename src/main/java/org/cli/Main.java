@@ -41,6 +41,7 @@ public class Main {
                     System.out.println(
                         "Annotation failed ❌ : could not annotate the file with the provided the schema."
                     );
+                    System.out.println(e.getErrorCode() + ": " + e.getErrorMessage());
                 }
             } else
                 System.out.println("Please specify if you want to validate or annotate the file against the schema");

@@ -13,18 +13,23 @@ public class IntegerItem extends AtomicItem {
     }
 
     @Override
+    public boolean isIntegerItem() {
+        return true;
+    }
+
+    @Override
     public Integer getIntegerValue() {
         return _value;
     }
 
     @Override
     public BigDecimal getDecimalValue() {
-        return new BigDecimal(this._value);
+        return BigDecimal.valueOf(this._value);
     }
 
     @Override
-    public BigDecimal castToDecimalValue() {
-        return BigDecimal.valueOf(this._value);
+    public Double getDoubleValue() {
+        return _value.doubleValue();
     }
 
     @Override

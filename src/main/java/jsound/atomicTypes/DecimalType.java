@@ -1,5 +1,6 @@
 package jsound.atomicTypes;
 
+import jsound.exceptions.UnexpectedTypeException;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
@@ -46,11 +47,8 @@ public class DecimalType extends AtomicTypeDescriptor {
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         BigDecimal decimalValue;
         try {
-            if (itemWrapper.isStringItem())
-                decimalValue = new BigDecimal(itemWrapper.getStringValue());
-            else
-                decimalValue = itemWrapper.getDecimalValue();
-        } catch (NumberFormatException e) {
+            decimalValue = getDecimalFromItem(itemWrapper.getItem());
+        } catch (NumberFormatException | UnexpectedTypeException e) {
             return false;
         }
         itemWrapper.setItem(new DecimalItem(decimalValue));

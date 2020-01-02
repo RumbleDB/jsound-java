@@ -1,0 +1,36 @@
+{
+  "doubles": [
+    {
+      "requiredDouble": 3.32e4,
+      "myDouble": "2"
+    },
+    {
+      "requiredDouble": 3e1,
+      "nullableDouble": null
+    },
+    {
+      "requiredDouble": 4E6,
+      "nullableDouble": "5.3E3"
+    },
+    {
+      "requiredDouble": 6,
+      "doubleWithDefault": "7.23112E2"
+    },
+    {
+      "requiredDouble": 8.212e2,
+      "requiredDoubleWithDefault": 91e1
+    },
+    {
+      "requiredDouble": 10.431e5,
+      "anotherDouble": "11.45323"
+    },
+    {
+      "requiredDouble": 12.4343222e4,
+      "uniqueDouble": "13e2"
+    },
+    {
+      "requiredDouble": 99e2,
+      "uniqueDouble": 11
+    }
+  ]
+}

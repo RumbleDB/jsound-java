@@ -1,0 +1,36 @@
+{
+  "integers": [
+    {
+      "requiredInteger": 1,
+      "myInteger": "2"
+    },
+    {
+      "requiredInteger": 3,
+      "nullableInteger": null
+    },
+    {
+      "requiredInteger": 4,
+      "nullableInteger": "5"
+    },
+    {
+      "requiredInteger": 6,
+      "integerWithDefault": "7"
+    },
+    {
+      "requiredInteger": 8,
+      "requiredIntegerWithDefault": 9
+    },
+    {
+      "requiredInteger": 10,
+      "anotherInteger": "11"
+    },
+    {
+      "requiredInteger": 12,
+      "uniqueInteger": "13"
+    },
+    {
+      "requiredInteger": 99999999,
+      "uniqueInteger": 0
+    }
+  ]
+}

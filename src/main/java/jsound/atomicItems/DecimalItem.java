@@ -13,18 +13,27 @@ public class DecimalItem extends AtomicItem {
     }
 
     @Override
+    public boolean isDecimalItem() {
+        return true;
+    }
+
+    @Override
+    public Integer getIntegerValue() {
+        return this._value.intValue();
+    }
+
+    @Override
     public BigDecimal getDecimalValue() {
         return _value;
     }
 
-    @Override
-    public BigDecimal castToDecimalValue() {
-        return _value;
+    @Override public Double getDoubleValue() {
+        return this._value.doubleValue();
     }
 
     @Override
     public String getStringValue() {
-        return this._value.toString();
+        return String.valueOf(_value.stripTrailingZeros().toPlainString());
     }
 
     @Override
