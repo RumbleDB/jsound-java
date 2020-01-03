@@ -50,4 +50,21 @@ public class ObjectItem extends Item {
         }
         return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ObjectItem))
+            return false;
+        ObjectItem objectItem = (ObjectItem) obj;
+        if (this._itemMap.size() != objectItem._itemMap.size())
+            return false;
+        for (String key : _itemMap.keySet()) {
+            if (
+                !objectItem._itemMap.containsKey(key)
+                    || !objectItem._itemMap.get(key).getItem().equals(_itemMap.get(key).getItem())
+            )
+                return false;
+        }
+        return true;
+    }
 }

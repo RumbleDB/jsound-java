@@ -47,36 +47,42 @@ public class DateTimeTest extends BaseTest {
         assertTrue(dateTimeObj.get("requiredDateTime").isRequired());
         assertTrue(dateTimeObj.get("nullableDateTime").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                dateTimeObj.get("nullableDateTime")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isDateTimeType()
+            dateTimeObj.get("nullableDateTime")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isDateTimeType()
         );
         assertTrue(
-                dateTimeObj.get("nullableDateTime")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            dateTimeObj.get("nullableDateTime")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(dateTimeObj.get("dateTimeWithDefault").getTypeOrReference().getTypeDescriptor().isDateTimeType());
         assertTrue(dateTimeObj.get("dateTimeWithDefault").getDefaultValue().isDateTimeItem());
-        assertEquals("2001-12-12T12:00:00-12:00", dateTimeObj.get("dateTimeWithDefault").getDefaultValue().getStringValue());
+        assertEquals(
+            "2001-12-12T12:00:00-12:00",
+            dateTimeObj.get("dateTimeWithDefault").getDefaultValue().getStringValue()
+        );
         assertTrue(
-                dateTimeObj.get("requiredDateTimeWithDefault").getTypeOrReference().getTypeDescriptor().isDateTimeType()
+            dateTimeObj.get("requiredDateTimeWithDefault").getTypeOrReference().getTypeDescriptor().isDateTimeType()
         );
         assertTrue(dateTimeObj.get("requiredDateTimeWithDefault").isRequired());
         assertTrue(dateTimeObj.get("requiredDateTimeWithDefault").getDefaultValue().isDateTimeItem());
-        assertEquals("2004-04-12T13:20:00Z", dateTimeObj.get("requiredDateTimeWithDefault").getDefaultValue().getStringValue());
+        assertEquals(
+            "2004-04-12T13:20:00Z",
+            dateTimeObj.get("requiredDateTimeWithDefault").getDefaultValue().getStringValue()
+        );
         assertTrue(dateTimeObj.get("uniqueDateTime").isUnique());
     }
 
@@ -108,29 +114,29 @@ public class DateTimeTest extends BaseTest {
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDateTime"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDateTime"))).getItemValue().isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDateTime"))).getItemValue().isDateTimeItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDateTime"))).getItemValue().isDateTimeItem()
         );
         assertEquals(
-                "2001-12-12T23:00:00",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("dateTimeWithDefault"))).getItemValue()
-                        .getStringValue()
+            "2001-12-12T23:00:00",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("dateTimeWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "2001-12-13T00:00:00",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDateTimeWithDefault"))).getItemValue()
-                        .getStringValue()
+            "2001-12-13T00:00:00",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDateTimeWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "dateTimeType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDateTime"))).getTypeName()
+            "dateTimeType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDateTime"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDateTime"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDateTime"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDateTime"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDateTime"))).getItemValue()
         );
 
     }

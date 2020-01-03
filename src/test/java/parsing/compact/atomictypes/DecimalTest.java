@@ -47,32 +47,32 @@ public class DecimalTest extends BaseTest {
         assertTrue(decimalObj.get("requiredDecimal").isRequired());
         assertTrue(decimalObj.get("nullableDecimal").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                decimalObj.get("nullableDecimal")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isDecimalType()
+            decimalObj.get("nullableDecimal")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isDecimalType()
         );
         assertTrue(
-                decimalObj.get("nullableDecimal")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            decimalObj.get("nullableDecimal")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(decimalObj.get("decimalWithDefault").getTypeOrReference().getTypeDescriptor().isDecimalType());
         assertTrue(decimalObj.get("decimalWithDefault").getDefaultValue().isDecimalItem());
         assertEquals("42.21", decimalObj.get("decimalWithDefault").getDefaultValue().getStringValue());
         assertTrue(
-                decimalObj.get("requiredDecimalWithDefault").getTypeOrReference().getTypeDescriptor().isDecimalType()
+            decimalObj.get("requiredDecimalWithDefault").getTypeOrReference().getTypeDescriptor().isDecimalType()
         );
         assertTrue(decimalObj.get("requiredDecimalWithDefault").isRequired());
         assertTrue(decimalObj.get("requiredDecimalWithDefault").getDefaultValue().isDecimalItem());
@@ -108,29 +108,29 @@ public class DecimalTest extends BaseTest {
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDecimal"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDecimal"))).getItemValue().isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDecimal"))).getItemValue().isDecimalItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDecimal"))).getItemValue().isDecimalItem()
         );
         assertEquals(
-                "7.65",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("decimalWithDefault"))).getItemValue()
-                        .getStringValue()
+            "7.65",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("decimalWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "9.76537436",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDecimalWithDefault"))).getItemValue()
-                        .getStringValue()
+            "9.76537436",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDecimalWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "decimalType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDecimal"))).getTypeName()
+            "decimalType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDecimal"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDecimal"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDecimal"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDecimal"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDecimal"))).getItemValue()
         );
 
     }

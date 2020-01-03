@@ -44,48 +44,48 @@ public class AnyURITest extends BaseTest {
     public void testAnyURIObj() {
         assertTrue(anyURIObj.get("myAnyURI").getTypeOrReference().getTypeDescriptor().isAnyURIType());
         assertTrue(
-                anyURIObj.get("requiredAnyURI").getTypeOrReference().getTypeDescriptor().isAnyURIType()
+            anyURIObj.get("requiredAnyURI").getTypeOrReference().getTypeDescriptor().isAnyURIType()
         );
         assertTrue(anyURIObj.get("requiredAnyURI").isRequired());
         assertTrue(anyURIObj.get("nullableAnyURI").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                anyURIObj.get("nullableAnyURI")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isAnyURIType()
+            anyURIObj.get("nullableAnyURI")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isAnyURIType()
         );
         assertTrue(
-                anyURIObj.get("nullableAnyURI")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            anyURIObj.get("nullableAnyURI")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(
-                anyURIObj.get("anyURIWithDefault").getTypeOrReference().getTypeDescriptor().isAnyURIType()
+            anyURIObj.get("anyURIWithDefault").getTypeOrReference().getTypeDescriptor().isAnyURIType()
         );
         assertTrue(anyURIObj.get("anyURIWithDefault").getDefaultValue().isAnyURIItem());
         assertEquals("http://gitlab.com", anyURIObj.get("anyURIWithDefault").getDefaultValue().getStringValue());
         assertTrue(
-                anyURIObj.get("requiredAnyURIWithDefault")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .isAnyURIType()
+            anyURIObj.get("requiredAnyURIWithDefault")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .isAnyURIType()
         );
         assertTrue(anyURIObj.get("requiredAnyURIWithDefault").isRequired());
         assertTrue(anyURIObj.get("requiredAnyURIWithDefault").getDefaultValue().isAnyURIItem());
         assertEquals(
-                "../prod.html",
-                anyURIObj.get("requiredAnyURIWithDefault").getDefaultValue().getStringValue()
+            "../prod.html",
+            anyURIObj.get("requiredAnyURIWithDefault").getDefaultValue().getStringValue()
         );
         assertTrue(anyURIObj.get("uniqueAnyURI").isUnique());
     }
@@ -118,29 +118,29 @@ public class AnyURITest extends BaseTest {
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableAnyURI"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableAnyURI"))).getItemValue().isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableAnyURI"))).getItemValue().isAnyURIItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableAnyURI"))).getItemValue().isAnyURIItem()
         );
         assertEquals(
-                "urn:example:org",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("anyURIWithDefault"))).getItemValue()
-                        .getStringValue()
+            "urn:example:org",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("anyURIWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "https://www.w3.org/TR/xquery-30/#id-expressions-on-datatypes",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredAnyURIWithDefault"))).getItemValue()
-                        .getStringValue()
+            "https://www.w3.org/TR/xquery-30/#id-expressions-on-datatypes",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredAnyURIWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "anyURIType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherAnyURI"))).getTypeName()
+            "anyURIType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherAnyURI"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueAnyURI"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueAnyURI"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueAnyURI"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueAnyURI"))).getItemValue()
         );
 
     }

@@ -42,41 +42,71 @@ public class YearMonthDuration extends BaseTest {
 
     @Test
     public void testYearMonthDurationObj() {
-        assertTrue(yearMonthDurationObj.get("myYearMonthDuration").getTypeOrReference().getTypeDescriptor().isYearMonthDurationType());
-        assertTrue(yearMonthDurationObj.get("requiredYearMonthDuration").getTypeOrReference().getTypeDescriptor().isYearMonthDurationType());
+        assertTrue(
+            yearMonthDurationObj.get("myYearMonthDuration")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .isYearMonthDurationType()
+        );
+        assertTrue(
+            yearMonthDurationObj.get("requiredYearMonthDuration")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .isYearMonthDurationType()
+        );
         assertTrue(yearMonthDurationObj.get("requiredYearMonthDuration").isRequired());
-        assertTrue(yearMonthDurationObj.get("nullableYearMonthDuration").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                yearMonthDurationObj.get("nullableYearMonthDuration")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isYearMonthDurationType()
+            yearMonthDurationObj.get("nullableYearMonthDuration").getTypeOrReference().getTypeDescriptor().isUnionType()
         );
         assertTrue(
-                yearMonthDurationObj.get("nullableYearMonthDuration")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            yearMonthDurationObj.get("nullableYearMonthDuration")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isYearMonthDurationType()
         );
-        assertTrue(yearMonthDurationObj.get("yearMonthDurationWithDefault").getTypeOrReference().getTypeDescriptor().isYearMonthDurationType());
-        assertTrue(yearMonthDurationObj.get("yearMonthDurationWithDefault").getDefaultValue().isYearMonthDurationItem());
-        assertEquals("P2Y4M", yearMonthDurationObj.get("yearMonthDurationWithDefault").getDefaultValue().getStringValue());
         assertTrue(
-                yearMonthDurationObj.get("requiredYearMonthDurationWithDefault").getTypeOrReference().getTypeDescriptor().isYearMonthDurationType()
+            yearMonthDurationObj.get("nullableYearMonthDuration")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
+        );
+        assertTrue(
+            yearMonthDurationObj.get("yearMonthDurationWithDefault")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .isYearMonthDurationType()
+        );
+        assertTrue(
+            yearMonthDurationObj.get("yearMonthDurationWithDefault").getDefaultValue().isYearMonthDurationItem()
+        );
+        assertEquals(
+            "P2Y4M",
+            yearMonthDurationObj.get("yearMonthDurationWithDefault").getDefaultValue().getStringValue()
+        );
+        assertTrue(
+            yearMonthDurationObj.get("requiredYearMonthDurationWithDefault")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .isYearMonthDurationType()
         );
         assertTrue(yearMonthDurationObj.get("requiredYearMonthDurationWithDefault").isRequired());
-        assertTrue(yearMonthDurationObj.get("requiredYearMonthDurationWithDefault").getDefaultValue().isYearMonthDurationItem());
-        assertEquals("P10Y3M", yearMonthDurationObj.get("requiredYearMonthDurationWithDefault").getDefaultValue().getStringValue());
+        assertTrue(
+            yearMonthDurationObj.get("requiredYearMonthDurationWithDefault").getDefaultValue().isYearMonthDurationItem()
+        );
+        assertEquals(
+            "P10Y3M",
+            yearMonthDurationObj.get("requiredYearMonthDurationWithDefault").getDefaultValue().getStringValue()
+        );
         assertTrue(yearMonthDurationObj.get("uniqueYearMonthDuration").isUnique());
     }
 
@@ -100,37 +130,48 @@ public class YearMonthDuration extends BaseTest {
 
             assertTrue(object.containsKey("yearMonthDurationWithDefault"));
             assertEquals("yearMonthDuration", ((TYSONValue) object.get("yearMonthDurationWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) object.get("yearMonthDurationWithDefault")).getItemValue().isYearMonthDurationItem());
+            assertTrue(
+                ((TYSONValue) object.get("yearMonthDurationWithDefault")).getItemValue().isYearMonthDurationItem()
+            );
 
             assertTrue(object.containsKey("requiredYearMonthDurationWithDefault"));
-            assertEquals("yearMonthDuration", ((TYSONValue) object.get("requiredYearMonthDurationWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) object.get("requiredYearMonthDurationWithDefault")).getItemValue().isYearMonthDurationItem());
+            assertEquals(
+                "yearMonthDuration",
+                ((TYSONValue) object.get("requiredYearMonthDurationWithDefault")).getTypeName()
+            );
+            assertTrue(
+                ((TYSONValue) object.get("requiredYearMonthDurationWithDefault")).getItemValue()
+                    .isYearMonthDurationItem()
+            );
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableYearMonthDuration"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableYearMonthDuration"))).getItemValue()
+                .isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableYearMonthDuration"))).getItemValue().isYearMonthDurationItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableYearMonthDuration"))).getItemValue()
+                .isYearMonthDurationItem()
         );
         assertEquals(
-                "-P5Y",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("yearMonthDurationWithDefault"))).getItemValue()
-                        .getStringValue()
+            "-P5Y",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("yearMonthDurationWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "-P1M",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredYearMonthDurationWithDefault"))).getItemValue()
-                        .getStringValue()
+            "-P1M",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredYearMonthDurationWithDefault")))
+                .getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "yearMonthDurationType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherYearMonthDuration"))).getTypeName()
+            "yearMonthDurationType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherYearMonthDuration"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueYearMonthDuration"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueYearMonthDuration"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueYearMonthDuration"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueYearMonthDuration"))).getItemValue()
         );
 
     }

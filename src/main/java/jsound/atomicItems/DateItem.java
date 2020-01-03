@@ -30,4 +30,9 @@ public class DateItem extends AtomicItem {
     public boolean isDateItem() {
         return true;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof DateItem && this._value.isEqual(((DateItem) obj).getDateTime());
+    }
 }

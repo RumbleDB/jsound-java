@@ -47,32 +47,32 @@ public class DoubleTest extends BaseTest {
         assertTrue(doubleObj.get("requiredDouble").isRequired());
         assertTrue(doubleObj.get("nullableDouble").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                doubleObj.get("nullableDouble")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isDoubleType()
+            doubleObj.get("nullableDouble")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isDoubleType()
         );
         assertTrue(
-                doubleObj.get("nullableDouble")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            doubleObj.get("nullableDouble")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(doubleObj.get("doubleWithDefault").getTypeOrReference().getTypeDescriptor().isDoubleType());
         assertTrue(doubleObj.get("doubleWithDefault").getDefaultValue().isDoubleItem());
         assertEquals("420", doubleObj.get("doubleWithDefault").getDefaultValue().getStringValue());
         assertTrue(
-                doubleObj.get("requiredDoubleWithDefault").getTypeOrReference().getTypeDescriptor().isDoubleType()
+            doubleObj.get("requiredDoubleWithDefault").getTypeOrReference().getTypeDescriptor().isDoubleType()
         );
         assertTrue(doubleObj.get("requiredDoubleWithDefault").isRequired());
         assertTrue(doubleObj.get("requiredDoubleWithDefault").getDefaultValue().isDoubleItem());
@@ -108,29 +108,29 @@ public class DoubleTest extends BaseTest {
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDouble"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDouble"))).getItemValue().isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDouble"))).getItemValue().isDoubleItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDouble"))).getItemValue().isDoubleItem()
         );
         assertEquals(
-                "723.112",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("doubleWithDefault"))).getItemValue()
-                        .getStringValue()
+            "723.112",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("doubleWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "910",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDoubleWithDefault"))).getItemValue()
-                        .getStringValue()
+            "910",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDoubleWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "doubleType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDouble"))).getTypeName()
+            "doubleType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDouble"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDouble"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDouble"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDouble"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDouble"))).getItemValue()
         );
 
     }

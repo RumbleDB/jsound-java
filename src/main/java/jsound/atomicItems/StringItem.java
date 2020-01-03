@@ -27,9 +27,7 @@ public class StringItem extends AtomicItem {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof StringItem))
-            return false;
-        return this._value.equals(((StringItem) o)._value);
+    public boolean equals(Object obj) {
+        return obj instanceof StringItem && this._value.equals(((StringItem) obj)._value);
     }
 }

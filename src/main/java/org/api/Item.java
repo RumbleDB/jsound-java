@@ -14,6 +14,7 @@ public abstract class Item {
     public boolean isAnyURIItem() {
         return false;
     }
+
     public boolean isStringItem() {
         return false;
     }

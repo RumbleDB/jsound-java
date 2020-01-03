@@ -47,32 +47,32 @@ public class BooleanTest extends BaseTest {
         assertTrue(booleanObj.get("requiredBoolean").isRequired());
         assertTrue(booleanObj.get("nullableBoolean").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                booleanObj.get("nullableBoolean")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isBooleanType()
+            booleanObj.get("nullableBoolean")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isBooleanType()
         );
         assertTrue(
-                booleanObj.get("nullableBoolean")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            booleanObj.get("nullableBoolean")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(booleanObj.get("booleanWithDefault").getTypeOrReference().getTypeDescriptor().isBooleanType());
         assertTrue(booleanObj.get("booleanWithDefault").getDefaultValue().isBooleanItem());
         assertEquals("true", booleanObj.get("booleanWithDefault").getDefaultValue().getStringValue());
         assertTrue(
-                booleanObj.get("requiredBooleanWithDefault").getTypeOrReference().getTypeDescriptor().isBooleanType()
+            booleanObj.get("requiredBooleanWithDefault").getTypeOrReference().getTypeDescriptor().isBooleanType()
         );
         assertTrue(booleanObj.get("requiredBooleanWithDefault").isRequired());
         assertTrue(booleanObj.get("requiredBooleanWithDefault").getDefaultValue().isBooleanItem());
@@ -108,29 +108,29 @@ public class BooleanTest extends BaseTest {
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableBoolean"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableBoolean"))).getItemValue().isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableBoolean"))).getItemValue().isBooleanItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableBoolean"))).getItemValue().isBooleanItem()
         );
         assertEquals(
-                "false",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("booleanWithDefault"))).getItemValue()
-                        .getStringValue()
+            "false",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("booleanWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "true",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredBooleanWithDefault"))).getItemValue()
-                        .getStringValue()
+            "true",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredBooleanWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "booleanType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherBoolean"))).getTypeName()
+            "booleanType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherBoolean"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueBoolean"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueBoolean"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueBoolean"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueBoolean"))).getItemValue()
         );
 
     }

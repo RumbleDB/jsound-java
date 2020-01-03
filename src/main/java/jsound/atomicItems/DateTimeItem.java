@@ -1,6 +1,7 @@
 package jsound.atomicItems;
 
 import jsound.types.AtomicTypes;
+import org.api.Item;
 import org.joda.time.DateTime;
 import jsound.item.AtomicItem;
 import org.joda.time.DateTimeZone;
@@ -24,14 +25,14 @@ public class DateTimeItem extends AtomicItem {
     private static final String timezoneFrag = "(Z|([+\\-])(((0\\d|1[0-3]):" + minuteFrag + ")|(14:00)))";
     private static final String dateFrag = "(" + yearFrag + '-' + monthFrag + '-' + dayFrag + ")";
     private static final String timeFrag = "(("
-            + hourFrag
-            + ":"
-            + minuteFrag
-            + ":"
-            + secondFrag
-            + ")|("
-            + endOfDayFrag
-            + "))";
+        + hourFrag
+        + ":"
+        + minuteFrag
+        + ":"
+        + secondFrag
+        + ")|("
+        + endOfDayFrag
+        + "))";
 
     private static final String dateTimeLexicalRep = dateFrag + "T" + timeFrag + "(" + timezoneFrag + ")?";
     private static final String dateLexicalRep = "(" + dateFrag + "(" + timezoneFrag + ")?)";
@@ -59,8 +60,8 @@ public class DateTimeItem extends AtomicItem {
     public String getStringValue() {
         String value = this._value.toString();
         String zoneString = this._value.getZone() == DateTimeZone.UTC
-                ? "Z"
-                : this._value.getZone().toString().equals(DateTimeZone.getDefault().toString())
+            ? "Z"
+            : this._value.getZone().toString().equals(DateTimeZone.getDefault().toString())
                 ? ""
                 : value.substring(value.length() - 6);
         value = value.substring(0, value.length() - zoneString.length());
@@ -93,9 +94,9 @@ public class DateTimeItem extends AtomicItem {
                 return startOfDay;
             int indexOfT = dateTime.indexOf('T');
             if (
-                    indexOfT < 1
-                            || indexOfT != dateTime.indexOf(endOfDay) - 1
-                            || !Character.isDigit(dateTime.charAt(indexOfT - 1))
+                indexOfT < 1
+                    || indexOfT != dateTime.indexOf(endOfDay) - 1
+                    || !Character.isDigit(dateTime.charAt(indexOfT - 1))
             )
                 throw new IllegalArgumentException();
             int dayValue;
@@ -105,12 +106,12 @@ public class DateTimeItem extends AtomicItem {
                 throw new IllegalArgumentException();
             }
             return dateTime.substring(0, indexOfT - 1)
-                    +
-                    (dayValue + 1)
-                    + "T"
-                    + startOfDay
-                    +
-                    dateTime.substring(indexOfT + endOfDay.length() + 1);
+                +
+                (dayValue + 1)
+                + "T"
+                + startOfDay
+                +
+                dateTime.substring(indexOfT + endOfDay.length() + 1);
         }
         return dateTime;
     }
@@ -128,16 +129,22 @@ public class DateTimeItem extends AtomicItem {
                 return ISODateTimeFormat.dateTimeParser().withOffsetParsed();
             case DATE:
                 DateTimeParser dtParser = new DateTimeFormatterBuilder().appendOptional(
-                        ((new DateTimeFormatterBuilder()).appendTimeZoneOffset("Z", true, 2, 4).toFormatter()).getParser()
+                    ((new DateTimeFormatterBuilder()).appendTimeZoneOffset("Z", true, 2, 4).toFormatter()).getParser()
                 ).toParser();
                 return (new DateTimeFormatterBuilder()).append(dateElementParser())
-                        .appendOptional(dtParser)
-                        .toFormatter()
-                        .withOffsetParsed();
+                    .appendOptional(dtParser)
+                    .toFormatter()
+                    .withOffsetParsed();
             case TIME:
                 return ISODateTimeFormat.timeParser().withOffsetParsed();
             default:
                 throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof DateTimeItem && this._value.isEqual(((DateTimeItem) obj).getDateTime());
+
     }
 }

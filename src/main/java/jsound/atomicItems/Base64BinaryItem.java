@@ -53,4 +53,16 @@ public class Base64BinaryItem extends AtomicItem {
             throw new IllegalArgumentException();
         return Base64.decodeBase64(base64BinaryString);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Base64BinaryItem))
+            return false;
+        Base64BinaryItem base64BinaryItem = (Base64BinaryItem) obj;
+        return this._stringValue.equals(base64BinaryItem.getStringValue())
+            && Arrays.equals(
+                this._value,
+                base64BinaryItem.getBinaryValue()
+            );
+    }
 }

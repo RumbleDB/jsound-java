@@ -53,7 +53,7 @@ public class DateTimeType extends AtomicTypeDescriptor {
             || checkExplicitTimezone(
                 itemWrapper.getItem(),
                 this.getFacets().explicitTimezone,
-               AtomicTypes.DATETIME
+                AtomicTypes.DATETIME
             );
     }
 
@@ -72,7 +72,8 @@ public class DateTimeType extends AtomicTypeDescriptor {
     }
 
     private int compareDateTime(Item dateTimeItem, Item constraintItem) {
-        return getDateTimeFromItem(dateTimeItem).getDateTime().compareTo(getDateTimeFromItem(constraintItem).getDateTime());
+        return getDateTimeFromItem(dateTimeItem).getDateTime()
+            .compareTo(getDateTimeFromItem(constraintItem).getDateTime());
     }
 
     @Override

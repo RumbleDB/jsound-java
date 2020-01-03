@@ -42,41 +42,66 @@ public class DayTimeDurationTest extends BaseTest {
 
     @Test
     public void testDayTimeDurationObj() {
-        assertTrue(dayTimeDurationObj.get("myDayTimeDuration").getTypeOrReference().getTypeDescriptor().isDayTimeDurationType());
-        assertTrue(dayTimeDurationObj.get("requiredDayTimeDuration").getTypeOrReference().getTypeDescriptor().isDayTimeDurationType());
+        assertTrue(
+            dayTimeDurationObj.get("myDayTimeDuration").getTypeOrReference().getTypeDescriptor().isDayTimeDurationType()
+        );
+        assertTrue(
+            dayTimeDurationObj.get("requiredDayTimeDuration")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .isDayTimeDurationType()
+        );
         assertTrue(dayTimeDurationObj.get("requiredDayTimeDuration").isRequired());
-        assertTrue(dayTimeDurationObj.get("nullableDayTimeDuration").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                dayTimeDurationObj.get("nullableDayTimeDuration")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isDayTimeDurationType()
+            dayTimeDurationObj.get("nullableDayTimeDuration").getTypeOrReference().getTypeDescriptor().isUnionType()
         );
         assertTrue(
-                dayTimeDurationObj.get("nullableDayTimeDuration")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            dayTimeDurationObj.get("nullableDayTimeDuration")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isDayTimeDurationType()
         );
-        assertTrue(dayTimeDurationObj.get("dayTimeDurationWithDefault").getTypeOrReference().getTypeDescriptor().isDayTimeDurationType());
+        assertTrue(
+            dayTimeDurationObj.get("nullableDayTimeDuration")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
+        );
+        assertTrue(
+            dayTimeDurationObj.get("dayTimeDurationWithDefault")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .isDayTimeDurationType()
+        );
         assertTrue(dayTimeDurationObj.get("dayTimeDurationWithDefault").getDefaultValue().isDayTimeDurationItem());
-        assertEquals("P399DT2M", dayTimeDurationObj.get("dayTimeDurationWithDefault").getDefaultValue().getStringValue());
+        assertEquals(
+            "P399DT2M",
+            dayTimeDurationObj.get("dayTimeDurationWithDefault").getDefaultValue().getStringValue()
+        );
         assertTrue(
-                dayTimeDurationObj.get("requiredDayTimeDurationWithDefault").getTypeOrReference().getTypeDescriptor().isDayTimeDurationType()
+            dayTimeDurationObj.get("requiredDayTimeDurationWithDefault")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .isDayTimeDurationType()
         );
         assertTrue(dayTimeDurationObj.get("requiredDayTimeDurationWithDefault").isRequired());
-        assertTrue(dayTimeDurationObj.get("requiredDayTimeDurationWithDefault").getDefaultValue().isDayTimeDurationItem());
-        assertEquals("PT5M30.111S", dayTimeDurationObj.get("requiredDayTimeDurationWithDefault").getDefaultValue().getStringValue());
+        assertTrue(
+            dayTimeDurationObj.get("requiredDayTimeDurationWithDefault").getDefaultValue().isDayTimeDurationItem()
+        );
+        assertEquals(
+            "PT5M30.111S",
+            dayTimeDurationObj.get("requiredDayTimeDurationWithDefault").getDefaultValue().getStringValue()
+        );
         assertTrue(dayTimeDurationObj.get("uniqueDayTimeDuration").isUnique());
     }
 
@@ -103,34 +128,41 @@ public class DayTimeDurationTest extends BaseTest {
             assertTrue(((TYSONValue) object.get("dayTimeDurationWithDefault")).getItemValue().isDayTimeDurationItem());
 
             assertTrue(object.containsKey("requiredDayTimeDurationWithDefault"));
-            assertEquals("dayTimeDuration", ((TYSONValue) object.get("requiredDayTimeDurationWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) object.get("requiredDayTimeDurationWithDefault")).getItemValue().isDayTimeDurationItem());
+            assertEquals(
+                "dayTimeDuration",
+                ((TYSONValue) object.get("requiredDayTimeDurationWithDefault")).getTypeName()
+            );
+            assertTrue(
+                ((TYSONValue) object.get("requiredDayTimeDurationWithDefault")).getItemValue().isDayTimeDurationItem()
+            );
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDayTimeDuration"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDayTimeDuration"))).getItemValue()
+                .isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDayTimeDuration"))).getItemValue().isDayTimeDurationItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDayTimeDuration"))).getItemValue()
+                .isDayTimeDurationItem()
         );
         assertEquals(
-                "-P60D",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("dayTimeDurationWithDefault"))).getItemValue()
-                        .getStringValue()
+            "-P60D",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("dayTimeDurationWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "PT7M7.890S",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDayTimeDurationWithDefault"))).getItemValue()
-                        .getStringValue()
+            "PT7M7.890S",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDayTimeDurationWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "dayTimeDurationType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDayTimeDuration"))).getTypeName()
+            "dayTimeDurationType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDayTimeDuration"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDayTimeDuration"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDayTimeDuration"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDayTimeDuration"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDayTimeDuration"))).getItemValue()
         );
 
     }

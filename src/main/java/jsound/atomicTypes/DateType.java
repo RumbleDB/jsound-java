@@ -53,7 +53,11 @@ public class DateType extends AtomicTypeDescriptor {
         if (!validateBoundariesFacets(itemWrapper.getItem(), isEnumValue))
             return false;
         return !this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE)
-            || DateTimeType.checkExplicitTimezone(itemWrapper.getItem(), this.getFacets().explicitTimezone, AtomicTypes.DATE);
+            || DateTimeType.checkExplicitTimezone(
+                itemWrapper.getItem(),
+                this.getFacets().explicitTimezone,
+                AtomicTypes.DATE
+            );
     }
 
     @Override

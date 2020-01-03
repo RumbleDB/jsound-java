@@ -16,7 +16,9 @@ public class TYSONValue implements TysonItem {
     private static String toTYSONString(TYSONValue tysonValue) {
         return tysonValue == null
             ? "null"
-            : ((tysonValue.typeName == null || tysonValue.typeName.equals("null")) ? "" : "(\"" + tysonValue.typeName + "\") ")
+            : ((tysonValue.typeName == null || tysonValue.typeName.equals("null"))
+                ? ""
+                : "(\"" + tysonValue.typeName + "\") ")
                 + tysonValue.itemValue.getStringAnnotation();
     }
 

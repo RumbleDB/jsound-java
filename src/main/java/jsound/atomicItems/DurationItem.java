@@ -1,5 +1,7 @@
 package jsound.atomicItems;
 
+import org.api.Item;
+import org.joda.time.Instant;
 import org.joda.time.Period;
 import jsound.item.AtomicItem;
 
@@ -30,4 +32,20 @@ public class DurationItem extends AtomicItem {
     public boolean isDurationItem() {
         return true;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Item)) {
+            return false;
+        }
+        Item item = (Item) obj;
+        Instant now = new Instant();
+        if (item.isDurationItem()) {
+            return this.getDuration()
+                .toDurationFrom(now)
+                .isEqual(item.getDuration().toDurationFrom(now));
+        }
+        return false;
+    }
+
 }

@@ -4,6 +4,7 @@ import jsound.tyson.TYSONObject;
 import org.api.Item;
 import org.api.ItemWrapper;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ArrayItem extends Item {
@@ -52,5 +53,19 @@ public class ArrayItem extends Item {
             result += itemWrapper.getItem().hashCode();
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ArrayItem))
+            return false;
+        ArrayItem arrayItem = (ArrayItem) obj;
+        if (_items.size() != arrayItem.getItems().size())
+            return false;
+        for (int i = 0; i < _items.size(); i++) {
+            if (!_items.get(i).getItem().equals(arrayItem.getItems().get(i).getItem()))
+                return false;
+        }
+        return true;
     }
 }

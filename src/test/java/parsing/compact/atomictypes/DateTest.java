@@ -47,32 +47,32 @@ public class DateTest extends BaseTest {
         assertTrue(dateObj.get("requiredDate").isRequired());
         assertTrue(dateObj.get("nullableDate").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                dateObj.get("nullableDate")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isDateType()
+            dateObj.get("nullableDate")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isDateType()
         );
         assertTrue(
-                dateObj.get("nullableDate")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            dateObj.get("nullableDate")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(dateObj.get("dateWithDefault").getTypeOrReference().getTypeDescriptor().isDateType());
         assertTrue(dateObj.get("dateWithDefault").getDefaultValue().isDateItem());
         assertEquals("2001-01-01-03:00", dateObj.get("dateWithDefault").getDefaultValue().getStringValue());
         assertTrue(
-                dateObj.get("requiredDateWithDefault").getTypeOrReference().getTypeDescriptor().isDateType()
+            dateObj.get("requiredDateWithDefault").getTypeOrReference().getTypeDescriptor().isDateType()
         );
         assertTrue(dateObj.get("requiredDateWithDefault").isRequired());
         assertTrue(dateObj.get("requiredDateWithDefault").getDefaultValue().isDateItem());
@@ -108,29 +108,29 @@ public class DateTest extends BaseTest {
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDate"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDate"))).getItemValue().isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDate"))).getItemValue().isDateItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDate"))).getItemValue().isDateItem()
         );
         assertEquals(
-                "2001-02-28",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("dateWithDefault"))).getItemValue()
-                        .getStringValue()
+            "2001-02-28",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("dateWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "2001-12-16",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDateWithDefault"))).getItemValue()
-                        .getStringValue()
+            "2001-12-16",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDateWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "dateType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDate"))).getTypeName()
+            "dateType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDate"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDate"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDate"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDate"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDate"))).getItemValue()
         );
 
     }

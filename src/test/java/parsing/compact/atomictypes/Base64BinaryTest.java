@@ -114,14 +114,17 @@ public class Base64BinaryTest extends BaseTest {
 
             assertTrue(object.containsKey("requiredBase64BinaryWithDefault"));
             assertEquals("base64Binary", ((TYSONValue) object.get("requiredBase64BinaryWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) object.get("requiredBase64BinaryWithDefault")).getItemValue().isBase64BinaryItem());
+            assertTrue(
+                ((TYSONValue) object.get("requiredBase64BinaryWithDefault")).getItemValue().isBase64BinaryItem()
+            );
         }
 
         assertTrue(
             ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableBase64Binary"))).getItemValue().isNullItem()
         );
         assertTrue(
-            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableBase64Binary"))).getItemValue().isBase64BinaryItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableBase64Binary"))).getItemValue()
+                .isBase64BinaryItem()
         );
         assertEquals(
             "abc12345",

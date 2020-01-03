@@ -43,8 +43,10 @@ public class InstanceFileJsonParser {
                     while ((key = object.readObject()) != null) {
                         itemMap.put(key, getItemFromObject(object));
                     }
-                    return new ItemWrapper(ItemFactory.getInstance()
-                        .createObjectItem(itemMap));
+                    return new ItemWrapper(
+                            ItemFactory.getInstance()
+                                .createObjectItem(itemMap)
+                    );
                 case ARRAY:
                     List<ItemWrapper> arrayValues = new ArrayList<>();
                     while (object.readArray()) {

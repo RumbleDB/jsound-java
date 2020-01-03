@@ -47,32 +47,32 @@ public class TimeTest extends BaseTest {
         assertTrue(timeObj.get("requiredTime").isRequired());
         assertTrue(timeObj.get("nullableTime").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                timeObj.get("nullableTime")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isTimeType()
+            timeObj.get("nullableTime")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isTimeType()
         );
         assertTrue(
-                timeObj.get("nullableTime")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            timeObj.get("nullableTime")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(timeObj.get("timeWithDefault").getTypeOrReference().getTypeDescriptor().isTimeType());
         assertTrue(timeObj.get("timeWithDefault").getDefaultValue().isTimeItem());
         assertEquals("13:20:00", timeObj.get("timeWithDefault").getDefaultValue().getStringValue());
         assertTrue(
-                timeObj.get("requiredTimeWithDefault").getTypeOrReference().getTypeDescriptor().isTimeType()
+            timeObj.get("requiredTimeWithDefault").getTypeOrReference().getTypeDescriptor().isTimeType()
         );
         assertTrue(timeObj.get("requiredTimeWithDefault").isRequired());
         assertTrue(timeObj.get("requiredTimeWithDefault").getDefaultValue().isTimeItem());
@@ -108,29 +108,29 @@ public class TimeTest extends BaseTest {
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableTime"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableTime"))).getItemValue().isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableTime"))).getItemValue().isTimeItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableTime"))).getItemValue().isTimeItem()
         );
         assertEquals(
-                "20:20:28",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("timeWithDefault"))).getItemValue()
-                        .getStringValue()
+            "20:20:28",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("timeWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "20:01:12.160",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredTimeWithDefault"))).getItemValue()
-                        .getStringValue()
+            "20:01:12.160",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredTimeWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "timeType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherTime"))).getTypeName()
+            "timeType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherTime"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueTime"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueTime"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueTime"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueTime"))).getItemValue()
         );
 
     }

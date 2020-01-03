@@ -6,7 +6,7 @@ import org.joda.time.PeriodType;
 
 public class YearMonthDurationItem extends DurationItem {
     private static final PeriodType yearMonthPeriodType = PeriodType.forFields(
-            new DurationFieldType[] { DurationFieldType.years(), DurationFieldType.months() }
+        new DurationFieldType[] { DurationFieldType.years(), DurationFieldType.months() }
     );
 
     public YearMonthDurationItem(Period value) {

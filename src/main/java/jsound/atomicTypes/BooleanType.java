@@ -24,10 +24,15 @@ public class BooleanType extends AtomicTypeDescriptor {
 
     @Override
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
-        boolean result = itemWrapper.isBooleanItem() || (itemWrapper.isStringItem() && StringUtils.isBooleanLiteral(
-                itemWrapper.getStringValue()));
+        boolean result = itemWrapper.isBooleanItem()
+            || (itemWrapper.isStringItem()
+                && StringUtils.isBooleanLiteral(
+                    itemWrapper.getStringValue()
+                ));
         if (result && !itemWrapper.isBooleanItem())
-            itemWrapper.setItem(ItemFactory.getInstance().createBooleanItem(Boolean.parseBoolean(itemWrapper.getStringValue())));
+            itemWrapper.setItem(
+                ItemFactory.getInstance().createBooleanItem(Boolean.parseBoolean(itemWrapper.getStringValue()))
+            );
         return result;
     }
 

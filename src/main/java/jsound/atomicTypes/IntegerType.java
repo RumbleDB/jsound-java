@@ -51,8 +51,11 @@ public class IntegerType extends AtomicTypeDescriptor {
             return false;
         }
         itemWrapper.setItem(new IntegerItem(integerValue));
-        return this.getFacets() == null || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue) && validateDigitsFacets(
-                itemWrapper.getItem());
+        return this.getFacets() == null
+            || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue)
+                && validateDigitsFacets(
+                    itemWrapper.getItem()
+                );
     }
 
     @Override

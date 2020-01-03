@@ -119,13 +119,17 @@ public class CompactSchemaFileJsonParser {
                         );
                     } catch (JsoundException e) {
                         fieldDescriptor.setDefaultValue(
-                            new ItemWrapper(ItemFactory.getInstance().createStringItem(defaultValue)
-                        ));
+                            new ItemWrapper(
+                                    ItemFactory.getInstance().createStringItem(defaultValue)
+                            )
+                        );
                     }
                 } else {
                     fieldDescriptor.setDefaultValue(
-                        new ItemWrapper(ItemFactory.getInstance().createStringItem(defaultValue)
-                        ));
+                        new ItemWrapper(
+                                ItemFactory.getInstance().createStringItem(defaultValue)
+                        )
+                    );
                 }
             }
             if (compactSchema.containsKey(fieldType))

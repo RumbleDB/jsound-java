@@ -52,8 +52,11 @@ public class DecimalType extends AtomicTypeDescriptor {
             return false;
         }
         itemWrapper.setItem(new DecimalItem(decimalValue));
-        return this.getFacets() == null || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue) && validateDigitsFacets(
-                itemWrapper.getItem());
+        return this.getFacets() == null
+            || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue)
+                && validateDigitsFacets(
+                    itemWrapper.getItem()
+                );
     }
 
     @Override

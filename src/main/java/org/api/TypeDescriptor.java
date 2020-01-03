@@ -215,14 +215,14 @@ public abstract class TypeDescriptor {
         for (FieldDescriptor fieldDescriptor : this.getFacets().getObjectContent().values()) {
             if (fieldDescriptor.getDefaultValue() != null && !fieldDescriptor.defaultIsChecked) {
                 if (
-                        !fieldDescriptor.getTypeOrReference()
-                                .getTypeDescriptor()
-                                .validate(fieldDescriptor.getDefaultValue(), false)
+                    !fieldDescriptor.getTypeOrReference()
+                        .getTypeDescriptor()
+                        .validate(fieldDescriptor.getDefaultValue(), false)
                 )
                     throw new InvalidSchemaException(
                             "The default value for field "
-                                    + this.getName()
-                                    + " is not valid against its type."
+                                + this.getName()
+                                + " is not valid against its type."
                     );
                 fieldDescriptor.defaultIsChecked = true;
             }
@@ -236,10 +236,10 @@ public abstract class TypeDescriptor {
             if (!this.validate(enumItem, true)) {
                 throw new InvalidEnumValueException(
                         "Value "
-                                + enumItem.getItem().getStringValue()
-                                + " in enumeration is not in the type value space for type "
-                                + this.getName()
-                                + "."
+                            + enumItem.getItem().getStringValue()
+                            + " in enumeration is not in the type value space for type "
+                            + this.getName()
+                            + "."
                 );
             }
         }

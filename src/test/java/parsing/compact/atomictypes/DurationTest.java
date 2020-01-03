@@ -47,32 +47,32 @@ public class DurationTest extends BaseTest {
         assertTrue(durationObj.get("requiredDuration").isRequired());
         assertTrue(durationObj.get("nullableDuration").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                durationObj.get("nullableDuration")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isDurationType()
+            durationObj.get("nullableDuration")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isDurationType()
         );
         assertTrue(
-                durationObj.get("nullableDuration")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            durationObj.get("nullableDuration")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(durationObj.get("durationWithDefault").getTypeOrReference().getTypeDescriptor().isDurationType());
         assertTrue(durationObj.get("durationWithDefault").getDefaultValue().isDurationItem());
         assertEquals("P9Y2M", durationObj.get("durationWithDefault").getDefaultValue().getStringValue());
         assertTrue(
-                durationObj.get("requiredDurationWithDefault").getTypeOrReference().getTypeDescriptor().isDurationType()
+            durationObj.get("requiredDurationWithDefault").getTypeOrReference().getTypeDescriptor().isDurationType()
         );
         assertTrue(durationObj.get("requiredDurationWithDefault").isRequired());
         assertTrue(durationObj.get("requiredDurationWithDefault").getDefaultValue().isDurationItem());
@@ -108,29 +108,29 @@ public class DurationTest extends BaseTest {
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDuration"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDuration"))).getItemValue().isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDuration"))).getItemValue().isDurationItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableDuration"))).getItemValue().isDurationItem()
         );
         assertEquals(
-                "-P60D",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("durationWithDefault"))).getItemValue()
-                        .getStringValue()
+            "-P60D",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("durationWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "PT7M7.890S",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDurationWithDefault"))).getItemValue()
-                        .getStringValue()
+            "PT7M7.890S",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredDurationWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "durationType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDuration"))).getTypeName()
+            "durationType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDuration"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDuration"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDuration"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDuration"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueDuration"))).getItemValue()
         );
 
     }

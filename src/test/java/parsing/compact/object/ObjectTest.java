@@ -53,26 +53,26 @@ public class ObjectTest extends BaseTest {
         assertTrue(objectType.get("requiredObject").isRequired());
         assertTrue(objectType.get("nullableObject").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                objectType.get("nullableObject")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isObjectType()
+            objectType.get("nullableObject")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isObjectType()
         );
         assertTrue(
-                objectType.get("nullableObject")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            objectType.get("nullableObject")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(objectType.get("objectWithDefault").getTypeOrReference().getTypeDescriptor().isObjectType());
         assertTrue(objectType.get("objectWithDefault").getDefaultValue().isObjectItem());
@@ -83,7 +83,7 @@ public class ObjectTest extends BaseTest {
         ObjectItem objectItem = new ObjectItem(itemMap);
         assertEquals(objectItem, objectType.get("objectWithDefault").getDefaultValue().getItem());
         assertTrue(
-                objectType.get("requiredObjectWithDefault").getTypeOrReference().getTypeDescriptor().isObjectType()
+            objectType.get("requiredObjectWithDefault").getTypeOrReference().getTypeDescriptor().isObjectType()
         );
         assertTrue(objectType.get("requiredObjectWithDefault").isRequired());
         assertTrue(objectType.get("requiredObjectWithDefault").getDefaultValue().isObjectItem());
@@ -116,39 +116,89 @@ public class ObjectTest extends BaseTest {
 
             assertTrue(object.containsKey("requiredObject"));
             assertEquals("myObject", (object.get("requiredObject")).getTypeName());
-            assertTrue(((TYSONValue) (((TYSONObject) object.get("requiredObject")).get("stringField"))).getItemValue().isStringItem());
-            assertTrue(((TYSONValue) (((TYSONObject) object.get("requiredObject")).get("integerField"))).getItemValue().isIntegerItem());
+            assertTrue(
+                ((TYSONValue) (((TYSONObject) object.get("requiredObject")).get("stringField"))).getItemValue()
+                    .isStringItem()
+            );
+            assertTrue(
+                ((TYSONValue) (((TYSONObject) object.get("requiredObject")).get("integerField"))).getItemValue()
+                    .isIntegerItem()
+            );
 
             assertTrue(object.containsKey("objectWithDefault"));
             assertEquals("myObject", (object.get("objectWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) (((TYSONObject) object.get("objectWithDefault")).get("stringField"))).getItemValue().isStringItem());
-            assertTrue(((TYSONValue) (((TYSONObject) object.get("objectWithDefault")).get("integerField"))).getItemValue().isIntegerItem());
+            assertTrue(
+                ((TYSONValue) (((TYSONObject) object.get("objectWithDefault")).get("stringField"))).getItemValue()
+                    .isStringItem()
+            );
+            assertTrue(
+                ((TYSONValue) (((TYSONObject) object.get("objectWithDefault")).get("integerField"))).getItemValue()
+                    .isIntegerItem()
+            );
 
             assertTrue(object.containsKey("requiredObjectWithDefault"));
             assertEquals("myObject", (object.get("requiredObjectWithDefault")).getTypeName());
-            assertTrue(((TYSONValue) (((TYSONObject) object.get("requiredObjectWithDefault")).get("stringField"))).getItemValue().isStringItem());
-            assertTrue(((TYSONValue) (((TYSONObject) object.get("requiredObjectWithDefault")).get("integerField"))).getItemValue().isIntegerItem());
+            assertTrue(
+                ((TYSONValue) (((TYSONObject) object.get("requiredObjectWithDefault")).get("stringField")))
+                    .getItemValue()
+                    .isStringItem()
+            );
+            assertTrue(
+                ((TYSONValue) (((TYSONObject) object.get("requiredObjectWithDefault")).get("integerField")))
+                    .getItemValue()
+                    .isIntegerItem()
+            );
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableObject"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableObject"))).getItemValue().isNullItem()
         );
-        assertEquals("gpu", ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(2)).get("nullableObject")).get("stringField")).getItemValue().getStringValue());
-        assertEquals("2", ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(2)).get("nullableObject")).get("integerField")).getItemValue().getStringValue());
-
-        assertEquals("hello", ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(3)).get("requiredObjectWithDefault")).get("stringField")).getItemValue().getStringValue());
-        assertEquals("1", ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(3)).get("requiredObjectWithDefault")).get("integerField")).getItemValue().getStringValue());
-
-        assertEquals("ram", ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(4)).get("requiredObjectWithDefault")).get("stringField")).getItemValue().getStringValue());
-        assertEquals("16", ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(4)).get("requiredObjectWithDefault")).get("integerField")).getItemValue().getStringValue());
+        assertEquals(
+            "gpu",
+            ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(2)).get("nullableObject")).get("stringField"))
+                .getItemValue()
+                .getStringValue()
+        );
+        assertEquals(
+            "2",
+            ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(2)).get("nullableObject")).get("integerField"))
+                .getItemValue()
+                .getStringValue()
+        );
 
         assertEquals(
-                "myObjectType",
-                (((TYSONObject) tysonArray.get(5)).get("anotherObject")).getTypeName()
+            "hello",
+            ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(3)).get("requiredObjectWithDefault")).get(
+                "stringField"
+            )).getItemValue().getStringValue()
+        );
+        assertEquals(
+            "1",
+            ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(3)).get("requiredObjectWithDefault")).get(
+                "integerField"
+            )).getItemValue().getStringValue()
+        );
+
+        assertEquals(
+            "ram",
+            ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(4)).get("requiredObjectWithDefault")).get(
+                "stringField"
+            )).getItemValue().getStringValue()
+        );
+        assertEquals(
+            "16",
+            ((TYSONValue) ((TYSONObject) ((TYSONObject) tysonArray.get(4)).get("requiredObjectWithDefault")).get(
+                "integerField"
+            )).getItemValue().getStringValue()
+        );
+
+        assertEquals(
+            "myObjectType",
+            (((TYSONObject) tysonArray.get(5)).get("anotherObject")).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueObject"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueObject"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueObject"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueObject"))).getItemValue()
         );
 
     }

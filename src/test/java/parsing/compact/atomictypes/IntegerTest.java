@@ -47,32 +47,32 @@ public class IntegerTest extends BaseTest {
         assertTrue(integerObj.get("requiredInteger").isRequired());
         assertTrue(integerObj.get("nullableInteger").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                integerObj.get("nullableInteger")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isIntegerType()
+            integerObj.get("nullableInteger")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isIntegerType()
         );
         assertTrue(
-                integerObj.get("nullableInteger")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            integerObj.get("nullableInteger")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(integerObj.get("integerWithDefault").getTypeOrReference().getTypeDescriptor().isIntegerType());
         assertTrue(integerObj.get("integerWithDefault").getDefaultValue().isIntegerItem());
         assertEquals("42", integerObj.get("integerWithDefault").getDefaultValue().getStringValue());
         assertTrue(
-                integerObj.get("requiredIntegerWithDefault").getTypeOrReference().getTypeDescriptor().isIntegerType()
+            integerObj.get("requiredIntegerWithDefault").getTypeOrReference().getTypeDescriptor().isIntegerType()
         );
         assertTrue(integerObj.get("requiredIntegerWithDefault").isRequired());
         assertTrue(integerObj.get("requiredIntegerWithDefault").getDefaultValue().isIntegerItem());
@@ -108,29 +108,29 @@ public class IntegerTest extends BaseTest {
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableInteger"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableInteger"))).getItemValue().isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableInteger"))).getItemValue().isIntegerItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableInteger"))).getItemValue().isIntegerItem()
         );
         assertEquals(
-                "7",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("integerWithDefault"))).getItemValue()
-                        .getStringValue()
+            "7",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("integerWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "9",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredIntegerWithDefault"))).getItemValue()
-                        .getStringValue()
+            "9",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredIntegerWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "integerType",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherInteger"))).getTypeName()
+            "integerType",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherInteger"))).getTypeName()
         );
         assertNotEquals(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueInteger"))).getItemValue(),
-                ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueInteger"))).getItemValue()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueInteger"))).getItemValue(),
+            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueInteger"))).getItemValue()
         );
 
     }

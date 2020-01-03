@@ -1,14 +1,5 @@
 package org.api;
 
-import jsound.exceptions.UnexpectedTypeException;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
-
-import java.math.BigDecimal;
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
-
 public class ItemWrapper {
     private Item item;
 
@@ -84,49 +75,8 @@ public class ItemWrapper {
         return this.item.isObjectItem();
     }
 
-    public boolean isArrayItem() {
-        return this.item.isArrayItem();
-    }
-
-
-    public Integer getIntegerValue() {
-        return this.item.getIntegerValue();
-    }
-
-    public BigDecimal getDecimalValue() {
-        return this.item.getDecimalValue();
-    }
-
-    public Double getDoubleValue() {
-        return this.item.getDoubleValue();
-    }
-
     public String getStringValue() {
         return this.item.getStringValue();
-    }
-
-    public DateTime getDateTime() {
-        return this.item.getDateTime();
-    }
-
-    public URI getAnyURIValue() {
-        return this.item.getAnyURIValue();
-    }
-
-    public byte[] getBinaryValue() {
-        return this.item.getBinaryValue();
-    }
-
-    public Period getDuration() {
-        return this.item.getDuration();
-    }
-
-    public Map<String, ItemWrapper> getItemMap() {
-        return this.item.getItemMap();
-    }
-
-    public List<ItemWrapper> getItems() {
-        return this.item.getItems();
     }
 
     public String getStringAnnotation() {

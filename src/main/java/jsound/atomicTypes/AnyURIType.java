@@ -36,7 +36,7 @@ public class AnyURIType extends AtomicTypeDescriptor {
         if (itemWrapper.isNullItem())
             return false;
         try {
-            uri = URI.create(itemWrapper.getStringValue().replaceAll("\\s+",""));
+            uri = URI.create(itemWrapper.getStringValue().replaceAll("\\s+", ""));
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -48,7 +48,7 @@ public class AnyURIType extends AtomicTypeDescriptor {
     protected boolean validateItemAgainstEnumeration(Item item) throws IllegalArgumentException {
         URI uri = item.getAnyURIValue();
         for (ItemWrapper enumItem : this.getFacets().getEnumeration()) {
-            if (uri.equals(URI.create(enumItem.getStringValue().replaceAll("\\s+",""))))
+            if (uri.equals(URI.create(enumItem.getStringValue().replaceAll("\\s+", ""))))
                 return true;
         }
         return false;

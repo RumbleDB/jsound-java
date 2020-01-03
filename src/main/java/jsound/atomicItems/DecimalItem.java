@@ -1,6 +1,7 @@
 package jsound.atomicItems;
 
 import jsound.item.AtomicItem;
+import org.api.Item;
 
 import java.math.BigDecimal;
 
@@ -27,7 +28,8 @@ public class DecimalItem extends AtomicItem {
         return _value;
     }
 
-    @Override public Double getDoubleValue() {
+    @Override
+    public Double getDoubleValue() {
         return this._value.doubleValue();
     }
 
@@ -44,5 +46,10 @@ public class DecimalItem extends AtomicItem {
     @Override
     public int hashCode() {
         return this._value.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Item) && this._value.compareTo(((Item) obj).getDecimalValue()) == 0;
     }
 }

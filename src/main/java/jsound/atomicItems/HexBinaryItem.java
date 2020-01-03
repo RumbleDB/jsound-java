@@ -49,4 +49,16 @@ public class HexBinaryItem extends AtomicItem {
             throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof HexBinaryItem))
+            return false;
+        HexBinaryItem hexBinaryItem = (HexBinaryItem) obj;
+        return this._stringValue.equals(hexBinaryItem.getStringValue())
+            && Arrays.equals(
+                this._value,
+                hexBinaryItem.getBinaryValue()
+            );
+    }
 }
