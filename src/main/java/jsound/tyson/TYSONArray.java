@@ -46,4 +46,9 @@ public class TYSONArray extends ArrayList<TysonItem> implements TysonItem {
     public String toTYSONString() {
         return toTYSONString(this);
     }
+
+    @Override
+    public String getTypeName() {
+        return typeName;
+    }
 }

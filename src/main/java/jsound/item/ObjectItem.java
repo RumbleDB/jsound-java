@@ -9,7 +9,7 @@ import java.util.Map;
 public class ObjectItem extends Item {
     private Map<String, ItemWrapper> _itemMap;
 
-    ObjectItem(Map<String, ItemWrapper> itemMap) {
+    public ObjectItem(Map<String, ItemWrapper> itemMap) {
         this._itemMap = itemMap;
     }
 

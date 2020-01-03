@@ -24,6 +24,7 @@ public class TYSONValue implements TysonItem {
         return toTYSONString(this);
     }
 
+    @Override
     public String getTypeName() {
         return typeName;
     }

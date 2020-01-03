@@ -97,6 +97,7 @@ public class CompactSchemaFileJsonParser {
                 unionTypeFacets.getUnionContent()
                     .getTypes()
                     .add(new TypeOrReference(new NullType(null, new AtomicFacets())));
+                unionTypeFacets.definedFacets.add(FacetTypes.CONTENT);
                 fieldDescriptor.setType(new TypeOrReference(new UnionTypeDescriptor(name, unionTypeFacets)));
             }
             facets.getObjectContent().put(fieldDescriptor.getName(), fieldDescriptor);
@@ -154,6 +155,7 @@ public class CompactSchemaFileJsonParser {
         if (typeString.contains("|")) {
             UnionFacets facets = new UnionFacets();
             facets.setUnionContent(typeString);
+            facets.definedFacets.add(FacetTypes.CONTENT);
             return new TypeOrReference(new UnionTypeDescriptor(name, facets));
         }
         try {

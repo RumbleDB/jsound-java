@@ -71,7 +71,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     public TysonItem annotate(ItemWrapper itemWrapper) {
         for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
             if (typeOrReference.getTypeDescriptor().validate(itemWrapper, false))
-                return new TYSONValue(typeOrReference.getTypeDescriptor().getName(), itemWrapper.getItem());
+                return typeOrReference.getTypeDescriptor().annotate(itemWrapper);
         }
         throw new InvalidSchemaException(
                 itemWrapper.getItem().getStringValue() + " is not valid against any type of union " + this.getName()

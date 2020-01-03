@@ -75,9 +75,7 @@ public class TYSONObject extends LinkedHashMap<String, TysonItem> implements Tys
     }
 
     private static void format(StringBuilder sb) {
-        for (int i = 0; i < tabCounter; i++) {
-            sb.append("    ");
-        }
+        sb.append("    ".repeat(Math.max(0, tabCounter)));
     }
 
     public static void newLineDecreaseCounter(StringBuilder sb) {
@@ -86,6 +84,7 @@ public class TYSONObject extends LinkedHashMap<String, TysonItem> implements Tys
         format(sb);
     }
 
+    @Override
     public String getTypeName() {
         return typeName;
     }
