@@ -1,8 +1,7 @@
 package parsing.compact;
 
-import org.api.executors.JSoundExecutor;
-import jsound.types.AtomicTypes;
 import jsound.typedescriptors.object.FieldDescriptor;
+import jsound.types.AtomicTypes;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import parsing.BaseTest;

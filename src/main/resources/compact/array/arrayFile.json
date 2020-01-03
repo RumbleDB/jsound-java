@@ -1,0 +1,66 @@
+{
+  "arrays": [
+    {
+      "requiredArrayOfIntegers": [
+        100, 200, 300
+      ],
+      "myArrayOfStrings": [
+        "a", "b", "c", "d"
+      ]
+    },
+    {
+      "requiredArrayOfIntegers": [
+        400, 500
+      ],
+      "nullableArrayOfStrings": null
+    },
+    {
+      "requiredArrayOfIntegers": [
+        600, 700
+      ],
+      "nullableArrayOfStrings": [
+        "ciao", "hello", "hola"
+      ]
+    },
+    {
+      "requiredArrayOfIntegers": [
+        800, 900
+      ],
+      "arrayOfIntegersWithDefault": [
+        1e3, 1.1, 1200
+      ]
+    },
+    {
+      "requiredArrayOfIntegers": [
+        1300, 1.4e3
+      ],
+      "requiredArrayOfStringsWithDefault": [
+        "sunny", "rainy", "foggy"
+      ]
+    },
+    {
+      "requiredArrayOfIntegers": [
+        1500, 1600
+      ],
+      "recursiveArrayOfStrings": [
+        "cpu", "ram", "storage"
+      ]
+    },
+    {
+      "requiredArrayOfIntegers": [
+        1.7e3, 1.8
+      ],
+      "uniqueArrayOfBinaries": [
+        "abcdEF", "9521", "ZW FzdX JlLg =="
+      ]
+    },
+    {
+      "requiredArrayOfIntegers": [
+        1900, 2e3
+      ],
+      "uniqueArrayOfBinaries": [
+        "c3VyZS4=", "0F+40A=="
+      ]
+    }
+  ]
+}

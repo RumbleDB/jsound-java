@@ -1,14 +1,14 @@
 package jsound.atomicTypes;
 
-import org.api.TypeDescriptor;
-import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
-import org.joda.time.Period;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
 import jsound.atomicItems.DurationItem;
 import jsound.atomicItems.YearMonthDurationItem;
 import jsound.facets.AtomicFacets;
+import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.types.ItemTypes;
+import org.api.TypeDescriptor;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 public class YearMonthDurationType extends DurationType {
 

@@ -4,17 +4,17 @@ import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.MissingNameOrTypeException;
 import jsound.exceptions.UnexpectedTypeException;
+import jsound.json.SchemaFileJsonParser;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.object.FieldDescriptor;
-import jsound.json.SchemaFileJsonParser;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static jsound.json.InstanceFileJsonParser.getItemFromObject;
 import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
 import static org.api.executors.JSoundExecutor.schema;
-import static jsound.json.InstanceFileJsonParser.getItemFromObject;
 
 public class ObjectFacets extends Facets {
 

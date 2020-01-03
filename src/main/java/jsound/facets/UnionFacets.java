@@ -1,15 +1,15 @@
 package jsound.facets;
 
 import com.jsoniter.ValueType;
+import jsound.json.SchemaFileJsonParser;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.union.UnionContentDescriptor;
-import jsound.json.SchemaFileJsonParser;
 
 import java.io.IOException;
 
+import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
 import static org.api.executors.JSoundExecutor.schema;
-import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 
 public class UnionFacets extends Facets {
     private UnionContentDescriptor unionContent = new UnionContentDescriptor();

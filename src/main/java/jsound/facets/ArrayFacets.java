@@ -2,18 +2,18 @@ package jsound.facets;
 
 import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
-import org.api.TypeDescriptor;
+import jsound.json.SchemaFileJsonParser;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.array.ArrayContentDescriptor;
-import jsound.json.SchemaFileJsonParser;
+import org.api.TypeDescriptor;
 
 import java.io.IOException;
 
-import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
-import static org.api.executors.JSoundExecutor.schema;
 import static jsound.facets.FacetTypes.CONTENT;
 import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static jsound.json.CompactSchemaFileJsonParser.getTypeFromObject;
+import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
+import static org.api.executors.JSoundExecutor.schema;
 
 public class ArrayFacets extends Facets {
     public jsound.typedescriptors.array.ArrayContentDescriptor arrayContent =

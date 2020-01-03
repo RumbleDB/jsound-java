@@ -1,8 +1,8 @@
 package org.api.executors;
 
 import jsound.exceptions.InvalidInstanceAgainstSchemaException;
-import org.config.JSoundRuntimeConfiguration;
 import jsound.tyson.TYSONObject;
+import org.config.JSoundRuntimeConfiguration;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,18 +1,18 @@
 package jsound.atomicTypes;
 
+import jsound.atomicItems.DurationItem;
+import jsound.facets.AtomicFacets;
+import jsound.facets.FacetTypes;
+import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import jsound.types.ItemTypes;
+import org.api.Item;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
-import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import org.joda.time.Instant;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
-import jsound.atomicItems.DurationItem;
-import jsound.facets.AtomicFacets;
-import jsound.facets.FacetTypes;
-import org.api.Item;
-import jsound.types.ItemTypes;
 
 import java.util.Arrays;
 import java.util.HashSet;

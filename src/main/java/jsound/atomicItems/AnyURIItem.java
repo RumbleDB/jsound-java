@@ -1,7 +1,6 @@
 package jsound.atomicItems;
 
 import jsound.item.AtomicItem;
-import jsound.item.ObjectItem;
 
 import java.net.URI;
 

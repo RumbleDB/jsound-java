@@ -14,7 +14,6 @@ import org.junit.Test;
 import parsing.BaseTest;
 
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -193,12 +192,12 @@ public class ObjectTest extends BaseTest {
         );
 
         assertEquals(
-            "myObjectType",
+            "myObject",
             (((TYSONObject) tysonArray.get(5)).get("anotherObject")).getTypeName()
         );
         assertNotEquals(
-            ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueObject"))).getItemValue(),
-            ((TYSONValue) (((TYSONObject) tysonArray.get(7)).get("uniqueObject"))).getItemValue()
+            (((TYSONObject) tysonArray.get(6)).get("uniqueObject")),
+            (((TYSONObject) tysonArray.get(7)).get("uniqueObject"))
         );
 
     }

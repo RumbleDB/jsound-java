@@ -4,14 +4,13 @@ import jsound.tyson.TYSONObject;
 import org.api.Item;
 import org.api.ItemWrapper;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ArrayItem extends Item {
 
     private List<ItemWrapper> _items;
 
-    ArrayItem(List<ItemWrapper> items) {
+    public ArrayItem(List<ItemWrapper> items) {
         super();
         this._items = items;
     }

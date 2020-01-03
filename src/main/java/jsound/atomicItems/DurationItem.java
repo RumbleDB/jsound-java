@@ -1,9 +1,9 @@
 package jsound.atomicItems;
 
+import jsound.item.AtomicItem;
 import org.api.Item;
 import org.joda.time.Instant;
 import org.joda.time.Period;
-import jsound.item.AtomicItem;
 
 
 public class DurationItem extends AtomicItem {

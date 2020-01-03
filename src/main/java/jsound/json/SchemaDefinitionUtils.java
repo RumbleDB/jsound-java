@@ -18,9 +18,9 @@ import jsound.atomicTypes.YearMonthDurationType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.TypeNotResolvedException;
 import jsound.facets.FacetTypes;
-import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import org.api.TypeDescriptor;
 
 import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static jsound.types.ItemTypes.ATOMIC;

@@ -3,12 +3,11 @@ package jsound.typedescriptors.union;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.facets.FacetTypes;
 import jsound.facets.UnionFacets;
-import org.api.ItemWrapper;
-import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.types.ItemTypes;
-import jsound.tyson.TYSONValue;
 import jsound.tyson.TysonItem;
+import org.api.ItemWrapper;
+import org.api.TypeDescriptor;
 
 import java.util.Collections;
 import java.util.HashSet;

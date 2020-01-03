@@ -16,7 +16,6 @@ import jsound.facets.Facets;
 import jsound.facets.ObjectFacets;
 import jsound.facets.UnionFacets;
 import jsound.kinds.Kinds;
-import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.array.ArrayTypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
@@ -24,6 +23,7 @@ import jsound.typedescriptors.object.ObjectTypeDescriptor;
 import jsound.typedescriptors.union.UnionTypeDescriptor;
 import jsound.types.AtomicTypes;
 import jsound.types.ItemTypes;
+import org.api.TypeDescriptor;
 
 import java.io.IOException;
 import java.util.ArrayList;

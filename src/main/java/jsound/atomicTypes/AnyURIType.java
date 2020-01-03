@@ -1,13 +1,13 @@
 package jsound.atomicTypes;
 
-import org.api.ItemWrapper;
-import org.api.TypeDescriptor;
-import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.atomicItems.AnyURIItem;
 import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
-import org.api.Item;
+import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.types.ItemTypes;
+import org.api.Item;
+import org.api.ItemWrapper;
+import org.api.TypeDescriptor;
 
 import java.net.URI;
 import java.util.Arrays;

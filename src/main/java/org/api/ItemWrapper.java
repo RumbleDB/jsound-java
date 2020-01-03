@@ -75,6 +75,10 @@ public class ItemWrapper {
         return this.item.isObjectItem();
     }
 
+    public boolean isArrayItem() {
+        return this.item.isArrayItem();
+    }
+
     public String getStringValue() {
         return this.item.getStringValue();
     }

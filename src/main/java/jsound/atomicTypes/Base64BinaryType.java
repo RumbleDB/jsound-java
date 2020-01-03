@@ -1,14 +1,14 @@
 package jsound.atomicTypes;
 
-import org.api.ItemWrapper;
-import org.api.TypeDescriptor;
-import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
-import org.apache.commons.codec.binary.Base64;
 import jsound.atomicItems.Base64BinaryItem;
 import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
-import org.api.Item;
+import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
 import jsound.types.ItemTypes;
+import org.apache.commons.codec.binary.Base64;
+import org.api.Item;
+import org.api.ItemWrapper;
+import org.api.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;

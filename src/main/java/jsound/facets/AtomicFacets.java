@@ -2,13 +2,12 @@ package jsound.facets;
 
 import com.jsoniter.ValueType;
 import jsound.exceptions.UnexpectedTypeException;
-import org.api.Item;
 import org.api.ItemWrapper;
 
 import java.io.IOException;
 
-import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
 import static jsound.json.InstanceFileJsonParser.getItemFromObject;
+import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
 
 public class AtomicFacets extends Facets {
     public Integer length = null, minLength = null, maxLength = null;

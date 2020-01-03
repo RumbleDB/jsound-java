@@ -1,8 +1,6 @@
 package parsing;
 
 import org.api.executors.JSoundExecutor;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;

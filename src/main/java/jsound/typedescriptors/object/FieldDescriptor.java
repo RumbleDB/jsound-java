@@ -1,6 +1,5 @@
 package jsound.typedescriptors.object;
 
-import org.api.Item;
 import jsound.typedescriptors.TypeOrReference;
 import org.api.ItemWrapper;
 

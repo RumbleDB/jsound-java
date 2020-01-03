@@ -2,7 +2,6 @@ package jsound.json;
 
 import com.jsoniter.JsonIterator;
 import com.jsoniter.ValueType;
-import com.jsoniter.spi.Slice;
 import jsound.atomicTypes.NullType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
@@ -12,6 +11,7 @@ import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
 import jsound.facets.ObjectFacets;
 import jsound.facets.UnionFacets;
+import jsound.item.ItemFactory;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.array.ArrayTypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
@@ -19,8 +19,6 @@ import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.typedescriptors.object.ObjectTypeDescriptor;
 import jsound.typedescriptors.union.UnionTypeDescriptor;
 import jsound.types.AtomicTypes;
-import jsound.item.ItemFactory;
-import org.api.Item;
 import org.api.ItemWrapper;
 
 import java.io.IOException;

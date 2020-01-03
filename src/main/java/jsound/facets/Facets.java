@@ -6,7 +6,6 @@ import jsound.exceptions.UnexpectedTypeException;
 import jsound.typedescriptors.array.ArrayContentDescriptor;
 import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.typedescriptors.union.UnionContentDescriptor;
-import org.api.Item;
 import org.api.ItemWrapper;
 
 import java.io.IOException;
@@ -16,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
 import static jsound.json.InstanceFileJsonParser.getItemFromObject;
+import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
 
 public class Facets {
 

@@ -1,7 +1,5 @@
 package jsound.typedescriptors.atomic;
 
-import jsound.exceptions.LessRestrictiveFacetException;
-import jsound.exceptions.UnexpectedTypeException;
 import jsound.atomicTypes.AnyURIType;
 import jsound.atomicTypes.Base64BinaryType;
 import jsound.atomicTypes.BooleanType;
@@ -17,17 +15,19 @@ import jsound.atomicTypes.NullType;
 import jsound.atomicTypes.StringType;
 import jsound.atomicTypes.TimeType;
 import jsound.atomicTypes.YearMonthDurationType;
+import jsound.exceptions.LessRestrictiveFacetException;
+import jsound.exceptions.UnexpectedTypeException;
 import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
 import jsound.facets.TimezoneFacet;
-import org.api.Item;
-import org.api.ItemWrapper;
-import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.types.AtomicTypes;
 import jsound.types.ItemTypes;
 import jsound.tyson.TYSONValue;
 import jsound.tyson.TysonItem;
+import org.api.Item;
+import org.api.ItemWrapper;
+import org.api.TypeDescriptor;
 
 import java.io.IOException;
 import java.util.Arrays;

@@ -8,13 +8,13 @@ import jsound.exceptions.RequiredSertBackToFalseException;
 import jsound.facets.FacetTypes;
 import jsound.facets.ObjectFacets;
 import jsound.item.ObjectItem;
-import org.api.ItemWrapper;
-import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.types.ItemTypes;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
 import jsound.tyson.TysonItem;
+import org.api.ItemWrapper;
+import org.api.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.HashSet;

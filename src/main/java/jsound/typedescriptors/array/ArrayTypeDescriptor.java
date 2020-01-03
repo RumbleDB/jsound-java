@@ -2,18 +2,18 @@ package jsound.typedescriptors.array;
 
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.LessRestrictiveFacetException;
-import jsound.typedescriptors.object.FieldDescriptor;
-import jsound.typedescriptors.object.ObjectTypeDescriptor;
 import jsound.facets.ArrayFacets;
 import jsound.facets.FacetTypes;
 import jsound.item.ArrayItem;
-import org.api.Item;
-import org.api.ItemWrapper;
-import org.api.TypeDescriptor;
 import jsound.typedescriptors.TypeOrReference;
+import jsound.typedescriptors.object.FieldDescriptor;
+import jsound.typedescriptors.object.ObjectTypeDescriptor;
 import jsound.types.ItemTypes;
 import jsound.tyson.TYSONArray;
 import jsound.tyson.TysonItem;
+import org.api.Item;
+import org.api.ItemWrapper;
+import org.api.TypeDescriptor;
 
 import java.util.Arrays;
 import java.util.Collections;
