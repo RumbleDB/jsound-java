@@ -12,18 +12,6 @@ import org.joda.time.format.PeriodFormatterBuilder;
 
 public class DayTimeDurationType extends DurationType {
 
-    private static final PeriodFormatter _formatter = new PeriodFormatterBuilder().appendLiteral("P")
-        .appendDays()
-        .appendSuffix("D")
-        .appendSeparatorIfFieldsAfter("T")
-        .appendHours()
-        .appendSuffix("H")
-        .appendMinutes()
-        .appendSuffix("M")
-        .appendSecondsWithOptionalMillis()
-        .appendSuffix("S")
-        .toFormatter();
-
     public DayTimeDurationType(String name, AtomicFacets facets) {
         super(ItemTypes.DAYTIMEDURATION, name, facets);
     }
@@ -35,11 +23,6 @@ public class DayTimeDurationType extends DurationType {
     @Override
     protected DurationItem createDurationItem(Period period) {
         return new DayTimeDurationItem(period);
-    }
-
-    @Override
-    protected PeriodFormatter getPeriodFormatter() {
-        return _formatter;
     }
 
     @Override

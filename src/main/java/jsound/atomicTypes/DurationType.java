@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static jsound.atomicItems.DurationItem.getDurationFromString;
 import static jsound.facets.FacetTypes.MAX_EXCLUSIVE;
 import static jsound.facets.FacetTypes.MAX_INCLUSIVE;
 import static jsound.facets.FacetTypes.MIN_EXCLUSIVE;
@@ -50,12 +51,6 @@ public class DurationType extends AtomicTypeDescriptor {
         return _allowedFacets;
     }
 
-    public static String getPositivePeriod(String period) {
-        if (period.startsWith("-"))
-            return period.substring(1);
-        return period;
-    }
-
     @Override
     public boolean isDurationType() {
         return true;
@@ -66,7 +61,7 @@ public class DurationType extends AtomicTypeDescriptor {
         Period period;
         try {
             period = getDurationFromItem(itemWrapper.getItem());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | UnsupportedOperationException e) {
             return false;
         }
         itemWrapper.setItem(createDurationItem(period));
@@ -74,7 +69,7 @@ public class DurationType extends AtomicTypeDescriptor {
     }
 
     protected DurationItem createDurationItem(Period period) {
-        return new DurationItem(period.normalizedStandard(PeriodType.yearMonthDayTime()));
+        return new DurationItem(period);
     }
 
     @Override
@@ -104,12 +99,7 @@ public class DurationType extends AtomicTypeDescriptor {
     protected Period getDurationFromItem(Item item) {
         if (item.isDurationItem())
             return item.getDuration();
-        Period period = Period.parse(getPositivePeriod(item.getStringValue()), this.getPeriodFormatter());
-        return item.getStringValue().startsWith("-") ? period.negated() : period;
-    }
-
-    protected PeriodFormatter getPeriodFormatter() {
-        return ISOPeriodFormat.standard();
+        return getDurationFromString(item.getStringValue(), this.getType());
     }
 
     @Override

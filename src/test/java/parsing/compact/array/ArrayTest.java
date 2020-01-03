@@ -4,7 +4,6 @@ import jsound.atomicItems.IntegerItem;
 import jsound.atomicItems.StringItem;
 import jsound.item.ArrayItem;
 import jsound.typedescriptors.object.FieldDescriptor;
-import jsound.typedescriptors.union.UnionTypeDescriptor;
 import jsound.tyson.TYSONArray;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
@@ -16,7 +15,6 @@ import parsing.BaseTest;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

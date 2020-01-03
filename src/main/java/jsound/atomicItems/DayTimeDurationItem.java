@@ -6,7 +6,7 @@ import org.joda.time.PeriodType;
 public class DayTimeDurationItem extends DurationItem {
 
     public DayTimeDurationItem(Period value) {
-        super(value.normalizedStandard(PeriodType.dayTime()));
+        super(value);
     }
 
     @Override

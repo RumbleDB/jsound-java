@@ -10,7 +10,9 @@ import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static jsound.facets.FacetTypes.CONTENT;
@@ -19,6 +21,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Collections.singletonList(CONTENT));
     private final UnionFacets facets;
+    private Map<ItemWrapper, TypeDescriptor> validatingTypes = new HashMap<>();
 
     public UnionTypeDescriptor(String name, UnionFacets facets) {
         super(ItemTypes.VALUE, name);
@@ -60,21 +63,17 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     private boolean validateContentFacet(ItemWrapper itemWrapper) {
         for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-            if (typeOrReference.getTypeDescriptor().validate(itemWrapper, false))
+            if (typeOrReference.getTypeDescriptor().validate(itemWrapper, false)) {
+                validatingTypes.put(itemWrapper, typeOrReference.getTypeDescriptor());
                 return true;
+            }
         }
         return false;
     }
 
     @Override
     public TysonItem annotate(ItemWrapper itemWrapper) {
-        for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-            if (typeOrReference.getTypeDescriptor().validate(itemWrapper, false))
-                return typeOrReference.getTypeDescriptor().annotate(itemWrapper);
-        }
-        throw new InvalidSchemaException(
-                itemWrapper.getItem().getStringValue() + " is not valid against any type of union " + this.getName()
-        );
+        return validatingTypes.get(itemWrapper).annotate(itemWrapper);
     }
 
     @Override

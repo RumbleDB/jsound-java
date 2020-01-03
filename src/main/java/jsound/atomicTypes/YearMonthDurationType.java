@@ -12,13 +12,6 @@ import org.joda.time.format.PeriodFormatterBuilder;
 
 public class YearMonthDurationType extends DurationType {
 
-    private static final PeriodFormatter _formatter = new PeriodFormatterBuilder().appendLiteral("P")
-        .appendYears()
-        .appendSuffix("Y")
-        .appendMonths()
-        .appendSuffix("M")
-        .toFormatter();
-
     public YearMonthDurationType(String name, AtomicFacets facets) {
         super(ItemTypes.YEARMONTHDURATION, name, facets);
     }
@@ -30,11 +23,6 @@ public class YearMonthDurationType extends DurationType {
     @Override
     protected DurationItem createDurationItem(Period period) {
         return new YearMonthDurationItem(period);
-    }
-
-    @Override
-    protected PeriodFormatter getPeriodFormatter() {
-        return _formatter;
     }
 
     @Override

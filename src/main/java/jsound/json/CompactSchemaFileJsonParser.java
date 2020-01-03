@@ -107,9 +107,9 @@ public class CompactSchemaFileJsonParser {
     private static void setFieldDescriptorType(FieldDescriptor fieldDescriptor) throws IOException {
         if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
             String fieldValue = jsonSchemaIterator.readString();
-            String fieldType = fieldValue.split("=")[0];
+            String fieldType = fieldValue.split("=", 2)[0];
             if (fieldValue.contains("=")) {
-                String defaultValue = fieldValue.split("=")[1];
+                String defaultValue = fieldValue.split("=", 2)[1];
                 if (defaultValue.startsWith("{") || defaultValue.startsWith("[")) {
                     try {
                         fieldDescriptor.setDefaultValue(
