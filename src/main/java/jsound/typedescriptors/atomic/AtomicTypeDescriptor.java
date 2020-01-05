@@ -114,69 +114,69 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     public static AtomicTypeDescriptor buildAtomicType(
             AtomicTypes atomicType,
             String name,
-            boolean shouldcreateAtomicFacets
+            boolean shouldCreateAtomicFacets
     )
             throws IOException {
         AtomicFacets facets = null;
         switch (atomicType) {
             case STRING:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(StringType._allowedFacets, name);
                 return new StringType(name, facets);
             case INTEGER:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(IntegerType._allowedFacets, name);
                 return new IntegerType(name, facets);
             case DECIMAL:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(DecimalType._allowedFacets, name);
                 return new DecimalType(name, facets);
             case DOUBLE:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(DoubleType._allowedFacets, name);
                 return new DoubleType(name, facets);
             case DURATION:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(DurationType._allowedFacets, name);
                 return new DurationType(name, facets);
             case YEARMONTHDURATION:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(YearMonthDurationType._allowedFacets, name);
                 return new YearMonthDurationType(name, facets);
             case DAYTIMEDURATION:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(DayTimeDurationType._allowedFacets, name);
                 return new DayTimeDurationType(name, facets);
             case DATETIME:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(DateTimeType._allowedFacets, name);
                 return new DateTimeType(name, facets);
             case DATE:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(DateType._allowedFacets, name);
                 return new DateType(name, facets);
             case TIME:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(TimeType._allowedFacets, name);
                 return new TimeType(name, facets);
             case HEXBINARY:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(HexBinaryType._allowedFacets, name);
                 return new HexBinaryType(name, facets);
             case BASE64BINARY:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(Base64BinaryType._allowedFacets, name);
                 return new Base64BinaryType(name, facets);
             case BOOLEAN:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(Collections.emptySet(), name);
                 return new BooleanType(name, facets);
             case NULL:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(Collections.emptySet(), name);
                 return new NullType(name, facets);
             case ANYURI:
-                if (shouldcreateAtomicFacets)
+                if (shouldCreateAtomicFacets)
                     facets = createAtomicFacets(AnyURIType._allowedFacets, name);
                 return new AnyURIType(name, facets);
             default:

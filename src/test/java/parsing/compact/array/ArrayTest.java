@@ -231,7 +231,7 @@ public class ArrayTest extends BaseTest {
 
 
         assertEquals(
-            "arrayOfStrings",
+            "recArrayOfStrings",
             (((TYSONObject) tysonArray.get(5)).get("recursiveArrayOfStrings")).getTypeName()
         );
         assertNotEquals(

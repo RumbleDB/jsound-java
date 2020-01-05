@@ -74,7 +74,7 @@ public class ApplicationInitTest extends BaseTest {
     @Test
     public void testUnionTypeField() {
         assertTrue(person.containsKey("birthDate"));
-        assertTrue(person.get("birthDate").getTypeOrReference().getType().isUnionType());
+        assertTrue(person.get("birthDate").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
             person.get("birthDate")
                 .getTypeOrReference()
@@ -83,7 +83,7 @@ public class ApplicationInitTest extends BaseTest {
                 .getUnionContent()
                 .getTypes()
                 .get(0)
-                .getType()
+                .getTypeDescriptor()
                 .isDateType()
         );
         assertTrue(
@@ -94,7 +94,7 @@ public class ApplicationInitTest extends BaseTest {
                 .getUnionContent()
                 .getTypes()
                 .get(1)
-                .getType()
+                .getTypeDescriptor()
                 .isDateTimeType()
         );
     }

@@ -16,11 +16,22 @@ import jsound.atomicTypes.StringType;
 import jsound.atomicTypes.TimeType;
 import jsound.atomicTypes.YearMonthDurationType;
 import jsound.exceptions.InvalidSchemaException;
+import jsound.exceptions.JsoundException;
 import jsound.exceptions.TypeNotResolvedException;
+import jsound.exceptions.UnexpectedTypeException;
+import jsound.facets.ArrayFacets;
 import jsound.facets.FacetTypes;
+import jsound.facets.ObjectFacets;
+import jsound.facets.UnionFacets;
 import jsound.typedescriptors.TypeOrReference;
+import jsound.typedescriptors.array.ArrayTypeDescriptor;
 import jsound.typedescriptors.atomic.AtomicTypeDescriptor;
+import jsound.typedescriptors.object.ObjectTypeDescriptor;
+import jsound.typedescriptors.union.UnionTypeDescriptor;
+import jsound.types.AtomicTypes;
 import org.api.TypeDescriptor;
+
+import java.io.IOException;
 
 import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static jsound.types.ItemTypes.ATOMIC;
@@ -30,13 +41,41 @@ public class SchemaDefinitionUtils {
 
     static TypeDescriptor resolveTypeDescriptors(String key) {
         TypeOrReference typeOrReference = compactSchema.get(key);
-        TypeDescriptor typeDescriptor;
         if (typeOrReference.getType() == null)
-            typeDescriptor = resolveTypeDescriptors(typeOrReference.getStringType());
+            schema.put(key, createTypeDescriptor(key, resolveTypeDescriptors(typeOrReference.getStringType())));
         else
-            typeDescriptor = typeOrReference.getType();
-        schema.put(key, typeDescriptor);
-        return typeDescriptor;
+            schema.put(key, typeOrReference.getType());
+        return schema.get(key);
+    }
+
+    private static TypeDescriptor createTypeDescriptor(String typeName, TypeDescriptor typeDescriptor) {
+        if (typeDescriptor.isAtomicType()) {
+            try {
+                return AtomicTypeDescriptor.buildAtomicType(
+                    AtomicTypes.valueOf(typeDescriptor.getType().name().toUpperCase()),
+                    typeName,
+                    false
+                );
+            } catch (IOException e) {
+                throw new JsoundException("Error parsing the JSON file");
+            }
+        } else if (typeDescriptor.isObjectType())
+            return new ObjectTypeDescriptor(
+                    typeName,
+                    new TypeOrReference(typeDescriptor),
+                    (ObjectFacets) typeDescriptor.getFacets()
+            );
+        else if (typeDescriptor.isArrayType())
+            return new ArrayTypeDescriptor(
+                    typeName,
+                    new TypeOrReference(typeDescriptor),
+                    (ArrayFacets) typeDescriptor.getFacets()
+            );
+        else if (typeDescriptor.isUnionType())
+            return new UnionTypeDescriptor(typeName, (UnionFacets) typeDescriptor.getFacets());
+        throw new UnexpectedTypeException(
+                "Cannot infer the baseType " + typeDescriptor.getName() + " for type " + typeName
+        );
     }
 
     static TypeDescriptor resolveSpecificAtomicTypeDescriptor(AtomicTypeDescriptor typeDescriptor) {

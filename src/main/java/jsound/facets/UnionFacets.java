@@ -8,6 +8,7 @@ import jsound.typedescriptors.union.UnionContentDescriptor;
 import java.io.IOException;
 
 import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
+import static jsound.json.CompactSchemaFileJsonParser.resolveType;
 import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
 import static org.api.executors.JSoundExecutor.schema;
 
@@ -45,10 +46,7 @@ public class UnionFacets extends Facets {
     public void setUnionContent(String unionContentString) {
         String[] unionTypes = unionContentString.split("\\|");
         for (String type : unionTypes) {
-            if (compactSchema.containsKey(type))
-                unionContent.getTypes().add(compactSchema.get(type));
-            else
-                unionContent.getTypes().add(new TypeOrReference(type));
+            unionContent.getTypes().add(resolveType(type));
         }
     }
 

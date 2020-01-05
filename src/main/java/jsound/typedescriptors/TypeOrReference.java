@@ -20,7 +20,7 @@ public class TypeOrReference {
 
     public TypeDescriptor getTypeDescriptor() {
         if (type == null) {
-            type = schema.getOrDefault(stringType, null);
+            type = schema.get(stringType);
             if (type == null)
                 throw new TypeNotResolvedException("Type " + stringType + " could not be resolved.");
         }

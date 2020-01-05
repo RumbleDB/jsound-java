@@ -5,6 +5,7 @@ import com.jsoniter.ValueType;
 import jsound.atomicTypes.NullType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
+import jsound.exceptions.TypeNotResolvedException;
 import jsound.exceptions.UnexpectedTypeException;
 import jsound.facets.ArrayFacets;
 import jsound.facets.AtomicFacets;
@@ -20,6 +21,7 @@ import jsound.typedescriptors.object.ObjectTypeDescriptor;
 import jsound.typedescriptors.union.UnionTypeDescriptor;
 import jsound.types.AtomicTypes;
 import org.api.ItemWrapper;
+import org.api.TypeDescriptor;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -47,7 +49,7 @@ public class CompactSchemaFileJsonParser {
                 compactSchema.put(typeName, getTypeFromObject(typeName));
             }
             for (String key : compactSchema.keySet()) {
-                if (schema.get(key) == null)
+                if (!schema.containsKey(key))
                     SchemaDefinitionUtils.resolveTypeDescriptors(key);
             }
         } catch (IOException e) {
@@ -61,7 +63,7 @@ public class CompactSchemaFileJsonParser {
                 case STRING:
                     return parseType(name, jsonSchemaIterator.readString());
                 case OBJECT:
-                    return new TypeOrReference(buildObjectType(name, new ObjectFacets()));
+                    return new TypeOrReference(buildObjectType(name));
                 case ARRAY:
                     ArrayFacets facets = new ArrayFacets();
                     facets.setArrayContent(name);
@@ -74,8 +76,9 @@ public class CompactSchemaFileJsonParser {
         }
     }
 
-    private static ObjectTypeDescriptor buildObjectType(String name, ObjectFacets facets) throws IOException {
+    private static ObjectTypeDescriptor buildObjectType(String name) throws IOException {
         String key;
+        ObjectFacets facets = new ObjectFacets();
         while ((key = jsonSchemaIterator.readObject()) != null) {
             FieldDescriptor fieldDescriptor = new FieldDescriptor();
             boolean allowNull = setMarkers(fieldDescriptor, key);
@@ -130,10 +133,7 @@ public class CompactSchemaFileJsonParser {
                     );
                 }
             }
-            if (compactSchema.containsKey(fieldType))
-                fieldDescriptor.setType(compactSchema.get(fieldType));
-            else
-                fieldDescriptor.setType(parseType(fieldDescriptor.name, fieldType));
+            fieldDescriptor.setType(resolveType(fieldType));
         } else if (!jsonSchemaIterator.whatIsNext().equals(ValueType.OBJECT))
             throw new InvalidSchemaException("Type for field descriptors must be either string or object.");
         else
@@ -165,8 +165,15 @@ public class CompactSchemaFileJsonParser {
                     AtomicTypeDescriptor.buildAtomicType(AtomicTypes.valueOf(typeString.toUpperCase()), name, false)
             );
         } catch (IllegalArgumentException e) {
-            if (compactSchema.containsKey(typeString))
-                return compactSchema.get(typeString);
+            return new TypeOrReference(typeString);
+        }
+    }
+
+    public static TypeOrReference resolveType(String typeString) {
+        try {
+            AtomicTypes.valueOf(typeString.toUpperCase());
+            return compactSchema.get(typeString);
+        } catch (IllegalArgumentException e) {
             return new TypeOrReference(typeString);
         }
     }

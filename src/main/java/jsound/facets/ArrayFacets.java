@@ -12,12 +12,13 @@ import java.io.IOException;
 import static jsound.facets.FacetTypes.CONTENT;
 import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static jsound.json.CompactSchemaFileJsonParser.getTypeFromObject;
+import static jsound.json.CompactSchemaFileJsonParser.resolveType;
 import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
 import static org.api.executors.JSoundExecutor.schema;
 
 public class ArrayFacets extends Facets {
-    public jsound.typedescriptors.array.ArrayContentDescriptor arrayContent =
-        new jsound.typedescriptors.array.ArrayContentDescriptor(
+    public ArrayContentDescriptor arrayContent =
+        new ArrayContentDescriptor(
                 new TypeOrReference(TypeDescriptor.getValueInstance())
         );
     public Integer minLength = null, maxLength = null;
@@ -51,11 +52,11 @@ public class ArrayFacets extends Facets {
             if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
                 String contentType = jsonSchemaIterator.readString();
                 if (schema.containsKey(contentType))
-                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(
+                    this.arrayContent = new ArrayContentDescriptor(
                             new TypeOrReference(schema.get(contentType))
                     );
                 else
-                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(
+                    this.arrayContent = new ArrayContentDescriptor(
                             new TypeOrReference(contentType)
                     );
             }
@@ -63,7 +64,7 @@ public class ArrayFacets extends Facets {
         }
         if (size == 0)
             throw new InvalidSchemaException("You must specify the content atomicTypes for array.");
-        this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(
+        this.arrayContent = new ArrayContentDescriptor(
                 new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor(true))
         );
     }
@@ -76,21 +77,16 @@ public class ArrayFacets extends Facets {
                 throw new InvalidSchemaException("Can only specify one content type for array type " + name + ".");
             if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
                 String contentType = jsonSchemaIterator.readString();
-                if (compactSchema.containsKey(contentType))
-                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(
-                            compactSchema.get(contentType)
-                    );
-                else
-                    this.arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(
-                            new TypeOrReference(contentType)
-                    );
+                this.arrayContent = new ArrayContentDescriptor(
+                        resolveType(contentType)
+                );
             }
             size++;
         }
         if (size == 0)
             throw new InvalidSchemaException("You must specify the content type for array for type " + name + ".");
         if (arrayContent == null)
-            arrayContent = new jsound.typedescriptors.array.ArrayContentDescriptor(getTypeFromObject(name));
+            arrayContent = new ArrayContentDescriptor(getTypeFromObject(name));
     }
 
     @Override

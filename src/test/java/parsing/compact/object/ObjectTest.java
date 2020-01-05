@@ -59,7 +59,7 @@ public class ObjectTest extends BaseTest {
                 .getUnionContent()
                 .getTypes()
                 .get(0)
-                .getType()
+                .getTypeDescriptor()
                 .isObjectType()
         );
         assertTrue(
@@ -192,7 +192,7 @@ public class ObjectTest extends BaseTest {
         );
 
         assertEquals(
-            "myObject",
+            "myObjectType",
             (((TYSONObject) tysonArray.get(5)).get("anotherObject")).getTypeName()
         );
         assertNotEquals(

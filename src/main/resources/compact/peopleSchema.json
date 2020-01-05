@@ -1,13 +1,14 @@
 {
 	"directory": {
 		"people": "persons"
-	}, 
+	},
+	"dateOrDateTime": "date|dateTime",
 	"persons": ["person"], 
 	"person": {
 		"first!": "string", 
 		"last": "string=N/A", 
 		"@picture": "hexBinary", 
-		"birthDate": "date|dateTime", 
+		"birthDate": "dateOrDateTime",
 		"maritalStatus?": "string"
 	}
 }

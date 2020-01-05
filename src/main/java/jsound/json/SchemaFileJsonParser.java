@@ -279,9 +279,9 @@ public class SchemaFileJsonParser {
         }
     }
 
-    public static jsound.facets.AtomicFacets createAtomicFacets(Set<FacetTypes> allowedFacets, String typeName)
+    public static AtomicFacets createAtomicFacets(Set<FacetTypes> allowedFacets, String typeName)
             throws IOException {
-        return (jsound.facets.AtomicFacets) createFacets(allowedFacets, new AtomicFacets(), typeName);
+        return (AtomicFacets) createFacets(allowedFacets, new AtomicFacets(), typeName);
     }
 
     public static ObjectFacets createObjectFacets(String typeName) throws IOException {

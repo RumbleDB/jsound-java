@@ -26,30 +26,30 @@ public class DurationItem extends AtomicItem {
 
     private static final String duYearMonthFrag = "((" + duYearFrag + "(" + duMonthFrag + ")?)|" + duMonthFrag + ")";
     private static final String duTimeFrag = "T(("
-            + duHourFrag
-            + "("
-            + duMinuteFrag
-            + ")?"
-            + "("
-            + duSecondFrag
-            + ")?)|"
-            +
-            "("
-            + duMinuteFrag
-            + "("
-            + duSecondFrag
-            + ")?)|"
-            + duSecondFrag
-            + ")";
+        + duHourFrag
+        + "("
+        + duMinuteFrag
+        + ")?"
+        + "("
+        + duSecondFrag
+        + ")?)|"
+        +
+        "("
+        + duMinuteFrag
+        + "("
+        + duSecondFrag
+        + ")?)|"
+        + duSecondFrag
+        + ")";
     private static final String duDayTimeFrag = "((" + duDayFrag + "(" + duTimeFrag + ")?)|" + duTimeFrag + ")";
     private static final String durationLiteral = prefix
-            + "(("
-            + duYearMonthFrag
-            + "("
-            + duDayTimeFrag
-            + ")?)|"
-            + duDayTimeFrag
-            + ")";
+        + "(("
+        + duYearMonthFrag
+        + "("
+        + duDayTimeFrag
+        + ")?)|"
+        + duDayTimeFrag
+        + ")";
     private static final String yearMonthDurationLiteral = prefix + duYearMonthFrag;
     private static final String dayTimeDurationLiteral = prefix + duDayTimeFrag;
     private static final Pattern durationPattern = Pattern.compile(durationLiteral);
@@ -88,23 +88,23 @@ public class DurationItem extends AtomicItem {
                 return ISOPeriodFormat.standard();
             case YEARMONTHDURATION:
                 return new PeriodFormatterBuilder().appendLiteral("P")
-                        .appendYears()
-                        .appendSuffix("Y")
-                        .appendMonths()
-                        .appendSuffix("M")
-                        .toFormatter();
+                    .appendYears()
+                    .appendSuffix("Y")
+                    .appendMonths()
+                    .appendSuffix("M")
+                    .toFormatter();
             case DAYTIMEDURATION:
                 return new PeriodFormatterBuilder().appendLiteral("P")
-                        .appendDays()
-                        .appendSuffix("D")
-                        .appendSeparatorIfFieldsAfter("T")
-                        .appendHours()
-                        .appendSuffix("H")
-                        .appendMinutes()
-                        .appendSuffix("M")
-                        .appendSecondsWithOptionalMillis()
-                        .appendSuffix("S")
-                        .toFormatter();
+                    .appendDays()
+                    .appendSuffix("D")
+                    .appendSeparatorIfFieldsAfter("T")
+                    .appendHours()
+                    .appendSuffix("H")
+                    .appendMinutes()
+                    .appendSuffix("M")
+                    .appendSecondsWithOptionalMillis()
+                    .appendSuffix("S")
+                    .toFormatter();
             default:
                 throw new IllegalArgumentException();
         }
@@ -116,7 +116,7 @@ public class DurationItem extends AtomicItem {
                 return PeriodType.yearMonthDayTime();
             case YEARMONTHDURATION:
                 return PeriodType.forFields(
-                        new DurationFieldType[] { DurationFieldType.years(), DurationFieldType.months() }
+                    new DurationFieldType[] { DurationFieldType.years(), DurationFieldType.months() }
                 );
             case DAYTIMEDURATION:
                 return PeriodType.dayTime();
@@ -139,7 +139,7 @@ public class DurationItem extends AtomicItem {
 
     public static Period getDurationFromString(String duration, ItemTypes durationType)
             throws UnsupportedOperationException,
-            IllegalArgumentException {
+                IllegalArgumentException {
         if (durationType == null || !checkInvalidDurationFormat(duration, durationType))
             throw new IllegalArgumentException();
         boolean isNegative = duration.charAt(0) == '-';
@@ -148,8 +148,8 @@ public class DurationItem extends AtomicItem {
         PeriodFormatter pf = getPeriodFormatter(durationType);
         Period period = Period.parse(duration, pf);
         return isNegative
-                ? period.negated().normalizedStandard(getPeriodType(durationType))
-                : period.normalizedStandard(getPeriodType(durationType));
+            ? period.negated().normalizedStandard(getPeriodType(durationType))
+            : period.normalizedStandard(getPeriodType(durationType));
     }
 
     @Override

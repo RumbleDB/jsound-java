@@ -50,87 +50,119 @@ public class UnionTest extends BaseTest {
         assertTrue(schema.get("numbers").isUnionType());
         assertTrue(schema.get("recursiveBinaries").isUnionType());
 
-        assertEquals(schema.get("durations")
+        assertEquals(
+            schema.get("durations")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(0)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.DAYTIMEDURATION);
-        assertEquals(schema.get("durations")
+                .getType(),
+            ItemTypes.DAYTIMEDURATION
+        );
+        assertEquals(
+            schema.get("durations")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(1)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.YEARMONTHDURATION);
-        assertEquals(schema.get("durations")
+                .getType(),
+            ItemTypes.YEARMONTHDURATION
+        );
+        assertEquals(
+            schema.get("durations")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(2)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.DURATION);
+                .getType(),
+            ItemTypes.DURATION
+        );
 
-        assertEquals(schema.get("dateTimes")
+        assertEquals(
+            schema.get("dateTimes")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(0)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.DATE);
-        assertEquals(schema.get("dateTimes")
+                .getType(),
+            ItemTypes.DATE
+        );
+        assertEquals(
+            schema.get("dateTimes")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(1)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.TIME);
-        assertEquals(schema.get("dateTimes")
+                .getType(),
+            ItemTypes.TIME
+        );
+        assertEquals(
+            schema.get("dateTimes")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(2)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.DATETIME);
+                .getType(),
+            ItemTypes.DATETIME
+        );
 
-        assertEquals(schema.get("binaries")
+        assertEquals(
+            schema.get("binaries")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(0)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.HEXBINARY);
-        assertEquals(schema.get("binaries")
+                .getType(),
+            ItemTypes.HEXBINARY
+        );
+        assertEquals(
+            schema.get("binaries")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(1)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.BASE64BINARY);
+                .getType(),
+            ItemTypes.BASE64BINARY
+        );
 
-        assertEquals(schema.get("numbers")
+        assertEquals(
+            schema.get("numbers")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(0)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.DOUBLE);
-        assertEquals(schema.get("numbers")
+                .getType(),
+            ItemTypes.DOUBLE
+        );
+        assertEquals(
+            schema.get("numbers")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(1)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.DECIMAL);
-        assertEquals(schema.get("numbers")
+                .getType(),
+            ItemTypes.DECIMAL
+        );
+        assertEquals(
+            schema.get("numbers")
                 .getFacets()
                 .getUnionContent()
                 .getTypes()
                 .get(2)
                 .getTypeDescriptor()
-                .getType(), ItemTypes.INTEGER);
-        assertEquals(schema.get("recursiveBinaries"), schema.get("binaries"));
+                .getType(),
+            ItemTypes.INTEGER
+        );
     }
 
     @Test
@@ -140,40 +172,40 @@ public class UnionTest extends BaseTest {
         assertTrue(unionObject.get("requiredNumbers").isRequired());
         assertTrue(unionObject.get("nullableDateTimes").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                unionObject.get("nullableDateTimes")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isUnionType()
+            unionObject.get("nullableDateTimes")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isUnionType()
         );
         assertTrue(
-                unionObject.get("nullableDateTimes")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            unionObject.get("nullableDateTimes")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(
-                unionObject.get("binariesWithDefault").getTypeOrReference().getTypeDescriptor().isUnionType()
+            unionObject.get("binariesWithDefault").getTypeOrReference().getTypeDescriptor().isUnionType()
         );
         assertTrue(unionObject.get("binariesWithDefault").getDefaultValue().isBase64BinaryItem());
         assertEquals("0F+40A==", unionObject.get("binariesWithDefault").getDefaultValue().getItem().getStringValue());
         assertTrue(
-                unionObject.get("requiredDurationsWithDefault").getTypeOrReference().getTypeDescriptor().isUnionType()
+            unionObject.get("requiredDurationsWithDefault").getTypeOrReference().getTypeDescriptor().isUnionType()
         );
         assertTrue(unionObject.get("requiredDurationsWithDefault").isRequired());
         assertTrue(unionObject.get("requiredDurationsWithDefault").getDefaultValue().isDayTimeDurationItem());
         assertEquals(
-                "P3DT2M",
-                unionObject.get("requiredDurationsWithDefault").getDefaultValue().getItem().getStringValue()
+            "P3DT2M",
+            unionObject.get("requiredDurationsWithDefault").getDefaultValue().getItem().getStringValue()
         );
         assertTrue(unionObject.get("uniqueDurations").isUnique());
     }
@@ -193,53 +225,59 @@ public class UnionTest extends BaseTest {
             assertEquals("unionObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredNumbers"));
-            assertTrue(object.get("requiredNumbers").getTypeName().equals("double")
-            || object.get("requiredNumbers").getTypeName().equals("decimal")
-            || object.get("requiredNumbers").getTypeName().equals("integer"));
+            assertTrue(
+                object.get("requiredNumbers").getTypeName().equals("double")
+                    || object.get("requiredNumbers").getTypeName().equals("decimal")
+                    || object.get("requiredNumbers").getTypeName().equals("integer")
+            );
 
             assertTrue(object.containsKey("binariesWithDefault"));
-            assertTrue(object.get("binariesWithDefault").getTypeName().equals("hexBinary")
-            || object.get("binariesWithDefault").getTypeName().equals("base64Binary"));
+            assertTrue(
+                object.get("binariesWithDefault").getTypeName().equals("hexBinary")
+                    || object.get("binariesWithDefault").getTypeName().equals("base64Binary")
+            );
 
             assertTrue(object.containsKey("requiredDurationsWithDefault"));
-            assertTrue(object.get("requiredDurationsWithDefault").getTypeName().equals("dayTimeDuration")
+            assertTrue(
+                object.get("requiredDurationsWithDefault").getTypeName().equals("dayTimeDuration")
                     || object.get("requiredDurationsWithDefault").getTypeName().equals("yearMonthDuration")
-                    || object.get("requiredDurationsWithDefault").getTypeName().equals("duration"));
+                    || object.get("requiredDurationsWithDefault").getTypeName().equals("duration")
+            );
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDateTimes"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableDateTimes"))).getItemValue().isNullItem()
         );
 
         assertEquals(
-                "2004-04-12T13:20:00+14:00",
-                ((TYSONValue) ((TYSONObject) tysonArray.get(2)).get("nullableDateTimes"))
-                        .getItemValue()
-                        .getStringValue()
+            "2004-04-12T13:20:00+14:00",
+            ((TYSONValue) ((TYSONObject) tysonArray.get(2)).get("nullableDateTimes"))
+                .getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "ZW FzdX JlLg ==",
-                ((TYSONValue) ((TYSONObject) tysonArray.get(3)).get("binariesWithDefault"))
-                        .getItemValue()
-                        .getStringValue()
+            "ZW FzdX JlLg ==",
+            ((TYSONValue) ((TYSONObject) tysonArray.get(3)).get("binariesWithDefault"))
+                .getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "-P33Y3M",
-                ((TYSONValue) ((TYSONObject) tysonArray.get(4)).get("requiredDurationsWithDefault"))
-                        .getItemValue()
-                        .getStringValue()
+            "-P33Y3M",
+            ((TYSONValue) ((TYSONObject) tysonArray.get(4)).get("requiredDurationsWithDefault"))
+                .getItemValue()
+                .getStringValue()
         );
 
 
         assertEquals(
-                "hexBinary",
-                (((TYSONObject) tysonArray.get(5)).get("recursiveBinaryField")).getTypeName()
+            "hexBinary",
+            (((TYSONObject) tysonArray.get(5)).get("recursiveBinaryField")).getTypeName()
         );
         assertNotEquals(
-                ((TYSONObject) tysonArray.get(6)).get("uniqueDurations"),
-                ((TYSONObject) tysonArray.get(7)).get("uniqueDurations")
+            ((TYSONObject) tysonArray.get(6)).get("uniqueDurations"),
+            ((TYSONObject) tysonArray.get(7)).get("uniqueDurations")
         );
 
     }
