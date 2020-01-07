@@ -15,6 +15,10 @@ public class ItemWrapper {
         this.item = item;
     }
 
+    public boolean isAtomicItem() {
+        return this.item.isAtomicItem();
+    }
+
     public boolean isAnyURIItem() {
         return this.item.isAnyURIItem();
     }

@@ -74,6 +74,8 @@ public class DateTimeItem extends AtomicItem {
     }
 
     private static boolean checkInvalidDateTimeFormat(String dateTime, AtomicTypes dateTimeType) {
+        if (dateTime == null)
+            return false;
         switch (dateTimeType) {
             case DATETIME:
                 return dateTimePattern.matcher(dateTime).matches();

@@ -1,5 +1,6 @@
 package parsing.compact.atomicTypes.booleanType;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,11 +32,10 @@ public class InvalidValuesTest extends BaseTest {
     public void testInvalidValues() {
         assertTrue(booleanObj.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
-        assertFalse(
-            booleanObj.validate(fileItem.getItem().getItemMap().get("booleans").getItem().getItems().get(0), false)
-        );
-        assertFalse(
-            booleanObj.validate(fileItem.getItem().getItemMap().get("booleans").getItem().getItems().get(1), false)
-        );
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("booleans").getItem().getItems()) {
+            assertFalse(
+                booleanObj.validate(itemWrapper, false)
+            );
+        }
     }
 }

@@ -1,5 +1,6 @@
 package parsing.compact.atomicTypes.hexBinary;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,17 +32,10 @@ public class InvalidValuesTest extends BaseTest {
     public void testInvalidValues() {
         assertTrue(hexBinaryObj.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
-        assertFalse(
-            hexBinaryObj.validate(
-                fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems().get(0),
-                false
-            )
-        );
-        assertFalse(
-            hexBinaryObj.validate(
-                fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems().get(1),
-                false
-            )
-        );
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems()) {
+            assertFalse(
+                hexBinaryObj.validate(itemWrapper, false)
+            );
+        }
     }
 }

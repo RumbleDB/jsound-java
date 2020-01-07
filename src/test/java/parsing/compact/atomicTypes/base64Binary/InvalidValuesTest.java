@@ -1,5 +1,6 @@
 package parsing.compact.atomicTypes.base64Binary;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,17 +32,10 @@ public class InvalidValuesTest extends BaseTest {
     public void testInvalidValues() {
         assertTrue(base64BinaryObj.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
-        assertFalse(
-            base64BinaryObj.validate(
-                fileItem.getItem().getItemMap().get("base64Binaries").getItem().getItems().get(0),
-                false
-            )
-        );
-        assertFalse(
-            base64BinaryObj.validate(
-                fileItem.getItem().getItemMap().get("base64Binaries").getItem().getItems().get(1),
-                false
-            )
-        );
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("base64Binaries").getItem().getItems()) {
+            assertFalse(
+                base64BinaryObj.validate(itemWrapper, false)
+            );
+        }
     }
 }

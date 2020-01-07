@@ -5,6 +5,19 @@
     },
     {
       "requiredNull": 2
+    },
+    {
+      "requiredNull": true
+    },
+    {
+      "requiredNull": {
+        "field": null
+      }
+    },
+    {
+      "requiredNull": [
+        "null"
+      ]
     }
   ]
 }

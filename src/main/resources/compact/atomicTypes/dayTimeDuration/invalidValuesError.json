@@ -17,6 +17,25 @@
     },
     {
       "requiredDayTimeDuration": "P2Y6M5DT12H35M30S"
+    },
+    {
+      "requiredDayTimeDuration": true
+    },
+    {
+      "requiredDayTimeDuration": null
+    },
+    {
+      "requiredDayTimeDuration": 3
+    },
+    {
+      "requiredDayTimeDuration": {
+        "field": "PT4322M"
+      }
+    },
+    {
+      "requiredDayTimeDuration": [
+        "PT4322M"
+      ]
     }
   ]
 }

@@ -5,6 +5,19 @@
     },
     {
       "requiredBoolean": 2
+    },
+    {
+      "requiredBoolean": null
+    },
+    {
+      "requiredBoolean": {
+        "field": true
+      }
+    },
+    {
+      "requiredBoolean": [
+        true
+      ]
     }
   ]
 }

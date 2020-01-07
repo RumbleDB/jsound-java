@@ -20,6 +20,25 @@
     },
     {
       "requiredDate": "20:20:02.29Z"
+    },
+    {
+      "requiredDate": true
+    },
+    {
+      "requiredDate": null
+    },
+    {
+      "requiredDate": 3
+    },
+    {
+      "requiredDate": {
+        "field": "20:20:02.29Z"
+      }
+    },
+    {
+      "requiredDate": [
+        "20:20:02.29Z"
+      ]
     }
   ]
 }

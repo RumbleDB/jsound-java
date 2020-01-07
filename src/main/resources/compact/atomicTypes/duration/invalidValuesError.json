@@ -32,6 +32,25 @@
     },
     {
       "requiredDuration": ""
+    },
+    {
+      "requiredDuration": null
+    },
+    {
+      "requiredDuration": true
+    },
+    {
+      "requiredDuration": 3
+    },
+    {
+      "requiredDuration": {
+        "field": "P3YT4322M"
+      }
+    },
+    {
+      "requiredDuration": [
+        "P44MT4322M"
+      ]
     }
   ]
 }

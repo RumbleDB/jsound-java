@@ -5,6 +5,25 @@
     },
     {
       "requiredHexBinary": "ag"
+    },
+    {
+      "requiredHexBinary": 3
+    },
+    {
+      "requiredHexBinary": null
+    },
+    {
+      "requiredHexBinary": true
+    },
+    {
+      "requiredHexBinary": {
+        "field": "abcd"
+      }
+    },
+    {
+      "requiredHexBinary": [
+        "abcd"
+      ]
     }
   ]
 }

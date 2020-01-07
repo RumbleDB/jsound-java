@@ -125,6 +125,8 @@ public class DurationItem extends AtomicItem {
     }
 
     private static boolean checkInvalidDurationFormat(String duration, ItemTypes durationType) {
+        if (duration == null)
+            return false;
         switch (durationType) {
             case DURATION:
                 return durationPattern.matcher(duration).matches();

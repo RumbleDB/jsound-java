@@ -14,6 +14,25 @@
     },
     {
       "requiredTime": ""
+    },
+    {
+      "requiredTime": true
+    },
+    {
+      "requiredTime": null
+    },
+    {
+      "requiredTime": 3
+    },
+    {
+      "requiredTime": {
+        "field": "14:00:00"
+      }
+    },
+    {
+      "requiredTime": [
+        "24:00:00"
+      ]
     }
   ]
 }

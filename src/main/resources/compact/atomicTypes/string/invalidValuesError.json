@@ -5,6 +5,22 @@
     },
     {
       "requiredString": true
+    },
+    {
+      "requiredString": 3
+    },
+    {
+      "requiredString": null
+    },
+    {
+      "requiredString": {
+        "field": "abcd"
+      }
+    },
+    {
+      "requiredString": [
+        "abcd"
+      ]
     }
   ]
 }

@@ -1,5 +1,6 @@
 package parsing.compact.atomicTypes.anyURI;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,11 +32,10 @@ public class InvalidValueTest extends BaseTest {
     public void testInvalidValues() {
         assertTrue(anyURIObj.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
-        assertFalse(
-            anyURIObj.validate(fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems().get(0), false)
-        );
-        assertFalse(
-            anyURIObj.validate(fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems().get(1), false)
-        );
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems()) {
+            assertFalse(
+                anyURIObj.validate(itemWrapper, false)
+            );
+        }
     }
 }

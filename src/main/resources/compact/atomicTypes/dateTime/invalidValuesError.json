@@ -17,6 +17,25 @@
     },
     {
       "requiredDateTime": "20:20:02.29Z"
+    },
+    {
+      "requiredDateTime": true
+    },
+    {
+      "requiredDateTime": null
+    },
+    {
+      "requiredDateTime": 3
+    },
+    {
+      "requiredDateTime": {
+        "field": "2001-12-12T24:00:00"
+      }
+    },
+    {
+      "requiredDateTime": [
+        "2001-12-12T24:00:00"
+      ]
     }
   ]
 }

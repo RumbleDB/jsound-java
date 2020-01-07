@@ -2,6 +2,22 @@
   "integers": [
     {
       "requiredInteger": "hello"
+    },
+    {
+      "requiredInteger": true
+    },
+    {
+      "requiredInteger": null
+    },
+    {
+      "requiredInteger": {
+        "field": 3e4
+      }
+    },
+    {
+      "requiredInteger": [
+        5.4
+      ]
     }
   ]
 }

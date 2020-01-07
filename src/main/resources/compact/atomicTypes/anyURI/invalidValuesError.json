@@ -5,6 +5,25 @@
     },
     {
       "requiredAnyURI": "http://datypic.com#f% rag"
+    },
+    {
+      "requiredAnyURI": null
+    },
+    {
+      "requiredAnyURI": 4
+    },
+    {
+      "requiredAnyURI": true
+    },
+    {
+      "requiredAnyURI": {
+        "field": "../prod.html#shirt"
+      }
+    },
+    {
+      "requiredAnyURI": [
+        "../prod.html#shirt"
+      ]
     }
   ]
 }

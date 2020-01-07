@@ -79,6 +79,10 @@ public abstract class Item {
         return false;
     }
 
+    public boolean isAtomicItem() {
+        return false;
+    }
+
     public Integer getIntegerValue() {
         throw new UnexpectedTypeException(this.getStringValue() + " does not have an integer.");
     }

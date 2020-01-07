@@ -17,6 +17,25 @@
     },
     {
       "requiredYearMonthDuration": ""
+    },
+    {
+      "requiredYearMonthDuration": true
+    },
+    {
+      "requiredYearMonthDuration": null
+    },
+    {
+      "requiredYearMonthDuration": 3
+    },
+    {
+      "requiredYearMonthDuration": {
+        "field": "P1Y5M"
+      }
+    },
+    {
+      "requiredYearMonthDuration": [
+        "P23M"
+      ]
     }
   ]
 }

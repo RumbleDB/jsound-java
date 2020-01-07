@@ -1,5 +1,6 @@
 package parsing.compact.atomicTypes.string;
 
+import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,17 +32,10 @@ public class InvalidValuesTest extends BaseTest {
     public void testInvalidValues() {
         assertTrue(stringObj.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
-        assertFalse(
-            stringObj.validate(
-                fileItem.getItem().getItemMap().get("strings").getItem().getItems().get(0),
-                false
-            )
-        );
-        assertFalse(
-            stringObj.validate(
-                fileItem.getItem().getItemMap().get("strings").getItem().getItems().get(1),
-                false
-            )
-        );
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("strings").getItem().getItems()) {
+            assertFalse(
+                stringObj.validate(itemWrapper, false)
+            );
+        }
     }
 }
