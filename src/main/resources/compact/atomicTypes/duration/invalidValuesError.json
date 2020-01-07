@@ -1,0 +1,37 @@
+{
+  "durations": [
+    {
+      "requiredDuration": "P-20M"
+    },
+    {
+      "requiredDuration": "P20MT"
+    },
+    {
+      "requiredDuration": "P1YM5D"
+    },
+    {
+      "requiredDuration": "P15.5Y"
+    },
+    {
+      "requiredDuration": "P1D2H"
+    },
+    {
+      "requiredDuration": "1Y2M"
+    },
+    {
+      "requiredDuration": "P2M1Y"
+    },
+    {
+      "requiredDuration": "P"
+    },
+    {
+      "requiredDuration": "PT15.S"
+    },
+    {
+      "requiredDuration": "PT"
+    },
+    {
+      "requiredDuration": ""
+    }
+  ]
+}

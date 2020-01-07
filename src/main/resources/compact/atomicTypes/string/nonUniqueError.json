@@ -1,0 +1,12 @@
+{
+  "strings": [
+    {
+      "requiredString": "hello",
+      "uniqueString": "world!"
+    },
+    {
+      "requiredString": "arinaldi",
+      "uniqueString": "world!"
+    }
+  ]
+}

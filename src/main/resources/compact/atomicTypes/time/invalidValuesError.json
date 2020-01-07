@@ -1,0 +1,19 @@
+{
+  "times": [
+    {
+      "requiredTime": "5:20:00"
+    },
+    {
+      "requiredTime": "13:20"
+    },
+    {
+      "requiredTime": "13:20.5:00"
+    },
+    {
+      "requiredTime": "13:65:00"
+    },
+    {
+      "requiredTime": ""
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "dayTimeDurations": [
+    {
+      "requiredDayTimeDuration": "P-20M"
+    },
+    {
+      "requiredDayTimeDuration": "P1D2H"
+    },
+    {
+      "requiredDayTimeDuration": "PT"
+    },
+    {
+      "requiredDayTimeDuration": "PT15.S"
+    },
+    {
+      "requiredDayTimeDuration": "P2Y99M"
+    },
+    {
+      "requiredDayTimeDuration": "P2Y6M5DT12H35M30S"
+    }
+  ]
+}

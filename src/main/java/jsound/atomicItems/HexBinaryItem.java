@@ -51,14 +51,17 @@ public class HexBinaryItem extends AtomicItem {
     }
 
     @Override
+    public int hashCode() {
+        return Arrays.hashCode(this._value);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof HexBinaryItem))
             return false;
-        HexBinaryItem hexBinaryItem = (HexBinaryItem) obj;
-        return this._stringValue.equals(hexBinaryItem.getStringValue())
-            && Arrays.equals(
-                this._value,
-                hexBinaryItem.getBinaryValue()
-            );
+        return Arrays.equals(
+            this._value,
+            ((HexBinaryItem) obj).getBinaryValue()
+        );
     }
 }

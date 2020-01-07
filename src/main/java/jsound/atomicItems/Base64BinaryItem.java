@@ -55,14 +55,17 @@ public class Base64BinaryItem extends AtomicItem {
     }
 
     @Override
+    public int hashCode() {
+        return Arrays.hashCode(this._value);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Base64BinaryItem))
             return false;
-        Base64BinaryItem base64BinaryItem = (Base64BinaryItem) obj;
-        return this._stringValue.equals(base64BinaryItem.getStringValue())
-            && Arrays.equals(
-                this._value,
-                base64BinaryItem.getBinaryValue()
-            );
+        return Arrays.equals(
+            this._value,
+            ((Base64BinaryItem) obj).getBinaryValue()
+        );
     }
 }

@@ -1,0 +1,12 @@
+{
+  "integers": [
+    {
+      "requiredInteger": 1,
+      "uniqueInteger": 135.2
+    },
+    {
+      "requiredInteger": 3,
+      "uniqueInteger": 13.5200e1
+    }
+  ]
+}

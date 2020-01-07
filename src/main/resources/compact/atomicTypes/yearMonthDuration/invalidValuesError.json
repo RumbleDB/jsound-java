@@ -1,0 +1,22 @@
+{
+  "yearMonthDurations": [
+    {
+      "requiredYearMonthDuration": "P-20D"
+    },
+    {
+      "requiredYearMonthDuration": "P1YM"
+    },
+    {
+      "requiredYearMonthDuration": "P15.5Y"
+    },
+    {
+      "requiredYearMonthDuration": "P15.5Y"
+    },
+    {
+      "requiredYearMonthDuration": "P2M1Y"
+    },
+    {
+      "requiredYearMonthDuration": ""
+    }
+  ]
+}

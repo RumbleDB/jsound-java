@@ -1,0 +1,12 @@
+{
+  "booleans": [
+    {
+      "requiredBoolean": "true",
+      "uniqueBoolean": "false"
+    },
+    {
+      "requiredBoolean": "false",
+      "uniqueBoolean": false
+    }
+  ]
+}

@@ -153,6 +153,11 @@ public class DurationItem extends AtomicItem {
     }
 
     @Override
+    public int hashCode() {
+        return this._value.hashCode();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Item)) {
             return false;

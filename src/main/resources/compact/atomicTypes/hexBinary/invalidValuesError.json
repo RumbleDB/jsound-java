@@ -1,0 +1,10 @@
+{
+  "hexBinaries": [
+    {
+      "requiredHexBinary": "FB8"
+    },
+    {
+      "requiredHexBinary": "ag"
+    }
+  ]
+}

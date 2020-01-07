@@ -33,6 +33,10 @@ public class TimeItem extends AtomicItem {
         return true;
     }
 
+    @Override public int hashCode() {
+        return Long.hashCode(this._value.getMillis());
+    }
+
     @Override
     public boolean equals(Object obj) {
         return obj instanceof TimeItem && this._value.isEqual(((TimeItem) obj).getDateTime());

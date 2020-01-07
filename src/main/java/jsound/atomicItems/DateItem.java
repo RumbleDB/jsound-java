@@ -32,6 +32,11 @@ public class DateItem extends AtomicItem {
     }
 
     @Override
+    public int hashCode() {
+        return Long.hashCode(this._value.getMillis());
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return obj instanceof DateItem && this._value.isEqual(((DateItem) obj).getDateTime());
     }

@@ -1,0 +1,10 @@
+{
+  "booleans": [
+    {
+      "requiredBoolean": "hello"
+    },
+    {
+      "requiredBoolean": 2
+    }
+  ]
+}

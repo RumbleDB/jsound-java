@@ -29,10 +29,15 @@ public class AnyURIItem extends AtomicItem {
     }
 
     @Override
+    public int hashCode() {
+        return this._value.hashCode();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof AnyURIItem))
             return false;
         AnyURIItem anyURIItem = (AnyURIItem) obj;
-        return this._stringValue.equals(anyURIItem.getStringValue()) && this._value.equals(anyURIItem.getAnyURIValue());
+        return this._value.equals(anyURIItem.getAnyURIValue());
     }
 }

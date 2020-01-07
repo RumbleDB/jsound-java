@@ -1,0 +1,12 @@
+{
+  "decimals": [
+    {
+      "requiredDecimal": 1e3,
+      "uniqueDecimal": 135.2
+    },
+    {
+      "requiredDecimal": 13.1,
+      "uniqueDecimal": 13.5200e1
+    }
+  ]
+}

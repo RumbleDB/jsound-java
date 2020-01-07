@@ -1,0 +1,10 @@
+{
+  "anyURIs": [
+    {
+      "requiredAnyURI": "http://datypic.com#frag1#frag2"
+    },
+    {
+      "requiredAnyURI": "http://datypic.com#f% rag"
+    }
+  ]
+}

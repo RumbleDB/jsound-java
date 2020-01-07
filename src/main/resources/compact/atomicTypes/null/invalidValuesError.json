@@ -1,0 +1,10 @@
+{
+  "nulls": [
+    {
+      "requiredNull": "hello"
+    },
+    {
+      "requiredNull": 2
+    }
+  ]
+}

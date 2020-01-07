@@ -1,0 +1,12 @@
+{
+  "dateTimes": [
+    {
+      "requiredDateTime": "2004-04-12T13:20:00Z",
+      "uniqueDateTime": "2001-12-12T24:00:00"
+    },
+    {
+      "requiredDateTime": "2001-12-12T23:00:00-02:00",
+      "uniqueDateTime": "2001-12-13T00:00:00"
+    }
+  ]
+}
