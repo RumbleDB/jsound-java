@@ -35,27 +35,30 @@ public class NonUniqueTest extends BaseTest {
         assertTrue(dayTimeDurationObj.get("uniqueDayTimeDuration").isUnique());
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("dayTimeDurations")
-                        .getItem()
-                        .getItems()
-                        .get(0)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueDayTimeDuration")
-                        .getItem(),
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("dayTimeDurations")
-                        .getItem()
-                        .getItems()
-                        .get(1)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueDayTimeDuration")
-                        .getItem()
+            fileItem.getItem()
+                .getItemMap()
+                .get("dayTimeDurations")
+                .getItem()
+                .getItems()
+                .get(0)
+                .getItem()
+                .getItemMap()
+                .get("uniqueDayTimeDuration")
+                .getItem(),
+            fileItem.getItem()
+                .getItemMap()
+                .get("dayTimeDurations")
+                .getItem()
+                .getItems()
+                .get(1)
+                .getItem()
+                .getItemMap()
+                .get("uniqueDayTimeDuration")
+                .getItem()
         );
-        assertFalse(schema.get("arrayOfDayTimeDurations").validate(fileItem.getItem().getItemMap().get("dayTimeDurations"), false));
+        assertFalse(
+            schema.get("arrayOfDayTimeDurations")
+                .validate(fileItem.getItem().getItemMap().get("dayTimeDurations"), false)
+        );
     }
 }

@@ -1,0 +1,20 @@
+{
+  "objects":[
+    {
+      "requiredObject": "hello"
+    },
+    {
+      "requiredObject": 1
+    },
+    {
+      "requiredObject": null
+    },
+    {
+      "requiredObject": [
+        {
+          "hello": "world!"
+        }
+      ]
+    }
+  ]
+}

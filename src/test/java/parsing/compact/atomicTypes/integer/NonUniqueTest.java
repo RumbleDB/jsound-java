@@ -35,26 +35,26 @@ public class NonUniqueTest extends BaseTest {
         assertTrue(integerObj.get("uniqueInteger").isUnique());
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("integers")
-                        .getItem()
-                        .getItems()
-                        .get(0)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueInteger")
-                        .getItem(),
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("integers")
-                        .getItem()
-                        .getItems()
-                        .get(1)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueInteger")
-                        .getItem()
+            fileItem.getItem()
+                .getItemMap()
+                .get("integers")
+                .getItem()
+                .getItems()
+                .get(0)
+                .getItem()
+                .getItemMap()
+                .get("uniqueInteger")
+                .getItem(),
+            fileItem.getItem()
+                .getItemMap()
+                .get("integers")
+                .getItem()
+                .getItems()
+                .get(1)
+                .getItem()
+                .getItemMap()
+                .get("uniqueInteger")
+                .getItem()
         );
         assertFalse(schema.get("arrayOfIntegers").validate(fileItem.getItem().getItemMap().get("integers"), false));
     }

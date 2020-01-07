@@ -9,13 +9,13 @@
 	},
 	"myObjectType": "myObject",
 	"objectType" : {
-                "myObject": "myObject",
-                "!requiredObject": "myObject",
-				"nullableObject?": "myObject",
-				"objectWithDefault": "myObject={\"stringField\": \"hello\", \"integerField\": 1}",
-				"!requiredObjectWithDefault": "myObject={\"stringField\": \"hello\", \"integerField\": 1, \"objectField\": {\"stringField\": \"world!\", \"integerField\": 2}}",
-				"anotherObject": "myObjectType",
-				"@uniqueObject": "myObject"
+		"myObject": "myObject",
+		"!requiredObject": "myObject",
+		"nullableObject?": "myObject",
+		"objectWithDefault": "myObject={\"stringField\": \"hello\", \"integerField\": 1}",
+		"!requiredObjectWithDefault": "myObject={\"stringField\": \"hello\", \"integerField\": 1, \"objectField\": {\"stringField\": \"world!\", \"integerField\": 2}}",
+		"anotherObject": "myObjectType",
+		"@uniqueObject": "myObject"
 	},
 	"arrayOfObjects": [
 		"objectType"

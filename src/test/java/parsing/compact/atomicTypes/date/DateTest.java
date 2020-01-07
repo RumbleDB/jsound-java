@@ -95,15 +95,15 @@ public class DateTest extends BaseTest {
             assertEquals("dateObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredDate"));
-            assertEquals("date", ((TYSONValue) object.get("requiredDate")).getTypeName());
+            assertEquals("date", object.get("requiredDate").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDate")).getItemValue().isDateItem());
 
             assertTrue(object.containsKey("dateWithDefault"));
-            assertEquals("date", ((TYSONValue) object.get("dateWithDefault")).getTypeName());
+            assertEquals("date", object.get("dateWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("dateWithDefault")).getItemValue().isDateItem());
 
             assertTrue(object.containsKey("requiredDateWithDefault"));
-            assertEquals("date", ((TYSONValue) object.get("requiredDateWithDefault")).getTypeName());
+            assertEquals("date", object.get("requiredDateWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDateWithDefault")).getItemValue().isDateItem());
         }
 
@@ -126,7 +126,7 @@ public class DateTest extends BaseTest {
         );
         assertEquals(
             "dateType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDate"))).getTypeName()
+            (((TYSONObject) tysonArray.get(5)).get("anotherDate")).getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDate"))).getItemValue(),

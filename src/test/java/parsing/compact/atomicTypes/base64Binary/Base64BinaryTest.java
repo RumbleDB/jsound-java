@@ -105,15 +105,15 @@ public class Base64BinaryTest extends BaseTest {
             assertEquals("base64BinaryObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredBase64Binary"));
-            assertEquals("base64Binary", ((TYSONValue) object.get("requiredBase64Binary")).getTypeName());
+            assertEquals("base64Binary", object.get("requiredBase64Binary").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredBase64Binary")).getItemValue().isBase64BinaryItem());
 
             assertTrue(object.containsKey("base64BinaryWithDefault"));
-            assertEquals("base64Binary", ((TYSONValue) object.get("base64BinaryWithDefault")).getTypeName());
+            assertEquals("base64Binary", object.get("base64BinaryWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("base64BinaryWithDefault")).getItemValue().isBase64BinaryItem());
 
             assertTrue(object.containsKey("requiredBase64BinaryWithDefault"));
-            assertEquals("base64Binary", ((TYSONValue) object.get("requiredBase64BinaryWithDefault")).getTypeName());
+            assertEquals("base64Binary", object.get("requiredBase64BinaryWithDefault").getTypeName());
             assertTrue(
                 ((TYSONValue) object.get("requiredBase64BinaryWithDefault")).getItemValue().isBase64BinaryItem()
             );

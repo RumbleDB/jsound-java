@@ -32,16 +32,16 @@ public class InvalidValuesTest extends BaseTest {
         assertTrue(hexBinaryObj.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
         assertFalse(
-                hexBinaryObj.validate(
-                        fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems().get(0),
-                        false
-                )
+            hexBinaryObj.validate(
+                fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems().get(0),
+                false
+            )
         );
         assertFalse(
-                hexBinaryObj.validate(
-                        fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems().get(1),
-                        false
-                )
+            hexBinaryObj.validate(
+                fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems().get(1),
+                false
+            )
         );
     }
 }

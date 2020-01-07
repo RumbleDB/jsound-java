@@ -35,29 +35,29 @@ public class NonUniqueTest extends BaseTest {
         assertTrue(hexBinaryObj.get("uniqueHexBinary").isUnique());
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("hexBinaries")
-                        .getItem()
-                        .getItems()
-                        .get(0)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueHexBinary")
-                        .getItem(),
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("hexBinaries")
-                        .getItem()
-                        .getItems()
-                        .get(1)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueHexBinary")
-                        .getItem()
+            fileItem.getItem()
+                .getItemMap()
+                .get("hexBinaries")
+                .getItem()
+                .getItems()
+                .get(0)
+                .getItem()
+                .getItemMap()
+                .get("uniqueHexBinary")
+                .getItem(),
+            fileItem.getItem()
+                .getItemMap()
+                .get("hexBinaries")
+                .getItem()
+                .getItems()
+                .get(1)
+                .getItem()
+                .getItemMap()
+                .get("uniqueHexBinary")
+                .getItem()
         );
         assertFalse(
-                schema.get("arrayOfHexBinaries").validate(fileItem.getItem().getItemMap().get("hexBinaries"), false)
+            schema.get("arrayOfHexBinaries").validate(fileItem.getItem().getItemMap().get("hexBinaries"), false)
         );
     }
 }

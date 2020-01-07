@@ -35,26 +35,26 @@ public class NonUniqueTest extends BaseTest {
         assertTrue(dateObj.get("uniqueDate").isUnique());
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("dates")
-                        .getItem()
-                        .getItems()
-                        .get(0)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueDate")
-                        .getItem(),
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("dates")
-                        .getItem()
-                        .getItems()
-                        .get(1)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueDate")
-                        .getItem()
+            fileItem.getItem()
+                .getItemMap()
+                .get("dates")
+                .getItem()
+                .getItems()
+                .get(0)
+                .getItem()
+                .getItemMap()
+                .get("uniqueDate")
+                .getItem(),
+            fileItem.getItem()
+                .getItemMap()
+                .get("dates")
+                .getItem()
+                .getItems()
+                .get(1)
+                .getItem()
+                .getItemMap()
+                .get("uniqueDate")
+                .getItem()
         );
         assertFalse(schema.get("arrayOfDates").validate(fileItem.getItem().getItemMap().get("dates"), false));
     }

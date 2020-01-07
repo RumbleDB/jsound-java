@@ -16,7 +16,6 @@ import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
 import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class NullTest extends BaseTest {
@@ -47,32 +46,32 @@ public class NullTest extends BaseTest {
         assertTrue(nullObj.get("requiredNull").isRequired());
         assertTrue(nullObj.get("nullableNull").getTypeOrReference().getTypeDescriptor().isUnionType());
         assertTrue(
-                nullObj.get("nullableNull")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(0)
-                        .getType()
-                        .isNullType()
+            nullObj.get("nullableNull")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(0)
+                .getType()
+                .isNullType()
         );
         assertTrue(
-                nullObj.get("nullableNull")
-                        .getTypeOrReference()
-                        .getTypeDescriptor()
-                        .getFacets()
-                        .getUnionContent()
-                        .getTypes()
-                        .get(1)
-                        .getType()
-                        .isNullType()
+            nullObj.get("nullableNull")
+                .getTypeOrReference()
+                .getTypeDescriptor()
+                .getFacets()
+                .getUnionContent()
+                .getTypes()
+                .get(1)
+                .getType()
+                .isNullType()
         );
         assertTrue(nullObj.get("nullWithDefault").getTypeOrReference().getTypeDescriptor().isNullType());
         assertTrue(nullObj.get("nullWithDefault").getDefaultValue().isNullItem());
         assertEquals("null", nullObj.get("nullWithDefault").getDefaultValue().getStringValue());
         assertTrue(
-                nullObj.get("requiredNullWithDefault").getTypeOrReference().getTypeDescriptor().isNullType()
+            nullObj.get("requiredNullWithDefault").getTypeOrReference().getTypeDescriptor().isNullType()
         );
         assertTrue(nullObj.get("requiredNullWithDefault").isRequired());
         assertTrue(nullObj.get("requiredNullWithDefault").getDefaultValue().isNullItem());
@@ -108,25 +107,25 @@ public class NullTest extends BaseTest {
         }
 
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableNull"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(1)).get("nullableNull"))).getItemValue().isNullItem()
         );
         assertTrue(
-                ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableNull"))).getItemValue().isNullItem()
+            ((TYSONValue) (((TYSONObject) tysonArray.get(2)).get("nullableNull"))).getItemValue().isNullItem()
         );
         assertEquals(
-                "null",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("nullWithDefault"))).getItemValue()
-                        .getStringValue()
+            "null",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(3)).get("nullWithDefault"))).getItemValue()
+                .getStringValue()
         );
 
         assertEquals(
-                "null",
-                ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredNullWithDefault"))).getItemValue()
-                        .getStringValue()
+            "null",
+            ((TYSONValue) (((TYSONObject) tysonArray.get(4)).get("requiredNullWithDefault"))).getItemValue()
+                .getStringValue()
         );
         assertEquals(
-                "nullType",
-                (((TYSONObject) tysonArray.get(5)).get("anotherNull")).getTypeName()
+            "nullType",
+            (((TYSONObject) tysonArray.get(5)).get("anotherNull")).getTypeName()
         );
     }
 }

@@ -95,15 +95,15 @@ public class TimeTest extends BaseTest {
             assertEquals("timeObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredTime"));
-            assertEquals("time", ((TYSONValue) object.get("requiredTime")).getTypeName());
+            assertEquals("time", object.get("requiredTime").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredTime")).getItemValue().isTimeItem());
 
             assertTrue(object.containsKey("timeWithDefault"));
-            assertEquals("time", ((TYSONValue) object.get("timeWithDefault")).getTypeName());
+            assertEquals("time", object.get("timeWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("timeWithDefault")).getItemValue().isTimeItem());
 
             assertTrue(object.containsKey("requiredTimeWithDefault"));
-            assertEquals("time", ((TYSONValue) object.get("requiredTimeWithDefault")).getTypeName());
+            assertEquals("time", object.get("requiredTimeWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredTimeWithDefault")).getItemValue().isTimeItem());
         }
 
@@ -126,7 +126,7 @@ public class TimeTest extends BaseTest {
         );
         assertEquals(
             "timeType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherTime"))).getTypeName()
+            ((TYSONObject) tysonArray.get(5)).get("anotherTime").getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueTime"))).getItemValue(),

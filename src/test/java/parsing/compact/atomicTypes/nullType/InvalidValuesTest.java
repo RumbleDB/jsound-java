@@ -32,10 +32,10 @@ public class InvalidValuesTest extends BaseTest {
         assertTrue(nullObj.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
         assertFalse(
-                nullObj.validate(fileItem.getItem().getItemMap().get("nulls").getItem().getItems().get(0), false)
+            nullObj.validate(fileItem.getItem().getItemMap().get("nulls").getItem().getItems().get(0), false)
         );
         assertFalse(
-                nullObj.validate(fileItem.getItem().getItemMap().get("nulls").getItem().getItems().get(1), false)
+            nullObj.validate(fileItem.getItem().getItemMap().get("nulls").getItem().getItems().get(1), false)
         );
     }
 }

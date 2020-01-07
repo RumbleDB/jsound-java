@@ -7,7 +7,6 @@ import jsound.typedescriptors.union.UnionContentDescriptor;
 
 import java.io.IOException;
 
-import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static jsound.json.CompactSchemaFileJsonParser.resolveType;
 import static org.api.executors.JSoundExecutor.jsonSchemaIterator;
 import static org.api.executors.JSoundExecutor.schema;

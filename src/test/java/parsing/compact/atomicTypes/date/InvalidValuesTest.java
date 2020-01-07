@@ -14,7 +14,7 @@ import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class InvalidValuesTest  extends BaseTest {
+public class InvalidValuesTest extends BaseTest {
     static String filePath = "src/main/resources/compact/atomicTypes/date/invalidValuesError.json";
     static String schemaPath = "src/main/resources/compact/atomicTypes/date/dateSchema.json";
     static String rootType = "rootType";
@@ -34,7 +34,7 @@ public class InvalidValuesTest  extends BaseTest {
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("dates").getItem().getItems()) {
             assertFalse(
-                    dateObj.validate(itemWrapper, false)
+                dateObj.validate(itemWrapper, false)
             );
         }
     }

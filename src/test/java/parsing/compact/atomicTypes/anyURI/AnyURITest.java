@@ -105,15 +105,15 @@ public class AnyURITest extends BaseTest {
             assertEquals("anyURIObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredAnyURI"));
-            assertEquals("anyURI", ((TYSONValue) object.get("requiredAnyURI")).getTypeName());
+            assertEquals("anyURI", object.get("requiredAnyURI").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredAnyURI")).getItemValue().isAnyURIItem());
 
             assertTrue(object.containsKey("anyURIWithDefault"));
-            assertEquals("anyURI", ((TYSONValue) object.get("anyURIWithDefault")).getTypeName());
+            assertEquals("anyURI", object.get("anyURIWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("anyURIWithDefault")).getItemValue().isAnyURIItem());
 
             assertTrue(object.containsKey("requiredAnyURIWithDefault"));
-            assertEquals("anyURI", ((TYSONValue) object.get("requiredAnyURIWithDefault")).getTypeName());
+            assertEquals("anyURI", object.get("requiredAnyURIWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredAnyURIWithDefault")).getItemValue().isAnyURIItem());
         }
 
@@ -136,7 +136,7 @@ public class AnyURITest extends BaseTest {
         );
         assertEquals(
             "anyURIType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherAnyURI"))).getTypeName()
+            (((TYSONObject) tysonArray.get(5)).get("anotherAnyURI")).getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueAnyURI"))).getItemValue(),

@@ -101,15 +101,15 @@ public class DateTimeTest extends BaseTest {
             assertEquals("dateTimeObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredDateTime"));
-            assertEquals("dateTime", ((TYSONValue) object.get("requiredDateTime")).getTypeName());
+            assertEquals("dateTime", object.get("requiredDateTime").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDateTime")).getItemValue().isDateTimeItem());
 
             assertTrue(object.containsKey("dateTimeWithDefault"));
-            assertEquals("dateTime", ((TYSONValue) object.get("dateTimeWithDefault")).getTypeName());
+            assertEquals("dateTime", object.get("dateTimeWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("dateTimeWithDefault")).getItemValue().isDateTimeItem());
 
             assertTrue(object.containsKey("requiredDateTimeWithDefault"));
-            assertEquals("dateTime", ((TYSONValue) object.get("requiredDateTimeWithDefault")).getTypeName());
+            assertEquals("dateTime", object.get("requiredDateTimeWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDateTimeWithDefault")).getItemValue().isDateTimeItem());
         }
 

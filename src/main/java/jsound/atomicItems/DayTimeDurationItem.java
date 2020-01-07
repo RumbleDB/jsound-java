@@ -1,7 +1,6 @@
 package jsound.atomicItems;
 
 import org.joda.time.Period;
-import org.joda.time.PeriodType;
 
 public class DayTimeDurationItem extends DurationItem {
 

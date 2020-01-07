@@ -95,15 +95,15 @@ public class DurationTest extends BaseTest {
             assertEquals("durationObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredDuration"));
-            assertEquals("duration", ((TYSONValue) object.get("requiredDuration")).getTypeName());
+            assertEquals("duration", object.get("requiredDuration").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDuration")).getItemValue().isDurationItem());
 
             assertTrue(object.containsKey("durationWithDefault"));
-            assertEquals("duration", ((TYSONValue) object.get("durationWithDefault")).getTypeName());
+            assertEquals("duration", object.get("durationWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("durationWithDefault")).getItemValue().isDurationItem());
 
             assertTrue(object.containsKey("requiredDurationWithDefault"));
-            assertEquals("duration", ((TYSONValue) object.get("requiredDurationWithDefault")).getTypeName());
+            assertEquals("duration", object.get("requiredDurationWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDurationWithDefault")).getItemValue().isDurationItem());
         }
 
@@ -126,7 +126,7 @@ public class DurationTest extends BaseTest {
         );
         assertEquals(
             "durationType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDuration"))).getTypeName()
+            (((TYSONObject) tysonArray.get(5)).get("anotherDuration")).getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDuration"))).getItemValue(),

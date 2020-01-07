@@ -1,7 +1,6 @@
 package jsound.atomicItems;
 
 import jsound.item.AtomicItem;
-import jsound.types.AtomicTypes;
 import jsound.types.ItemTypes;
 import org.api.Item;
 import org.joda.time.DurationFieldType;
@@ -154,7 +153,11 @@ public class DurationItem extends AtomicItem {
 
     @Override
     public int hashCode() {
-        return this._value.hashCode();
+        return Long.hashCode(
+            this._value
+                .toDurationFrom(new Instant())
+                .getMillis()
+        );
     }
 
     @Override

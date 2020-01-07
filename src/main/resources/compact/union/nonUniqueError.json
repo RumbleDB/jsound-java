@@ -1,0 +1,12 @@
+{
+  "unions": [
+    {
+      "requiredNumbers": 1,
+      "uniqueDurations": "P0Y0M"
+    },
+    {
+      "requiredNumbers": 3.4232e3,
+      "uniqueDurations": "PT0S"
+    }
+  ]
+}

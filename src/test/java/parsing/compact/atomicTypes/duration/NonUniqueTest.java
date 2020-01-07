@@ -35,26 +35,26 @@ public class NonUniqueTest extends BaseTest {
         assertTrue(durationObj.get("uniqueDuration").isUnique());
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("durations")
-                        .getItem()
-                        .getItems()
-                        .get(0)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueDuration")
-                        .getItem(),
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("durations")
-                        .getItem()
-                        .getItems()
-                        .get(1)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueDuration")
-                        .getItem()
+            fileItem.getItem()
+                .getItemMap()
+                .get("durations")
+                .getItem()
+                .getItems()
+                .get(0)
+                .getItem()
+                .getItemMap()
+                .get("uniqueDuration")
+                .getItem(),
+            fileItem.getItem()
+                .getItemMap()
+                .get("durations")
+                .getItem()
+                .getItems()
+                .get(1)
+                .getItem()
+                .getItemMap()
+                .get("uniqueDuration")
+                .getItem()
         );
         assertFalse(schema.get("arrayOfDurations").validate(fileItem.getItem().getItemMap().get("durations"), false));
     }

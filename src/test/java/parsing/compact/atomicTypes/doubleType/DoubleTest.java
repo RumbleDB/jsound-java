@@ -95,15 +95,15 @@ public class DoubleTest extends BaseTest {
             assertEquals("doubleObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredDouble"));
-            assertEquals("double", ((TYSONValue) object.get("requiredDouble")).getTypeName());
+            assertEquals("double", object.get("requiredDouble").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDouble")).getItemValue().isDoubleItem());
 
             assertTrue(object.containsKey("doubleWithDefault"));
-            assertEquals("double", ((TYSONValue) object.get("doubleWithDefault")).getTypeName());
+            assertEquals("double", object.get("doubleWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("doubleWithDefault")).getItemValue().isDoubleItem());
 
             assertTrue(object.containsKey("requiredDoubleWithDefault"));
-            assertEquals("double", ((TYSONValue) object.get("requiredDoubleWithDefault")).getTypeName());
+            assertEquals("double", object.get("requiredDoubleWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDoubleWithDefault")).getItemValue().isDoubleItem());
         }
 
@@ -126,7 +126,7 @@ public class DoubleTest extends BaseTest {
         );
         assertEquals(
             "doubleType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDouble"))).getTypeName()
+            ((TYSONObject) tysonArray.get(5)).get("anotherDouble").getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDouble"))).getItemValue(),

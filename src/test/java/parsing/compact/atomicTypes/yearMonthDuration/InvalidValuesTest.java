@@ -34,7 +34,7 @@ public class InvalidValuesTest extends BaseTest {
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("yearMonthDurations").getItem().getItems()) {
             assertFalse(
-                    yearMonthDurationObj.validate(itemWrapper, false)
+                yearMonthDurationObj.validate(itemWrapper, false)
             );
         }
     }

@@ -93,15 +93,15 @@ public class StringTest extends BaseTest {
             assertEquals("stringObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredString"));
-            assertEquals("string", ((TYSONValue) object.get("requiredString")).getTypeName());
+            assertEquals("string", object.get("requiredString").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredString")).getItemValue().isStringItem());
 
             assertTrue(object.containsKey("stringWithDefault"));
-            assertEquals("string", ((TYSONValue) object.get("stringWithDefault")).getTypeName());
+            assertEquals("string", object.get("stringWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("stringWithDefault")).getItemValue().isStringItem());
 
             assertTrue(object.containsKey("requiredStringWithDefault"));
-            assertEquals("string", ((TYSONValue) object.get("requiredStringWithDefault")).getTypeName());
+            assertEquals("string", object.get("requiredStringWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredStringWithDefault")).getItemValue().isStringItem());
         }
 
@@ -124,7 +124,7 @@ public class StringTest extends BaseTest {
         );
         assertEquals(
             "stringType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherString"))).getTypeName()
+            ((TYSONObject) tysonArray.get(5)).get("anotherString").getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueString"))).getItemValue(),

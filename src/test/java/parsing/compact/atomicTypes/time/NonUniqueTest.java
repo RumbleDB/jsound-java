@@ -35,26 +35,26 @@ public class NonUniqueTest extends BaseTest {
         assertTrue(timeObj.get("uniqueTime").isUnique());
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("times")
-                        .getItem()
-                        .getItems()
-                        .get(0)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueTime")
-                        .getItem(),
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("times")
-                        .getItem()
-                        .getItems()
-                        .get(1)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueTime")
-                        .getItem()
+            fileItem.getItem()
+                .getItemMap()
+                .get("times")
+                .getItem()
+                .getItems()
+                .get(0)
+                .getItem()
+                .getItemMap()
+                .get("uniqueTime")
+                .getItem(),
+            fileItem.getItem()
+                .getItemMap()
+                .get("times")
+                .getItem()
+                .getItems()
+                .get(1)
+                .getItem()
+                .getItemMap()
+                .get("uniqueTime")
+                .getItem()
         );
         assertFalse(schema.get("arrayOfTimes").validate(fileItem.getItem().getItemMap().get("times"), false));
 
@@ -62,26 +62,26 @@ public class NonUniqueTest extends BaseTest {
         initializeApplication();
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("times")
-                        .getItem()
-                        .getItems()
-                        .get(0)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueTime")
-                        .getItem(),
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("times")
-                        .getItem()
-                        .getItems()
-                        .get(1)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueTime")
-                        .getItem()
+            fileItem.getItem()
+                .getItemMap()
+                .get("times")
+                .getItem()
+                .getItems()
+                .get(0)
+                .getItem()
+                .getItemMap()
+                .get("uniqueTime")
+                .getItem(),
+            fileItem.getItem()
+                .getItemMap()
+                .get("times")
+                .getItem()
+                .getItems()
+                .get(1)
+                .getItem()
+                .getItemMap()
+                .get("uniqueTime")
+                .getItem()
         );
         assertFalse(schema.get("arrayOfTimes").validate(fileItem.getItem().getItemMap().get("times"), false));
     }

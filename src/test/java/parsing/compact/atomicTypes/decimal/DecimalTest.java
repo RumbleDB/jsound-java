@@ -95,15 +95,15 @@ public class DecimalTest extends BaseTest {
             assertEquals("decimalObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredDecimal"));
-            assertEquals("decimal", ((TYSONValue) object.get("requiredDecimal")).getTypeName());
+            assertEquals("decimal", object.get("requiredDecimal").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDecimal")).getItemValue().isDecimalItem());
 
             assertTrue(object.containsKey("decimalWithDefault"));
-            assertEquals("decimal", ((TYSONValue) object.get("decimalWithDefault")).getTypeName());
+            assertEquals("decimal", object.get("decimalWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("decimalWithDefault")).getItemValue().isDecimalItem());
 
             assertTrue(object.containsKey("requiredDecimalWithDefault"));
-            assertEquals("decimal", ((TYSONValue) object.get("requiredDecimalWithDefault")).getTypeName());
+            assertEquals("decimal", object.get("requiredDecimalWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDecimalWithDefault")).getItemValue().isDecimalItem());
         }
 
@@ -126,7 +126,7 @@ public class DecimalTest extends BaseTest {
         );
         assertEquals(
             "decimalType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDecimal"))).getTypeName()
+            ((TYSONObject) tysonArray.get(5)).get("anotherDecimal").getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDecimal"))).getItemValue(),

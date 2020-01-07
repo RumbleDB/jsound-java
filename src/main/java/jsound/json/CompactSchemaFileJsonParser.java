@@ -5,7 +5,6 @@ import com.jsoniter.ValueType;
 import jsound.atomicTypes.NullType;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
-import jsound.exceptions.TypeNotResolvedException;
 import jsound.exceptions.UnexpectedTypeException;
 import jsound.facets.ArrayFacets;
 import jsound.facets.AtomicFacets;
@@ -21,7 +20,6 @@ import jsound.typedescriptors.object.ObjectTypeDescriptor;
 import jsound.typedescriptors.union.UnionTypeDescriptor;
 import jsound.types.AtomicTypes;
 import org.api.ItemWrapper;
-import org.api.TypeDescriptor;
 
 import java.io.IOException;
 import java.util.HashMap;

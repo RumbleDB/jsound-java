@@ -35,26 +35,26 @@ public class NonUniqueTest extends BaseTest {
         assertTrue(doubleObj.get("uniqueDouble").isUnique());
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("doubles")
-                        .getItem()
-                        .getItems()
-                        .get(0)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueDouble")
-                        .getItem(),
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("doubles")
-                        .getItem()
-                        .getItems()
-                        .get(1)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueDouble")
-                        .getItem()
+            fileItem.getItem()
+                .getItemMap()
+                .get("doubles")
+                .getItem()
+                .getItems()
+                .get(0)
+                .getItem()
+                .getItemMap()
+                .get("uniqueDouble")
+                .getItem(),
+            fileItem.getItem()
+                .getItemMap()
+                .get("doubles")
+                .getItem()
+                .getItems()
+                .get(1)
+                .getItem()
+                .getItemMap()
+                .get("uniqueDouble")
+                .getItem()
         );
         assertFalse(schema.get("arrayOfDoubles").validate(fileItem.getItem().getItemMap().get("doubles"), false));
     }

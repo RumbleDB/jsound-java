@@ -125,11 +125,11 @@ public class YearMonthDuration extends BaseTest {
             assertEquals("yearMonthDurationObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredYearMonthDuration"));
-            assertEquals("yearMonthDuration", ((TYSONValue) object.get("requiredYearMonthDuration")).getTypeName());
+            assertEquals("yearMonthDuration", object.get("requiredYearMonthDuration").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredYearMonthDuration")).getItemValue().isYearMonthDurationItem());
 
             assertTrue(object.containsKey("yearMonthDurationWithDefault"));
-            assertEquals("yearMonthDuration", ((TYSONValue) object.get("yearMonthDurationWithDefault")).getTypeName());
+            assertEquals("yearMonthDuration", object.get("yearMonthDurationWithDefault").getTypeName());
             assertTrue(
                 ((TYSONValue) object.get("yearMonthDurationWithDefault")).getItemValue().isYearMonthDurationItem()
             );
@@ -137,7 +137,7 @@ public class YearMonthDuration extends BaseTest {
             assertTrue(object.containsKey("requiredYearMonthDurationWithDefault"));
             assertEquals(
                 "yearMonthDuration",
-                ((TYSONValue) object.get("requiredYearMonthDurationWithDefault")).getTypeName()
+                object.get("requiredYearMonthDurationWithDefault").getTypeName()
             );
             assertTrue(
                 ((TYSONValue) object.get("requiredYearMonthDurationWithDefault")).getItemValue()
@@ -167,7 +167,7 @@ public class YearMonthDuration extends BaseTest {
         );
         assertEquals(
             "yearMonthDurationType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherYearMonthDuration"))).getTypeName()
+            ((TYSONObject) tysonArray.get(5)).get("anotherYearMonthDuration").getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueYearMonthDuration"))).getItemValue(),

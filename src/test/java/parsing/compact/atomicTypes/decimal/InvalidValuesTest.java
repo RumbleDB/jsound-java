@@ -34,7 +34,7 @@ public class InvalidValuesTest extends BaseTest {
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("decimals").getItem().getItems()) {
             assertFalse(
-                    decimalObj.validate(itemWrapper, false)
+                decimalObj.validate(itemWrapper, false)
             );
         }
     }

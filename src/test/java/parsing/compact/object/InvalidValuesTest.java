@@ -1,4 +1,4 @@
-package parsing.compact.atomicTypes.duration;
+package parsing.compact.object;
 
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
@@ -15,26 +15,26 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidValuesTest extends BaseTest {
-    static String filePath = "src/main/resources/compact/atomicTypes/duration/invalidValuesError.json";
-    static String schemaPath = "src/main/resources/compact/atomicTypes/duration/durationSchema.json";
+    static String filePath = "src/main/resources/compact/object/invalidValuesError.json";
+    static String schemaPath = "src/main/resources/compact/object/objectSchema.json";
     static String rootType = "rootType";
     public static boolean compact = true;
 
-    private static TypeDescriptor durationObj;
+    private static TypeDescriptor objectType;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(schemaPath, filePath, rootType, compact);
-        durationObj = schema.get("durationObj");
+        objectType = schema.get("objectType");
     }
 
     @Test
     public void testInvalidValues() {
-        assertTrue(durationObj.isObjectType());
+        assertTrue(objectType.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("durations").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("objects").getItem().getItems()) {
             assertFalse(
-                durationObj.validate(itemWrapper, false)
+                objectType.validate(itemWrapper, false)
             );
         }
     }

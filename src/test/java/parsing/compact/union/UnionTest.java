@@ -1,24 +1,16 @@
 package parsing.compact.union;
 
-import jsound.atomicItems.IntegerItem;
-import jsound.atomicItems.StringItem;
-import jsound.atomicTypes.DayTimeDurationType;
-import jsound.item.ArrayItem;
-import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.types.ItemTypes;
 import jsound.tyson.TYSONArray;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
 import jsound.tyson.TysonItem;
-import org.api.ItemWrapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import parsing.BaseTest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static org.api.executors.JSoundExecutor.fileItem;

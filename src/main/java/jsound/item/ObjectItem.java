@@ -46,7 +46,7 @@ public class ObjectItem extends Item {
     public int hashCode() {
         int result = _itemMap.size();
         for (String key : _itemMap.keySet()) {
-            result += +_itemMap.get(key).hashCode();
+            result += _itemMap.get(key).getItem().hashCode();
         }
         return result;
     }

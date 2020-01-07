@@ -95,15 +95,15 @@ public class IntegerTest extends BaseTest {
             assertEquals("integerObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredInteger"));
-            assertEquals("integer", ((TYSONValue) object.get("requiredInteger")).getTypeName());
+            assertEquals("integer", object.get("requiredInteger").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredInteger")).getItemValue().isIntegerItem());
 
             assertTrue(object.containsKey("integerWithDefault"));
-            assertEquals("integer", ((TYSONValue) object.get("integerWithDefault")).getTypeName());
+            assertEquals("integer", object.get("integerWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("integerWithDefault")).getItemValue().isIntegerItem());
 
             assertTrue(object.containsKey("requiredIntegerWithDefault"));
-            assertEquals("integer", ((TYSONValue) object.get("requiredIntegerWithDefault")).getTypeName());
+            assertEquals("integer", object.get("requiredIntegerWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredIntegerWithDefault")).getItemValue().isIntegerItem());
         }
 
@@ -126,7 +126,7 @@ public class IntegerTest extends BaseTest {
         );
         assertEquals(
             "integerType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherInteger"))).getTypeName()
+            ((TYSONObject) tysonArray.get(5)).get("anotherInteger").getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueInteger"))).getItemValue(),

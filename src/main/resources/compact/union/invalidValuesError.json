@@ -1,0 +1,22 @@
+{
+  "unions":[
+    {
+      "requiredNumbers": "hello"
+    },
+    {
+      "requiredNumbers": {
+        "hello": "world!"
+      }
+    },
+    {
+      "requiredNumbers": null
+    },
+    {
+      "requiredNumbers": [
+        {
+          "hello": "world!"
+        }
+      ]
+    }
+  ]
+}

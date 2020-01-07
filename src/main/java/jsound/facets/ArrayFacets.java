@@ -10,7 +10,6 @@ import org.api.TypeDescriptor;
 import java.io.IOException;
 
 import static jsound.facets.FacetTypes.CONTENT;
-import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 import static jsound.json.CompactSchemaFileJsonParser.getTypeFromObject;
 import static jsound.json.CompactSchemaFileJsonParser.resolveType;
 import static org.api.executors.JSoundExecutor.jsonSchemaIterator;

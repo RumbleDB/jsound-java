@@ -120,17 +120,17 @@ public class DayTimeDurationTest extends BaseTest {
             assertEquals("dayTimeDurationObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredDayTimeDuration"));
-            assertEquals("dayTimeDuration", ((TYSONValue) object.get("requiredDayTimeDuration")).getTypeName());
+            assertEquals("dayTimeDuration", object.get("requiredDayTimeDuration").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredDayTimeDuration")).getItemValue().isDayTimeDurationItem());
 
             assertTrue(object.containsKey("dayTimeDurationWithDefault"));
-            assertEquals("dayTimeDuration", ((TYSONValue) object.get("dayTimeDurationWithDefault")).getTypeName());
+            assertEquals("dayTimeDuration", object.get("dayTimeDurationWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("dayTimeDurationWithDefault")).getItemValue().isDayTimeDurationItem());
 
             assertTrue(object.containsKey("requiredDayTimeDurationWithDefault"));
             assertEquals(
                 "dayTimeDuration",
-                ((TYSONValue) object.get("requiredDayTimeDurationWithDefault")).getTypeName()
+                object.get("requiredDayTimeDurationWithDefault").getTypeName()
             );
             assertTrue(
                 ((TYSONValue) object.get("requiredDayTimeDurationWithDefault")).getItemValue().isDayTimeDurationItem()
@@ -158,7 +158,7 @@ public class DayTimeDurationTest extends BaseTest {
         );
         assertEquals(
             "dayTimeDurationType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherDayTimeDuration"))).getTypeName()
+            ((TYSONObject) tysonArray.get(5)).get("anotherDayTimeDuration").getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueDayTimeDuration"))).getItemValue(),

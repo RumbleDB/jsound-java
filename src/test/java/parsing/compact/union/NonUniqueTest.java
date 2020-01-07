@@ -1,4 +1,4 @@
-package parsing.compact.atomicTypes.decimal;
+package parsing.compact.union;
 
 import jsound.typedescriptors.object.FieldDescriptor;
 import org.junit.BeforeClass;
@@ -16,46 +16,46 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class NonUniqueTest extends BaseTest {
-    static String filePath = "src/main/resources/compact/atomicTypes/decimal/nonUniqueError.json";
-    static String schemaPath = "src/main/resources/compact/atomicTypes/decimal/decimalSchema.json";
+    static String filePath = "src/main/resources/compact/union/nonUniqueError.json";
+    static String schemaPath = "src/main/resources/compact/union/unionSchema.json";
     static String rootType = "rootType";
     public static boolean compact = true;
 
-    private static Map<String, FieldDescriptor> decimalObj;
+    private static Map<String, FieldDescriptor> unionObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(schemaPath, filePath, rootType, compact);
-        decimalObj = schema.get("decimalObj").getFacets().getObjectContent();
+        unionObj = schema.get("unionObj").getFacets().getObjectContent();
     }
 
     @Test
     public void testUniqueField() {
-        assertTrue(schema.get("decimalObj").isObjectType());
-        assertTrue(decimalObj.get("uniqueDecimal").isUnique());
+        assertTrue(schema.get("unionObj").isObjectType());
+        assertTrue(unionObj.get("uniqueDurations").isUnique());
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
             fileItem.getItem()
                 .getItemMap()
-                .get("decimals")
+                .get("unions")
                 .getItem()
                 .getItems()
                 .get(0)
                 .getItem()
                 .getItemMap()
-                .get("uniqueDecimal")
+                .get("uniqueDurations")
                 .getItem(),
             fileItem.getItem()
                 .getItemMap()
-                .get("decimals")
+                .get("unions")
                 .getItem()
                 .getItems()
                 .get(1)
                 .getItem()
                 .getItemMap()
-                .get("uniqueDecimal")
+                .get("uniqueDurations")
                 .getItem()
         );
-        assertFalse(schema.get("arrayOfDecimals").validate(fileItem.getItem().getItemMap().get("decimals"), false));
+        assertFalse(schema.get("arrayOfUnions").validate(fileItem.getItem().getItemMap().get("unions"), false));
     }
 }

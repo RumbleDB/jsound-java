@@ -35,27 +35,30 @@ public class NonUniqueTest extends BaseTest {
         assertTrue(yearMonthDurationObj.get("uniqueYearMonthDuration").isUnique());
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("yearMonthDurations")
-                        .getItem()
-                        .getItems()
-                        .get(0)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueYearMonthDuration")
-                        .getItem(),
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("yearMonthDurations")
-                        .getItem()
-                        .getItems()
-                        .get(1)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueYearMonthDuration")
-                        .getItem()
+            fileItem.getItem()
+                .getItemMap()
+                .get("yearMonthDurations")
+                .getItem()
+                .getItems()
+                .get(0)
+                .getItem()
+                .getItemMap()
+                .get("uniqueYearMonthDuration")
+                .getItem(),
+            fileItem.getItem()
+                .getItemMap()
+                .get("yearMonthDurations")
+                .getItem()
+                .getItems()
+                .get(1)
+                .getItem()
+                .getItemMap()
+                .get("uniqueYearMonthDuration")
+                .getItem()
         );
-        assertFalse(schema.get("arrayOfYearMonthDurations").validate(fileItem.getItem().getItemMap().get("yearMonthDurations"), false));
+        assertFalse(
+            schema.get("arrayOfYearMonthDurations")
+                .validate(fileItem.getItem().getItemMap().get("yearMonthDurations"), false)
+        );
     }
 }

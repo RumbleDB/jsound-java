@@ -10,9 +10,6 @@ import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 import org.joda.time.Instant;
 import org.joda.time.Period;
-import org.joda.time.PeriodType;
-import org.joda.time.format.ISOPeriodFormat;
-import org.joda.time.format.PeriodFormatter;
 
 import java.util.Arrays;
 import java.util.HashSet;

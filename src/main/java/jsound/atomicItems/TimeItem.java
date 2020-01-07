@@ -33,7 +33,8 @@ public class TimeItem extends AtomicItem {
         return true;
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return Long.hashCode(this._value.getMillis());
     }
 

@@ -1,0 +1,18 @@
+{
+  "arrays":[
+    {
+      "requiredArrayOfIntegers": "hello"
+    },
+    {
+      "requiredArrayOfIntegers": 1
+    },
+    {
+      "requiredArrayOfIntegers": null
+    },
+    {
+      "requiredArrayOfIntegers": {
+          "hello": "world!"
+      }
+    }
+  ]
+}

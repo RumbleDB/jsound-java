@@ -35,29 +35,29 @@ public class NonUniqueTest extends BaseTest {
         assertTrue(stringObj.get("uniqueString").isUnique());
         assertFalse(schemaItem.validate(fileItem, false));
         assertEquals(
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("strings")
-                        .getItem()
-                        .getItems()
-                        .get(0)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueString")
-                        .getItem(),
-                fileItem.getItem()
-                        .getItemMap()
-                        .get("strings")
-                        .getItem()
-                        .getItems()
-                        .get(1)
-                        .getItem()
-                        .getItemMap()
-                        .get("uniqueString")
-                        .getItem()
+            fileItem.getItem()
+                .getItemMap()
+                .get("strings")
+                .getItem()
+                .getItems()
+                .get(0)
+                .getItem()
+                .getItemMap()
+                .get("uniqueString")
+                .getItem(),
+            fileItem.getItem()
+                .getItemMap()
+                .get("strings")
+                .getItem()
+                .getItems()
+                .get(1)
+                .getItem()
+                .getItemMap()
+                .get("uniqueString")
+                .getItem()
         );
         assertFalse(
-                schema.get("arrayOfStrings").validate(fileItem.getItem().getItemMap().get("strings"), false)
+            schema.get("arrayOfStrings").validate(fileItem.getItem().getItemMap().get("strings"), false)
         );
     }
 }

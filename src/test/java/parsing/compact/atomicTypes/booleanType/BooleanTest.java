@@ -95,15 +95,15 @@ public class BooleanTest extends BaseTest {
             assertEquals("booleanObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredBoolean"));
-            assertEquals("boolean", ((TYSONValue) object.get("requiredBoolean")).getTypeName());
+            assertEquals("boolean", object.get("requiredBoolean").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredBoolean")).getItemValue().isBooleanItem());
 
             assertTrue(object.containsKey("booleanWithDefault"));
-            assertEquals("boolean", ((TYSONValue) object.get("booleanWithDefault")).getTypeName());
+            assertEquals("boolean", object.get("booleanWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("booleanWithDefault")).getItemValue().isBooleanItem());
 
             assertTrue(object.containsKey("requiredBooleanWithDefault"));
-            assertEquals("boolean", ((TYSONValue) object.get("requiredBooleanWithDefault")).getTypeName());
+            assertEquals("boolean", object.get("requiredBooleanWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredBooleanWithDefault")).getItemValue().isBooleanItem());
         }
 

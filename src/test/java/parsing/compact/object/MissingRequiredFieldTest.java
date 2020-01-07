@@ -1,6 +1,5 @@
 package parsing.compact.object;
 
-import jsound.item.ObjectItem;
 import jsound.typedescriptors.object.FieldDescriptor;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,9 +14,9 @@ import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class MissingRequiredTest extends BaseTest {
+public class MissingRequiredFieldTest extends BaseTest {
     static String filePath = "src/main/resources/compact/object/missingRequiredField/missingRequiredFieldError.json";
-    static String schemaPath = "src/main/resources/compact/object/missingRequiredField/missingRequiredSchema.json";
+    static String schemaPath = "src/main/resources/compact/object/missingRequiredField/missingRequiredFieldSchema.json";
     static String rootType = "rootType";
     public static boolean compact = true;
 

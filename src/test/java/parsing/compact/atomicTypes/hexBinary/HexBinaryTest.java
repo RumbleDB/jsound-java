@@ -95,15 +95,15 @@ public class HexBinaryTest extends BaseTest {
             assertEquals("hexBinaryObj", object.getTypeName());
 
             assertTrue(object.containsKey("requiredHexBinary"));
-            assertEquals("hexBinary", ((TYSONValue) object.get("requiredHexBinary")).getTypeName());
+            assertEquals("hexBinary", object.get("requiredHexBinary").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredHexBinary")).getItemValue().isHexBinaryItem());
 
             assertTrue(object.containsKey("hexBinaryWithDefault"));
-            assertEquals("hexBinary", ((TYSONValue) object.get("hexBinaryWithDefault")).getTypeName());
+            assertEquals("hexBinary", object.get("hexBinaryWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("hexBinaryWithDefault")).getItemValue().isHexBinaryItem());
 
             assertTrue(object.containsKey("requiredHexBinaryWithDefault"));
-            assertEquals("hexBinary", ((TYSONValue) object.get("requiredHexBinaryWithDefault")).getTypeName());
+            assertEquals("hexBinary", object.get("requiredHexBinaryWithDefault").getTypeName());
             assertTrue(((TYSONValue) object.get("requiredHexBinaryWithDefault")).getItemValue().isHexBinaryItem());
         }
 
@@ -126,7 +126,7 @@ public class HexBinaryTest extends BaseTest {
         );
         assertEquals(
             "hexBinaryType",
-            ((TYSONValue) (((TYSONObject) tysonArray.get(5)).get("anotherHexBinary"))).getTypeName()
+            ((TYSONObject) tysonArray.get(5)).get("anotherHexBinary").getTypeName()
         );
         assertNotEquals(
             ((TYSONValue) (((TYSONObject) tysonArray.get(6)).get("uniqueHexBinary"))).getItemValue(),
