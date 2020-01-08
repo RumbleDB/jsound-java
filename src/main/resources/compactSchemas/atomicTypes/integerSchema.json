@@ -1,0 +1,18 @@
+{
+  "rootType" : {
+    "integers": "arrayOfIntegers"
+  },
+  "integerType": "integer",
+  "integerObj" : {
+    "myInteger": "integer",
+    "!requiredInteger": "integer",
+    "nullableInteger?": "integer",
+    "integerWithDefault": "integer=42",
+    "!requiredIntegerWithDefault": "integer=666",
+    "anotherInteger": "integerType",
+    "@uniqueInteger": "integer"
+  },
+  "arrayOfIntegers": [
+    "integerObj"
+  ]
+}

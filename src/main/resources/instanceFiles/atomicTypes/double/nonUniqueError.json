@@ -1,0 +1,12 @@
+{
+  "doubles": [
+    {
+      "requiredDouble": 1e3,
+      "uniqueDouble": 135.2
+    },
+    {
+      "requiredDouble": 13.1,
+      "uniqueDouble": 13.5200e1
+    }
+  ]
+}

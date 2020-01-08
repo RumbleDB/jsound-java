@@ -1,0 +1,36 @@
+{
+  "dayTimeDurations": [
+    {
+      "requiredDayTimeDuration": "P3DT99H66M4333.3S",
+      "myDayTimeDuration": "P1DT2H"
+    },
+    {
+      "requiredDayTimeDuration": "P4D",
+      "nullableDayTimeDuration": null
+    },
+    {
+      "requiredDayTimeDuration": "PT4322M",
+      "nullableDayTimeDuration": "PT4H6M5.5S"
+    },
+    {
+      "requiredDayTimeDuration": "PT999999S",
+      "dayTimeDurationWithDefault": "-P60D"
+    },
+    {
+      "requiredDayTimeDuration": "PT1M30.5S",
+      "requiredDayTimeDurationWithDefault": "PT7M7.890S"
+    },
+    {
+      "requiredDayTimeDuration": "P6DT61M",
+      "anotherDayTimeDuration": "-P6DT99H"
+    },
+    {
+      "requiredDayTimeDuration": "-P4DT5M",
+      "uniqueDayTimeDuration": "P0DT0M"
+    },
+    {
+      "requiredDayTimeDuration": "PT20M3S",
+      "uniqueDayTimeDuration": "PT7M7.890S"
+    }
+  ]
+}

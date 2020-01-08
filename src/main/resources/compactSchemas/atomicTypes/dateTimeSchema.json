@@ -1,0 +1,20 @@
+{
+  "rootType" : {
+    "dateTimes": "arrayOfDateTimes",
+    "dateTimes2": "arrayOfDateTimes",
+    "dateTimes3": "arrayOfDateTimes"
+  },
+  "dateTimeType": "dateTime",
+  "dateTimeObj" : {
+    "myDateTime": "dateTime",
+    "!requiredDateTime": "dateTime",
+    "nullableDateTime?": "dateTime",
+    "dateTimeWithDefault": "dateTime=2001-12-12T12:00:00-12:00",
+    "!requiredDateTimeWithDefault": "dateTime=2004-04-12T13:20:00Z",
+    "anotherDateTime": "dateTimeType",
+    "@uniqueDateTime": "dateTime"
+  },
+  "arrayOfDateTimes": [
+    "dateTimeObj"
+  ]
+}

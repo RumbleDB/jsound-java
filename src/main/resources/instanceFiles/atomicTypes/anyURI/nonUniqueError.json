@@ -1,0 +1,12 @@
+{
+  "anyURIs": [
+    {
+      "requiredAnyURI": "http://www.jsound-spec.org/publish/en-US/JSound/2.0/html-single/JSound/index.html#idm111=",
+      "uniqueAnyURI": "../arinaldi.html"
+    },
+    {
+      "requiredAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java",
+      "uniqueAnyURI": "../arinaldi.html"
+    }
+  ]
+}

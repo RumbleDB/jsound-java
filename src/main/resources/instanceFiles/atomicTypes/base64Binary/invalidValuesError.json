@@ -1,0 +1,29 @@
+{
+  "base64Binaries": [
+    {
+      "requiredBase64Binary": "FB8"
+    },
+    {
+      "requiredBase64Binary": "==0F"
+    },
+    {
+      "requiredBase64Binary": 3
+    },
+    {
+      "requiredBase64Binary": true
+    },
+    {
+      "requiredBase64Binary": null
+    },
+    {
+      "requiredBase64Binary": {
+        "field": "abcd"
+      }
+    },
+    {
+      "requiredBase64Binary": [
+        "abcd"
+      ]
+    }
+  ]
+}

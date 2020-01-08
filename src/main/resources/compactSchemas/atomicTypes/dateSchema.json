@@ -1,0 +1,18 @@
+{
+  "rootType" : {
+    "dates": "arrayOfDates"
+  },
+  "dateType": "date",
+  "dateObj" : {
+    "myDate": "date",
+    "!requiredDate": "date",
+    "nullableDate?": "date",
+    "dateWithDefault": "date=2001-01-01-03:00",
+    "!requiredDateWithDefault": "date=2004-04-12Z",
+    "anotherDate": "dateType",
+    "@uniqueDate": "date"
+  },
+  "arrayOfDates": [
+    "dateObj"
+  ]
+}

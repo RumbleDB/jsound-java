@@ -1,0 +1,23 @@
+{
+  "decimals": [
+    {
+      "requiredDecimal": "hello"
+    },
+    {
+      "requiredDecimal": true
+    },
+    {
+      "requiredDecimal": null
+    },
+    {
+      "requiredDecimal": {
+        "field": 3e4
+      }
+    },
+    {
+      "requiredDecimal": [
+        5.4
+      ]
+    }
+  ]
+}

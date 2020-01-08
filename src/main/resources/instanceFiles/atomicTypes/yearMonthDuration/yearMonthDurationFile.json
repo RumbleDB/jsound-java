@@ -1,0 +1,36 @@
+{
+  "yearMonthDurations": [
+    {
+      "requiredYearMonthDuration": "P2Y",
+      "myYearMonthDuration": "P1Y3M"
+    },
+    {
+      "requiredYearMonthDuration": "-P2Y3M",
+      "nullableYearMonthDuration": null
+    },
+    {
+      "requiredYearMonthDuration": "-P33Y3M",
+      "nullableYearMonthDuration": "P13Y3432M"
+    },
+    {
+      "requiredYearMonthDuration": "P999M",
+      "yearMonthDurationWithDefault": "-P60M"
+    },
+    {
+      "requiredYearMonthDuration": "P12Y",
+      "requiredYearMonthDurationWithDefault": "-P1M"
+    },
+    {
+      "requiredYearMonthDuration": "P0Y0M",
+      "anotherYearMonthDuration": "-P12Y4M"
+    },
+    {
+      "requiredYearMonthDuration": "-P5M",
+      "uniqueYearMonthDuration": "P0Y"
+    },
+    {
+      "requiredYearMonthDuration": "P0M",
+      "uniqueYearMonthDuration": "P99Y12M"
+    }
+  ]
+}

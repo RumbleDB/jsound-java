@@ -1,0 +1,12 @@
+{
+  "hexBinaries": [
+    {
+      "requiredHexBinary": "abcd",
+      "uniqueHexBinary": "aaaa"
+    },
+    {
+      "requiredHexBinary": "12345678",
+      "uniqueHexBinary": "AAAA"
+    }
+  ]
+}

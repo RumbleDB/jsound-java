@@ -58,14 +58,15 @@ public class ArrayFacets extends Facets {
                     this.arrayContent = new ArrayContentDescriptor(
                             new TypeOrReference(contentType)
                     );
+            } else {
+                this.arrayContent = new ArrayContentDescriptor(
+                        new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor(true))
+                );
             }
             size++;
         }
         if (size == 0)
             throw new InvalidSchemaException("You must specify the content atomicTypes for array.");
-        this.arrayContent = new ArrayContentDescriptor(
-                new TypeOrReference(SchemaFileJsonParser.getTypeDescriptor(true))
-        );
     }
 
     public void setArrayContent(String name) throws IOException {

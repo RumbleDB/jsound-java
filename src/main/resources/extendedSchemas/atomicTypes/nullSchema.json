@@ -1,0 +1,18 @@
+{
+  "rootType" : {
+    "nulls": "arrayOfNulls"
+  },
+  "nullType": "null",
+  "nullObj" : {
+    "myNull": "null",
+    "!requiredNull": "null",
+    "nullableNull?": "null",
+    "nullWithDefault": "null=null",
+    "!requiredNullWithDefault": "null=null",
+    "anotherNull": "nullType",
+    "@uniqueNull": "null"
+  },
+  "arrayOfNulls": [
+    "nullObj"
+  ]
+}

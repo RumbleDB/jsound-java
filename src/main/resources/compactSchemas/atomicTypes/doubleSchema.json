@@ -1,0 +1,18 @@
+{
+  "rootType" : {
+    "doubles": "arrayOfDoubles"
+  },
+  "doubleType": "double",
+  "doubleObj" : {
+    "myDouble": "double",
+    "!requiredDouble": "double",
+    "nullableDouble?": "double",
+    "doubleWithDefault": "double=42e1",
+    "!requiredDoubleWithDefault": "double=6.432432E3",
+    "anotherDouble": "doubleType",
+    "@uniqueDouble": "double"
+  },
+  "arrayOfDoubles": [
+    "doubleObj"
+  ]
+}

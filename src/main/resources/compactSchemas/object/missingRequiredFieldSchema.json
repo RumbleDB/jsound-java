@@ -1,0 +1,12 @@
+{
+  "rootType" : {
+    "objects": "arrayOfObjects"
+  },
+  "object" : {
+    "field": "string",
+    "!requiredField": "string"
+  },
+  "arrayOfObjects": [
+    "object"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "types" : [
+    {
+      "name" :"rootType",
+      "kind" : "object",
+      "content" : [
+        {
+          "name" : "people",
+          "type" : "persons"
+        }
+      ]
+    },
+    {
+      "name": "dateOrDateTime",
+      "kind": "union",
+      "content": [ "date", "dateTime" ]
+    },
+    {
+      "name": "persons",
+      "kind": "array",
+      "content": [ "person" ]
+    },
+    {
+      "name": "person",
+      "kind": "object",
+      "content": [
+        {
+          "name": "first",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "last",
+          "type": "string",
+          "default": "N/A"
+        },
+        {
+          "name": "picture",
+          "type": "hexBinary",
+          "unique": true
+        },
+        {
+          "name": "birthDate",
+          "type": "dateOrDateTime"
+        },
+        {
+          "name" : "maritalStatus",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "string", "null" ]
+          }
+        }
+      ]
+    }
+  ]
+}

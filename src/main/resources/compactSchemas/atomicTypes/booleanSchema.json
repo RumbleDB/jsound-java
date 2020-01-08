@@ -1,0 +1,18 @@
+{ 
+	"rootType" : {
+		"booleans": "arrayOfBooleans"
+	},
+        "booleanType": "boolean",
+	"booleanObj" : {
+                "myBoolean": "boolean",
+                "!requiredBoolean": "boolean",
+                "nullableBoolean?": "boolean",
+                "booleanWithDefault": "boolean=true",
+                "!requiredBooleanWithDefault": "boolean=false",
+                "anotherBoolean": "booleanType",
+                "@uniqueBoolean": "boolean"
+	},
+	"arrayOfBooleans": [
+		"booleanObj"
+	]
+}

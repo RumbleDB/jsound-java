@@ -1,0 +1,23 @@
+{
+  "doubles": [
+    {
+      "requiredDouble": "hello"
+    },
+    {
+      "requiredDouble": true
+    },
+    {
+      "requiredDouble": null
+    },
+    {
+      "requiredDouble": {
+        "field": 3e4
+      }
+    },
+    {
+      "requiredDouble": [
+        5.4
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "nulls": [
+    {
+      "requiredNull": null,
+      "uniqueNull": "null"
+    },
+    {
+      "requiredNull": "null",
+      "uniqueNull": null
+    }
+  ]
+}
+

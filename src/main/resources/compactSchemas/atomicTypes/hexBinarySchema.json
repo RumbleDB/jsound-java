@@ -1,0 +1,18 @@
+{ 
+	"rootType" : {
+		"hexBinaries": "arrayOfHexBinaries"
+	},
+        "hexBinaryType": "hexBinary",
+	"hexBinaryObj" : {
+                "myHexBinary": "hexBinary",
+                "!requiredHexBinary": "hexBinary",
+                "nullableHexBinary?": "hexBinary",
+                "hexBinaryWithDefault": "hexBinary=0123abcd",
+                "!requiredHexBinaryWithDefault": "hexBinary=aaBB",
+                "anotherHexBinary": "hexBinaryType",
+                "@uniqueHexBinary": "hexBinary"
+	},
+	"arrayOfHexBinaries": [
+		"hexBinaryObj"
+	]
+}

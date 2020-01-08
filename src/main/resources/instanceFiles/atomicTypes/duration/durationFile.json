@@ -1,0 +1,36 @@
+{
+  "durations": [
+    {
+      "requiredDuration": "P2Y6M5DT12H35M30S",
+      "myDuration": "P1DT2H"
+    },
+    {
+      "requiredDuration": "P20M",
+      "nullableDuration": null
+    },
+    {
+      "requiredDuration": "PT20M",
+      "nullableDuration": "P0Y20M0D"
+    },
+    {
+      "requiredDuration": "P0Y",
+      "durationWithDefault": "-P60D"
+    },
+    {
+      "requiredDuration": "PT1M30.5S",
+      "requiredDurationWithDefault": "PT7M7.890S"
+    },
+    {
+      "requiredDuration": "P6DT60M",
+      "anotherDuration": "-P6DT1H"
+    },
+    {
+      "requiredDuration": "P20MT4H5M6S",
+      "uniqueDuration": "P1Y6M5DT12H35M30S"
+    },
+    {
+      "requiredDuration": "P20M3D",
+      "uniqueDuration": "PT7M7.890S"
+    }
+  ]
+}

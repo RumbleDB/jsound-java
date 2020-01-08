@@ -1,0 +1,14 @@
+{
+	"rootType": {
+		"people": "persons"
+	},
+	"dateOrDateTime": "date|dateTime",
+	"persons": ["person"], 
+	"person": {
+		"first!": "string", 
+		"last": "string=N/A", 
+		"@picture": "hexBinary", 
+		"birthDate": "dateOrDateTime",
+		"maritalStatus?": "string"
+	}
+}
