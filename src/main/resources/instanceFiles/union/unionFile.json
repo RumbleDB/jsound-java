@@ -21,10 +21,6 @@
       "requiredDurationsWithDefault": "-P33Y3M"
     },
     {
-      "requiredNumbers": 3,
-      "recursiveBinaryField": "abe490"
-    },
-    {
       "requiredNumbers": 5,
       "uniqueDurations": "P1Y6M5DT12H35M30S"
     },

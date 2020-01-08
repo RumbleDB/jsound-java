@@ -1,23 +1,100 @@
-{ 
-	"rootType" : {
-		"objects": "arrayOfObjects"
-	},
-	"myObject": {
-		"stringField": "string",
-		"integerField": "integer",
-		"objectField?": "myObject=null"
-	},
-	"myObjectType": "myObject",
-	"objectType" : {
-		"myObject": "myObject",
-		"!requiredObject": "myObject",
-		"nullableObject?": "myObject",
-		"objectWithDefault": "myObject={\"stringField\": \"hello\", \"integerField\": 1}",
-		"!requiredObjectWithDefault": "myObject={\"stringField\": \"hello\", \"integerField\": 1, \"objectField\": {\"stringField\": \"world!\", \"integerField\": 2}}",
-		"anotherObject": "myObjectType",
-		"@uniqueObject": "myObject"
-	},
-	"arrayOfObjects": [
-		"objectType"
+{
+	"types": [
+		{
+			"name": "rootType",
+			"kind": "object",
+			"content": [
+				{
+					"name": "objects",
+					"type": "arrayOfObjects"
+				}
+			]
+		},
+		{
+			"name": "myObject",
+			"kind": "object",
+			"content": [
+				{
+					"name": "stringField",
+					"type": "string"
+				},
+				{
+					"name": "integerField",
+					"type": "integer"
+				},
+				{
+					"name": "objectField",
+					"type": {
+						"kind" : "union",
+						"content" : [ "myObject", "null" ]
+					},
+					"default": null
+				}
+			]
+		},
+		{
+			"name": "myObjectType",
+			"kind": "object",
+			"baseType": "myObject"
+		},
+		{
+			"name": "objectType",
+			"kind": "object",
+			"content": [
+				{
+					"name": "myObject",
+					"type": "myObject"
+				},
+				{
+					"name": "requiredObject",
+					"type": "myObject",
+					"required": true
+				},
+				{
+					"name" : "nullableObject",
+					"type" : {
+						"kind" : "union",
+						"content" : [ "myObject", "null" ]
+					}
+				},
+				{
+					"name": "objectWithDefault",
+					"type": "myObject",
+					"default": {
+						"stringField": "hello",
+						"integerField": 1
+					}
+				},
+				{
+					"name": "requiredObjectWithDefault",
+					"type": "myObject",
+					"required": true,
+					"default": {
+						"stringField": "hello",
+						"integerField": 1,
+						"objectField": {
+							"stringField": "world!",
+							"integerField": 2
+						}
+					}
+				},
+				{
+					"name": "anotherObject",
+					"type": "myObjectType"
+				},
+				{
+					"name": "uniqueObject",
+					"type": "myObject",
+					"unique": true
+				}
+			]
+		},
+		{
+			"name": "arrayOfObjects",
+			"kind": "array",
+			"content": [
+				"objectType"
+			]
+		}
 	]
 }

@@ -1,18 +1,68 @@
-{ 
-	"rootType" : {
-		"booleans": "arrayOfBooleans"
-	},
-        "booleanType": "boolean",
-	"booleanObj" : {
-                "myBoolean": "boolean",
-                "!requiredBoolean": "boolean",
-                "nullableBoolean?": "boolean",
-                "booleanWithDefault": "boolean=true",
-                "!requiredBooleanWithDefault": "boolean=false",
-                "anotherBoolean": "booleanType",
-                "@uniqueBoolean": "boolean"
-	},
-	"arrayOfBooleans": [
-		"booleanObj"
-	]
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "booleans",
+          "type": "arrayOfBooleans"
+        }
+      ]
+    },
+    {
+      "name": "booleanType",
+      "kind": "atomic",
+      "baseType": "boolean"
+    },
+    {
+      "name": "arrayOfBooleans",
+      "kind": "array",
+      "content": [
+        "booleanObj"
+      ]
+    },
+    {
+      "name": "booleanObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myBoolean",
+          "type": "boolean"
+        },
+        {
+          "name": "requiredBoolean",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "name" : "nullableBoolean",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "boolean", "null" ]
+          }
+        },
+        {
+          "name": "booleanWithDefault",
+          "type": "boolean",
+          "default": "true"
+        },
+        {
+          "name": "requiredBooleanWithDefault",
+          "type": "boolean",
+          "required": true,
+          "default": false
+        },
+        {
+          "name": "anotherBoolean",
+          "type": "booleanType"
+        },
+        {
+          "name": "uniqueBoolean",
+          "type": "boolean",
+          "unique": true
+        }
+      ]
+    }
+  ]
 }

@@ -1,18 +1,68 @@
 {
-  "rootType" : {
-    "doubles": "arrayOfDoubles"
-  },
-  "doubleType": "double",
-  "doubleObj" : {
-    "myDouble": "double",
-    "!requiredDouble": "double",
-    "nullableDouble?": "double",
-    "doubleWithDefault": "double=42e1",
-    "!requiredDoubleWithDefault": "double=6.432432E3",
-    "anotherDouble": "doubleType",
-    "@uniqueDouble": "double"
-  },
-  "arrayOfDoubles": [
-    "doubleObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "doubles",
+          "type": "arrayOfDoubles"
+        }
+      ]
+    },
+    {
+      "name": "doubleType",
+      "kind": "atomic",
+      "baseType": "double"
+    },
+    {
+      "name": "arrayOfDoubles",
+      "kind": "array",
+      "content": [
+        "doubleObj"
+      ]
+    },
+    {
+      "name": "doubleObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myDouble",
+          "type": "double"
+        },
+        {
+          "name": "requiredDouble",
+          "type": "double",
+          "required": true
+        },
+        {
+          "name" : "nullableDouble",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "double", "null" ]
+          }
+        },
+        {
+          "name": "doubleWithDefault",
+          "type": "double",
+          "default": 42e1
+        },
+        {
+          "name": "requiredDoubleWithDefault",
+          "type": "double",
+          "required": true,
+          "default": 6.432432E3
+        },
+        {
+          "name": "anotherDouble",
+          "type": "doubleType"
+        },
+        {
+          "name": "uniqueDouble",
+          "type": "double",
+          "unique": true
+        }
+      ]
+    }
   ]
 }

@@ -1,18 +1,68 @@
 {
-  "rootType" : {
-    "dates": "arrayOfDates"
-  },
-  "dateType": "date",
-  "dateObj" : {
-    "myDate": "date",
-    "!requiredDate": "date",
-    "nullableDate?": "date",
-    "dateWithDefault": "date=2001-01-01-03:00",
-    "!requiredDateWithDefault": "date=2004-04-12Z",
-    "anotherDate": "dateType",
-    "@uniqueDate": "date"
-  },
-  "arrayOfDates": [
-    "dateObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dates",
+          "type": "arrayOfDates"
+        }
+      ]
+    },
+    {
+      "name": "dateType",
+      "kind": "atomic",
+      "baseType": "date"
+    },
+    {
+      "name": "arrayOfDates",
+      "kind": "array",
+      "content": [
+        "dateObj"
+      ]
+    },
+    {
+      "name": "dateObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myDate",
+          "type": "date"
+        },
+        {
+          "name": "requiredDate",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name" : "nullableDate",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "date", "null" ]
+          }
+        },
+        {
+          "name": "dateWithDefault",
+          "type": "date",
+          "default": "2001-01-01-03:00"
+        },
+        {
+          "name": "requiredDateWithDefault",
+          "type": "date",
+          "required": true,
+          "default": "2004-04-12Z"
+        },
+        {
+          "name": "anotherDate",
+          "type": "dateType"
+        },
+        {
+          "name": "uniqueDate",
+          "type": "date",
+          "unique": true
+        }
+      ]
+    }
   ]
 }

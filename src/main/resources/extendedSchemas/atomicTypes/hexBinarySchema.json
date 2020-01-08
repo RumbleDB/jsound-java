@@ -1,18 +1,68 @@
-{ 
-	"rootType" : {
-		"hexBinaries": "arrayOfHexBinaries"
-	},
-        "hexBinaryType": "hexBinary",
-	"hexBinaryObj" : {
-                "myHexBinary": "hexBinary",
-                "!requiredHexBinary": "hexBinary",
-                "nullableHexBinary?": "hexBinary",
-                "hexBinaryWithDefault": "hexBinary=0123abcd",
-                "!requiredHexBinaryWithDefault": "hexBinary=aaBB",
-                "anotherHexBinary": "hexBinaryType",
-                "@uniqueHexBinary": "hexBinary"
-	},
-	"arrayOfHexBinaries": [
-		"hexBinaryObj"
-	]
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "hexBinaries",
+          "type": "arrayOfHexBinaries"
+        }
+      ]
+    },
+    {
+      "name": "hexBinaryType",
+      "kind": "atomic",
+      "baseType": "hexBinary"
+    },
+    {
+      "name": "arrayOfHexBinaries",
+      "kind": "array",
+      "content": [
+        "hexBinaryObj"
+      ]
+    },
+    {
+      "name": "hexBinaryObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myHexBinary",
+          "type": "hexBinary"
+        },
+        {
+          "name": "requiredHexBinary",
+          "type": "hexBinary",
+          "required": true
+        },
+        {
+          "name" : "nullableHexBinary",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "hexBinary", "null" ]
+          }
+        },
+        {
+          "name": "hexBinaryWithDefault",
+          "type": "hexBinary",
+          "default": "0123abcd"
+        },
+        {
+          "name": "requiredHexBinaryWithDefault",
+          "type": "hexBinary",
+          "required": true,
+          "default": "aaBB"
+        },
+        {
+          "name": "anotherHexBinary",
+          "type": "hexBinaryType"
+        },
+        {
+          "name": "uniqueHexBinary",
+          "type": "hexBinary",
+          "unique": true
+        }
+      ]
+    }
+  ]
 }

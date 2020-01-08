@@ -1,18 +1,68 @@
 {
-  "rootType" : {
-    "times": "arrayOfTimes"
-  },
-  "timeType": "time",
-  "timeObj" : {
-    "myTime": "time",
-    "!requiredTime": "time",
-    "nullableTime?": "time",
-    "timeWithDefault": "time=13:20:00",
-    "!requiredTimeWithDefault": "time=23:10:10.555Z",
-    "anotherTime": "timeType",
-    "@uniqueTime": "time"
-  },
-  "arrayOfTimes": [
-    "timeObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "times",
+          "type": "arrayOfTimes"
+        }
+      ]
+    },
+    {
+      "name": "timeType",
+      "kind": "atomic",
+      "baseType": "time"
+    },
+    {
+      "name": "arrayOfTimes",
+      "kind": "array",
+      "content": [
+        "timeObj"
+      ]
+    },
+    {
+      "name": "timeObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myTime",
+          "type": "time"
+        },
+        {
+          "name": "requiredTime",
+          "type": "time",
+          "required": true
+        },
+        {
+          "name" : "nullableTime",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "time", "null" ]
+          }
+        },
+        {
+          "name": "timeWithDefault",
+          "type": "time",
+          "default": "13:20:00"
+        },
+        {
+          "name": "requiredTimeWithDefault",
+          "type": "time",
+          "required": true,
+          "default": "23:10:10.555Z"
+        },
+        {
+          "name": "anotherTime",
+          "type": "timeType"
+        },
+        {
+          "name": "uniqueTime",
+          "type": "time",
+          "unique": true
+        }
+      ]
+    }
   ]
 }

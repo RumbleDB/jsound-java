@@ -1,20 +1,68 @@
 {
-  "rootType" : {
-    "dateTimes": "arrayOfDateTimes",
-    "dateTimes2": "arrayOfDateTimes",
-    "dateTimes3": "arrayOfDateTimes"
-  },
-  "dateTimeType": "dateTime",
-  "dateTimeObj" : {
-    "myDateTime": "dateTime",
-    "!requiredDateTime": "dateTime",
-    "nullableDateTime?": "dateTime",
-    "dateTimeWithDefault": "dateTime=2001-12-12T12:00:00-12:00",
-    "!requiredDateTimeWithDefault": "dateTime=2004-04-12T13:20:00Z",
-    "anotherDateTime": "dateTimeType",
-    "@uniqueDateTime": "dateTime"
-  },
-  "arrayOfDateTimes": [
-    "dateTimeObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dateTimes",
+          "type": "arrayOfDateTimes"
+        }
+      ]
+    },
+    {
+      "name": "dateTimeType",
+      "kind": "atomic",
+      "baseType": "dateTime"
+    },
+    {
+      "name": "arrayOfDateTimes",
+      "kind": "array",
+      "content": [
+        "dateTimeObj"
+      ]
+    },
+    {
+      "name": "dateTimeObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myDateTime",
+          "type": "dateTime"
+        },
+        {
+          "name": "requiredDateTime",
+          "type": "dateTime",
+          "required": true
+        },
+        {
+          "name" : "nullableDateTime",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "dateTime", "null" ]
+          }
+        },
+        {
+          "name": "dateTimeWithDefault",
+          "type": "dateTime",
+          "default": "2001-12-12T12:00:00-12:00"
+        },
+        {
+          "name": "requiredDateTimeWithDefault",
+          "type": "dateTime",
+          "required": true,
+          "default": "2004-04-12T13:20:00Z"
+        },
+        {
+          "name": "anotherDateTime",
+          "type": "dateTimeType"
+        },
+        {
+          "name": "uniqueDateTime",
+          "type": "dateTime",
+          "unique": true
+        }
+      ]
+    }
   ]
 }

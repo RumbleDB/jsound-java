@@ -1,18 +1,68 @@
 {
-  "rootType" : {
-    "yearMonthDurations": "arrayOfYearMonthDurations"
-  },
-  "yearMonthDurationType": "yearMonthDuration",
-  "yearMonthDurationObj" : {
-    "myYearMonthDuration": "yearMonthDuration",
-    "!requiredYearMonthDuration": "yearMonthDuration",
-    "nullableYearMonthDuration?": "yearMonthDuration",
-    "yearMonthDurationWithDefault": "yearMonthDuration=P2Y4M",
-    "!requiredYearMonthDurationWithDefault": "yearMonthDuration=P2Y99M",
-    "anotherYearMonthDuration": "yearMonthDurationType",
-    "@uniqueYearMonthDuration": "yearMonthDuration"
-  },
-  "arrayOfYearMonthDurations": [
-    "yearMonthDurationObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "yearMonthDurations",
+          "type": "arrayOfYearMonthDurations"
+        }
+      ]
+    },
+    {
+      "name": "yearMonthDurationType",
+      "kind": "atomic",
+      "baseType": "yearMonthDuration"
+    },
+    {
+      "name": "arrayOfYearMonthDurations",
+      "kind": "array",
+      "content": [
+        "yearMonthDurationObj"
+      ]
+    },
+    {
+      "name": "yearMonthDurationObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myYearMonthDuration",
+          "type": "yearMonthDuration"
+        },
+        {
+          "name": "requiredYearMonthDuration",
+          "type": "yearMonthDuration",
+          "required": true
+        },
+        {
+          "name" : "nullableYearMonthDuration",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "yearMonthDuration", "null" ]
+          }
+        },
+        {
+          "name": "yearMonthDurationWithDefault",
+          "type": "yearMonthDuration",
+          "default": "P2Y4M"
+        },
+        {
+          "name": "requiredYearMonthDurationWithDefault",
+          "type": "yearMonthDuration",
+          "required": true,
+          "default": "P2Y99M"
+        },
+        {
+          "name": "anotherYearMonthDuration",
+          "type": "yearMonthDurationType"
+        },
+        {
+          "name": "uniqueYearMonthDuration",
+          "type": "yearMonthDuration",
+          "unique": true
+        }
+      ]
+    }
   ]
 }

@@ -6,14 +6,12 @@
   "dateTimes": "date|time|dateTime",
   "binaries": "hexBinary|base64Binary",
   "numbers": "double|decimal|integer",
-  "recursiveBinaries": "binaries",
   "unionObj" : {
     "myDurations": "durations",
     "!requiredNumbers": "numbers",
     "nullableDateTimes?": "dateTimes",
     "binariesWithDefault": "binaries=0F+40A==",
     "!requiredDurationsWithDefault": "durations=PT4322M",
-    "recursiveBinaryField": "recursiveBinaries",
     "@uniqueDurations": "durations"
   },
   "arrayOfUnions": [

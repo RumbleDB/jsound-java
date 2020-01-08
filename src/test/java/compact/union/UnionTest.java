@@ -42,7 +42,6 @@ public class UnionTest extends BaseTest {
         assertTrue(schema.get("dateTimes").isUnionType());
         assertTrue(schema.get("binaries").isUnionType());
         assertTrue(schema.get("numbers").isUnionType());
-        assertTrue(schema.get("recursiveBinaries").isUnionType());
 
         assertEquals(
             schema.get("durations")
@@ -264,14 +263,9 @@ public class UnionTest extends BaseTest {
                 .getStringValue()
         );
 
-
-        assertEquals(
-            "hexBinary",
-            (((TYSONObject) tysonArray.get(5)).get("recursiveBinaryField")).getTypeName()
-        );
         assertNotEquals(
-            ((TYSONObject) tysonArray.get(6)).get("uniqueDurations"),
-            ((TYSONObject) tysonArray.get(7)).get("uniqueDurations")
+            ((TYSONObject) tysonArray.get(5)).get("uniqueDurations"),
+            ((TYSONObject) tysonArray.get(6)).get("uniqueDurations")
         );
 
     }

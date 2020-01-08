@@ -1,18 +1,68 @@
 {
-  "rootType" : {
-    "dayTimeDurations": "arrayOfDayTimeDurations"
-  },
-  "dayTimeDurationType": "dayTimeDuration",
-  "dayTimeDurationObj" : {
-    "myDayTimeDuration": "dayTimeDuration",
-    "!requiredDayTimeDuration": "dayTimeDuration",
-    "nullableDayTimeDuration?": "dayTimeDuration",
-    "dayTimeDurationWithDefault": "dayTimeDuration=P399DT2M",
-    "!requiredDayTimeDurationWithDefault": "dayTimeDuration=PT5M30.111S",
-    "anotherDayTimeDuration": "dayTimeDurationType",
-    "@uniqueDayTimeDuration": "dayTimeDuration"
-  },
-  "arrayOfDayTimeDurations": [
-    "dayTimeDurationObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dayTimeDurations",
+          "type": "arrayOfDayTimeDurations"
+        }
+      ]
+    },
+    {
+      "name": "dayTimeDurationType",
+      "kind": "atomic",
+      "baseType": "dayTimeDuration"
+    },
+    {
+      "name": "arrayOfDayTimeDurations",
+      "kind": "array",
+      "content": [
+        "dayTimeDurationObj"
+      ]
+    },
+    {
+      "name": "dayTimeDurationObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myDayTimeDuration",
+          "type": "dayTimeDuration"
+        },
+        {
+          "name": "requiredDayTimeDuration",
+          "type": "dayTimeDuration",
+          "required": true
+        },
+        {
+          "name" : "nullableDayTimeDuration",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "dayTimeDuration", "null" ]
+          }
+        },
+        {
+          "name": "dayTimeDurationWithDefault",
+          "type": "dayTimeDuration",
+          "default": "P399DT2M"
+        },
+        {
+          "name": "requiredDayTimeDurationWithDefault",
+          "type": "dayTimeDuration",
+          "required": true,
+          "default": "PT5M30.111S"
+        },
+        {
+          "name": "anotherDayTimeDuration",
+          "type": "dayTimeDurationType"
+        },
+        {
+          "name": "uniqueDayTimeDuration",
+          "type": "dayTimeDuration",
+          "unique": true
+        }
+      ]
+    }
   ]
 }

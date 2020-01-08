@@ -1,12 +1,37 @@
 {
-  "rootType" : {
-    "objects": "arrayOfObjects"
-  },
-  "object" : {
-    "field": "string",
-    "!requiredField": "string"
-  },
-  "arrayOfObjects": [
-    "object"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "objects",
+          "type": "arrayOfObjects"
+        }
+      ]
+    },
+    {
+      "name": "object",
+      "kind": "object",
+      "content": [
+        {
+          "name": "field",
+          "type": "string"
+        },
+        {
+          "name": "requiredField",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "arrayOfObjects",
+      "kind": "array",
+      "content": [
+        "object"
+      ]
+    }
   ]
 }
+

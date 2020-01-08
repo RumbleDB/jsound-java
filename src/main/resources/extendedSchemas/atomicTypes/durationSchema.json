@@ -1,18 +1,68 @@
 {
-  "rootType" : {
-    "durations": "arrayOfDurations"
-  },
-  "durationType": "duration",
-  "durationObj" : {
-    "myDuration": "duration",
-    "!requiredDuration": "duration",
-    "nullableDuration?": "duration",
-    "durationWithDefault": "duration=P9Y2M",
-    "!requiredDurationWithDefault": "duration=P1Y7MT5M30S",
-    "anotherDuration": "durationType",
-    "@uniqueDuration": "duration"
-  },
-  "arrayOfDurations": [
-    "durationObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "durations",
+          "type": "arrayOfDurations"
+        }
+      ]
+    },
+    {
+      "name": "durationType",
+      "kind": "atomic",
+      "baseType": "duration"
+    },
+    {
+      "name": "arrayOfDurations",
+      "kind": "array",
+      "content": [
+        "durationObj"
+      ]
+    },
+    {
+      "name": "durationObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myDuration",
+          "type": "duration"
+        },
+        {
+          "name": "requiredDuration",
+          "type": "duration",
+          "required": true
+        },
+        {
+          "name" : "nullableDuration",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "duration", "null" ]
+          }
+        },
+        {
+          "name": "durationWithDefault",
+          "type": "duration",
+          "default": "P9Y2M"
+        },
+        {
+          "name": "requiredDurationWithDefault",
+          "type": "duration",
+          "required": true,
+          "default": "P1Y7MT5M30S"
+        },
+        {
+          "name": "anotherDuration",
+          "type": "durationType"
+        },
+        {
+          "name": "uniqueDuration",
+          "type": "duration",
+          "unique": true
+        }
+      ]
+    }
   ]
 }

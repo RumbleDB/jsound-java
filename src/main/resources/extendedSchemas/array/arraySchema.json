@@ -1,22 +1,95 @@
 {
-  "rootType" : {
-    "arrays": "arrayOfArrays"
-  },
-  "arrayOfStrings": ["string"],
-  "arrayOfIntegers": ["integer"],
-  "arrayOfBinaries": ["binaries"],
-  "recArrayOfStrings": "arrayOfStrings",
-  "arrayObj" : {
-    "myArrayOfStrings": "arrayOfStrings",
-    "!requiredArrayOfIntegers": "arrayOfIntegers",
-    "nullableArrayOfStrings?": "arrayOfStrings",
-    "arrayOfIntegersWithDefault": "arrayOfIntegers=[1,2,3]",
-    "!requiredArrayOfStringsWithDefault": "arrayOfStrings=[\"hello\", \"world!\"]",
-    "recursiveArrayOfStrings": "recArrayOfStrings",
-    "@uniqueArrayOfBinaries": "arrayOfBinaries"
-  },
-  "binaries": "hexBinary|base64Binary",
-  "arrayOfArrays": [
-    "arrayObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "arrays",
+          "type": "arrayOfArrays"
+        }
+      ]
+    },
+    {
+      "name": "arrayOfStrings",
+      "kind": "array",
+      "content": [
+        "string"
+      ]
+    },{
+      "name": "arrayOfIntegers",
+      "kind": "array",
+      "content": [
+        "integer"
+      ]
+    },
+    {
+      "name": "arrayOfBinaries",
+      "kind": "array",
+      "content": [
+        "binaries"
+      ]
+    },
+    {
+      "name": "recArrayOfStrings",
+      "kind": "array",
+      "baseType": "arrayOfStrings"
+    },
+    {
+      "name": "binaries",
+      "kind": "union",
+      "content": [
+        "hexBinary", "base64Binary"
+      ]
+    },
+    {
+      "name": "arrayObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myArrayOfStrings",
+          "type": "arrayOfStrings"
+        },
+        {
+          "name": "requiredArrayOfIntegers",
+          "type": "arrayOfIntegers",
+          "required": true
+        },
+        {
+          "name" : "nullableArrayOfStrings",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "arrayOfStrings", "null" ]
+          }
+        },
+        {
+          "name": "arrayOfIntegersWithDefault",
+          "type": "arrayOfIntegers",
+          "default": [1,2,3]
+        },
+        {
+          "name": "requiredArrayOfStringsWithDefault",
+          "type": "arrayOfStrings",
+          "required": true,
+          "default": ["hello", "world!"]
+        },
+        {
+          "name": "recursiveArrayOfStrings",
+          "type": "recArrayOfStrings"
+        },
+        {
+          "name": "uniqueArrayOfBinaries",
+          "type": "arrayOfBinaries",
+          "unique": true
+        }
+      ]
+    },
+    {
+      "name": "arrayOfArrays",
+      "kind": "array",
+      "content": [
+        "arrayObj"
+      ]
+    }
   ]
 }

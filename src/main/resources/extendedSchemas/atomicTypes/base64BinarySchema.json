@@ -1,18 +1,68 @@
-{ 
-	"rootType" : {
-		"base64Binaries": "arrayOfBase64Binaries"
-	},
-        "base64BinaryType": "base64Binary",
-	"base64BinaryObj" : {
-                "myBase64Binary": "base64Binary",
-                "!requiredBase64Binary": "base64Binary",
-                "nullableBase64Binary?": "base64Binary",
-                "base64BinaryWithDefault": "base64Binary=abcd",
-                "!requiredBase64BinaryWithDefault": "base64Binary=abcdefgh",
-                "anotherBase64Binary": "base64BinaryType",
-                "@uniqueBase64Binary": "base64Binary"
-	},
-	"arrayOfBase64Binaries": [
-		"base64BinaryObj"
-	]
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "base64Binaries",
+          "type": "arrayOfBase64Binaries"
+        }
+      ]
+    },
+    {
+      "name": "base64BinaryType",
+      "kind": "atomic",
+      "baseType": "base64Binary"
+    },
+    {
+      "name": "arrayOfBase64Binaries",
+      "kind": "array",
+      "content": [
+        "base64BinaryObj"
+      ]
+    },
+    {
+      "name": "base64BinaryObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myBase64Binary",
+          "type": "base64Binary"
+        },
+        {
+          "name": "requiredBase64Binary",
+          "type": "base64Binary",
+          "required": true
+        },
+        {
+          "name" : "nullableBase64Binary",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "base64Binary", "null" ]
+          }
+        },
+        {
+          "name": "base64BinaryWithDefault",
+          "type": "base64Binary",
+          "default": "abcd"
+        },
+        {
+          "name": "requiredBase64BinaryWithDefault",
+          "type": "base64Binary",
+          "required": true,
+          "default": "abcdefgh"
+        },
+        {
+          "name": "anotherBase64Binary",
+          "type": "base64BinaryType"
+        },
+        {
+          "name": "uniqueBase64Binary",
+          "type": "base64Binary",
+          "unique": true
+        }
+      ]
+    }
+  ]
 }

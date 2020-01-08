@@ -1,18 +1,68 @@
-{ 
-	"rootType" : {
-		"strings": "arrayOfStrings"
-	},
-        "stringType": "string",
-	"stringObj" : {
-                "myString": "string",
-                "!requiredString": "string",
-                "nullableString?": "string",
-                "stringWithDefault": "string=defString1",
-                "!requiredStringWithDefault": "string=defString2",
-                "anotherString": "stringType",
-                "@uniqueString": "string"
-	},
-	"arrayOfStrings": [
-		"stringObj"
-	]
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "strings",
+          "type": "arrayOfStrings"
+        }
+      ]
+    },
+    {
+      "name": "stringType",
+      "kind": "atomic",
+      "baseType": "string"
+    },
+    {
+      "name": "arrayOfStrings",
+      "kind": "array",
+      "content": [
+        "stringObj"
+      ]
+    },
+    {
+      "name": "stringObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myString",
+          "type": "string"
+        },
+        {
+          "name": "requiredString",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name" : "nullableString",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "string", "null" ]
+          }
+        },
+        {
+          "name": "stringWithDefault",
+          "type": "string",
+          "default": "defString1"
+        },
+        {
+          "name": "requiredStringWithDefault",
+          "type": "string",
+          "required": true,
+          "default": "defString2"
+        },
+        {
+          "name": "anotherString",
+          "type": "stringType"
+        },
+        {
+          "name": "uniqueString",
+          "type": "string",
+          "unique": true
+        }
+      ]
+    }
+  ]
 }

@@ -1,18 +1,68 @@
 {
-  "rootType" : {
-    "nulls": "arrayOfNulls"
-  },
-  "nullType": "null",
-  "nullObj" : {
-    "myNull": "null",
-    "!requiredNull": "null",
-    "nullableNull?": "null",
-    "nullWithDefault": "null=null",
-    "!requiredNullWithDefault": "null=null",
-    "anotherNull": "nullType",
-    "@uniqueNull": "null"
-  },
-  "arrayOfNulls": [
-    "nullObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "nulls",
+          "type": "arrayOfNulls"
+        }
+      ]
+    },
+    {
+      "name": "nullType",
+      "kind": "atomic",
+      "baseType": "null"
+    },
+    {
+      "name": "arrayOfNulls",
+      "kind": "array",
+      "content": [
+        "nullObj"
+      ]
+    },
+    {
+      "name": "nullObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myNull",
+          "type": "null"
+        },
+        {
+          "name": "requiredNull",
+          "type": "null",
+          "required": true
+        },
+        {
+          "name" : "nullableNull",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "null", "null" ]
+          }
+        },
+        {
+          "name": "nullWithDefault",
+          "type": "null",
+          "default": null
+        },
+        {
+          "name": "requiredNullWithDefault",
+          "type": "null",
+          "required": true,
+          "default": "null"
+        },
+        {
+          "name": "anotherNull",
+          "type": "nullType"
+        },
+        {
+          "name": "uniqueNull",
+          "type": "null",
+          "unique": true
+        }
+      ]
+    }
   ]
 }

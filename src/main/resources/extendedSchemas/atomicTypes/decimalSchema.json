@@ -1,18 +1,68 @@
 {
-  "rootType" : {
-    "decimals": "arrayOfDecimals"
-  },
-  "decimalType": "decimal",
-  "decimalObj" : {
-    "myDecimal": "decimal",
-    "!requiredDecimal": "decimal",
-    "nullableDecimal?": "decimal",
-    "decimalWithDefault": "decimal=42.21",
-    "!requiredDecimalWithDefault": "decimal=666.333",
-    "anotherDecimal": "decimalType",
-    "@uniqueDecimal": "decimal"
-  },
-  "arrayOfDecimals": [
-    "decimalObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "decimals",
+          "type": "arrayOfDecimals"
+        }
+      ]
+    },
+    {
+      "name": "decimalType",
+      "kind": "atomic",
+      "baseType": "decimal"
+    },
+    {
+      "name": "arrayOfDecimals",
+      "kind": "array",
+      "content": [
+        "decimalObj"
+      ]
+    },
+    {
+      "name": "decimalObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myDecimal",
+          "type": "decimal"
+        },
+        {
+          "name": "requiredDecimal",
+          "type": "decimal",
+          "required": true
+        },
+        {
+          "name" : "nullableDecimal",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "decimal", "null" ]
+          }
+        },
+        {
+          "name": "decimalWithDefault",
+          "type": "decimal",
+          "default": 42.21
+        },
+        {
+          "name": "requiredDecimalWithDefault",
+          "type": "decimal",
+          "required": true,
+          "default": 666.333
+        },
+        {
+          "name": "anotherDecimal",
+          "type": "decimalType"
+        },
+        {
+          "name": "uniqueDecimal",
+          "type": "decimal",
+          "unique": true
+        }
+      ]
+    }
   ]
 }

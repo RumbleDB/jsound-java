@@ -1,18 +1,68 @@
 {
-  "rootType" : {
-    "integers": "arrayOfIntegers"
-  },
-  "integerType": "integer",
-  "integerObj" : {
-    "myInteger": "integer",
-    "!requiredInteger": "integer",
-    "nullableInteger?": "integer",
-    "integerWithDefault": "integer=42",
-    "!requiredIntegerWithDefault": "integer=666",
-    "anotherInteger": "integerType",
-    "@uniqueInteger": "integer"
-  },
-  "arrayOfIntegers": [
-    "integerObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "integers",
+          "type": "arrayOfIntegers"
+        }
+      ]
+    },
+    {
+      "name": "integerType",
+      "kind": "atomic",
+      "baseType": "integer"
+    },
+    {
+      "name": "arrayOfIntegers",
+      "kind": "array",
+      "content": [
+        "integerObj"
+      ]
+    },
+    {
+      "name": "integerObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myInteger",
+          "type": "integer"
+        },
+        {
+          "name": "requiredInteger",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name" : "nullableInteger",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "integer", "null" ]
+          }
+        },
+        {
+          "name": "integerWithDefault",
+          "type": "integer",
+          "default": 42
+        },
+        {
+          "name": "requiredIntegerWithDefault",
+          "type": "integer",
+          "required": true,
+          "default": 666
+        },
+        {
+          "name": "anotherInteger",
+          "type": "integerType"
+        },
+        {
+          "name": "uniqueInteger",
+          "type": "integer",
+          "unique": true
+        }
+      ]
+    }
   ]
 }

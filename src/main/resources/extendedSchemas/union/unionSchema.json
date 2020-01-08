@@ -1,22 +1,88 @@
 {
-  "rootType" : {
-    "unions": "arrayOfUnions"
-  },
-  "durations": "dayTimeDuration|yearMonthDuration|duration",
-  "dateTimes": "date|time|dateTime",
-  "binaries": "hexBinary|base64Binary",
-  "numbers": "double|decimal|integer",
-  "recursiveBinaries": "binaries",
-  "unionObj" : {
-    "myDurations": "durations",
-    "!requiredNumbers": "numbers",
-    "nullableDateTimes?": "dateTimes",
-    "binariesWithDefault": "binaries=0F+40A==",
-    "!requiredDurationsWithDefault": "durations=PT4322M",
-    "recursiveBinaryField": "recursiveBinaries",
-    "@uniqueDurations": "durations"
-  },
-  "arrayOfUnions": [
-    "unionObj"
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "unions",
+          "type": "arrayOfUnions"
+        }
+      ]
+    },
+    {
+      "name": "durations",
+      "kind": "union",
+      "content": [
+        "dayTimeDuration", "yearMonthDuration", "duration"
+      ]
+    },
+    {
+      "name": "dateTimes",
+      "kind": "union",
+      "content": [
+        "date", "time", "dateTime"
+      ]
+    },
+    {
+      "name": "binaries",
+      "kind": "union",
+      "content": [
+        "hexBinary", "base64Binary"
+      ]
+    },
+    {
+      "name": "numbers",
+      "kind": "union",
+      "content": [
+        "double", "decimal", "integer"
+      ]
+    },
+    {
+      "name": "unionObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myDurations",
+          "type": "durations"
+        },
+        {
+          "name": "requiredNumbers",
+          "type": "numbers",
+          "required": true
+        },
+        {
+          "name" : "nullableDateTimes",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "dateTimes", "null" ]
+          }
+        },
+        {
+          "name": "binariesWithDefault",
+          "type": "binaries",
+          "default": "0F+40A=="
+        },
+        {
+          "name": "requiredDurationsWithDefault",
+          "type": "durations",
+          "required": true,
+          "default": "PT4322M"
+        },
+        {
+          "name": "uniqueDurations",
+          "type": "durations",
+          "unique": true
+        }
+      ]
+    },
+    {
+      "name": "arrayOfUnions",
+      "kind": "array",
+      "content": [
+        "unionObj"
+      ]
+    }
   ]
 }
+
