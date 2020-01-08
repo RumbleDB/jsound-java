@@ -1,18 +1,68 @@
-{ 
-    "rootType" : {
-        "anyURIs": "arrayOfAnyURIs"
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "anyURIs",
+          "type": "arrayOfAnyURIs"
+        }
+      ]
     },
-    "anyURIType": "anyURI",
-	"anyURIObj" : {
-                "myAnyURI": "anyURI",
-                "!requiredAnyURI": "anyURI",
-                "nullableAnyURI?": "anyURI",
-                "anyURIWithDefault": "anyURI=http://gitlab.com",
-                "!requiredAnyURIWithDefault": "anyURI=../prod.html",
-                "anotherAnyURI": "anyURIType",
-                "@uniqueAnyURI": "anyURI"
-	},
-	"arrayOfAnyURIs": [
-		"anyURIObj"
-	]
+    {
+      "name": "anyURIType",
+      "kind": "atomic",
+      "baseType": "anyURI"
+    },
+    {
+      "name": "arrayOfAnyURIs",
+      "kind": "array",
+      "content": [
+        "anyURIObj"
+      ]
+    },
+    {
+      "name": "anyURIObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myAnyURI",
+          "type": "anyURI"
+        },
+        {
+          "name": "requiredAnyURI",
+          "type": "anyURI",
+          "required": true
+        },
+        {
+          "name" : "nullableAnyURI",
+          "type" : {
+            "kind" : "union",
+            "content" : [ "anyURI", "null" ]
+          }
+        },
+        {
+          "name": "anyURIWithDefault",
+          "type": "anyURI",
+          "default": "http://gitlab.com"
+        },
+        {
+          "name": "requiredAnyURIWithDefault",
+          "type": "anyURI",
+          "required": true,
+          "default": "../prod.html"
+        },
+        {
+          "name": "anotherAnyURI",
+          "type": "anyURIType"
+        },
+        {
+          "name": "uniqueAnyURI",
+          "type": "anyURI",
+          "unique": true
+        }
+      ]
+    }
+  ]
 }
