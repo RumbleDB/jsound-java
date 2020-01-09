@@ -26,7 +26,9 @@ public class TYSONObject extends LinkedHashMap<String, TysonItem> implements Tys
             StringBuilder sb = new StringBuilder();
             boolean first = true;
             Iterator<Map.Entry<String, TysonItem>> iterator = map.entrySet().iterator();
-            sb.append("(\"").append(map.typeName).append("\") ").append('{');
+            if (map.typeName != null)
+                sb.append("(\"").append(map.typeName).append("\") ");
+            sb.append('{');
             newLineIncreaseCounter(sb);
 
             while (iterator.hasNext()) {

@@ -18,7 +18,9 @@ public class TYSONArray extends ArrayList<TysonItem> implements TysonItem {
             boolean first = true;
             StringBuilder sb = new StringBuilder();
             Iterator<TysonItem> iterator = list.iterator();
-            sb.append("(\"").append(list.typeName).append("\") ").append('[');
+            if (list.typeName != null)
+                sb.append("(\"").append(list.typeName).append("\") ");
+            sb.append('[');
             TYSONObject.newLineIncreaseCounter(sb);
 
             while (iterator.hasNext()) {

@@ -24,10 +24,10 @@ public class BaseTest {
         if (compact)
             compactSchema = new HashMap<>();
         JSoundExecutor.initializeApplication(
-                schemaPathPrefix + schemaPath,
-                filePathPrefix + filePath,
-                "rootType",
-                compact
+            schemaPathPrefix + schemaPath,
+            filePathPrefix + filePath,
+            "rootType",
+            compact
         );
         return schema;
     }
