@@ -5,50 +5,70 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "dateTimes",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "dateTimeObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "dateTimeType",
       "kind": "atomic",
-      "baseType": "anyURI"
+      "baseType": "dateTime"
     },
     {
-      "name": "anyURIObj",
+      "name": "dateTimeObj",
       "kind": "object",
       "content": [
         {
           "name": "integerValue",
-          "type": "anyURIType",
+          "type": "dateTimeType",
           "default": 34
         },
         {
+          "name": "stringValue",
+          "type": "dateTimeType",
+          "default": "randomString"
+        },
+        {
+          "name": "incorrectDateValue1",
+          "type": "dateTimeType",
+          "default": "2012-04-12T12:12:12-15:00"
+        },
+        {
+          "name": "incorrectDateValue2",
+          "type": "dateTimeType",
+          "default": "2011-02-29T12:12:12"
+        },
+        {
+          "name": "incorrectDateValue3",
+          "type": "dateTimeType",
+          "default": "2011-02-23T24:12:12"
+        },
+        {
           "name": "nullValue",
-          "type": "anyURIType",
+          "type": "dateTimeType",
           "default": null
         },
         {
           "name": "booleanValue",
-          "type": "anyURIType",
+          "type": "dateTimeType",
           "default": false
         },
         {
           "name": "objectValue",
-          "type": "anyURIType",
+          "type": "dateTimeType",
           "default": {
             "hello": "world!"
           }
         },
         {
           "name": "arrayValue",
-          "type": "anyURIType",
+          "type": "dateTimeType",
           "default": [ "thisIsAString" ]
         }
       ]

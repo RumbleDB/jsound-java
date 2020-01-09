@@ -1,9 +1,13 @@
 package extendedSchemas.atomicTypes.dateTime.enumeration;
 
 import base.BaseTest;
-import jsound.atomicItems.AnyURIItem;
+import jsound.atomicItems.DateItem;
+import jsound.atomicItems.DateTimeItem;
+import jsound.types.AtomicTypes;
 import org.api.Item;
 import org.api.ItemWrapper;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -24,36 +28,36 @@ public class EnumerationTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+            "extendedSchemas/atomicTypes/dateTime/enumerationSchema.json",
+            "atomicTypes/dateTime/enumeration/dateTimeEnumeration.json",
             false
         );
     }
 
     @Test
     public void testSchema() {
-        assertTrue(schema.get("anyURIType").isAnyURIType());
-        assertTrue(schema.get("anyURIObj").isObjectType());
+        assertTrue(schema.get("dateTimeType").isDateTimeType());
+        assertTrue(schema.get("dateTimeObj").isObjectType());
         assertTrue(
-            schema.get("anyURIObj")
+            schema.get("dateTimeObj")
                 .getFacets()
                 .getObjectContent()
-                .get("myAnyURI")
+                .get("myDateTime")
                 .getTypeOrReference()
                 .getTypeDescriptor()
-                .isAnyURIType()
+                .isDateTimeType()
         );
     }
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-            "http://datypic.com",
-            "../prod.html#shirt",
-            "../arinaldi.html",
-            "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+        List<DateTimeItem> values = Arrays.asList(
+                createDate("2004-04-12T13:20:00Z"),
+                createDate("2004-04-12T13:20:00+14:00"),
+                createDate("2004-04-12T13:20:15.5"),
+                createDate("2001-12-12T24:00:00")
         );
-        List<Item> enumValues = schema.get("anyURIType")
+        List<Item> enumValues = schema.get("dateTimeType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -61,14 +65,23 @@ public class EnumerationTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        assertEquals(schema.get("anyURIType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new AnyURIItem(value, URI.create(value))));
+        assertEquals(schema.get("dateTimeType").getFacets().getEnumeration().size(), values.size());
+        for (DateTimeItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem().getStringValue()));
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("dateTimes").getItem().getItems())
+            assertTrue(values.contains((DateTimeItem) itemWrapper.getItem().getItemMap().get("myDateTime").getItem()));
     }
+
+    private DateTimeItem createDate(String value) {
+        DateTime date = DateTimeItem.parseDateTime(value, AtomicTypes.DATETIME);
+        if (!value.endsWith("Z") && date.getZone() == DateTimeZone.getDefault()) {
+            return new DateTimeItem(date.withZoneRetainFields(DateTimeZone.UTC), false);
+        }
+        return new DateTimeItem(date, true);
+    }
+
 
     @Test
     public void testValidate() {

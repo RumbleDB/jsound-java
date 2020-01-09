@@ -1,22 +1,31 @@
 {
-  "anyURIs": [
+  "dateTimes": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myDateTime": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myDateTime": "2011-02-29T12:12:12"
     },
     {
-      "myAnyURI": false
+      "myDateTime": "2011-02-23T24:12:12"
     },
     {
-      "myAnyURI": null
+      "myDateTime": "2012-04-12T12:12:12-15:00"
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
+      "myDateTime": 21
     },
     {
-      "myAnyURI": {
+      "myDateTime": false
+    },
+    {
+      "myDateTime": null
+    },
+    {
+      "myDateTime": [ "a", "b", "c" ]
+    },
+    {
+      "myDateTime": {
         "hello" : "world!"
       }
     }
