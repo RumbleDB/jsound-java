@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "decimals",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "decimalObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "decimalType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ "http://datypic.com", "../prod.html#shirt", "../arinaldi.html", "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java" ]
+      "baseType": "decimal",
+      "enumeration": [ 1, 2, 3.4, 5e6 ]
     },
     {
-      "name": "anyURIObj",
+      "name": "decimalObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myDecimal",
+          "type": "decimalType"
         }
       ]
     }

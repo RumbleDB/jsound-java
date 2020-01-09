@@ -5,50 +5,50 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "decimals",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "decimalObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "decimalType",
       "kind": "atomic",
-      "baseType": "anyURI"
+      "baseType": "decimal"
     },
     {
-      "name": "anyURIObj",
+      "name": "decimalObj",
       "kind": "object",
       "content": [
         {
-          "name": "integerValue",
-          "type": "anyURIType",
-          "default": 34
+          "name": "stringValue",
+          "type": "decimalType",
+          "default": "rndString"
         },
         {
           "name": "nullValue",
-          "type": "anyURIType",
+          "type": "decimalType",
           "default": null
         },
         {
           "name": "booleanValue",
-          "type": "anyURIType",
+          "type": "decimalType",
           "default": false
         },
         {
           "name": "objectValue",
-          "type": "anyURIType",
+          "type": "decimalType",
           "default": {
             "hello": "world!"
           }
         },
         {
           "name": "arrayValue",
-          "type": "anyURIType",
+          "type": "decimalType",
           "default": [ "thisIsAString" ]
         }
       ]

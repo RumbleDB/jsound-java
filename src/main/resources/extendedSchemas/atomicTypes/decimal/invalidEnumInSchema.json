@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "decimals",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "decimalObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "decimalType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ 31, null, false, ["anyString"], {"hello":  "world!"} ]
+      "baseType": "decimal",
+      "enumeration": [ "rndString", null, false, ["anyString"], {"hello":  "world!"} ]
     },
     {
-      "name": "anyURIObj",
+      "name": "decimalObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myDecimal",
+          "type": "decimalType"
         }
       ]
     }

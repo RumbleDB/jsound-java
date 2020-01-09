@@ -1,22 +1,19 @@
 {
-  "anyURIs": [
+  "decimals": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myDecimal": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myDecimal": false
     },
     {
-      "myAnyURI": false
+      "myDecimal": null
     },
     {
-      "myAnyURI": null
+      "myDecimal": [ "a", "b", "c" ]
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
-    },
-    {
-      "myAnyURI": {
+      "myDecimal": {
         "hello" : "world!"
       }
     }

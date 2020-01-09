@@ -2,6 +2,7 @@ package extendedSchemas.atomicTypes.booleanType.enumeration;
 
 import base.BaseTest;
 import jsound.atomicItems.BooleanItem;
+import jsound.item.ItemFactory;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.junit.BeforeClass;
@@ -47,9 +48,11 @@ public class EnumerationTest extends BaseTest {
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-            "true", "false", "true", "false"
-        );
+        List<BooleanItem> values = Arrays.asList(
+                new BooleanItem(true),
+                new BooleanItem(false),
+                new BooleanItem(true),
+                new BooleanItem(false));
         List<Item> enumValues = schema.get("booleanType")
             .getFacets()
             .getEnumeration()
@@ -59,12 +62,12 @@ public class EnumerationTest extends BaseTest {
                 Collectors.toList()
             );
         assertEquals(schema.get("booleanType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new BooleanItem(Boolean.parseBoolean(value))));
+        for (BooleanItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("booleans").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myBoolean").getItem().getStringValue()));
+            assertTrue(values.contains((BooleanItem) itemWrapper.getItem().getItemMap().get("myBoolean").getItem()));
     }
 
     @Test

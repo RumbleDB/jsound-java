@@ -46,9 +46,11 @@ public class EnumerationTest extends BaseTest {
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-                "ZW FzdX JlLg ==", "0F+40A==", "0123456789abcdef"
-        );
+        List<Base64BinaryItem> values = Arrays.asList(
+                new Base64BinaryItem(Base64BinaryItem.parseBase64BinaryString("ZW FzdX JlLg =="), "ZW FzdX JlLg =="),
+                new Base64BinaryItem(Base64BinaryItem.parseBase64BinaryString("0F+40A=="), "0F+40A=="),
+                new Base64BinaryItem(Base64BinaryItem.parseBase64BinaryString("0123456789abcdef"), "0123456789abcdef"));
+
         List<Item> enumValues = schema.get("base64BinaryType")
             .getFacets()
             .getEnumeration()
@@ -58,12 +60,12 @@ public class EnumerationTest extends BaseTest {
                 Collectors.toList()
             );
         assertEquals(schema.get("base64BinaryType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new Base64BinaryItem(Base64BinaryItem.parseBase64BinaryString(value), value)));
+        for (Base64BinaryItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("base64Binaries").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myBase64Binary").getItem().getStringValue()));
+            assertTrue(values.contains((Base64BinaryItem) itemWrapper.getItem().getItemMap().get("myBase64Binary").getItem()));
     }
 
     @Test

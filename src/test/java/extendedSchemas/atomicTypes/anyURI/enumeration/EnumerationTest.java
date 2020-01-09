@@ -47,12 +47,11 @@ public class EnumerationTest extends BaseTest {
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-            "http://datypic.com",
-            "../prod.html#shirt",
-            "../arinaldi.html",
-            "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
-        );
+        List<AnyURIItem> values = Arrays.asList(
+            new AnyURIItem("http://datypic.com", URI.create("http://datypic.com")),
+            new AnyURIItem("../prod.html#shirt", URI.create("../prod.html#shirt")),
+            new AnyURIItem("../arinaldi.html", URI.create("../arinaldi.html")),
+            new AnyURIItem("https://gitlab.inf.ethz.ch/gfourny/jsound-20-java", URI.create("https://gitlab.inf.ethz.ch/gfourny/jsound-20-java")));
         List<Item> enumValues = schema.get("anyURIType")
             .getFacets()
             .getEnumeration()
@@ -62,12 +61,12 @@ public class EnumerationTest extends BaseTest {
                 Collectors.toList()
             );
         assertEquals(schema.get("anyURIType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new AnyURIItem(value, URI.create(value))));
+        for (AnyURIItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem().getStringValue()));
+            assertTrue(values.contains((AnyURIItem) itemWrapper.getItem().getItemMap().get("myAnyURI").getItem()));
     }
 
     @Test

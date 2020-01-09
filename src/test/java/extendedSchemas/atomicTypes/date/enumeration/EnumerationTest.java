@@ -51,8 +51,11 @@ public class EnumerationTest extends BaseTest {
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-                "2004-03-12Z", "1945-01-01", "2012-04-12-05:00", "2945-11-01"
+        List<DateItem> values = Arrays.asList(
+                createDate("2004-03-12Z"),
+                createDate("1945-01-01"),
+                createDate("2012-04-12-05:00"),
+                createDate("2945-11-01")
         );
         List<Item> enumValues = schema.get("dateType")
             .getFacets()
@@ -63,12 +66,12 @@ public class EnumerationTest extends BaseTest {
                 Collectors.toList()
             );
         assertEquals(schema.get("dateType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(createDate(value)));
+        for (DateItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("dates").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myDate").getItem().getStringValue()));
+            assertTrue(values.contains((DateItem) itemWrapper.getItem().getItemMap().get("myDate").getItem()));
     }
 
     private DateItem createDate(String value) {

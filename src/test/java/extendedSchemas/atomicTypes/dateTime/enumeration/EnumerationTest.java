@@ -52,10 +52,10 @@ public class EnumerationTest extends BaseTest {
     @Test
     public void testEnumeration() {
         List<DateTimeItem> values = Arrays.asList(
-                createDate("2004-04-12T13:20:00Z"),
-                createDate("2004-04-12T13:20:00+14:00"),
-                createDate("2004-04-12T13:20:15.5"),
-                createDate("2001-12-12T24:00:00")
+                createDateTime("2004-04-12T13:20:00Z"),
+                createDateTime("2004-04-12T13:20:00+14:00"),
+                createDateTime("2004-04-12T13:20:15.5"),
+                createDateTime("2001-12-12T24:00:00")
         );
         List<Item> enumValues = schema.get("dateTimeType")
             .getFacets()
@@ -74,7 +74,7 @@ public class EnumerationTest extends BaseTest {
             assertTrue(values.contains((DateTimeItem) itemWrapper.getItem().getItemMap().get("myDateTime").getItem()));
     }
 
-    private DateTimeItem createDate(String value) {
+    private DateTimeItem createDateTime(String value) {
         DateTime date = DateTimeItem.parseDateTime(value, AtomicTypes.DATETIME);
         if (!value.endsWith("Z") && date.getZone() == DateTimeZone.getDefault()) {
             return new DateTimeItem(date.withZoneRetainFields(DateTimeZone.UTC), false);

@@ -1,13 +1,13 @@
 {
-  "anyURIs": [
+  "decimals": [
     {
-      "myAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+      "myDecimal": 2
     },
     {
-      "myAnyURI": "http://datypic.com"
+      "myDecimal": 3.4
     },
     {
-      "myAnyURI": "../arinaldi.html"
+      "myDecimal": 5e6
     }
   ]
 }

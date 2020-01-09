@@ -1,13 +1,14 @@
 package extendedSchemas.atomicTypes.decimal.enumeration;
 
 import base.BaseTest;
-import jsound.atomicItems.AnyURIItem;
+import jsound.atomicItems.DecimalItem;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
@@ -24,36 +25,35 @@ public class EnumerationTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+            "extendedSchemas/atomicTypes/decimal/enumerationSchema.json",
+            "atomicTypes/decimal/enumeration/decimalEnumeration.json",
             false
         );
     }
 
     @Test
     public void testSchema() {
-        assertTrue(schema.get("anyURIType").isAnyURIType());
-        assertTrue(schema.get("anyURIObj").isObjectType());
+        assertTrue(schema.get("decimalType").isDecimalType());
+        assertTrue(schema.get("decimalObj").isObjectType());
         assertTrue(
-            schema.get("anyURIObj")
+            schema.get("decimalObj")
                 .getFacets()
                 .getObjectContent()
-                .get("myAnyURI")
+                .get("myDecimal")
                 .getTypeOrReference()
                 .getTypeDescriptor()
-                .isAnyURIType()
+                .isDecimalType()
         );
     }
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-            "http://datypic.com",
-            "../prod.html#shirt",
-            "../arinaldi.html",
-            "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
-        );
-        List<Item> enumValues = schema.get("anyURIType")
+        List<DecimalItem> values = Arrays.asList(
+                new DecimalItem(BigDecimal.valueOf(1)),
+                new DecimalItem(BigDecimal.valueOf(2)),
+                new DecimalItem(BigDecimal.valueOf(3.4)),
+                new DecimalItem(BigDecimal.valueOf(5e6)));
+        List<Item> enumValues = schema.get("decimalType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -61,13 +61,13 @@ public class EnumerationTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        assertEquals(schema.get("anyURIType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new AnyURIItem(value, URI.create(value))));
+        assertEquals(schema.get("decimalType").getFacets().getEnumeration().size(), values.size());
+        for (DecimalItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem().getStringValue()));
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("decimals").getItem().getItems())
+            assertTrue(values.contains((DecimalItem) itemWrapper.getItem().getItemMap().get("myDecimal").getItem()));
     }
 
     @Test
