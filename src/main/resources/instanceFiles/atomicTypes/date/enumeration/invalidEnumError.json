@@ -1,22 +1,28 @@
 {
-  "anyURIs": [
+  "dates": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myDate": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myDate": "2011-02-29"
     },
     {
-      "myAnyURI": false
+      "myDate": "2012-04-12-15:00"
     },
     {
-      "myAnyURI": null
+      "myDate": 21
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
+      "myDate": false
     },
     {
-      "myAnyURI": {
+      "myDate": null
+    },
+    {
+      "myDate": [ "a", "b", "c" ]
+    },
+    {
+      "myDate": {
         "hello" : "world!"
       }
     }

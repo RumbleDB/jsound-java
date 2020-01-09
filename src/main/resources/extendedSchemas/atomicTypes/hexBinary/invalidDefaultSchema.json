@@ -25,9 +25,31 @@
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
+          "name": "integerValue",
           "type": "anyURIType",
           "default": 34
+        },
+        {
+          "name": "nullValue",
+          "type": "anyURIType",
+          "default": null
+        },
+        {
+          "name": "booleanValue",
+          "type": "anyURIType",
+          "default": false
+        },
+        {
+          "name": "objectValue",
+          "type": "anyURIType",
+          "default": {
+            "hello": "world!"
+          }
+        },
+        {
+          "name": "arrayValue",
+          "type": "anyURIType",
+          "default": [ "thisIsAString" ]
         }
       ]
     }

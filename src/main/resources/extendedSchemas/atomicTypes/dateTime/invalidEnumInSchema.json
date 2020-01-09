@@ -19,7 +19,7 @@
       "name": "anyURIType",
       "kind": "atomic",
       "baseType": "anyURI",
-      "enumeration": [ "anyString", 31 ]
+      "enumeration": [ 31, null, false, ["anyString"], {"hello":  "world!"} ]
     },
     {
       "name": "anyURIObj",

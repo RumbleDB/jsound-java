@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "dates",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "dateObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "dateType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ "anyString", 31 ]
+      "baseType": "date",
+      "enumeration": [ 31, "randomString", "2012-04-12-15:00", "2011-02-29", null, false, ["anyString"], {"hello":  "world!"} ]
     },
     {
-      "name": "anyURIObj",
+      "name": "dateObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myDate",
+          "type": "dateType"
         }
       ]
     }
