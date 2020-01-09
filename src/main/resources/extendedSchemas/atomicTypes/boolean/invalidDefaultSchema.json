@@ -5,29 +5,51 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "booleans",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "booleanObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "booleanType",
       "kind": "atomic",
-      "baseType": "anyURI"
+      "baseType": "boolean"
     },
     {
-      "name": "anyURIObj",
+      "name": "booleanObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType",
+          "name": "integerValue",
+          "type": "booleanType",
           "default": 34
+        },
+        {
+          "name": "nullValue",
+          "type": "booleanType",
+          "default": null
+        },
+        {
+          "name": "stringValue",
+          "type": "booleanType",
+          "default": "hello"
+        },
+        {
+          "name": "objectValue",
+          "type": "booleanType",
+          "default": {
+            "hello": true
+          }
+        },
+        {
+          "name": "arrayValue",
+          "type": "booleanType",
+          "default": [ "true" ]
         }
       ]
     }

@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "booleans",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "booleanObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "booleanType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ "http://datypic.com", "../prod.html#shirt", "../arinaldi.html", "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java" ]
+      "baseType": "boolean",
+      "enumeration": [ "true", "false", true, false ]
     },
     {
-      "name": "anyURIObj",
+      "name": "booleanObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myBoolean",
+          "type": "booleanType"
         }
       ]
     }

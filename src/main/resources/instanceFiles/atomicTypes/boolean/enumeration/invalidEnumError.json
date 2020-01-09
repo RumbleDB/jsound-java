@@ -1,23 +1,20 @@
 {
-  "anyURIs": [
+  "booleans": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myBoolean": "rndString"
     },
     {
-      "myAnyURI": 21
+      "myBoolean": 21
     },
     {
-      "myAnyURI": false
+      "myBoolean": null
     },
     {
-      "myAnyURI": null
+      "myBoolean": [ true, "false" ]
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
-    },
-    {
-      "myAnyURI": {
-        "hello" : "world!"
+      "myBoolean": {
+        "hello" : false
       }
     }
   ]

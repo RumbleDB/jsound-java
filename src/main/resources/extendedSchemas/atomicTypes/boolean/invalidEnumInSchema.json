@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "booleans",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "booleanObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "booleanType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ "anyString", 31 ]
+      "baseType": "boolean",
+      "enumeration": [ "anyString", 31, null, [ "true" ], {"hello":  false} ]
     },
     {
-      "name": "anyURIObj",
+      "name": "booleanObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myBoolean",
+          "type": "booleanType"
         }
       ]
     }
