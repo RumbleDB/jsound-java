@@ -1,22 +1,31 @@
 {
-  "anyURIs": [
+  "dayTimeDurations": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myDayTimeDuration": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myDayTimeDuration": "P2Y99M"
     },
     {
-      "myAnyURI": false
+      "myDayTimeDuration": "PT"
     },
     {
-      "myAnyURI": null
+      "myDayTimeDuration": "P1D2H"
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
+      "myDayTimeDuration": 21
     },
     {
-      "myAnyURI": {
+      "myDayTimeDuration": false
+    },
+    {
+      "myDayTimeDuration": null
+    },
+    {
+      "myDayTimeDuration": [ "a", "b", "c" ]
+    },
+    {
+      "myDayTimeDuration": {
         "hello" : "world!"
       }
     }

@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "dayTimeDurations",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "dayTimeDurationObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "dayTimeDurationType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ 31, null, false, ["anyString"], {"hello":  "world!"} ]
+      "baseType": "dayTimeDuration",
+      "enumeration": [ "P2Y99M", "PT", "P1D2H", "randomString", 31, null, false, ["anyString"], {"hello":  "world!"} ]
     },
     {
-      "name": "anyURIObj",
+      "name": "dayTimeDurationObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myDayTimeDuration",
+          "type": "dayTimeDurationType"
         }
       ]
     }

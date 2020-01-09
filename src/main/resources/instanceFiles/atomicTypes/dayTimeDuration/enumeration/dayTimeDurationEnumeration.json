@@ -1,13 +1,13 @@
 {
-  "anyURIs": [
+  "dayTimeDurations": [
     {
-      "myAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+      "myDayTimeDuration": "PT999999S"
     },
     {
-      "myAnyURI": "http://datypic.com"
+      "myDayTimeDuration": "-P4DT5M"
     },
     {
-      "myAnyURI": "../arinaldi.html"
+      "myDayTimeDuration": "P3DT99H66M4333.3S"
     }
   ]
 }

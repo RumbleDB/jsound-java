@@ -5,50 +5,70 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "dayTimeDurations",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "dayTimeDurationObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "dayTimeDurationType",
       "kind": "atomic",
-      "baseType": "anyURI"
+      "baseType": "dayTimeDuration"
     },
     {
-      "name": "anyURIObj",
+      "name": "dayTimeDurationObj",
       "kind": "object",
       "content": [
         {
           "name": "integerValue",
-          "type": "anyURIType",
+          "type": "dayTimeDurationType",
           "default": 34
         },
         {
+          "name": "stringValue",
+          "type": "dayTimeDurationType",
+          "default": "randomString"
+        },
+        {
+          "name": "incorrectDayTimeDurationValue1",
+          "type": "dayTimeDurationType",
+          "default": "P-20M"
+        },
+        {
+          "name": "incorrectDayTimeDurationValue2",
+          "type": "dayTimeDurationType",
+          "default": "PT15.S"
+        },
+        {
+          "name": "incorrectDayTimeDurationValue3",
+          "type": "dayTimeDurationType",
+          "default": "P2Y6M5DT12H35M30S"
+        },
+        {
           "name": "nullValue",
-          "type": "anyURIType",
+          "type": "dayTimeDurationType",
           "default": null
         },
         {
           "name": "booleanValue",
-          "type": "anyURIType",
+          "type": "dayTimeDurationType",
           "default": false
         },
         {
           "name": "objectValue",
-          "type": "anyURIType",
+          "type": "dayTimeDurationType",
           "default": {
             "hello": "world!"
           }
         },
         {
           "name": "arrayValue",
-          "type": "anyURIType",
+          "type": "dayTimeDurationType",
           "default": [ "thisIsAString" ]
         }
       ]

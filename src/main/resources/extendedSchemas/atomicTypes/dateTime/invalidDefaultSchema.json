@@ -35,17 +35,17 @@
           "default": "randomString"
         },
         {
-          "name": "incorrectDateValue1",
+          "name": "incorrectDateTimeValue1",
           "type": "dateTimeType",
           "default": "2012-04-12T12:12:12-15:00"
         },
         {
-          "name": "incorrectDateValue2",
+          "name": "incorrectDateTimeValue2",
           "type": "dateTimeType",
           "default": "2011-02-29T12:12:12"
         },
         {
-          "name": "incorrectDateValue3",
+          "name": "incorrectDateTimeValue3",
           "type": "dateTimeType",
           "default": "2011-02-23T24:12:12"
         },
