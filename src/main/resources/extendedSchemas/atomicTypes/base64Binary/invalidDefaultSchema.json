@@ -1,0 +1,57 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "base64Binaries",
+          "type": {
+            "kind": "array",
+            "content": [
+              "base64BinaryObj"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "base64BinaryType",
+      "kind": "atomic",
+      "baseType": "base64Binary"
+    },
+    {
+      "name": "base64BinaryObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "integerValue",
+          "type": "base64BinaryType",
+          "default": 34
+        },
+        {
+          "name": "nullValue",
+          "type": "base64BinaryType",
+          "default": null
+        },
+        {
+          "name": "booleanValue",
+          "type": "base64BinaryType",
+          "default": false
+        },
+        {
+          "name": "objectValue",
+          "type": "base64BinaryType",
+          "default": {
+            "hello": "world!"
+          }
+        },
+        {
+          "name": "arrayValue",
+          "type": "base64BinaryType",
+          "default": [ "thisIsAString" ]
+        }
+      ]
+    }
+  ]
+}

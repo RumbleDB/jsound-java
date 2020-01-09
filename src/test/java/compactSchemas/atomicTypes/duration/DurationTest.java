@@ -20,13 +20,13 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class DurationTest extends BaseTest {
-    public static final String filePath = "atomicTypes/duration/durationFile.json";
-    protected static String schemaPath = "atomicTypes/durationSchema.json";
+    private static final String filePath = "atomicTypes/duration/durationFile.json";
     protected static boolean compact = true;
-    public static Map<String, FieldDescriptor> durationObj;
+    private static Map<String, FieldDescriptor> durationObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "atomicTypes/duration/durationSchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

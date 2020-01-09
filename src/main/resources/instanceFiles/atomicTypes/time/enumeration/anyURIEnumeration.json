@@ -1,0 +1,13 @@
+{
+  "anyURIs": [
+    {
+      "myAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+    },
+    {
+      "myAnyURI": "http://datypic.com"
+    },
+    {
+      "myAnyURI": "../arinaldi.html"
+    }
+  ]
+}

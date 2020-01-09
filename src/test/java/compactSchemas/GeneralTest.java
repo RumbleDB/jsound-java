@@ -17,13 +17,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class GeneralTest extends BaseTest {
-    public static final String filePath = "generalFile.json";
-    protected static String schemaPath = "generalSchema.json";
+    private static final String filePath = "generalFile.json";
     protected static boolean compact = true;
-    public static Map<String, FieldDescriptor> person;
+    private static Map<String, FieldDescriptor> person;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "generalSchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

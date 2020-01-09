@@ -15,13 +15,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidValuesTest extends BaseTest {
-    public static final String filePath = "union/invalidValuesError.json";
-    protected static String schemaPath = "union/unionSchema.json";
+    private static final String filePath = "union/invalidValuesError.json";
     protected static boolean compact = true;
     private static TypeDescriptor unionObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "union/unionSchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

@@ -33,7 +33,7 @@ public class AnyURIType extends AtomicTypeDescriptor {
     @Override
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         URI uri;
-        if (!itemWrapper.isStringItem())
+        if (!itemWrapper.isStringItem() && !itemWrapper.isAnyURIItem())
             return false;
         try {
             uri = URI.create(itemWrapper.getStringValue().replaceAll("\\s+", ""));

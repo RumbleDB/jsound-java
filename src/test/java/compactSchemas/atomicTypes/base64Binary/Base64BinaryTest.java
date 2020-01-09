@@ -20,13 +20,13 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class Base64BinaryTest extends BaseTest {
-    public static final String filePath = "atomicTypes/base64Binary/base64BinaryFile.json";
-    protected static String schemaPath = "atomicTypes/base64BinarySchema.json";
+    private static final String filePath = "atomicTypes/base64Binary/base64BinaryFile.json";
     protected static boolean compact = true;
-    public static Map<String, FieldDescriptor> base64BinaryObj;
+    private static Map<String, FieldDescriptor> base64BinaryObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "atomicTypes/base64Binary/base64BinarySchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

@@ -26,13 +26,13 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ArrayTest extends BaseTest {
-    public static final String filePath = "array/arrayFile.json";
-    protected static String schemaPath = "array/arraySchema.json";
+    private static final String filePath = "array/arrayFile.json";
     protected static boolean compact = true;
-    public static Map<String, FieldDescriptor> arrayObject;
+    private static Map<String, FieldDescriptor> arrayObject;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "array/arraySchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

@@ -15,13 +15,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidValuesTest extends BaseTest {
-    public static final String filePath = "atomicTypes/date/invalidValuesError.json";
-    protected static String schemaPath = "atomicTypes/dateSchema.json";
+    private static final String filePath = "atomicTypes/date/invalidValuesError.json";
     protected static boolean compact = true;
     private static TypeDescriptor dateObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "atomicTypes/date/dateSchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

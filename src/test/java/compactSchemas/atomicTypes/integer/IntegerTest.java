@@ -20,13 +20,13 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class IntegerTest extends BaseTest {
-    public static final String filePath = "atomicTypes/integer/integerFile.json";
-    protected static String schemaPath = "atomicTypes/integerSchema.json";
+    private static final String filePath = "atomicTypes/integer/integerFile.json";
     protected static boolean compact = true;
-    public static Map<String, FieldDescriptor> integerObj;
+    private static Map<String, FieldDescriptor> integerObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "atomicTypes/integer/integerSchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

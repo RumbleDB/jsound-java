@@ -21,13 +21,13 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class UnionTest extends BaseTest {
-    public static final String filePath = "union/unionFile.json";
-    protected static String schemaPath = "union/unionSchema.json";
+    private static final String filePath = "union/unionFile.json";
     protected static boolean compact = true;
-    public static Map<String, FieldDescriptor> unionObject;
+    private static Map<String, FieldDescriptor> unionObject;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "union/unionSchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

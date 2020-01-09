@@ -20,13 +20,13 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class DateTimeTest extends BaseTest {
-    public static final String filePath = "atomicTypes/dateTime/dateTimeFile.json";
-    protected static String schemaPath = "atomicTypes/dateTimeSchema.json";
+    private static final String filePath = "atomicTypes/dateTime/dateTimeFile.json";
     protected static boolean compact = true;
-    public static Map<String, FieldDescriptor> dateTimeObj;
+    private static Map<String, FieldDescriptor> dateTimeObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "atomicTypes/dateTime/dateTimeSchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

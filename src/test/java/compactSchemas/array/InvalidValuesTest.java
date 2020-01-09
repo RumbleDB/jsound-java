@@ -15,13 +15,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidValuesTest extends BaseTest {
-    public static final String filePath = "array/invalidValuesError.json";
-    protected static String schemaPath = "array/arraySchema.json";
+    private static final String filePath = "array/invalidValuesError.json";
     protected static boolean compact = true;
     private static TypeDescriptor arrayObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "array/arraySchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

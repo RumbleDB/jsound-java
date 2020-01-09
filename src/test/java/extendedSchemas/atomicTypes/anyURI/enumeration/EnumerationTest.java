@@ -20,16 +20,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class EnumerationTest extends BaseTest {
-    private static final String filePath = "atomicTypes/anyURI/enumeration/anyURIEnumeration.json";
-    protected static boolean compact = false;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        String schemaPath = "atomicTypes/anyURI/enumerationSchema.json";
         BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
-            compact
+            "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
+            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+            false
         );
     }
 
@@ -66,8 +63,7 @@ public class EnumerationTest extends BaseTest {
             );
         assertEquals(schema.get("anyURIType").getFacets().getEnumeration().size(), values.size());
         for (String value : values) {
-            AnyURIItem anyURIItem = new AnyURIItem(value, URI.create(value));
-            assertTrue(enumValues.contains(anyURIItem));
+            assertTrue(enumValues.contains(new AnyURIItem(value, URI.create(value))));
         }
 
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems())

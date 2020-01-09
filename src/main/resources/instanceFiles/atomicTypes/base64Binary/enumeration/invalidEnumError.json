@@ -1,0 +1,24 @@
+{
+  "base64Binaries": [
+    {
+      "myBase64Binary": "valueNonInEnum"
+    },
+    {
+      "myBase64Binary": 21
+    },
+    {
+      "myBase64Binary": false
+    },
+    {
+      "myBase64Binary": null
+    },
+    {
+      "myBase64Binary": [ "a", "b", "c" ]
+    },
+    {
+      "myBase64Binary": {
+        "hello" : "world!"
+      }
+    }
+  ]
+}

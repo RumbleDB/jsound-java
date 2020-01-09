@@ -1,0 +1,35 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "base64Binaries",
+          "type": {
+            "kind": "array",
+            "content": [
+              "base64BinaryObj"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "base64BinaryType",
+      "kind": "atomic",
+      "baseType": "base64Binary",
+      "enumeration": [ "anyString", 31, null, false, ["anyString"], {"hello":  "world!"} ]
+    },
+    {
+      "name": "base64BinaryObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myBase64Binary",
+          "type": "base64BinaryType"
+        }
+      ]
+    }
+  ]
+}

@@ -15,13 +15,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class MissingRequiredFieldTest extends BaseTest {
-    public static final String filePath = "object/missingRequiredFieldError.json";
-    protected static String schemaPath = "object/missingRequiredFieldSchema.json";
+    private static final String filePath = "object/missingRequiredFieldError.json";
     protected static boolean compact = true;
     private static Map<String, FieldDescriptor> object;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "object/missingRequiredFieldSchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

@@ -20,13 +20,13 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class DoubleTest extends BaseTest {
-    public static final String filePath = "atomicTypes/double/doubleFile.json";
-    protected static String schemaPath = "atomicTypes/doubleSchema.json";
+    private static final String filePath = "atomicTypes/double/doubleFile.json";
     protected static boolean compact = true;
-    public static Map<String, FieldDescriptor> doubleObj;
+    private static Map<String, FieldDescriptor> doubleObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "atomicTypes/double/doubleSchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,
@@ -37,7 +37,7 @@ public class DoubleTest extends BaseTest {
 
     @Test
     public void testGeneral() {
-        assertTrue(schema.get("doubleType").isDoubleType());
+        assertTrue(schema.get("double").isDoubleType());
         assertTrue(schema.get("doubleObj").isObjectType());
         assertTrue(schema.get("arrayOfDoubles").isArrayType());
     }

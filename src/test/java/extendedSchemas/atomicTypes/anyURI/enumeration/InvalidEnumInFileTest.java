@@ -19,17 +19,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidEnumInFileTest extends BaseTest {
-    private static final String filePath = "atomicTypes/anyURI/enumeration/invalidEnumError.json";
-    protected static boolean compact = false;
     private static TypeDescriptor anyURIObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        String schemaPath = "atomicTypes/anyURI/enumerationSchema.json";
         BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
-            compact
+                "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
+                "atomicTypes/anyURI/enumeration/invalidEnumError.json",
+                false
         );
         anyURIObj = schema.get("anyURIObj");
     }

@@ -16,13 +16,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class NonUniqueTest extends BaseTest {
-    public static String filePath = "atomicTypes/time/nonUniqueError1.json";
-    protected static String schemaPath = "atomicTypes/timeSchema.json";
+    private static String filePath = "atomicTypes/time/nonUniqueError1.json";
     protected static boolean compact = true;
     private static Map<String, FieldDescriptor> timeObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "atomicTypes/time/timeSchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

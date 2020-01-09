@@ -1,0 +1,35 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "base64Binaries",
+          "type": {
+            "kind": "array",
+            "content": [
+              "base64BinaryObj"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "base64BinaryType",
+      "kind": "atomic",
+      "baseType": "base64Binary",
+      "enumeration": [ "ZW FzdX JlLg ==", "0F+40A==", "0123456789abcdef" ]
+    },
+    {
+      "name": "base64BinaryObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myBase64Binary",
+          "type": "base64BinaryType"
+        }
+      ]
+    }
+  ]
+}

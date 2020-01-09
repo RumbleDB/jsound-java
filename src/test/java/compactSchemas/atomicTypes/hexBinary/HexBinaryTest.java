@@ -20,13 +20,13 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class HexBinaryTest extends BaseTest {
-    public static final String filePath = "atomicTypes/hexBinary/hexBinaryFile.json";
-    protected static String schemaPath = "atomicTypes/hexBinarySchema.json";
+    private static final String filePath = "atomicTypes/hexBinary/hexBinaryFile.json";
     protected static boolean compact = true;
-    public static Map<String, FieldDescriptor> hexBinaryObj;
+    private static Map<String, FieldDescriptor> hexBinaryObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
+        String schemaPath = "atomicTypes/hexBinary/hexBinarySchema.json";
         BaseTest.initializeApplication(
             (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
             filePath,

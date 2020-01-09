@@ -1,0 +1,24 @@
+{
+  "anyURIs": [
+    {
+      "myAnyURI": "valueNonInEnum"
+    },
+    {
+      "myAnyURI": 21
+    },
+    {
+      "myAnyURI": false
+    },
+    {
+      "myAnyURI": null
+    },
+    {
+      "myAnyURI": [ "a", "b", "c" ]
+    },
+    {
+      "myAnyURI": {
+        "hello" : "world!"
+      }
+    }
+  ]
+}
