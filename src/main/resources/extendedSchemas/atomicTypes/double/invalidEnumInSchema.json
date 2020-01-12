@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "doubles",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "doubleObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "doubleType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ 31, null, false, ["anyString"], {"hello":  "world!"} ]
+      "baseType": "double",
+      "enumeration": [ "rndString", null, false, ["anyString"], {"hello":  "world!"} ]
     },
     {
-      "name": "anyURIObj",
+      "name": "doubleObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myDouble",
+          "type": "doubleType"
         }
       ]
     }

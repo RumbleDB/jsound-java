@@ -4,6 +4,9 @@
       "myDecimal": "valueNonInEnum"
     },
     {
+      "myDecimal": 43
+    },
+    {
       "myDecimal": false
     },
     {

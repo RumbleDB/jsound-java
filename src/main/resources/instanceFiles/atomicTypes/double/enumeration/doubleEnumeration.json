@@ -1,13 +1,13 @@
 {
-  "anyURIs": [
+  "doubles": [
     {
-      "myAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+      "myDouble": 12e3
     },
     {
-      "myAnyURI": "http://datypic.com"
+      "myDouble": 3.45
     },
     {
-      "myAnyURI": "../arinaldi.html"
+      "myDouble": 678
     }
   ]
 }

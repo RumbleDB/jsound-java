@@ -1,7 +1,7 @@
 package extendedSchemas.atomicTypes.doubleType.enumeration;
 
 import base.BaseTest;
-import jsound.atomicItems.AnyURIItem;
+import jsound.atomicItems.DoubleItem;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.junit.BeforeClass;
@@ -24,36 +24,36 @@ public class EnumerationTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+            "extendedSchemas/atomicTypes/double/enumerationSchema.json",
+            "atomicTypes/double/enumeration/doubleEnumeration.json",
             false
         );
     }
 
     @Test
     public void testSchema() {
-        assertTrue(schema.get("anyURIType").isAnyURIType());
-        assertTrue(schema.get("anyURIObj").isObjectType());
+        assertTrue(schema.get("doubleType").isDoubleType());
+        assertTrue(schema.get("doubleObj").isObjectType());
         assertTrue(
-            schema.get("anyURIObj")
+            schema.get("doubleObj")
                 .getFacets()
                 .getObjectContent()
-                .get("myAnyURI")
+                .get("myDouble")
                 .getTypeOrReference()
                 .getTypeDescriptor()
-                .isAnyURIType()
+                .isDoubleType()
         );
     }
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-            "http://datypic.com",
-            "../prod.html#shirt",
-            "../arinaldi.html",
-            "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+        List<DoubleItem> values = Arrays.asList(
+            new DoubleItem(12e3),
+            new DoubleItem(3.45),
+            new DoubleItem(678d),
+            new DoubleItem(9E1)
         );
-        List<Item> enumValues = schema.get("anyURIType")
+        List<Item> enumValues = schema.get("doubleType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -61,13 +61,13 @@ public class EnumerationTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        assertEquals(schema.get("anyURIType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new AnyURIItem(value, URI.create(value))));
+        assertEquals(schema.get("doubleType").getFacets().getEnumeration().size(), values.size());
+        for (DoubleItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem().getStringValue()));
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("doubles").getItem().getItems())
+            assertTrue(values.contains((DoubleItem) itemWrapper.getItem().getItemMap().get("myDouble").getItem()));
     }
 
     @Test

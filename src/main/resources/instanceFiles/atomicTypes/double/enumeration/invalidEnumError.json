@@ -1,22 +1,22 @@
 {
-  "anyURIs": [
+  "doubles": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myDouble": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myDouble": 21
     },
     {
-      "myAnyURI": false
+      "myDouble": false
     },
     {
-      "myAnyURI": null
+      "myDouble": null
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
+      "myDouble": [ "a", "b", "c" ]
     },
     {
-      "myAnyURI": {
+      "myDouble": {
         "hello" : "world!"
       }
     }
