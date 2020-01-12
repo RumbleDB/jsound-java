@@ -1,7 +1,9 @@
 package extendedSchemas.atomicTypes.duration.enumeration;
 
 import base.BaseTest;
-import jsound.atomicItems.AnyURIItem;
+import jsound.atomicItems.DayTimeDurationItem;
+import jsound.atomicItems.DurationItem;
+import jsound.types.ItemTypes;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.junit.BeforeClass;
@@ -13,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static jsound.atomicItems.DurationItem.getDurationFromString;
 import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
 import static org.api.executors.JSoundExecutor.schemaItem;
@@ -24,36 +27,36 @@ public class EnumerationTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+            "extendedSchemas/atomicTypes/duration/enumerationSchema.json",
+            "atomicTypes/duration/enumeration/durationEnumeration.json",
             false
         );
     }
 
     @Test
     public void testSchema() {
-        assertTrue(schema.get("anyURIType").isAnyURIType());
-        assertTrue(schema.get("anyURIObj").isObjectType());
+        assertTrue(schema.get("durationType").isDurationType());
+        assertTrue(schema.get("durationObj").isObjectType());
         assertTrue(
-            schema.get("anyURIObj")
+            schema.get("durationObj")
                 .getFacets()
                 .getObjectContent()
-                .get("myAnyURI")
+                .get("myDuration")
                 .getTypeOrReference()
                 .getTypeDescriptor()
-                .isAnyURIType()
+                .isDurationType()
         );
     }
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-            "http://datypic.com",
-            "../prod.html#shirt",
-            "../arinaldi.html",
-            "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+        List<DurationItem> values = Arrays.asList(
+            createDurationItem("P20M"),
+            createDurationItem("PT20M"),
+            createDurationItem("P2Y6M5DT12H35M30S"),
+            createDurationItem("P4DT2H3M0S")
         );
-        List<Item> enumValues = schema.get("anyURIType")
+        List<Item> enumValues = schema.get("durationType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -61,13 +64,17 @@ public class EnumerationTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        assertEquals(schema.get("anyURIType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new AnyURIItem(value, URI.create(value))));
+        assertEquals(schema.get("durationType").getFacets().getEnumeration().size(), values.size());
+        for (DurationItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem().getStringValue()));
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("durations").getItem().getItems())
+            assertTrue(values.contains((DurationItem) itemWrapper.getItem().getItemMap().get("myDuration").getItem()));
+    }
+
+    private DurationItem createDurationItem(String value) {
+        return new DurationItem(getDurationFromString(value, ItemTypes.DURATION));
     }
 
     @Test

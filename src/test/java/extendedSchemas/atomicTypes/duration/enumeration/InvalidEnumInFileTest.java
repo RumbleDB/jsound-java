@@ -19,28 +19,28 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidEnumInFileTest extends BaseTest {
-    private static TypeDescriptor anyURIObj;
+    private static TypeDescriptor durationObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-                "atomicTypes/anyURI/enumeration/invalidEnumError.json",
+                "extendedSchemas/atomicTypes/duration/enumerationSchema.json",
+                "atomicTypes/duration/enumeration/invalidEnumError.json",
                 false
         );
-        anyURIObj = schema.get("anyURIObj");
+        durationObj = schema.get("durationObj");
     }
 
     @Test
     public void testInvalidValues() {
-        assertTrue(anyURIObj.isObjectType());
+        assertTrue(durationObj.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("durations").getItem().getItems()) {
             assertFalse(
-                anyURIObj.validate(itemWrapper, false)
+                durationObj.validate(itemWrapper, false)
             );
         }
-        List<Item> enumValues = schema.get("anyURIType")
+        List<Item> enumValues = schema.get("durationType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -48,10 +48,10 @@ public class InvalidEnumInFileTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("durations").getItem().getItems()) {
             try {
                 assertFalse(
-                    enumValues.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem())
+                    enumValues.contains(itemWrapper.getItem().getItemMap().get("myDuration").getItem())
                 );
             } catch (UnexpectedTypeException ignored) {
             }

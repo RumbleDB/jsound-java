@@ -5,50 +5,50 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "durations",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "durationObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "durationType",
       "kind": "atomic",
-      "baseType": "anyURI"
+      "baseType": "duration"
     },
     {
-      "name": "anyURIObj",
+      "name": "durationObj",
       "kind": "object",
       "content": [
         {
           "name": "integerValue",
-          "type": "anyURIType",
+          "type": "durationType",
           "default": 34
         },
         {
           "name": "nullValue",
-          "type": "anyURIType",
+          "type": "durationType",
           "default": null
         },
         {
           "name": "booleanValue",
-          "type": "anyURIType",
+          "type": "durationType",
           "default": false
         },
         {
           "name": "objectValue",
-          "type": "anyURIType",
+          "type": "durationType",
           "default": {
             "hello": "world!"
           }
         },
         {
           "name": "arrayValue",
-          "type": "anyURIType",
+          "type": "durationType",
           "default": [ "thisIsAString" ]
         }
       ]

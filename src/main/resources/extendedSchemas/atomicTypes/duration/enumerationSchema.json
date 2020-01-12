@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "durations",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "durationObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "durationType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ "http://datypic.com", "../prod.html#shirt", "../arinaldi.html", "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java" ]
+      "baseType": "duration",
+      "enumeration": [ "P20M", "PT20M", "P2Y6M5DT12H35M30S", "P4DT2H3M0S" ]
     },
     {
-      "name": "anyURIObj",
+      "name": "durationObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myDuration",
+          "type": "durationType"
         }
       ]
     }

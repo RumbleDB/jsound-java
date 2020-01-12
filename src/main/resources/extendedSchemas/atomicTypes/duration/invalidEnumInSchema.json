@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "durations",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "durationObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "durationType",
       "kind": "atomic",
-      "baseType": "anyURI",
+      "baseType": "duration",
       "enumeration": [ 31, null, false, ["anyString"], {"hello":  "world!"} ]
     },
     {
-      "name": "anyURIObj",
+      "name": "durationObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myDuration",
+          "type": "durationType"
         }
       ]
     }

@@ -1,22 +1,22 @@
 {
-  "anyURIs": [
+  "durations": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myDuration": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myDuration": 21
     },
     {
-      "myAnyURI": false
+      "myDuration": false
     },
     {
-      "myAnyURI": null
+      "myDuration": null
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
+      "myDuration": [ "a", "b", "c" ]
     },
     {
-      "myAnyURI": {
+      "myDuration": {
         "hello" : "world!"
       }
     }

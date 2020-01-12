@@ -1,13 +1,13 @@
 {
-  "anyURIs": [
+  "durations": [
     {
-      "myAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+      "myDuration": "P2Y6M5DT12H35M30S"
     },
     {
-      "myAnyURI": "http://datypic.com"
+      "myDuration": "PT20M"
     },
     {
-      "myAnyURI": "../arinaldi.html"
+      "myDuration": "P20M"
     }
   ]
 }

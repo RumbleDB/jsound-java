@@ -75,6 +75,7 @@ public class EnumerationTest extends BaseTest {
     private DayTimeDurationItem createDayTimeDurationItem(String value) {
         return new DayTimeDurationItem(getDurationFromString(value, ItemTypes.DAYTIMEDURATION));
     }
+
     @Test
     public void testValidate() {
         assertTrue(schemaItem.validate(fileItem, false));
