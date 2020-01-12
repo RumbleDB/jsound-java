@@ -1,13 +1,13 @@
 {
-  "anyURIs": [
+  "hexBinaries": [
     {
-      "myAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+      "myHexBinary": "AAAA"
     },
     {
-      "myAnyURI": "http://datypic.com"
+      "myHexBinary": "9521"
     },
     {
-      "myAnyURI": "../arinaldi.html"
+      "myHexBinary": "0123456789abcdef"
     }
   ]
 }

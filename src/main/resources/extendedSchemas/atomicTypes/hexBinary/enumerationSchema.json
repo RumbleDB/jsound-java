@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "hexBinaries",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "hexBinaryObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "hexBinaryType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ "http://datypic.com", "../prod.html#shirt", "../arinaldi.html", "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java" ]
+      "baseType": "hexBinary",
+      "enumeration": [ "0123456789abcdef", "aBCd12", "9521", "AAAA" ]
     },
     {
-      "name": "anyURIObj",
+      "name": "hexBinaryObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myHexBinary",
+          "type": "hexBinaryType"
         }
       ]
     }

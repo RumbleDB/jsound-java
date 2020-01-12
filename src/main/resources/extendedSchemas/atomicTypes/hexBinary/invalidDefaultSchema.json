@@ -5,50 +5,55 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "hexBinaries",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "hexBinaryObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "hexBinaryType",
       "kind": "atomic",
-      "baseType": "anyURI"
+      "baseType": "hexBinary"
     },
     {
-      "name": "anyURIObj",
+      "name": "hexBinaryObj",
       "kind": "object",
       "content": [
         {
           "name": "integerValue",
-          "type": "anyURIType",
+          "type": "hexBinaryType",
           "default": 34
         },
         {
+          "name": "stringValue",
+          "type": "hexBinaryType",
+          "default": "rndString"
+        },
+        {
           "name": "nullValue",
-          "type": "anyURIType",
+          "type": "hexBinaryType",
           "default": null
         },
         {
           "name": "booleanValue",
-          "type": "anyURIType",
+          "type": "hexBinaryType",
           "default": false
         },
         {
           "name": "objectValue",
-          "type": "anyURIType",
+          "type": "hexBinaryType",
           "default": {
             "hello": "world!"
           }
         },
         {
           "name": "arrayValue",
-          "type": "anyURIType",
+          "type": "hexBinaryType",
           "default": [ "thisIsAString" ]
         }
       ]

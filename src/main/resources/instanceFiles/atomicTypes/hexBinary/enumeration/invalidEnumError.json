@@ -1,22 +1,22 @@
 {
-  "anyURIs": [
+  "hexBinaries": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myHexBinary": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myHexBinary": 21
     },
     {
-      "myAnyURI": false
+      "myHexBinary": false
     },
     {
-      "myAnyURI": null
+      "myHexBinary": null
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
+      "myHexBinary": [ "a", "b", "c" ]
     },
     {
-      "myAnyURI": {
+      "myHexBinary": {
         "hello" : "world!"
       }
     }

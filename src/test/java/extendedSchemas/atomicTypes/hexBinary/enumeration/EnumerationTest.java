@@ -1,7 +1,7 @@
 package extendedSchemas.atomicTypes.hexBinary.enumeration;
 
 import base.BaseTest;
-import jsound.atomicItems.AnyURIItem;
+import jsound.atomicItems.HexBinaryItem;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.junit.BeforeClass;
@@ -24,36 +24,36 @@ public class EnumerationTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+            "extendedSchemas/atomicTypes/hexBinary/enumerationSchema.json",
+            "atomicTypes/hexBinary/enumeration/hexBinaryEnumeration.json",
             false
         );
     }
 
     @Test
     public void testSchema() {
-        assertTrue(schema.get("anyURIType").isAnyURIType());
-        assertTrue(schema.get("anyURIObj").isObjectType());
+        assertTrue(schema.get("hexBinaryType").isHexBinaryType());
+        assertTrue(schema.get("hexBinaryObj").isObjectType());
         assertTrue(
-            schema.get("anyURIObj")
+            schema.get("hexBinaryObj")
                 .getFacets()
                 .getObjectContent()
-                .get("myAnyURI")
+                .get("myHexBinary")
                 .getTypeOrReference()
                 .getTypeDescriptor()
-                .isAnyURIType()
+                .isHexBinaryType()
         );
     }
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-            "http://datypic.com",
-            "../prod.html#shirt",
-            "../arinaldi.html",
-            "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+        List<HexBinaryItem> values = Arrays.asList(
+            new HexBinaryItem(HexBinaryItem.parseHexBinaryString("0123456789abcdef"), "0123456789abcdef"),
+            new HexBinaryItem(HexBinaryItem.parseHexBinaryString("aBCd12"),"aBCd12"),
+            new HexBinaryItem(HexBinaryItem.parseHexBinaryString("9521"), "9521"),
+            new HexBinaryItem(HexBinaryItem.parseHexBinaryString("AAAA"), "AAAA")
         );
-        List<Item> enumValues = schema.get("anyURIType")
+        List<Item> enumValues = schema.get("hexBinaryType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -61,13 +61,13 @@ public class EnumerationTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        assertEquals(schema.get("anyURIType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new AnyURIItem(value, URI.create(value))));
+        assertEquals(schema.get("hexBinaryType").getFacets().getEnumeration().size(), values.size());
+        for (HexBinaryItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem().getStringValue()));
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems())
+            assertTrue(values.contains((HexBinaryItem) itemWrapper.getItem().getItemMap().get("myHexBinary").getItem()));
     }
 
     @Test
