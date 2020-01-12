@@ -1,0 +1,25 @@
+{
+  "unions": [
+    {
+      "myUnion": "valueNonInEnum"
+    },
+    {
+      "myUnion": 21
+    },
+    {
+      "myUnion": false
+    },
+    {
+      "myUnion": null
+    },
+    {
+      "myUnion": [ 1,2,3 ]
+    },
+    {
+      "myUnion": {
+        "firstKey" : "world!",
+        "secondKey": 2
+      }
+    }
+  ]
+}

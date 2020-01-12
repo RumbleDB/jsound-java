@@ -1,0 +1,37 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "unions",
+          "type": {
+            "kind": "array",
+            "content": [
+              "unionObj"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "unionType",
+      "kind": "union",
+      "content": [ "hexBinary", "date", "yearMonthDuration" ],
+      "enumeration": [
+        "AAAA", "2001-12-12Z", "P12Y", "P1Y3M"
+      ]
+    },
+    {
+      "name": "unionObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myUnion",
+          "type": "unionType"
+        }
+      ]
+    }
+  ]
+}

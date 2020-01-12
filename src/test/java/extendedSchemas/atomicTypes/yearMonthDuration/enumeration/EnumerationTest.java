@@ -1,7 +1,6 @@
 package extendedSchemas.atomicTypes.yearMonthDuration.enumeration;
 
 import base.BaseTest;
-import jsound.atomicItems.DayTimeDurationItem;
 import jsound.atomicItems.YearMonthDurationItem;
 import jsound.types.ItemTypes;
 import org.api.Item;
@@ -10,7 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

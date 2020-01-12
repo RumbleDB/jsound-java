@@ -1,0 +1,65 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "unions",
+          "type": {
+            "kind": "array",
+            "content": [
+              "unionObj"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "unionType",
+      "kind": "union",
+      "content": [ "hexBinary", "date", "yearMonthDuration" ]
+    },
+    {
+      "name": "unionObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "integerValue",
+          "type": "unionType",
+          "default": 34
+        },
+        {
+          "name": "stringValue",
+          "type": "unionType",
+          "default": "hello"
+        },
+        {
+          "name": "nullValue",
+          "type": "unionType",
+          "default": null
+        },
+        {
+          "name": "booleanValue",
+          "type": "unionType",
+          "default": false
+        },
+        {
+          "name": "arrayValue",
+          "type": "unionType",
+          "default": [
+            "rndString"
+          ]
+        },
+        {
+          "name": "objectValue",
+          "type": "unionType",
+          "default": {
+            "firstKey": "firstValue",
+            "secondKey":  "hello"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "unions": [
+    {
+      "myUnion": "AAAA"
+    },
+    {
+      "myUnion": "P12Y"
+    },
+    {
+      "myUnion": "2001-12-12Z"
+    }
+  ]
+}
