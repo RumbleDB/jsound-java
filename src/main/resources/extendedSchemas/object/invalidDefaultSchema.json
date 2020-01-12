@@ -1,0 +1,74 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "objects",
+          "type": {
+            "kind": "array",
+            "content": [
+              "objectObj"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "objectType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "firstKey",
+          "type": "string"
+        },
+        {
+          "name": "secondKey",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "name": "objectObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "integerValue",
+          "type": "objectType",
+          "default": 34
+        },
+        {
+          "name": "stringValue",
+          "type": "objectType",
+          "default": "hello"
+        },
+        {
+          "name": "nullValue",
+          "type": "objectType",
+          "default": null
+        },
+        {
+          "name": "booleanValue",
+          "type": "objectType",
+          "default": false
+        },
+        {
+          "name": "arrayValue",
+          "type": "objectType",
+          "default": [
+            "rndString"
+          ]
+        },
+        {
+          "name": "objectValue",
+          "type": "objectType",
+          "default": {
+            "firstKey": "firstValue",
+            "secondKey":  "hello"
+          }
+        }
+      ]
+    }
+  ]
+}

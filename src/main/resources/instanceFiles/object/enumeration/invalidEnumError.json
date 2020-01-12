@@ -1,0 +1,25 @@
+{
+  "objects": [
+    {
+      "myObject": "valueNonInEnum"
+    },
+    {
+      "myObject": 21
+    },
+    {
+      "myObject": false
+    },
+    {
+      "myObject": null
+    },
+    {
+      "myObject": [ 1,2,3 ]
+    },
+    {
+      "myObject": {
+        "firstKey" : "world!",
+        "secondKey": 2
+      }
+    }
+  ]
+}

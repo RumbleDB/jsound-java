@@ -45,6 +45,8 @@ public class ObjectFacets extends Facets {
         String key;
         while (jsonSchemaIterator.readArray()) {
             FieldDescriptor fieldDescriptor = new FieldDescriptor();
+            if (!jsonSchemaIterator.whatIsNext().equals(ValueType.OBJECT))
+                throw new UnexpectedTypeException("Expected object. Found: " + jsonSchemaIterator.read().toString());
             while ((key = jsonSchemaIterator.readObject()) != null) {
                 switch (key) {
                     case "name":

@@ -1,0 +1,61 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "objects",
+          "type": {
+            "kind": "array",
+            "content": [
+              "objectObj"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "objectType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "firstKey",
+          "type": "string"
+        },
+        {
+          "name": "secondKey",
+          "type": "integer"
+        }
+      ],
+      "enumeration": [
+        {
+          "firstKey": "firstValue",
+          "secondKey": 1
+        },
+        {
+          "firstKey": "secondValue",
+          "secondKey": 2
+        },
+        {
+          "firstKey": "thirdValue",
+          "secondKey": 3
+        },
+        {
+          "firstKey": "fourthValue",
+          "secondKey": 4
+        }
+      ]
+    },
+    {
+      "name": "objectObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myObject",
+          "type": "objectType"
+        }
+      ]
+    }
+  ]
+}
