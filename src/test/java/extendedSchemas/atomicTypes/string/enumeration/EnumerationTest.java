@@ -8,7 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +47,10 @@ public class EnumerationTest extends BaseTest {
     @Test
     public void testEnumeration() {
         List<StringItem> values = Arrays.asList(
-            new StringItem("first"), new StringItem("second"), new StringItem("third"), new StringItem("fourth")
+            new StringItem("first"),
+            new StringItem("second"),
+            new StringItem("third"),
+            new StringItem("fourth")
         );
         List<Item> enumValues = schema.get("stringType")
             .getFacets()

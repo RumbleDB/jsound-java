@@ -15,16 +15,20 @@ public class InvalidDefaultTest extends BaseTest {
     @Test(expected = InvalidSchemaException.class)
     public void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/dateTime/invalidDefaultSchema.json",
-                "atomicTypes/dateTime/enumeration/dateTimeEnumeration.json",
-                false
+            "extendedSchemas/atomicTypes/dateTime/invalidDefaultSchema.json",
+            "atomicTypes/dateTime/enumeration/dateTimeEnumeration.json",
+            false
         );
     }
 
     @Test
     public void validateDefaultValues() {
         for (FieldDescriptor fieldDescriptor : schema.get("dateTimeObj").getFacets().getObjectContent().values()) {
-            assertFalse(fieldDescriptor.getTypeOrReference().getTypeDescriptor().validate(fieldDescriptor.getDefaultValue(), false));
+            assertFalse(
+                fieldDescriptor.getTypeOrReference()
+                    .getTypeDescriptor()
+                    .validate(fieldDescriptor.getDefaultValue(), false)
+            );
         }
     }
 }

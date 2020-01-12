@@ -15,11 +15,12 @@ public class InvalidEnumInSchemaTest extends BaseTest {
     @Test(expected = InvalidEnumValueException.class)
     public void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/base64Binary/invalidEnumInSchema.json",
-                "atomicTypes/base64Binary/enumeration/base64BinaryEnumeration.json",
-                false
+            "extendedSchemas/atomicTypes/base64Binary/invalidEnumInSchema.json",
+            "atomicTypes/base64Binary/enumeration/base64BinaryEnumeration.json",
+            false
         );
     }
+
     @Test
     public void validateEnumValues() {
         for (ItemWrapper itemWrapper : schema.get("base64BinaryType").getFacets().getEnumeration()) {

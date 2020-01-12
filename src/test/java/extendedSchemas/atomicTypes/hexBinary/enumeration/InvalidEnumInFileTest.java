@@ -24,9 +24,9 @@ public class InvalidEnumInFileTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/hexBinary/enumerationSchema.json",
-                "atomicTypes/hexBinary/enumeration/invalidEnumError.json",
-                false
+            "extendedSchemas/atomicTypes/hexBinary/enumerationSchema.json",
+            "atomicTypes/hexBinary/enumeration/invalidEnumError.json",
+            false
         );
         hexBinaryObj = schema.get("hexBinaryObj");
     }

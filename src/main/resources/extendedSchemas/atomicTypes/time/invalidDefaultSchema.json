@@ -5,50 +5,55 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "times",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "timeObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "timeType",
       "kind": "atomic",
-      "baseType": "anyURI"
+      "baseType": "time"
     },
     {
-      "name": "anyURIObj",
+      "name": "timeObj",
       "kind": "object",
       "content": [
         {
           "name": "integerValue",
-          "type": "anyURIType",
+          "type": "timeType",
           "default": 34
         },
         {
+          "name": "stringValue",
+          "type": "timeType",
+          "default": "randomString"
+        },
+        {
           "name": "nullValue",
-          "type": "anyURIType",
+          "type": "timeType",
           "default": null
         },
         {
           "name": "booleanValue",
-          "type": "anyURIType",
+          "type": "timeType",
           "default": false
         },
         {
           "name": "objectValue",
-          "type": "anyURIType",
+          "type": "timeType",
           "default": {
             "hello": "world!"
           }
         },
         {
           "name": "arrayValue",
-          "type": "anyURIType",
+          "type": "timeType",
           "default": [ "thisIsAString" ]
         }
       ]

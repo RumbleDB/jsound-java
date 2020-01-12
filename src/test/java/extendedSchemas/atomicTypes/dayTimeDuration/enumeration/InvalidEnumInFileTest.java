@@ -24,9 +24,9 @@ public class InvalidEnumInFileTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/dayTimeDuration/enumerationSchema.json",
-                "atomicTypes/dayTimeDuration/enumeration/invalidEnumError.json",
-                false
+            "extendedSchemas/atomicTypes/dayTimeDuration/enumerationSchema.json",
+            "atomicTypes/dayTimeDuration/enumeration/invalidEnumError.json",
+            false
         );
         dayTimeDurationObj = schema.get("dayTimeDurationObj");
     }

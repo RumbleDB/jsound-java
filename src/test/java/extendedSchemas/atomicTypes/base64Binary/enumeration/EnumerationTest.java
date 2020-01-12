@@ -23,9 +23,9 @@ public class EnumerationTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/base64Binary/enumerationSchema.json",
-                "atomicTypes/base64Binary/enumeration/base64BinaryEnumeration.json",
-                false
+            "extendedSchemas/atomicTypes/base64Binary/enumerationSchema.json",
+            "atomicTypes/base64Binary/enumeration/base64BinaryEnumeration.json",
+            false
         );
     }
 
@@ -47,9 +47,10 @@ public class EnumerationTest extends BaseTest {
     @Test
     public void testEnumeration() {
         List<Base64BinaryItem> values = Arrays.asList(
-                new Base64BinaryItem(Base64BinaryItem.parseBase64BinaryString("ZW FzdX JlLg =="), "ZW FzdX JlLg =="),
-                new Base64BinaryItem(Base64BinaryItem.parseBase64BinaryString("0F+40A=="), "0F+40A=="),
-                new Base64BinaryItem(Base64BinaryItem.parseBase64BinaryString("0123456789abcdef"), "0123456789abcdef"));
+            new Base64BinaryItem(Base64BinaryItem.parseBase64BinaryString("ZW FzdX JlLg =="), "ZW FzdX JlLg =="),
+            new Base64BinaryItem(Base64BinaryItem.parseBase64BinaryString("0F+40A=="), "0F+40A=="),
+            new Base64BinaryItem(Base64BinaryItem.parseBase64BinaryString("0123456789abcdef"), "0123456789abcdef")
+        );
 
         List<Item> enumValues = schema.get("base64BinaryType")
             .getFacets()
@@ -65,7 +66,9 @@ public class EnumerationTest extends BaseTest {
         }
 
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("base64Binaries").getItem().getItems())
-            assertTrue(values.contains((Base64BinaryItem) itemWrapper.getItem().getItemMap().get("myBase64Binary").getItem()));
+            assertTrue(
+                values.contains((Base64BinaryItem) itemWrapper.getItem().getItemMap().get("myBase64Binary").getItem())
+            );
     }
 
     @Test

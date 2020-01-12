@@ -1,7 +1,6 @@
 package extendedSchemas.atomicTypes.dateTime.enumeration;
 
 import base.BaseTest;
-import jsound.atomicItems.DateItem;
 import jsound.atomicItems.DateTimeItem;
 import jsound.types.AtomicTypes;
 import org.api.Item;
@@ -12,7 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,10 +50,10 @@ public class EnumerationTest extends BaseTest {
     @Test
     public void testEnumeration() {
         List<DateTimeItem> values = Arrays.asList(
-                createDateTime("2004-04-12T13:20:00Z"),
-                createDateTime("2004-04-12T13:20:00+14:00"),
-                createDateTime("2004-04-12T13:20:15.5"),
-                createDateTime("2001-12-12T24:00:00")
+            createDateTime("2004-04-12T13:20:00Z"),
+            createDateTime("2004-04-12T13:20:00+14:00"),
+            createDateTime("2004-04-12T13:20:15.5"),
+            createDateTime("2001-12-12T24:00:00")
         );
         List<Item> enumValues = schema.get("dateTimeType")
             .getFacets()

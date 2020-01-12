@@ -15,16 +15,20 @@ public class InvalidDefaultTest extends BaseTest {
     @Test(expected = InvalidSchemaException.class)
     public void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/integer/invalidDefaultSchema.json",
-                "atomicTypes/integer/enumeration/integerEnumeration.json",
-                false
+            "extendedSchemas/atomicTypes/integer/invalidDefaultSchema.json",
+            "atomicTypes/integer/enumeration/integerEnumeration.json",
+            false
         );
     }
 
     @Test
     public void validateDefaultValues() {
         for (FieldDescriptor fieldDescriptor : schema.get("integerObj").getFacets().getObjectContent().values()) {
-            assertFalse(fieldDescriptor.getTypeOrReference().getTypeDescriptor().validate(fieldDescriptor.getDefaultValue(), false));
+            assertFalse(
+                fieldDescriptor.getTypeOrReference()
+                    .getTypeDescriptor()
+                    .validate(fieldDescriptor.getDefaultValue(), false)
+            );
         }
     }
 }

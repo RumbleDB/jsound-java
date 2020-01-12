@@ -24,9 +24,9 @@ public class InvalidEnumInFileTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/integer/enumerationSchema.json",
-                "atomicTypes/integer/enumeration/invalidEnumError.json",
-                false
+            "extendedSchemas/atomicTypes/integer/enumerationSchema.json",
+            "atomicTypes/integer/enumeration/invalidEnumError.json",
+            false
         );
         integerObj = schema.get("integerObj");
     }

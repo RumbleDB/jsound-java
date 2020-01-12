@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,10 +48,11 @@ public class EnumerationTest extends BaseTest {
     @Test
     public void testEnumeration() {
         List<DecimalItem> values = Arrays.asList(
-                new DecimalItem(BigDecimal.valueOf(1)),
-                new DecimalItem(BigDecimal.valueOf(2)),
-                new DecimalItem(BigDecimal.valueOf(3.4)),
-                new DecimalItem(BigDecimal.valueOf(5e6)));
+            new DecimalItem(BigDecimal.valueOf(1)),
+            new DecimalItem(BigDecimal.valueOf(2)),
+            new DecimalItem(BigDecimal.valueOf(3.4)),
+            new DecimalItem(BigDecimal.valueOf(5e6))
+        );
         List<Item> enumValues = schema.get("decimalType")
             .getFacets()
             .getEnumeration()

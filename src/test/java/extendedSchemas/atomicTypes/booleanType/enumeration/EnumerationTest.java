@@ -2,14 +2,12 @@ package extendedSchemas.atomicTypes.booleanType.enumeration;
 
 import base.BaseTest;
 import jsound.atomicItems.BooleanItem;
-import jsound.item.ItemFactory;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,10 +47,11 @@ public class EnumerationTest extends BaseTest {
     @Test
     public void testEnumeration() {
         List<BooleanItem> values = Arrays.asList(
-                new BooleanItem(true),
-                new BooleanItem(false),
-                new BooleanItem(true),
-                new BooleanItem(false));
+            new BooleanItem(true),
+            new BooleanItem(false),
+            new BooleanItem(true),
+            new BooleanItem(false)
+        );
         List<Item> enumValues = schema.get("booleanType")
             .getFacets()
             .getEnumeration()

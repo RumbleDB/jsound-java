@@ -1,14 +1,17 @@
 package extendedSchemas.atomicTypes.time.enumeration;
 
 import base.BaseTest;
-import jsound.atomicItems.AnyURIItem;
+import jsound.atomicItems.DateTimeItem;
+import jsound.atomicItems.TimeItem;
+import jsound.types.AtomicTypes;
 import org.api.Item;
 import org.api.ItemWrapper;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,36 +27,36 @@ public class EnumerationTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+            "extendedSchemas/atomicTypes/time/enumerationSchema.json",
+            "atomicTypes/time/enumeration/timeEnumeration.json",
             false
         );
     }
 
     @Test
     public void testSchema() {
-        assertTrue(schema.get("anyURIType").isAnyURIType());
-        assertTrue(schema.get("anyURIObj").isObjectType());
+        assertTrue(schema.get("timeType").isTimeType());
+        assertTrue(schema.get("timeObj").isObjectType());
         assertTrue(
-            schema.get("anyURIObj")
+            schema.get("timeObj")
                 .getFacets()
                 .getObjectContent()
-                .get("myAnyURI")
+                .get("myTime")
                 .getTypeOrReference()
                 .getTypeDescriptor()
-                .isAnyURIType()
+                .isTimeType()
         );
     }
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-            "http://datypic.com",
-            "../prod.html#shirt",
-            "../arinaldi.html",
-            "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+        List<TimeItem> values = Arrays.asList(
+            createTime("13:20:00Z"),
+            createTime("00:00:00"),
+            createTime("21:12:13+02:00"),
+            createTime("19:45:01.011")
         );
-        List<Item> enumValues = schema.get("anyURIType")
+        List<Item> enumValues = schema.get("timeType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -61,17 +64,25 @@ public class EnumerationTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        assertEquals(schema.get("anyURIType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new AnyURIItem(value, URI.create(value))));
+        assertEquals(schema.get("timeType").getFacets().getEnumeration().size(), values.size());
+        for (TimeItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem().getStringValue()));
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("times").getItem().getItems())
+            assertTrue(values.contains((TimeItem) itemWrapper.getItem().getItemMap().get("myTime").getItem()));
+    }
+
+    private TimeItem createTime(String value) {
+        DateTime time = DateTimeItem.parseDateTime(value, AtomicTypes.TIME);
+        if (!value.endsWith("Z") && time.getZone() == DateTimeZone.getDefault()) {
+            return new TimeItem(time.withZoneRetainFields(DateTimeZone.UTC), false);
+        }
+        return new TimeItem(time, true);
     }
 
     @Test
-    public void testValidate() {
+    public void testValitime() {
         assertTrue(schemaItem.validate(fileItem, false));
     }
 }

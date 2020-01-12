@@ -15,9 +15,9 @@ public class InvalidEnumInSchemaTest extends BaseTest {
     @Test(expected = InvalidEnumValueException.class)
     public void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/anyURI/invalidEnumInSchema.json",
-                "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
-                false
+            "extendedSchemas/atomicTypes/anyURI/invalidEnumInSchema.json",
+            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+            false
         );
     }
 

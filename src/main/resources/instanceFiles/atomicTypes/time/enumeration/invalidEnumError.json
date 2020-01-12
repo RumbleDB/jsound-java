@@ -1,22 +1,22 @@
 {
-  "anyURIs": [
+  "times": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myTime": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myTime": 21
     },
     {
-      "myAnyURI": false
+      "myTime": false
     },
     {
-      "myAnyURI": null
+      "myTime": null
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
+      "myTime": [ "a", "b", "c" ]
     },
     {
-      "myAnyURI": {
+      "myTime": {
         "hello" : "world!"
       }
     }

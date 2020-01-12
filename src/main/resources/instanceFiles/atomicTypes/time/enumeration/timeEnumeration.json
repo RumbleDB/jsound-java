@@ -1,13 +1,13 @@
 {
-  "anyURIs": [
+  "times": [
     {
-      "myAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+      "myTime": "13:20:00Z"
     },
     {
-      "myAnyURI": "http://datypic.com"
+      "myTime": "21:12:13+02:00"
     },
     {
-      "myAnyURI": "../arinaldi.html"
+      "myTime": "19:45:01.011"
     }
   ]
 }

@@ -51,7 +51,11 @@ public class EnumerationTest extends BaseTest {
             new AnyURIItem("http://datypic.com", URI.create("http://datypic.com")),
             new AnyURIItem("../prod.html#shirt", URI.create("../prod.html#shirt")),
             new AnyURIItem("../arinaldi.html", URI.create("../arinaldi.html")),
-            new AnyURIItem("https://gitlab.inf.ethz.ch/gfourny/jsound-20-java", URI.create("https://gitlab.inf.ethz.ch/gfourny/jsound-20-java")));
+            new AnyURIItem(
+                    "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java",
+                    URI.create("https://gitlab.inf.ethz.ch/gfourny/jsound-20-java")
+            )
+        );
         List<Item> enumValues = schema.get("anyURIType")
             .getFacets()
             .getEnumeration()

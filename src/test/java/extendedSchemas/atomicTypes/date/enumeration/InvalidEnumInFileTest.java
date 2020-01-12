@@ -24,9 +24,9 @@ public class InvalidEnumInFileTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/date/enumerationSchema.json",
-                "atomicTypes/date/enumeration/invalidEnumError.json",
-                false
+            "extendedSchemas/atomicTypes/date/enumerationSchema.json",
+            "atomicTypes/date/enumeration/invalidEnumError.json",
+            false
         );
         dateObj = schema.get("dateObj");
     }

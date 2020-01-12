@@ -12,7 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,10 +51,10 @@ public class EnumerationTest extends BaseTest {
     @Test
     public void testEnumeration() {
         List<DateItem> values = Arrays.asList(
-                createDate("2004-03-12Z"),
-                createDate("1945-01-01"),
-                createDate("2012-04-12-05:00"),
-                createDate("2945-11-01")
+            createDate("2004-03-12Z"),
+            createDate("1945-01-01"),
+            createDate("2012-04-12-05:00"),
+            createDate("2945-11-01")
         );
         List<Item> enumValues = schema.get("dateType")
             .getFacets()

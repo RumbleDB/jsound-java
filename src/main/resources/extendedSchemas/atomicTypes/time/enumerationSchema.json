@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "times",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "timeObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "timeType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ "http://datypic.com", "../prod.html#shirt", "../arinaldi.html", "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java" ]
+      "baseType": "time",
+      "enumeration": [ "13:20:00Z", "00:00:00", "21:12:13+02:00", "19:45:01.011" ]
     },
     {
-      "name": "anyURIObj",
+      "name": "timeObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myTime",
+          "type": "timeType"
         }
       ]
     }

@@ -15,16 +15,20 @@ public class InvalidDefaultTest extends BaseTest {
     @Test(expected = InvalidSchemaException.class)
     public void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/boolean/invalidDefaultSchema.json",
-                "atomicTypes/boolean/enumeration/booleanEnumeration.json",
-                false
+            "extendedSchemas/atomicTypes/boolean/invalidDefaultSchema.json",
+            "atomicTypes/boolean/enumeration/booleanEnumeration.json",
+            false
         );
     }
 
     @Test
     public void validateDefaultValues() {
         for (FieldDescriptor fieldDescriptor : schema.get("booleanObj").getFacets().getObjectContent().values()) {
-            assertFalse(fieldDescriptor.getTypeOrReference().getTypeDescriptor().validate(fieldDescriptor.getDefaultValue(), false));
+            assertFalse(
+                fieldDescriptor.getTypeOrReference()
+                    .getTypeDescriptor()
+                    .validate(fieldDescriptor.getDefaultValue(), false)
+            );
         }
     }
 }

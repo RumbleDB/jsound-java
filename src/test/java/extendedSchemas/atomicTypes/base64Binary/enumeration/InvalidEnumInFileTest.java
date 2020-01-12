@@ -24,9 +24,9 @@ public class InvalidEnumInFileTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/base64Binary/enumerationSchema.json",
-                "atomicTypes/base64Binary/enumeration/invalidEnumError.json",
-                false
+            "extendedSchemas/atomicTypes/base64Binary/enumerationSchema.json",
+            "atomicTypes/base64Binary/enumeration/invalidEnumError.json",
+            false
         );
         base64BinaryObj = schema.get("base64BinaryObj");
     }

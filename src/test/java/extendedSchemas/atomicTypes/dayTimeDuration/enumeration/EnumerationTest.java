@@ -9,7 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,10 +49,10 @@ public class EnumerationTest extends BaseTest {
     @Test
     public void testEnumeration() {
         List<DayTimeDurationItem> values = Arrays.asList(
-                createDayTimeDurationItem("PT999999S"),
-                createDayTimeDurationItem("PT1M30.5S"),
-                createDayTimeDurationItem("P3DT99H66M4333.3S"),
-                createDayTimeDurationItem("-P4DT5M")
+            createDayTimeDurationItem("PT999999S"),
+            createDayTimeDurationItem("PT1M30.5S"),
+            createDayTimeDurationItem("P3DT99H66M4333.3S"),
+            createDayTimeDurationItem("-P4DT5M")
         );
         List<Item> enumValues = schema.get("dayTimeDurationType")
             .getFacets()
@@ -69,7 +68,11 @@ public class EnumerationTest extends BaseTest {
         }
 
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("dayTimeDurations").getItem().getItems())
-            assertTrue(values.contains((DayTimeDurationItem) itemWrapper.getItem().getItemMap().get("myDayTimeDuration").getItem()));
+            assertTrue(
+                values.contains(
+                    (DayTimeDurationItem) itemWrapper.getItem().getItemMap().get("myDayTimeDuration").getItem()
+                )
+            );
     }
 
     private DayTimeDurationItem createDayTimeDurationItem(String value) {

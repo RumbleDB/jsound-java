@@ -8,7 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,7 +48,7 @@ public class EnumerationTest extends BaseTest {
     public void testEnumeration() {
         List<HexBinaryItem> values = Arrays.asList(
             new HexBinaryItem(HexBinaryItem.parseHexBinaryString("0123456789abcdef"), "0123456789abcdef"),
-            new HexBinaryItem(HexBinaryItem.parseHexBinaryString("aBCd12"),"aBCd12"),
+            new HexBinaryItem(HexBinaryItem.parseHexBinaryString("aBCd12"), "aBCd12"),
             new HexBinaryItem(HexBinaryItem.parseHexBinaryString("9521"), "9521"),
             new HexBinaryItem(HexBinaryItem.parseHexBinaryString("AAAA"), "AAAA")
         );
@@ -67,7 +66,9 @@ public class EnumerationTest extends BaseTest {
         }
 
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems())
-            assertTrue(values.contains((HexBinaryItem) itemWrapper.getItem().getItemMap().get("myHexBinary").getItem()));
+            assertTrue(
+                values.contains((HexBinaryItem) itemWrapper.getItem().getItemMap().get("myHexBinary").getItem())
+            );
     }
 
     @Test
