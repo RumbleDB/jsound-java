@@ -1,22 +1,19 @@
 {
-  "anyURIs": [
+  "nulls": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myNull": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myNull": 21
     },
     {
-      "myAnyURI": false
+      "myNull": false
     },
     {
-      "myAnyURI": null
+      "myNull": [ "a", "b", "c" ]
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
-    },
-    {
-      "myAnyURI": {
+      "myNull": {
         "hello" : "world!"
       }
     }

@@ -1,13 +1,10 @@
 {
-  "anyURIs": [
+  "nulls": [
     {
-      "myAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+      "myNull": null
     },
     {
-      "myAnyURI": "http://datypic.com"
-    },
-    {
-      "myAnyURI": "../arinaldi.html"
+      "myNull": "null"
     }
   ]
 }

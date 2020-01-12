@@ -1,7 +1,7 @@
 package extendedSchemas.atomicTypes.nullType.enumeration;
 
 import base.BaseTest;
-import jsound.atomicItems.AnyURIItem;
+import jsound.atomicItems.NullItem;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.junit.BeforeClass;
@@ -24,36 +24,33 @@ public class EnumerationTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+            "extendedSchemas/atomicTypes/null/enumerationSchema.json",
+            "atomicTypes/null/enumeration/nullEnumeration.json",
             false
         );
     }
 
     @Test
     public void testSchema() {
-        assertTrue(schema.get("anyURIType").isAnyURIType());
-        assertTrue(schema.get("anyURIObj").isObjectType());
+        assertTrue(schema.get("nullType").isNullType());
+        assertTrue(schema.get("nullObj").isObjectType());
         assertTrue(
-            schema.get("anyURIObj")
+            schema.get("nullObj")
                 .getFacets()
                 .getObjectContent()
-                .get("myAnyURI")
+                .get("myNull")
                 .getTypeOrReference()
                 .getTypeDescriptor()
-                .isAnyURIType()
+                .isNullType()
         );
     }
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-            "http://datypic.com",
-            "../prod.html#shirt",
-            "../arinaldi.html",
-            "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+        List<NullItem> values = Arrays.asList(
+            new NullItem(), new NullItem()
         );
-        List<Item> enumValues = schema.get("anyURIType")
+        List<Item> enumValues = schema.get("nullType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -61,13 +58,13 @@ public class EnumerationTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        assertEquals(schema.get("anyURIType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new AnyURIItem(value, URI.create(value))));
+        assertEquals(schema.get("nullType").getFacets().getEnumeration().size(), values.size());
+        for (NullItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem().getStringValue()));
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("nulls").getItem().getItems())
+            assertTrue(values.contains((NullItem) itemWrapper.getItem().getItemMap().get("myNull").getItem()));
     }
 
     @Test

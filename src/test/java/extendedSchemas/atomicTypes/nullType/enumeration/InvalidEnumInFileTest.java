@@ -19,28 +19,28 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidEnumInFileTest extends BaseTest {
-    private static TypeDescriptor anyURIObj;
+    private static TypeDescriptor nullObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-                "atomicTypes/anyURI/enumeration/invalidEnumError.json",
+                "extendedSchemas/atomicTypes/null/enumerationSchema.json",
+                "atomicTypes/null/enumeration/invalidEnumError.json",
                 false
         );
-        anyURIObj = schema.get("anyURIObj");
+        nullObj = schema.get("nullObj");
     }
 
     @Test
     public void testInvalidValues() {
-        assertTrue(anyURIObj.isObjectType());
+        assertTrue(nullObj.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("nulls").getItem().getItems()) {
             assertFalse(
-                anyURIObj.validate(itemWrapper, false)
+                nullObj.validate(itemWrapper, false)
             );
         }
-        List<Item> enumValues = schema.get("anyURIType")
+        List<Item> enumValues = schema.get("nullType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -48,10 +48,10 @@ public class InvalidEnumInFileTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("nulls").getItem().getItems()) {
             try {
                 assertFalse(
-                    enumValues.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem())
+                    enumValues.contains(itemWrapper.getItem().getItemMap().get("myNull").getItem())
                 );
             } catch (UnexpectedTypeException ignored) {
             }
