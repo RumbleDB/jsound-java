@@ -1,0 +1,10 @@
+{
+  "arrays": [
+    {
+      "myArray": [ "first first", "second first"]
+    },
+    {
+      "myArray": ["first second", "second second"]
+    }
+  ]
+}

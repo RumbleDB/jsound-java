@@ -1,0 +1,57 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "arrays",
+          "type": {
+            "kind": "array",
+            "content": [
+              "arrayObj"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "arrayType",
+      "kind": "array",
+      "content": ["string"]
+    },
+    {
+      "name": "arrayObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "integerValue",
+          "type": "arrayType",
+          "default": 34
+        },
+        {
+          "name": "stringValue",
+          "type": "arrayType",
+          "default": "hello"
+        },
+        {
+          "name": "nullValue",
+          "type": "arrayType",
+          "default": null
+        },
+        {
+          "name": "booleanValue",
+          "type": "arrayType",
+          "default": false
+        },
+        {
+          "name": "objectValue",
+          "type": "arrayType",
+          "default": {
+            "hello": "world!"
+          }
+        }
+      ]
+    }
+  ]
+}

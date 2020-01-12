@@ -1,0 +1,24 @@
+{
+  "arrays": [
+    {
+      "myArray": "valueNonInEnum"
+    },
+    {
+      "myArray": 21
+    },
+    {
+      "myArray": false
+    },
+    {
+      "myArray": null
+    },
+    {
+      "myArray": [ 1,2,3 ]
+    },
+    {
+      "myArray": {
+        "hello" : "world!"
+      }
+    }
+  ]
+}

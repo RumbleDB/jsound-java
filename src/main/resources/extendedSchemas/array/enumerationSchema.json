@@ -1,0 +1,35 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "arrays",
+          "type": {
+            "kind": "array",
+            "content": [
+              "arrayObj"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "arrayType",
+      "kind": "array",
+      "content": [ "string" ],
+      "enumeration": [ [ "first first", "second first"], ["first second", "second second"], ["first third", "second third"] ]
+    },
+    {
+      "name": "arrayObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myArray",
+          "type": "arrayType"
+        }
+      ]
+    }
+  ]
+}
