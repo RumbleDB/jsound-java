@@ -1,13 +1,13 @@
 {
-  "anyURIs": [
+  "integers": [
     {
-      "myAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+      "myInteger": 2
     },
     {
-      "myAnyURI": "http://datypic.com"
+      "myInteger": 3
     },
     {
-      "myAnyURI": "../arinaldi.html"
+      "myInteger": 1
     }
   ]
 }

@@ -1,22 +1,22 @@
 {
-  "anyURIs": [
+  "integers": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myInteger": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myInteger": 21
     },
     {
-      "myAnyURI": false
+      "myInteger": false
     },
     {
-      "myAnyURI": null
+      "myInteger": null
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
+      "myInteger": [ "a", "b", "c" ]
     },
     {
-      "myAnyURI": {
+      "myInteger": {
         "hello" : "world!"
       }
     }
