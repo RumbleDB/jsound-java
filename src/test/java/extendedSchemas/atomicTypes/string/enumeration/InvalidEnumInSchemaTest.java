@@ -15,16 +15,16 @@ public class InvalidEnumInSchemaTest extends BaseTest {
     @Test(expected = InvalidEnumValueException.class)
     public void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/anyURI/invalidEnumInSchema.json",
-                "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+                "extendedSchemas/atomicTypes/string/invalidEnumInSchema.json",
+                "atomicTypes/string/enumeration/stringEnumeration.json",
                 false
         );
     }
 
     @Test
     public void validateEnumValues() {
-        for (ItemWrapper itemWrapper : schema.get("anyURIType").getFacets().getEnumeration()) {
-            assertFalse(schema.get("anyURIType").validate(itemWrapper, true));
+        for (ItemWrapper itemWrapper : schema.get("stringType").getFacets().getEnumeration()) {
+            assertFalse(schema.get("stringType").validate(itemWrapper, true));
         }
     }
 }

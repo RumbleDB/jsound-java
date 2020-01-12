@@ -5,50 +5,50 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "strings",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "stringObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "stringType",
       "kind": "atomic",
-      "baseType": "anyURI"
+      "baseType": "string"
     },
     {
-      "name": "anyURIObj",
+      "name": "stringObj",
       "kind": "object",
       "content": [
         {
           "name": "integerValue",
-          "type": "anyURIType",
+          "type": "stringType",
           "default": 34
         },
         {
           "name": "nullValue",
-          "type": "anyURIType",
+          "type": "stringType",
           "default": null
         },
         {
           "name": "booleanValue",
-          "type": "anyURIType",
+          "type": "stringType",
           "default": false
         },
         {
           "name": "objectValue",
-          "type": "anyURIType",
+          "type": "stringType",
           "default": {
             "hello": "world!"
           }
         },
         {
           "name": "arrayValue",
-          "type": "anyURIType",
+          "type": "stringType",
           "default": [ "thisIsAString" ]
         }
       ]

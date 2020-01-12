@@ -1,22 +1,22 @@
 {
-  "anyURIs": [
+  "strings": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myString": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myString": 21
     },
     {
-      "myAnyURI": false
+      "myString": false
     },
     {
-      "myAnyURI": null
+      "myString": null
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
+      "myString": [ "a", "b", "c" ]
     },
     {
-      "myAnyURI": {
+      "myString": {
         "hello" : "world!"
       }
     }

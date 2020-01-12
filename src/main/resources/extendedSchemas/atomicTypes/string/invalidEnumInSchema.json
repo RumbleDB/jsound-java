@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "strings",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "stringObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "stringType",
       "kind": "atomic",
-      "baseType": "anyURI",
+      "baseType": "string",
       "enumeration": [ 31, null, false, ["anyString"], {"hello":  "world!"} ]
     },
     {
-      "name": "anyURIObj",
+      "name": "stringObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myString",
+          "type": "stringType"
         }
       ]
     }

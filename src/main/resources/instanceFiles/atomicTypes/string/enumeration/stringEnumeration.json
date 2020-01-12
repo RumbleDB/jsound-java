@@ -1,13 +1,13 @@
 {
-  "anyURIs": [
+  "strings": [
     {
-      "myAnyURI": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+      "myString": "first"
     },
     {
-      "myAnyURI": "http://datypic.com"
+      "myString": "second"
     },
     {
-      "myAnyURI": "../arinaldi.html"
+      "myString": "third"
     }
   ]
 }

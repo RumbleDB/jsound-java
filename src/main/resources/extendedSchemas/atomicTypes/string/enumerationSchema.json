@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "strings",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "stringObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "stringType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ "http://datypic.com", "../prod.html#shirt", "../arinaldi.html", "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java" ]
+      "baseType": "string",
+      "enumeration": [ "first", "second", "third" , "fourth"]
     },
     {
-      "name": "anyURIObj",
+      "name": "stringObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myString",
+          "type": "stringType"
         }
       ]
     }
