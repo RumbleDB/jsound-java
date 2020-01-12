@@ -1,7 +1,9 @@
 package extendedSchemas.atomicTypes.yearMonthDuration.enumeration;
 
 import base.BaseTest;
-import jsound.atomicItems.AnyURIItem;
+import jsound.atomicItems.DayTimeDurationItem;
+import jsound.atomicItems.YearMonthDurationItem;
+import jsound.types.ItemTypes;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.junit.BeforeClass;
@@ -13,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static jsound.atomicItems.DurationItem.getDurationFromString;
 import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
 import static org.api.executors.JSoundExecutor.schemaItem;
@@ -24,36 +27,36 @@ public class EnumerationTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
+            "extendedSchemas/atomicTypes/yearMonthDuration/enumerationSchema.json",
+            "atomicTypes/yearMonthDuration/enumeration/yearMonthDurationEnumeration.json",
             false
         );
     }
 
     @Test
     public void testSchema() {
-        assertTrue(schema.get("anyURIType").isAnyURIType());
-        assertTrue(schema.get("anyURIObj").isObjectType());
+        assertTrue(schema.get("yearMonthDurationType").isYearMonthDurationType());
+        assertTrue(schema.get("yearMonthDurationObj").isObjectType());
         assertTrue(
-            schema.get("anyURIObj")
+            schema.get("yearMonthDurationObj")
                 .getFacets()
                 .getObjectContent()
-                .get("myAnyURI")
+                .get("myYearMonthDuration")
                 .getTypeOrReference()
                 .getTypeDescriptor()
-                .isAnyURIType()
+                .isYearMonthDurationType()
         );
     }
 
     @Test
     public void testEnumeration() {
-        List<String> values = Arrays.asList(
-            "http://datypic.com",
-            "../prod.html#shirt",
-            "../arinaldi.html",
-            "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+        List<YearMonthDurationItem> values = Arrays.asList(
+            createYearMonthDurationItem("-P33Y3M"),
+            createYearMonthDurationItem("P999M"),
+            createYearMonthDurationItem("P1Y3M"),
+            createYearMonthDurationItem("P0Y")
         );
-        List<Item> enumValues = schema.get("anyURIType")
+        List<Item> enumValues = schema.get("yearMonthDurationType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -61,13 +64,21 @@ public class EnumerationTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        assertEquals(schema.get("anyURIType").getFacets().getEnumeration().size(), values.size());
-        for (String value : values) {
-            assertTrue(enumValues.contains(new AnyURIItem(value, URI.create(value))));
+        assertEquals(schema.get("yearMonthDurationType").getFacets().getEnumeration().size(), values.size());
+        for (YearMonthDurationItem value : values) {
+            assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems())
-            assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem().getStringValue()));
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("yearMonthDurations").getItem().getItems())
+            assertTrue(
+                values.contains(
+                    (YearMonthDurationItem) itemWrapper.getItem().getItemMap().get("myYearMonthDuration").getItem()
+                )
+            );
+    }
+
+    private YearMonthDurationItem createYearMonthDurationItem(String value) {
+        return new YearMonthDurationItem(getDurationFromString(value, ItemTypes.YEARMONTHDURATION));
     }
 
     @Test

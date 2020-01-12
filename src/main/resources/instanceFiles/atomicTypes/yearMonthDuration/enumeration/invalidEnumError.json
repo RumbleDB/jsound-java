@@ -1,22 +1,22 @@
 {
-  "anyURIs": [
+  "yearMonthDurations": [
     {
-      "myAnyURI": "valueNonInEnum"
+      "myYearMonthDuration": "valueNonInEnum"
     },
     {
-      "myAnyURI": 21
+      "myYearMonthDuration": 21
     },
     {
-      "myAnyURI": false
+      "myYearMonthDuration": false
     },
     {
-      "myAnyURI": null
+      "myYearMonthDuration": null
     },
     {
-      "myAnyURI": [ "a", "b", "c" ]
+      "myYearMonthDuration": [ "a", "b", "c" ]
     },
     {
-      "myAnyURI": {
+      "myYearMonthDuration": {
         "hello" : "world!"
       }
     }

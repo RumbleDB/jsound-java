@@ -19,28 +19,28 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidEnumInFileTest extends BaseTest {
-    private static TypeDescriptor anyURIObj;
+    private static TypeDescriptor yearMonthDurationObj;
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/anyURI/enumerationSchema.json",
-            "atomicTypes/anyURI/enumeration/invalidEnumError.json",
+            "extendedSchemas/atomicTypes/yearMonthDuration/enumerationSchema.json",
+            "atomicTypes/yearMonthDuration/enumeration/invalidEnumError.json",
             false
         );
-        anyURIObj = schema.get("anyURIObj");
+        yearMonthDurationObj = schema.get("yearMonthDurationObj");
     }
 
     @Test
     public void testInvalidValues() {
-        assertTrue(anyURIObj.isObjectType());
+        assertTrue(yearMonthDurationObj.isObjectType());
         assertFalse(schemaItem.validate(fileItem, false));
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("yearMonthDurations").getItem().getItems()) {
             assertFalse(
-                anyURIObj.validate(itemWrapper, false)
+                yearMonthDurationObj.validate(itemWrapper, false)
             );
         }
-        List<Item> enumValues = schema.get("anyURIType")
+        List<Item> enumValues = schema.get("yearMonthDurationType")
             .getFacets()
             .getEnumeration()
             .stream()
@@ -48,10 +48,10 @@ public class InvalidEnumInFileTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("yearMonthDurations").getItem().getItems()) {
             try {
                 assertFalse(
-                    enumValues.contains(itemWrapper.getItem().getItemMap().get("myAnyURI").getItem())
+                    enumValues.contains(itemWrapper.getItem().getItemMap().get("myYearMonthDuration").getItem())
                 );
             } catch (UnexpectedTypeException ignored) {
             }

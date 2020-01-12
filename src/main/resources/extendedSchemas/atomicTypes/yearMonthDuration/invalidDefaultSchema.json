@@ -5,50 +5,55 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "yearMonthDurations",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "yearMonthDurationObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "yearMonthDurationType",
       "kind": "atomic",
-      "baseType": "anyURI"
+      "baseType": "yearMonthDuration"
     },
     {
-      "name": "anyURIObj",
+      "name": "yearMonthDurationObj",
       "kind": "object",
       "content": [
         {
           "name": "integerValue",
-          "type": "anyURIType",
+          "type": "yearMonthDurationType",
           "default": 34
         },
         {
+          "name": "stringValue",
+          "type": "yearMonthDurationType",
+          "default": "P2Y5D"
+        },
+        {
           "name": "nullValue",
-          "type": "anyURIType",
+          "type": "yearMonthDurationType",
           "default": null
         },
         {
           "name": "booleanValue",
-          "type": "anyURIType",
+          "type": "yearMonthDurationType",
           "default": false
         },
         {
           "name": "objectValue",
-          "type": "anyURIType",
+          "type": "yearMonthDurationType",
           "default": {
             "hello": "world!"
           }
         },
         {
           "name": "arrayValue",
-          "type": "anyURIType",
+          "type": "yearMonthDurationType",
           "default": [ "thisIsAString" ]
         }
       ]

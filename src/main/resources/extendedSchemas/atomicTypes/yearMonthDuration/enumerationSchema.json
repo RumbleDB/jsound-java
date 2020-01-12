@@ -5,29 +5,29 @@
       "kind": "object",
       "content": [
         {
-          "name": "anyURIs",
+          "name": "yearMonthDurations",
           "type": {
             "kind": "array",
             "content": [
-              "anyURIObj"
+              "yearMonthDurationObj"
             ]
           }
         }
       ]
     },
     {
-      "name": "anyURIType",
+      "name": "yearMonthDurationType",
       "kind": "atomic",
-      "baseType": "anyURI",
-      "enumeration": [ "http://datypic.com", "../prod.html#shirt", "../arinaldi.html", "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java" ]
+      "baseType": "yearMonthDuration",
+      "enumeration": [ "-P33Y3M", "P83Y3M", "P1Y3M", "P0M" ]
     },
     {
-      "name": "anyURIObj",
+      "name": "yearMonthDurationObj",
       "kind": "object",
       "content": [
         {
-          "name": "myAnyURI",
-          "type": "anyURIType"
+          "name": "myYearMonthDuration",
+          "type": "yearMonthDurationType"
         }
       ]
     }
