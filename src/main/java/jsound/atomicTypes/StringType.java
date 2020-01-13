@@ -13,13 +13,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static jsound.facets.FacetTypes.LENGTH;
-import static jsound.facets.FacetTypes.MAX_LENGTH;
-import static jsound.facets.FacetTypes.MIN_LENGTH;
+import static jsound.facets.FacetTypes.MAXLENGTH;
+import static jsound.facets.FacetTypes.MINLENGTH;
 
 
 public class StringType extends AtomicTypeDescriptor {
 
-    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MIN_LENGTH, MAX_LENGTH));
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MINLENGTH, MAXLENGTH));
 
     public StringType(String name, AtomicFacets facets) {
         super(ItemTypes.STRING, name, facets);

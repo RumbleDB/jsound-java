@@ -119,7 +119,11 @@ public class SchemaDefinitionUtils {
             }
 
             typeDescriptor = createSpecificAtomicType(typeDescriptor);
+        } else if (typeDescriptor.getType().equals(ATOMIC)) {
+            typeDescriptor.setType(typeDescriptor.baseType.getType().getType());
+            typeDescriptor = createSpecificAtomicType(typeDescriptor);
         }
+        schema.put(typeDescriptor.getName(), typeDescriptor);
         return typeDescriptor;
     }
 

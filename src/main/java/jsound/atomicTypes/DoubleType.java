@@ -14,15 +14,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static jsound.facets.FacetTypes.MAX_EXCLUSIVE;
-import static jsound.facets.FacetTypes.MAX_INCLUSIVE;
-import static jsound.facets.FacetTypes.MIN_EXCLUSIVE;
-import static jsound.facets.FacetTypes.MIN_INCLUSIVE;
+import static jsound.facets.FacetTypes.MAXEXCLUSIVE;
+import static jsound.facets.FacetTypes.MAXINCLUSIVE;
+import static jsound.facets.FacetTypes.MINEXCLUSIVE;
+import static jsound.facets.FacetTypes.MININCLUSIVE;
 
 public class DoubleType extends AtomicTypeDescriptor {
 
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
-            Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE)
+            Arrays.asList(MININCLUSIVE, MAXINCLUSIVE, MINEXCLUSIVE, MAXEXCLUSIVE)
     );
 
     public DoubleType(String name, AtomicFacets facets) {

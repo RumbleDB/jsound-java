@@ -1,0 +1,97 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "anyURIs",
+          "type": "arrayOfAnyURIs"
+        }
+      ]
+    },
+    {
+      "name": "anyURILength",
+      "kind": "atomic",
+      "baseType": "anyURI",
+      "length": 18
+    },
+    {
+      "name": "anyURIMinLength",
+      "kind": "atomic",
+      "baseType": "anyURI",
+      "minLength": 5
+    },
+    {
+      "name": "anyURIMaxLength",
+      "kind": "atomic",
+      "baseType": "anyURI",
+      "maxLength": 20
+    },
+    {
+      "name": "arrayOfAnyURIs",
+      "kind": "array",
+      "content": [
+        "anyURIObj"
+      ]
+    },
+    {
+      "name": "restrictedAnyURILength",
+      "kind": "atomic",
+      "baseType": "anyURILength",
+      "length": 18
+    },
+    {
+      "name": "restrictedAnyURIMinLength",
+      "kind": "atomic",
+      "baseType": "anyURIMinLength",
+      "minLength": 6
+    },
+    {
+      "name": "restrictedAnyURIMaxLength",
+      "kind": "atomic",
+      "baseType": "anyURIMaxLength",
+      "maxLength": 19
+    },
+    {
+      "name": "combinedLengthFacets",
+      "kind": "atomic",
+      "baseType": "anyURIMaxLength",
+      "minLength": 9
+    },
+    {
+      "name": "anyURIObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "anyURILengthField",
+          "type": "anyURILength"
+        },
+        {
+          "name": "anyURIMinLengthField",
+          "type": "anyURIMinLength"
+        },
+        {
+          "name": "anyURIMaxLengthField",
+          "type": "anyURIMaxLength"
+        },
+        {
+          "name": "restrictedAnyURILengthField",
+          "type": "restrictedAnyURILength"
+        },
+        {
+          "name": "restrictedAnyURIMinLengthField",
+          "type": "restrictedAnyURIMinLength"
+        },
+        {
+          "name": "restrictedAnyURIMaxLengthField",
+          "type": "restrictedAnyURIMaxLength"
+        },
+        {
+          "name": "combinedLengthFacetsField",
+          "type": "combinedLengthFacets"
+        }
+      ]
+    }
+  ]
+}

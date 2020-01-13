@@ -1,0 +1,25 @@
+{
+  "anyURIs": [
+    {
+      "anyURILengthField": "http://datypic.com"
+    },
+    {
+      "anyURIMinLengthField": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+    },
+    {
+      "anyURIMaxLengthField": "../arinaldi.html"
+    },
+    {
+      "restrictedAnyURILengthField": "http://datypic.com"
+    },
+    {
+      "restrictedAnyURIMinLengthField": "https://gitlab.inf.ethz.ch/gfourny/jsound-20-java"
+    },
+    {
+      "restrictedAnyURIMaxLengthField": "../arinaldi.html"
+    },
+    {
+      "combinedLengthFacetsField": "../arinaldi.html"
+    }
+  ]
+}

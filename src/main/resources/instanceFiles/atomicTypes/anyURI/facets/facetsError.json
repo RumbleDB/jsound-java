@@ -1,0 +1,25 @@
+{
+  "anyURIs": [
+    {
+      "anyURILengthField": "http://datypic.co.uk"
+    },
+    {
+      "anyURIMinLengthField": "http"
+    },
+    {
+      "anyURIMaxLengthField": "https://www.w3.org/TR/xquery-30/#id-expressions-on-datatypes"
+    },
+    {
+      "restrictedAnyURILengthField": "http://datypic.co.uk"
+    },
+    {
+      "restrictedAnyURIMinLengthField": "http"
+    },
+    {
+      "restrictedAnyURIMaxLengthField": "https://www.w3.org/TR/xquery-30/#id-expressions-on-datatypes"
+    },
+    {
+      "combinedLengthFacetsField": "https://"
+    }
+  ]
+}

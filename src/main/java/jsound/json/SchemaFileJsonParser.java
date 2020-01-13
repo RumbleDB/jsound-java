@@ -133,7 +133,7 @@ public class SchemaFileJsonParser {
             if (!typeDescriptor.isAtomicType())
                 throw new InvalidSchemaException("The baseType must be atomic.");
             AtomicTypeDescriptor atomicTypeDescriptor = new AtomicTypeDescriptor(
-                    typeDescriptor.getType(),
+                    ItemTypes.ATOMIC,
                     name,
                     new TypeOrReference(typeDescriptor),
                     createAtomicFacets(AtomicTypeDescriptor._allowedFacets, name)

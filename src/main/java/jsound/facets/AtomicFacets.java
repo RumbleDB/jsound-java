@@ -22,31 +22,31 @@ public class AtomicFacets extends Facets {
             case LENGTH:
                 this.length = getIntegerFromObject();
                 break;
-            case MIN_LENGTH:
+            case MINLENGTH:
                 this.minLength = getIntegerFromObject();
                 break;
-            case MAX_LENGTH:
+            case MAXLENGTH:
                 this.maxLength = getIntegerFromObject();
                 break;
-            case MIN_INCLUSIVE:
+            case MININCLUSIVE:
                 this.minInclusive = getItemFromObject(jsonSchemaIterator);
                 break;
-            case MAX_INCLUSIVE:
+            case MAXINCLUSIVE:
                 this.maxInclusive = getItemFromObject(jsonSchemaIterator);
                 break;
-            case MIN_EXCLUSIVE:
+            case MINEXCLUSIVE:
                 this.minExclusive = getItemFromObject(jsonSchemaIterator);
                 break;
-            case MAX_EXCLUSIVE:
+            case MAXEXCLUSIVE:
                 this.maxExclusive = getItemFromObject(jsonSchemaIterator);
                 break;
-            case TOTAL_DIGITS:
+            case TOTALDIGITS:
                 this.totalDigits = getIntegerFromObject();
                 break;
-            case FRACTION_DIGITS:
+            case FRACTIONDIGITS:
                 this.fractionDigits = getIntegerFromObject();
                 break;
-            case EXPLICIT_TIMEZONE:
+            case EXPLICITTIMEZONE:
                 this.explicitTimezone = TimezoneFacet.valueOf(
                     getStringFromObject(facetType.getTypeName()).toUpperCase()
                 );

@@ -29,10 +29,10 @@ public class ArrayFacets extends Facets {
             case CONTENT:
                 this.setArrayContentFromObject();
                 break;
-            case MIN_LENGTH:
+            case MINLENGTH:
                 this.minLength = AtomicFacets.getIntegerFromObject();
                 break;
-            case MAX_LENGTH:
+            case MAXLENGTH:
                 this.maxLength = AtomicFacets.getIntegerFromObject();
                 break;
             case ENUMERATION:

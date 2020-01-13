@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "anyURIs",
+          "type": "arrayOfAnyURIs"
+        }
+      ]
+    },
+    {
+      "name": "anyURILength",
+      "kind": "atomic",
+      "baseType": "anyURI",
+      "length": 18
+    },
+    {
+      "name": "restrictedAnyURILength",
+      "kind": "atomic",
+      "baseType": "anyURILength",
+      "length": 19
+    },
+    {
+      "name": "anyURIObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "anyURILengthField",
+          "type": "anyURILength"
+        },
+        {
+          "name": "restrictedAnyURILengthField",
+          "type": "restrictedAnyURILength"
+        }
+      ]
+    }
+  ]
+}

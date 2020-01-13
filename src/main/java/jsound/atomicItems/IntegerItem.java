@@ -50,6 +50,7 @@ public class IntegerItem extends AtomicItem {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof Item) && this._value.compareTo(((Item) obj).getIntegerValue()) == 0;
+        return (obj instanceof IntegerItem || obj instanceof DecimalItem || obj instanceof DoubleItem)
+            && this._value.compareTo(((Item) obj).getIntegerValue()) == 0;
     }
 }

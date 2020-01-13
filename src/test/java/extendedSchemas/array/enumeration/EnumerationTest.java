@@ -50,26 +50,26 @@ public class EnumerationTest extends BaseTest {
     public void testEnumeration() {
         List<ArrayItem> values = Arrays.asList(
             new ArrayItem(
-                new ArrayList<>(
-                    Arrays.asList(
-                            new ItemWrapper(new StringItem("first first")),
-                            new ItemWrapper(new StringItem("second first"))
-                    )
-                )
-            ),
-            new ArrayItem(
                     new ArrayList<>(
                             Arrays.asList(
-                                    new ItemWrapper(new StringItem("first second")),
-                                    new ItemWrapper(new StringItem("second second"))
+                                new ItemWrapper(new StringItem("first first")),
+                                new ItemWrapper(new StringItem("second first"))
                             )
                     )
             ),
             new ArrayItem(
                     new ArrayList<>(
                             Arrays.asList(
-                                    new ItemWrapper(new StringItem("first third")),
-                                    new ItemWrapper(new StringItem("second third"))
+                                new ItemWrapper(new StringItem("first second")),
+                                new ItemWrapper(new StringItem("second second"))
+                            )
+                    )
+            ),
+            new ArrayItem(
+                    new ArrayList<>(
+                            Arrays.asList(
+                                new ItemWrapper(new StringItem("first third")),
+                                new ItemWrapper(new StringItem("second third"))
                             )
                     )
             )

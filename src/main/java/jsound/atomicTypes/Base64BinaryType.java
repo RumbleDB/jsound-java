@@ -15,12 +15,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static jsound.facets.FacetTypes.LENGTH;
-import static jsound.facets.FacetTypes.MAX_LENGTH;
-import static jsound.facets.FacetTypes.MIN_LENGTH;
+import static jsound.facets.FacetTypes.MAXLENGTH;
+import static jsound.facets.FacetTypes.MINLENGTH;
 
 public class Base64BinaryType extends AtomicTypeDescriptor {
 
-    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MIN_LENGTH, MAX_LENGTH));
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MINLENGTH, MAXLENGTH));
 
     public Base64BinaryType(String name, AtomicFacets facets) {
         super(ItemTypes.BASE64BINARY, name, facets);
@@ -33,7 +33,7 @@ public class Base64BinaryType extends AtomicTypeDescriptor {
     @Override
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         byte[] base64BinaryValue;
-        if (!itemWrapper.isStringItem())
+        if (!itemWrapper.isStringItem() && !itemWrapper.isBase64BinaryItem())
             return false;
         try {
             base64BinaryValue = Base64BinaryItem.parseBase64BinaryString(itemWrapper.getStringValue());

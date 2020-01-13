@@ -56,12 +56,12 @@ public class EnumerationTest extends BaseTest {
     public void testEnumeration() {
 
         List<Item> values = Arrays.asList(
-                new HexBinaryItem(HexBinaryItem.parseHexBinaryString("AAAA"), "AAAA"),
-                createDate("2001-12-12Z"),
-                new YearMonthDurationItem(getDurationFromString("P12Y", ItemTypes.YEARMONTHDURATION)),
-                new YearMonthDurationItem(getDurationFromString("P1Y3M", ItemTypes.YEARMONTHDURATION))
+            new HexBinaryItem(HexBinaryItem.parseHexBinaryString("AAAA"), "AAAA"),
+            createDate("2001-12-12Z"),
+            new YearMonthDurationItem(getDurationFromString("P12Y", ItemTypes.YEARMONTHDURATION)),
+            new YearMonthDurationItem(getDurationFromString("P1Y3M", ItemTypes.YEARMONTHDURATION))
         );
-            
+
         List<Item> enumValues = schema.get("unionType")
             .getFacets()
             .getEnumeration()

@@ -17,16 +17,16 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static jsound.facets.FacetTypes.EXPLICIT_TIMEZONE;
-import static jsound.facets.FacetTypes.MAX_EXCLUSIVE;
-import static jsound.facets.FacetTypes.MAX_INCLUSIVE;
-import static jsound.facets.FacetTypes.MIN_EXCLUSIVE;
-import static jsound.facets.FacetTypes.MIN_INCLUSIVE;
+import static jsound.facets.FacetTypes.EXPLICITTIMEZONE;
+import static jsound.facets.FacetTypes.MAXEXCLUSIVE;
+import static jsound.facets.FacetTypes.MAXINCLUSIVE;
+import static jsound.facets.FacetTypes.MINEXCLUSIVE;
+import static jsound.facets.FacetTypes.MININCLUSIVE;
 
 public class DateTimeType extends AtomicTypeDescriptor {
 
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
-            Arrays.asList(MIN_INCLUSIVE, MAX_INCLUSIVE, MIN_EXCLUSIVE, MAX_EXCLUSIVE, EXPLICIT_TIMEZONE)
+            Arrays.asList(MININCLUSIVE, MAXINCLUSIVE, MINEXCLUSIVE, MAXEXCLUSIVE, EXPLICITTIMEZONE)
     );
 
     public DateTimeType(String name, AtomicFacets facets) {
@@ -48,7 +48,7 @@ public class DateTimeType extends AtomicTypeDescriptor {
             return true;
         if (!validateBoundariesFacets(itemWrapper.getItem(), isEnumValue))
             return false;
-        return !this.getFacets().getDefinedFacets().contains(EXPLICIT_TIMEZONE)
+        return !this.getFacets().getDefinedFacets().contains(EXPLICITTIMEZONE)
             || checkExplicitTimezone(
                 itemWrapper.getItem(),
                 this.getFacets().explicitTimezone,

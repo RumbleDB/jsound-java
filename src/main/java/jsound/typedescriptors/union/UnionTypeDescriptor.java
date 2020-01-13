@@ -6,6 +6,7 @@ import jsound.facets.UnionFacets;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.types.ItemTypes;
 import jsound.tyson.TysonItem;
+import org.api.Item;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 
@@ -21,7 +22,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Collections.singletonList(CONTENT));
     private final UnionFacets facets;
-    private Map<ItemWrapper, TypeDescriptor> validatingTypes = new HashMap<>();
+    private Map<Item, TypeDescriptor> validatingTypes = new HashMap<>();
 
     public UnionTypeDescriptor(String name, UnionFacets facets) {
         super(ItemTypes.VALUE, name);
@@ -51,6 +52,8 @@ public class UnionTypeDescriptor extends TypeDescriptor {
                         return false;
                     break;
                 case ENUMERATION:
+                    if (!isEnumValue)
+                        this.validateContentFacet(itemWrapper);
                     if (!validateEnumeration(itemWrapper.getItem(), isEnumValue))
                         return false;
                     break;
@@ -64,7 +67,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     private boolean validateContentFacet(ItemWrapper itemWrapper) {
         for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
             if (typeOrReference.getTypeDescriptor().validate(itemWrapper, false)) {
-                validatingTypes.put(itemWrapper, typeOrReference.getTypeDescriptor());
+                validatingTypes.put(itemWrapper.getItem(), typeOrReference.getTypeDescriptor());
                 return true;
             }
         }
@@ -73,7 +76,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     @Override
     public TysonItem annotate(ItemWrapper itemWrapper) {
-        return validatingTypes.get(itemWrapper).annotate(itemWrapper);
+        return validatingTypes.get(itemWrapper.getItem()).annotate(itemWrapper);
     }
 
     @Override

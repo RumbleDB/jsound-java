@@ -24,12 +24,12 @@ import java.util.Map;
 import java.util.Set;
 
 import static jsound.facets.FacetTypes.CONTENT;
-import static jsound.facets.FacetTypes.MAX_LENGTH;
-import static jsound.facets.FacetTypes.MIN_LENGTH;
+import static jsound.facets.FacetTypes.MAXLENGTH;
+import static jsound.facets.FacetTypes.MINLENGTH;
 
 public class ArrayTypeDescriptor extends TypeDescriptor {
 
-    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(CONTENT, MIN_LENGTH, MAX_LENGTH));
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(CONTENT, MINLENGTH, MAXLENGTH));
     private final ArrayFacets facets;
 
     public ArrayTypeDescriptor(String name, ArrayFacets facets) {
@@ -58,11 +58,11 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
                     if (!validateContent(arrayItem))
                         return false;
                     break;
-                case MIN_LENGTH:
+                case MINLENGTH:
                     if (arrayItem.getItems().size() < this.getFacets().minLength)
                         return false;
                     break;
-                case MAX_LENGTH:
+                case MAXLENGTH:
                     if (arrayItem.getItems().size() > this.getFacets().maxLength)
                         return false;
                     break;
@@ -167,11 +167,12 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     private void resolveArrayFacets(ArrayTypeDescriptor baseTypeDescriptor) {
         for (FacetTypes facetTypes : baseTypeDescriptor.getFacets().getDefinedFacets()) {
             if (!this.getFacets().getDefinedFacets().contains(facetTypes)) {
+                this.getFacets().definedFacets.add(facetTypes);
                 switch (facetTypes) {
-                    case MIN_LENGTH:
+                    case MINLENGTH:
                         this.getFacets().minLength = baseTypeDescriptor.getFacets().minLength;
                         break;
-                    case MAX_LENGTH:
+                    case MAXLENGTH:
                         this.getFacets().maxLength = baseTypeDescriptor.getFacets().maxLength;
                         break;
                     case CONTENT:
@@ -197,8 +198,8 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
                 case CONTENT:
                     isArrayContentMoreRestrictive(arrayTypeDescriptor);
                     break;
-                case MIN_LENGTH:
-                case MAX_LENGTH:
+                case MINLENGTH:
+                case MAXLENGTH:
                     areLengthFacetsMoreRestrictive(arrayTypeDescriptor);
                     break;
                 case ENUMERATION:
@@ -225,8 +226,8 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
 
     private void areLengthFacetsMoreRestrictive(ArrayTypeDescriptor baseTypeDescriptor) {
         if (
-            this.getFacets().getDefinedFacets().contains(MIN_LENGTH)
-                && baseTypeDescriptor.getFacets().getDefinedFacets().contains(MIN_LENGTH)
+            this.getFacets().getDefinedFacets().contains(MINLENGTH)
+                && baseTypeDescriptor.getFacets().getDefinedFacets().contains(MINLENGTH)
                 && this.getFacets().minLength < baseTypeDescriptor.getFacets().minLength
         )
             throw new InvalidSchemaException(
@@ -235,8 +236,8 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
                         + " is less restrictive than that of its baseType."
             );
         if (
-            this.getFacets().getDefinedFacets().contains(MAX_LENGTH)
-                && baseTypeDescriptor.getFacets().getDefinedFacets().contains(MAX_LENGTH)
+            this.getFacets().getDefinedFacets().contains(MAXLENGTH)
+                && baseTypeDescriptor.getFacets().getDefinedFacets().contains(MAXLENGTH)
                 && this.getFacets().maxLength > baseTypeDescriptor.getFacets().maxLength
         )
             throw new InvalidSchemaException(

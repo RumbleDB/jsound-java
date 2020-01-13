@@ -67,9 +67,12 @@ public class EnumerationTest extends BaseTest {
         fourthMap.put("secondKey", new ItemWrapper(new IntegerItem(4)));
 
         List<ObjectItem> values = Arrays.asList(
-            new ObjectItem(firstMap), new ObjectItem(secondMap), new ObjectItem(thirdMap), new ObjectItem(fourthMap)
+            new ObjectItem(firstMap),
+            new ObjectItem(secondMap),
+            new ObjectItem(thirdMap),
+            new ObjectItem(fourthMap)
         );
-            
+
         List<Item> enumValues = schema.get("objectType")
             .getFacets()
             .getEnumeration()

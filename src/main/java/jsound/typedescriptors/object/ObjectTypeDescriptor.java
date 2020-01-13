@@ -173,6 +173,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     private void resolveObjectFacets(ObjectTypeDescriptor typeDescriptor) {
         for (FacetTypes facetTypes : typeDescriptor.getFacets().getDefinedFacets()) {
             if (!this.getFacets().getDefinedFacets().contains(facetTypes)) {
+                this.getFacets().definedFacets.add(facetTypes);
                 switch (facetTypes) {
                     case CLOSED:
                         if (

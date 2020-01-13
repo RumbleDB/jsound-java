@@ -14,23 +14,23 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static jsound.facets.FacetTypes.FRACTION_DIGITS;
-import static jsound.facets.FacetTypes.MAX_EXCLUSIVE;
-import static jsound.facets.FacetTypes.MAX_INCLUSIVE;
-import static jsound.facets.FacetTypes.MIN_EXCLUSIVE;
-import static jsound.facets.FacetTypes.MIN_INCLUSIVE;
-import static jsound.facets.FacetTypes.TOTAL_DIGITS;
+import static jsound.facets.FacetTypes.FRACTIONDIGITS;
+import static jsound.facets.FacetTypes.MAXEXCLUSIVE;
+import static jsound.facets.FacetTypes.MAXINCLUSIVE;
+import static jsound.facets.FacetTypes.MINEXCLUSIVE;
+import static jsound.facets.FacetTypes.MININCLUSIVE;
+import static jsound.facets.FacetTypes.TOTALDIGITS;
 
 public class IntegerType extends AtomicTypeDescriptor {
 
     public static final Set<FacetTypes> _allowedFacets = new HashSet<>(
             Arrays.asList(
-                MIN_INCLUSIVE,
-                MAX_INCLUSIVE,
-                MIN_EXCLUSIVE,
-                MAX_EXCLUSIVE,
-                TOTAL_DIGITS,
-                FRACTION_DIGITS
+                MININCLUSIVE,
+                MAXINCLUSIVE,
+                MINEXCLUSIVE,
+                MAXEXCLUSIVE,
+                TOTALDIGITS,
+                FRACTIONDIGITS
             )
     );
 

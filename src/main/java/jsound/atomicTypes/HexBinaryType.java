@@ -16,12 +16,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static jsound.facets.FacetTypes.LENGTH;
-import static jsound.facets.FacetTypes.MAX_LENGTH;
-import static jsound.facets.FacetTypes.MIN_LENGTH;
+import static jsound.facets.FacetTypes.MAXLENGTH;
+import static jsound.facets.FacetTypes.MINLENGTH;
 
 public class HexBinaryType extends AtomicTypeDescriptor {
 
-    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MIN_LENGTH, MAX_LENGTH));
+    public static final Set<FacetTypes> _allowedFacets = new HashSet<>(Arrays.asList(LENGTH, MINLENGTH, MAXLENGTH));
 
     public HexBinaryType(String name, AtomicFacets facets) {
         super(ItemTypes.HEXBINARY, name, facets);
@@ -34,7 +34,7 @@ public class HexBinaryType extends AtomicTypeDescriptor {
     @Override
     public boolean validate(ItemWrapper itemWrapper, boolean isEnumValue) {
         byte[] hexValue;
-        if (!itemWrapper.isStringItem())
+        if (!itemWrapper.isStringItem() && !itemWrapper.isHexBinaryItem())
             return false;
         try {
             hexValue = HexBinaryItem.parseHexBinaryString(itemWrapper.getStringValue());
