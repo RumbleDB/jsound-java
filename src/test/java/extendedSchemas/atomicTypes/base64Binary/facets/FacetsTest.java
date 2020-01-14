@@ -39,8 +39,13 @@ public class FacetsTest extends BaseTest {
         assertEquals(20, (int) ((AtomicFacets) schema.get("base64BinaryMaxLength").getFacets()).maxLength);
 
         assertTrue(schema.get("restrictedBase64BinaryLength").isBase64BinaryType());
-        assertEquals(schema.get("restrictedBase64BinaryLength").baseType.getTypeDescriptor(), schema.get("base64BinaryLength"));
-        assertTrue(schema.get("restrictedBase64BinaryLength").getFacets().getDefinedFacets().contains(FacetTypes.LENGTH));
+        assertEquals(
+            schema.get("restrictedBase64BinaryLength").baseType.getTypeDescriptor(),
+            schema.get("base64BinaryLength")
+        );
+        assertTrue(
+            schema.get("restrictedBase64BinaryLength").getFacets().getDefinedFacets().contains(FacetTypes.LENGTH)
+        );
         assertEquals(8, (int) ((AtomicFacets) schema.get("restrictedBase64BinaryLength").getFacets()).length);
 
         assertTrue(schema.get("restrictedBase64BinaryMinLength").isBase64BinaryType());
@@ -64,7 +69,10 @@ public class FacetsTest extends BaseTest {
         assertEquals(19, (int) ((AtomicFacets) schema.get("restrictedBase64BinaryMaxLength").getFacets()).maxLength);
 
         assertTrue(schema.get("combinedLengthFacets").isBase64BinaryType());
-        assertEquals(schema.get("combinedLengthFacets").baseType.getTypeDescriptor(), schema.get("base64BinaryMaxLength"));
+        assertEquals(
+            schema.get("combinedLengthFacets").baseType.getTypeDescriptor(),
+            schema.get("base64BinaryMaxLength")
+        );
         assertTrue(schema.get("combinedLengthFacets").getFacets().getDefinedFacets().contains(FacetTypes.MAXLENGTH));
         assertTrue(schema.get("combinedLengthFacets").getFacets().getDefinedFacets().contains(FacetTypes.MINLENGTH));
         assertEquals(20, (int) ((AtomicFacets) schema.get("combinedLengthFacets").getFacets()).maxLength);

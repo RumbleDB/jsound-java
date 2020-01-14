@@ -11,9 +11,9 @@ public class LessRestrictiveTotalDigitsFacetTest extends BaseTest {
     @Test(expected = LessRestrictiveFacetException.class)
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/facets/totalDigits/lessRestrictiveTotalDigitsFacet.json",
-                "atomicTypes/decimal/facets/decimalFile.json",
-                false
+            "extendedSchemas/facets/totalDigits/lessRestrictiveTotalDigitsFacet.json",
+            "atomicTypes/decimal/facets/decimalFile.json",
+            false
         );
     }
 

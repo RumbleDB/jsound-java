@@ -18,9 +18,9 @@ public class InvalidFacetsTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/anyURI/facets/anyURISchema.json",
-                "atomicTypes/anyURI/facets/facetsError.json",
-                false
+            "extendedSchemas/atomicTypes/anyURI/facets/anyURISchema.json",
+            "atomicTypes/anyURI/facets/facetsError.json",
+            false
         );
     }
 
@@ -31,7 +31,7 @@ public class InvalidFacetsTest extends BaseTest {
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("anyURIs").getItem().getItems()) {
             assertFalse(
-                    anyURIObj.validate(itemWrapper, false)
+                anyURIObj.validate(itemWrapper, false)
             );
         }
     }

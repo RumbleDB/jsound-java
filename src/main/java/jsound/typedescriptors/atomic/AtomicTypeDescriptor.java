@@ -476,26 +476,23 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     }
 
     protected boolean isMinInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MININCLUSIVE)
-            && compare(this.getFacets().minInclusive.getItem(), facets.minInclusive.getItem()) < 0;
+        return !facets.getDefinedFacets().contains(MININCLUSIVE)
+            || compare(this.getFacets().minInclusive.getItem(), facets.minInclusive.getItem()) >= 0;
     }
 
     protected boolean isMinExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MINEXCLUSIVE)
-            &&
-            compare(this.getFacets().minExclusive.getItem(), facets.minExclusive.getItem()) < 0;
+        return !facets.getDefinedFacets().contains(MINEXCLUSIVE)
+            || compare(this.getFacets().minExclusive.getItem(), facets.minExclusive.getItem()) >= 0;
     }
 
     protected boolean isMaxInclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAXINCLUSIVE)
-            &&
-            compare(this.getFacets().maxInclusive.getItem(), facets.maxInclusive.getItem()) > 0;
+        return !facets.getDefinedFacets().contains(MAXINCLUSIVE)
+            || compare(this.getFacets().maxInclusive.getItem(), facets.maxInclusive.getItem()) <= 0;
     }
 
     protected boolean isMaxExclusiveMoreRestrictive(AtomicFacets facets) {
-        return facets.getDefinedFacets().contains(MAXEXCLUSIVE)
-            &&
-            compare(this.getFacets().maxExclusive.getItem(), facets.maxExclusive.getItem()) > 0;
+        return !facets.getDefinedFacets().contains(MAXEXCLUSIVE)
+            || compare(this.getFacets().maxExclusive.getItem(), facets.maxExclusive.getItem()) <= 0;
     }
 
     protected boolean isTotalDigitsMoreRestrictive(AtomicFacets facets) {

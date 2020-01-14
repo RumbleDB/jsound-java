@@ -39,7 +39,10 @@ public class FacetsTest extends BaseTest {
         assertEquals(20, (int) ((AtomicFacets) schema.get("hexBinaryMaxLength").getFacets()).maxLength);
 
         assertTrue(schema.get("restrictedHexBinaryLength").isHexBinaryType());
-        assertEquals(schema.get("restrictedHexBinaryLength").baseType.getTypeDescriptor(), schema.get("hexBinaryLength"));
+        assertEquals(
+            schema.get("restrictedHexBinaryLength").baseType.getTypeDescriptor(),
+            schema.get("hexBinaryLength")
+        );
         assertTrue(schema.get("restrictedHexBinaryLength").getFacets().getDefinedFacets().contains(FacetTypes.LENGTH));
         assertEquals(8, (int) ((AtomicFacets) schema.get("restrictedHexBinaryLength").getFacets()).length);
 

@@ -80,7 +80,6 @@ public class EnumerationTest extends BaseTest {
         return new DateTimeItem(date, true);
     }
 
-
     @Test
     public void testValidate() {
         assertTrue(schemaItem.validate(fileItem, false));

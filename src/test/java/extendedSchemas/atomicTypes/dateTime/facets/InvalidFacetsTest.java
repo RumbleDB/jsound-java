@@ -1,4 +1,4 @@
-package extendedSchemas.atomicTypes.integer.facets;
+package extendedSchemas.atomicTypes.dateTime.facets;
 
 import base.BaseTest;
 import org.api.ItemWrapper;
@@ -18,8 +18,8 @@ public class InvalidFacetsTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/integer/facets/integerSchema.json",
-            "atomicTypes/integer/facets/facetsError.json",
+            "extendedSchemas/atomicTypes/dateTime/facets/dateTimeSchema.json",
+            "atomicTypes/dateTime/facets/facetsError.json",
             false
         );
     }
@@ -27,11 +27,11 @@ public class InvalidFacetsTest extends BaseTest {
 
     @Test
     public void testInvalidValues() {
-        TypeDescriptor integerObj = schema.get("integerObj");
+        TypeDescriptor dateTimeObj = schema.get("dateTimeObj");
         assertFalse(schemaItem.validate(fileItem, false));
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("integers").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("dateTimes").getItem().getItems()) {
             assertFalse(
-                integerObj.validate(itemWrapper, false)
+                dateTimeObj.validate(itemWrapper, false)
             );
         }
     }

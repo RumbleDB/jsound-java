@@ -35,8 +35,13 @@ public class FacetsTest extends BaseTest {
         assertEquals(4, (int) ((AtomicFacets) schema.get("decimalFracDigits").getFacets()).fractionDigits);
 
         assertTrue(schema.get("restrictedDecimalTotDigits").isDecimalType());
-        assertEquals(schema.get("restrictedDecimalTotDigits").baseType.getTypeDescriptor(), schema.get("decimalTotDigits"));
-        assertTrue(schema.get("restrictedDecimalTotDigits").getFacets().getDefinedFacets().contains(FacetTypes.TOTALDIGITS));
+        assertEquals(
+            schema.get("restrictedDecimalTotDigits").baseType.getTypeDescriptor(),
+            schema.get("decimalTotDigits")
+        );
+        assertTrue(
+            schema.get("restrictedDecimalTotDigits").getFacets().getDefinedFacets().contains(FacetTypes.TOTALDIGITS)
+        );
         assertEquals(4, (int) ((AtomicFacets) schema.get("restrictedDecimalTotDigits").getFacets()).totalDigits);
 
         assertTrue(schema.get("restrictedDecimalFracDigits").isDecimalType());
@@ -52,7 +57,9 @@ public class FacetsTest extends BaseTest {
         assertTrue(schema.get("combinedDigitsFacets").isDecimalType());
         assertEquals(schema.get("combinedDigitsFacets").baseType.getTypeDescriptor(), schema.get("decimalTotDigits"));
         assertTrue(schema.get("combinedDigitsFacets").getFacets().getDefinedFacets().contains(FacetTypes.TOTALDIGITS));
-        assertTrue(schema.get("combinedDigitsFacets").getFacets().getDefinedFacets().contains(FacetTypes.FRACTIONDIGITS));
+        assertTrue(
+            schema.get("combinedDigitsFacets").getFacets().getDefinedFacets().contains(FacetTypes.FRACTIONDIGITS)
+        );
         assertEquals(5, (int) ((AtomicFacets) schema.get("combinedDigitsFacets").getFacets()).totalDigits);
         assertEquals(4, (int) ((AtomicFacets) schema.get("combinedDigitsFacets").getFacets()).fractionDigits);
     }

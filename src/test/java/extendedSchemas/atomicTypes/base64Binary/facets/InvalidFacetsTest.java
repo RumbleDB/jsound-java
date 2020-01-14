@@ -18,9 +18,9 @@ public class InvalidFacetsTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/base64Binary/facets/base64BinarySchema.json",
-                "atomicTypes/base64Binary/facets/facetsError.json",
-                false
+            "extendedSchemas/atomicTypes/base64Binary/facets/base64BinarySchema.json",
+            "atomicTypes/base64Binary/facets/facetsError.json",
+            false
         );
     }
 
@@ -31,7 +31,7 @@ public class InvalidFacetsTest extends BaseTest {
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("base64Binaries").getItem().getItems()) {
             assertFalse(
-                    base64BinaryObj.validate(itemWrapper, false)
+                base64BinaryObj.validate(itemWrapper, false)
             );
         }
     }

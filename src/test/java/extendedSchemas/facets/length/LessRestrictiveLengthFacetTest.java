@@ -16,15 +16,15 @@ public class LessRestrictiveLengthFacetTest extends BaseTest {
 
     @Parameterized.Parameters(name = "{index}: {0}")
     public static Object[] data() {
-        return new Object[] {1,2};
+        return new Object[] { 1, 2 };
     }
 
     @Test(expected = LessRestrictiveFacetException.class)
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/facets/length/lessRestrictiveLengthFacet" + fileNumber + ".json",
-                "atomicTypes/anyURI/facets/anyURIFile.json",
-                false
+            "extendedSchemas/facets/length/lessRestrictiveLengthFacet" + fileNumber + ".json",
+            "atomicTypes/anyURI/facets/anyURIFile.json",
+            false
         );
     }
 

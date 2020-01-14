@@ -2,7 +2,6 @@ package extendedSchemas.array.facets;
 
 import base.BaseTest;
 import jsound.facets.ArrayFacets;
-import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
 import org.junit.BeforeClass;
 import org.junit.Test;

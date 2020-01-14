@@ -18,9 +18,9 @@ public class InvalidFacetsTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/string/facets/stringSchema.json",
-                "atomicTypes/string/facets/facetsError.json",
-                false
+            "extendedSchemas/atomicTypes/string/facets/stringSchema.json",
+            "atomicTypes/string/facets/facetsError.json",
+            false
         );
     }
 
@@ -31,7 +31,7 @@ public class InvalidFacetsTest extends BaseTest {
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("strings").getItem().getItems()) {
             assertFalse(
-                    stringObj.validate(itemWrapper, false)
+                stringObj.validate(itemWrapper, false)
             );
         }
     }

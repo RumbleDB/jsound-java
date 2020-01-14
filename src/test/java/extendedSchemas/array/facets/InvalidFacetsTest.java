@@ -18,9 +18,9 @@ public class InvalidFacetsTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/array/facets/arraySchema.json",
-                "array/facets/facetsError.json",
-                false
+            "extendedSchemas/array/facets/arraySchema.json",
+            "array/facets/facetsError.json",
+            false
         );
     }
 
@@ -31,7 +31,7 @@ public class InvalidFacetsTest extends BaseTest {
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("arrays").getItem().getItems()) {
             assertFalse(
-                    arrayObj.validate(itemWrapper, false)
+                arrayObj.validate(itemWrapper, false)
             );
         }
     }

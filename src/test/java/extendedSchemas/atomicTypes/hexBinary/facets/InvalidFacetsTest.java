@@ -18,9 +18,9 @@ public class InvalidFacetsTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/hexBinary/facets/hexBinarySchema.json",
-                "atomicTypes/hexBinary/facets/facetsError.json",
-                false
+            "extendedSchemas/atomicTypes/hexBinary/facets/hexBinarySchema.json",
+            "atomicTypes/hexBinary/facets/facetsError.json",
+            false
         );
     }
 
@@ -31,7 +31,7 @@ public class InvalidFacetsTest extends BaseTest {
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems()) {
             assertFalse(
-                    hexBinaryObj.validate(itemWrapper, false)
+                hexBinaryObj.validate(itemWrapper, false)
             );
         }
     }

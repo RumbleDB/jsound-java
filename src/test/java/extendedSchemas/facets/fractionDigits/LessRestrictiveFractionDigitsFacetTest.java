@@ -11,9 +11,9 @@ public class LessRestrictiveFractionDigitsFacetTest extends BaseTest {
     @Test(expected = LessRestrictiveFacetException.class)
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/facets/fractionDigits/lessRestrictiveFractionDigitsFacet.json",
-                "atomicTypes/decimal/facets/decimalFile.json",
-                false
+            "extendedSchemas/facets/fractionDigits/lessRestrictiveFractionDigitsFacet.json",
+            "atomicTypes/decimal/facets/decimalFile.json",
+            false
         );
     }
 
