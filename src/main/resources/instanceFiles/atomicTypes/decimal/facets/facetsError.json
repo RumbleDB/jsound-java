@@ -1,0 +1,19 @@
+{
+  "decimals": [
+    {
+      "decimalTotDigitsField": 12.3456
+    },
+    {
+      "decimalFracDigitsField": 9999.12345
+    },
+    {
+      "restrictedDecimalTotDigitsField": 56.7891
+    },
+    {
+      "restrictedDecimalFracDigitsField": 88888.5678
+    },
+    {
+      "combinedDigitsFacetsField": 1.23456
+    }
+  ]
+}
