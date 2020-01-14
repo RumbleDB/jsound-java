@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dateTimes",
+          "type": "arrayOfDateTimes"
+        }
+      ]
+    },
+    {
+      "name": "dateTimeMaxInclusive",
+      "kind": "atomic",
+      "baseType": "dateTime",
+      "maxInclusive": "2004-04-12T13:20:00"
+    },
+    {
+      "name": "restrictedDateTimeMaxInclusive",
+      "kind": "atomic",
+      "baseType": "dateTimeMaxInclusive",
+      "maxInclusive": "2004-04-19T13:20:00"
+    },
+    {
+      "name": "dateTimeObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dateTimeMaxInclusiveField",
+          "type": "dateTimeMaxInclusive"
+        },
+        {
+          "name": "restrictedDateTimeMaxInclusiveField",
+          "type": "restrictedDateTimeMaxInclusive"
+        }
+      ]
+    }
+  ]
+}
