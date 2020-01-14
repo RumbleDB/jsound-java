@@ -1,0 +1,25 @@
+{
+  "base64Binaries": [
+    {
+      "base64BinaryLengthField": "0F+40A=="
+    },
+    {
+      "base64BinaryMinLengthField": "0123456789abcdef"
+    },
+    {
+      "base64BinaryMaxLengthField": "d ef9"
+    },
+    {
+      "restrictedBase64BinaryLengthField": "0F+40A=="
+    },
+    {
+      "restrictedBase64BinaryMinLengthField": "0123456789abcdef"
+    },
+    {
+      "restrictedBase64BinaryMaxLengthField": "d ef9"
+    },
+    {
+      "combinedLengthFacetsField": "abcdEFGH"
+    }
+  ]
+}

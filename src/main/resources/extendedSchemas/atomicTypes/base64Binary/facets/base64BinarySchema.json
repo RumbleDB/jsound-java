@@ -1,0 +1,97 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "base64Binaries",
+          "type": "arrayOfBase64Binaries"
+        }
+      ]
+    },
+    {
+      "name": "base64BinaryLength",
+      "kind": "atomic",
+      "baseType": "base64Binary",
+      "length": 8
+    },
+    {
+      "name": "base64BinaryMinLength",
+      "kind": "atomic",
+      "baseType": "base64Binary",
+      "minLength": 5
+    },
+    {
+      "name": "base64BinaryMaxLength",
+      "kind": "atomic",
+      "baseType": "base64Binary",
+      "maxLength": 20
+    },
+    {
+      "name": "arrayOfBase64Binaries",
+      "kind": "array",
+      "content": [
+        "base64BinaryObj"
+      ]
+    },
+    {
+      "name": "restrictedBase64BinaryLength",
+      "kind": "atomic",
+      "baseType": "base64BinaryLength",
+      "length": 8
+    },
+    {
+      "name": "restrictedBase64BinaryMinLength",
+      "kind": "atomic",
+      "baseType": "base64BinaryMinLength",
+      "minLength": 6
+    },
+    {
+      "name": "restrictedBase64BinaryMaxLength",
+      "kind": "atomic",
+      "baseType": "base64BinaryMaxLength",
+      "maxLength": 19
+    },
+    {
+      "name": "combinedLengthFacets",
+      "kind": "atomic",
+      "baseType": "base64BinaryMaxLength",
+      "minLength": 7
+    },
+    {
+      "name": "base64BinaryObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "base64BinaryLengthField",
+          "type": "base64BinaryLength"
+        },
+        {
+          "name": "base64BinaryMinLengthField",
+          "type": "base64BinaryMinLength"
+        },
+        {
+          "name": "base64BinaryMaxLengthField",
+          "type": "base64BinaryMaxLength"
+        },
+        {
+          "name": "restrictedBase64BinaryLengthField",
+          "type": "restrictedBase64BinaryLength"
+        },
+        {
+          "name": "restrictedBase64BinaryMinLengthField",
+          "type": "restrictedBase64BinaryMinLength"
+        },
+        {
+          "name": "restrictedBase64BinaryMaxLengthField",
+          "type": "restrictedBase64BinaryMaxLength"
+        },
+        {
+          "name": "combinedLengthFacetsField",
+          "type": "combinedLengthFacets"
+        }
+      ]
+    }
+  ]
+}
