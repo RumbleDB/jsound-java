@@ -1,0 +1,13 @@
+{
+  "integers": [
+    {
+      "integerTotDigitsField": 123456
+    },
+    {
+      "restrictedIntegerTotDigitsField": 567890
+    },
+    {
+      "combinedDigitsFacetsField": 123456
+    }
+  ]
+}

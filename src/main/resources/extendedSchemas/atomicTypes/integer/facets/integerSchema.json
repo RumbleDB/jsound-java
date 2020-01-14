@@ -1,0 +1,77 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "integers",
+          "type": "arrayOfIntegers"
+        }
+      ]
+    },
+    {
+      "name": "integerTotDigits",
+      "kind": "atomic",
+      "baseType": "integer",
+      "totalDigits": 5
+    },
+    {
+      "name": "integerFracDigits",
+      "kind": "atomic",
+      "baseType": "integer",
+      "fractionDigits": 4
+    },
+    {
+      "name": "arrayOfIntegers",
+      "kind": "array",
+      "content": [
+        "integerObj"
+      ]
+    },
+    {
+      "name": "restrictedIntegerTotDigits",
+      "kind": "atomic",
+      "baseType": "integerTotDigits",
+      "totalDigits": 4
+    },
+    {
+      "name": "restrictedIntegerFracDigits",
+      "kind": "atomic",
+      "baseType": "integerFracDigits",
+      "fractionDigits": 3
+    },
+    {
+      "name": "combinedDigitsFacets",
+      "kind": "atomic",
+      "baseType": "integerTotDigits",
+      "fractionDigits": 4
+    },
+    {
+      "name": "integerObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "integerTotDigitsField",
+          "type": "integerTotDigits"
+        },
+        {
+          "name": "integerFracDigitsField",
+          "type": "integerFracDigits"
+        },
+        {
+          "name": "restrictedIntegerTotDigitsField",
+          "type": "restrictedIntegerTotDigits"
+        },
+        {
+          "name": "restrictedIntegerFracDigitsField",
+          "type": "restrictedIntegerFracDigits"
+        },
+        {
+          "name": "combinedDigitsFacetsField",
+          "type": "combinedDigitsFacets"
+        }
+      ]
+    }
+  ]
+}

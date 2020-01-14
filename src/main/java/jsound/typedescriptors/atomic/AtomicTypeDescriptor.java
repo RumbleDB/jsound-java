@@ -500,12 +500,12 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
 
     protected boolean isTotalDigitsMoreRestrictive(AtomicFacets facets) {
         return !facets.getDefinedFacets().contains(TOTALDIGITS)
-            || facets.totalDigits.equals(this.getFacets().totalDigits);
+            || this.getFacets().totalDigits.compareTo(facets.totalDigits) <= 0;
     }
 
     protected boolean isFractionDigitsMoreRestrictive(AtomicFacets facets) {
         return !facets.getDefinedFacets().contains(FRACTIONDIGITS)
-            || facets.fractionDigits.equals(this.getFacets().fractionDigits);
+            || this.getFacets().fractionDigits.compareTo(facets.fractionDigits) <= 0;
     }
 
     protected void isExplicitTimezoneMoreRestrictive(AtomicFacets facets) {
