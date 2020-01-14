@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dateTimes",
+          "type": "arrayOfDateTimes"
+        }
+      ]
+    },
+    {
+      "name": "dateTimeProhibited",
+      "kind": "atomic",
+      "baseType": "dateTime",
+      "explicitTimezone": "prohibited"
+    },
+    {
+      "name": "restrictedDateTimeProhibited",
+      "kind": "atomic",
+      "baseType": "dateTimeProhibited",
+      "explicitTimezone": "optional"
+    },
+    {
+      "name": "dateTimeObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dateTimeProhibitedField",
+          "type": "dateTimeProhibited"
+        },
+        {
+          "name": "restrictedDateTimeProhibitedField",
+          "type": "restrictedDateTimeProhibited"
+        }
+      ]
+    }
+  ]
+}

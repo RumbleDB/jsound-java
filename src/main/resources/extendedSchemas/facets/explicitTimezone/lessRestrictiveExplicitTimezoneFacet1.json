@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dateTimes",
+          "type": "arrayOfDateTimes"
+        }
+      ]
+    },
+    {
+      "name": "dateTimeRequired",
+      "kind": "atomic",
+      "baseType": "dateTime",
+      "explicitTimezone": "required"
+    },
+    {
+      "name": "restrictedDateTimeRequired",
+      "kind": "atomic",
+      "baseType": "dateTimeRequired",
+      "explicitTimezone": "optional"
+    },
+    {
+      "name": "dateTimeObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dateTimeRequiredField",
+          "type": "dateTimeRequired"
+        },
+        {
+          "name": "restrictedDateTimeRequiredField",
+          "type": "restrictedDateTimeRequired"
+        }
+      ]
+    }
+  ]
+}

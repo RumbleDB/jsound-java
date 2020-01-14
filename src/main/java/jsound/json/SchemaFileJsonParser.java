@@ -302,7 +302,7 @@ public class SchemaFileJsonParser {
                     throw new InvalidSchemaException("Invalid facet " + key + ".");
                 facets.setFacet(facetTypes, typeName);
             } catch (IllegalArgumentException e) {
-                throw new InvalidSchemaException("Invalid facet " + key + ".");
+                throw new UnexpectedTypeException("Invalid value for facet " + key + ".");
             }
         }
         return facets;
