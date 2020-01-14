@@ -1,0 +1,117 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dates",
+          "type": "arrayOfDates"
+        }
+      ]
+    },
+    {
+      "name": "dateMinInclusive",
+      "kind": "atomic",
+      "baseType": "date",
+      "minInclusive": "2004-04-12"
+    },
+    {
+      "name": "dateMinExclusive",
+      "kind": "atomic",
+      "baseType": "date",
+      "minExclusive": "2004-04-12"
+    },
+    {
+      "name": "dateMaxInclusive",
+      "kind": "atomic",
+      "baseType": "date",
+      "maxInclusive": "2004-04-12"
+    },
+    {
+      "name": "dateMaxExclusive",
+      "kind": "atomic",
+      "baseType": "date",
+      "maxExclusive": "2004-04-12"
+    },
+    {
+      "name": "arrayOfDates",
+      "kind": "array",
+      "content": [
+        "dateObj"
+      ]
+    },
+    {
+      "name": "restrictedDateMinInclusive",
+      "kind": "atomic",
+      "baseType": "dateMinInclusive",
+      "minInclusive": "2004-04-14"
+    },
+    {
+      "name": "restrictedDateMinExclusive",
+      "kind": "atomic",
+      "baseType": "dateMinExclusive",
+      "minExclusive": "2004-04-14"
+    },
+    {
+      "name": "restrictedDateMaxInclusive",
+      "kind": "atomic",
+      "baseType": "dateMaxInclusive",
+      "maxInclusive": "2004-04-12"
+    },
+    {
+      "name": "restrictedDateMaxExclusive",
+      "kind": "atomic",
+      "baseType": "dateMaxExclusive",
+      "maxExclusive": "2004-04-11"
+    },
+    {
+      "name": "combinedBoundariesFacets",
+      "kind": "atomic",
+      "baseType": "dateMaxInclusive",
+      "minInclusive": "2004-02-12"
+    },
+    {
+      "name": "dateObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dateMinInclusiveField",
+          "type": "dateMinInclusive"
+        },
+        {
+          "name": "dateMinExclusiveField",
+          "type": "dateMinExclusive"
+        },
+        {
+          "name": "dateMaxInclusiveField",
+          "type": "dateMaxInclusive"
+        },
+        {
+          "name": "dateMaxExclusiveField",
+          "type": "dateMaxExclusive"
+        },
+        {
+          "name": "restrictedDateMinInclusiveField",
+          "type": "restrictedDateMinInclusive"
+        },
+        {
+          "name": "restrictedDateMinExclusiveField",
+          "type": "restrictedDateMinExclusive"
+        },
+        {
+          "name": "restrictedDateMaxInclusiveField",
+          "type": "restrictedDateMaxInclusive"
+        },
+        {
+          "name": "restrictedDateMaxExclusiveField",
+          "type": "restrictedDateMaxExclusive"
+        },
+        {
+          "name": "combinedBoundariesFacetsField",
+          "type": "combinedBoundariesFacets"
+        }
+      ]
+    }
+  ]
+}
