@@ -1,7 +1,7 @@
-package extendedSchemas.facets.atomicTypes.length;
+package extendedSchemas.facets.length;
 
 import base.BaseTest;
-import jsound.exceptions.LessRestrictiveFacetException;
+import jsound.exceptions.UnexpectedTypeException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -9,23 +9,22 @@ import org.junit.runners.Parameterized;
 import java.io.IOException;
 
 @RunWith(Parameterized.class)
-public class LessRestrictiveLengthFacetTest extends BaseTest {
+public class InvalidLengthFacetTest extends BaseTest {
 
     @Parameterized.Parameter
     public int fileNumber;
 
     @Parameterized.Parameters(name = "{index}: {0}")
     public static Object[] data() {
-        return new Object[] {1,2};
+        return new Object[] {1,2,3,4,5};
     }
 
-    @Test(expected = LessRestrictiveFacetException.class)
+    @Test(expected = UnexpectedTypeException.class)
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/facets/length/lessRestrictiveLengthFacet" + fileNumber + ".json",
+                "extendedSchemas/facets/length/invalidLengthFacet" + fileNumber +".json",
                 "atomicTypes/anyURI/facets/anyURIFile.json",
                 false
         );
     }
-
 }

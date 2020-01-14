@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "decimals",
+          "type": "arrayOfDecimals"
+        }
+      ]
+    },
+    {
+      "name": "decimalTotalDigits",
+      "kind": "atomic",
+      "baseType": "decimal",
+      "totalDigits": 4
+    },
+    {
+      "name": "restrictedDecimalTotalDigits",
+      "kind": "atomic",
+      "baseType": "decimalTotalDigits",
+      "totalDigits": 5
+    },
+    {
+      "name": "decimalObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "decimalTotalDigitsField",
+          "type": "decimalTotalDigits"
+        },
+        {
+          "name": "restrictedDecimalTotalDigitsField",
+          "type": "restrictedDecimalTotalDigits"
+        }
+      ]
+    }
+  ]
+}

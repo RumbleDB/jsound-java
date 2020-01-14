@@ -14,13 +14,13 @@
       "name": "anyURIMaxLength",
       "kind": "atomic",
       "baseType": "anyURI",
-      "length": 18
+      "maxLength": 18
     },
     {
       "name": "restrictedAnyURIMaxLength",
       "kind": "atomic",
       "baseType": "anyURIMaxLength",
-      "length": 19
+      "maxLength": 19
     },
     {
       "name": "anyURIObj",

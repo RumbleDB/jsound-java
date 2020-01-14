@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "decimals",
+          "type": "arrayOfDecimals"
+        }
+      ]
+    },
+    {
+      "name": "decimalFractionDigits",
+      "kind": "atomic",
+      "baseType": "decimal",
+      "fractionDigits": 4
+    },
+    {
+      "name": "restrictedDecimalFractionDigits",
+      "kind": "atomic",
+      "baseType": "decimalFractionDigits",
+      "fractionDigits": 5
+    },
+    {
+      "name": "decimalObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "decimalFractionDigitsField",
+          "type": "decimalFractionDigits"
+        },
+        {
+          "name": "restrictedDecimalFractionDigitsField",
+          "type": "restrictedDecimalFractionDigits"
+        }
+      ]
+    }
+  ]
+}

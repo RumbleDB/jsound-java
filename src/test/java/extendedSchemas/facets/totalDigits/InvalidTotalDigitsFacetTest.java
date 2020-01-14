@@ -1,4 +1,4 @@
-package extendedSchemas.facets.atomicTypes.length;
+package extendedSchemas.facets.totalDigits;
 
 import base.BaseTest;
 import jsound.exceptions.UnexpectedTypeException;
@@ -9,7 +9,7 @@ import org.junit.runners.Parameterized;
 import java.io.IOException;
 
 @RunWith(Parameterized.class)
-public class InvalidLengthFacetTest extends BaseTest {
+public class InvalidTotalDigitsFacetTest extends BaseTest {
 
     @Parameterized.Parameter
     public int fileNumber;
@@ -22,8 +22,8 @@ public class InvalidLengthFacetTest extends BaseTest {
     @Test(expected = UnexpectedTypeException.class)
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/facets/length/invalidLengthFacet" + fileNumber +".json",
-                "atomicTypes/anyURI/facets/anyURIFile.json",
+                "extendedSchemas/facets/totalDigits/invalidTotalDigitsFacet" + fileNumber +".json",
+                "atomicTypes/decimal/facets/decimalFile.json",
                 false
         );
     }

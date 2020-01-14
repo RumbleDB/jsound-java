@@ -1,4 +1,4 @@
-package extendedSchemas.facets.atomicTypes.minLength;
+package extendedSchemas.facets.maxLength;
 
 import base.BaseTest;
 import jsound.exceptions.UnexpectedTypeException;
@@ -9,7 +9,7 @@ import org.junit.runners.Parameterized;
 import java.io.IOException;
 
 @RunWith(Parameterized.class)
-public class InvalidMinLengthFacetTest extends BaseTest {
+public class InvalidMaxLengthFacetTest extends BaseTest {
 
     @Parameterized.Parameter
     public int fileNumber;
@@ -22,7 +22,7 @@ public class InvalidMinLengthFacetTest extends BaseTest {
     @Test(expected = UnexpectedTypeException.class)
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/facets/minLength/invalidMinLengthFacet" + fileNumber +".json",
+                "extendedSchemas/facets/maxLength/invalidMaxLengthFacet" + fileNumber +".json",
                 "atomicTypes/anyURI/facets/anyURIFile.json",
                 false
         );

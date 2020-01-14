@@ -14,13 +14,13 @@
       "name": "anyURIMinLength",
       "kind": "atomic",
       "baseType": "anyURI",
-      "length": 18
+      "minLength": 18
     },
     {
       "name": "restrictedAnyURIMinLength",
       "kind": "atomic",
       "baseType": "anyURIMinLength",
-      "length": 17
+      "minLength": 17
     },
     {
       "name": "anyURIObj",
