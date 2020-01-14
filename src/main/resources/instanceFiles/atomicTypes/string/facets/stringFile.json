@@ -1,0 +1,25 @@
+{
+  "strings": [
+    {
+      "stringLengthField": "abcdefghij"
+    },
+    {
+      "stringMinLengthField": "abcdefg"
+    },
+    {
+      "stringMaxLengthField": "abcdefghijkl"
+    },
+    {
+      "restrictedStringLengthField": "abcdefghij"
+    },
+    {
+      "restrictedStringMinLengthField": "abcdefghijklmnop"
+    },
+    {
+      "restrictedStringMaxLengthField": "abcdefghijkl"
+    },
+    {
+      "combinedLengthFacetsField": "abcdefghij"
+    }
+  ]
+}
