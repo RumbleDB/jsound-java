@@ -61,7 +61,7 @@ public class AtomicFacets extends Facets {
 
     protected static Integer getIntegerFromObject() throws IOException {
         if (!jsonSchemaIterator.whatIsNext().equals(ValueType.NUMBER))
-            throw new UnexpectedTypeException("Invalid number " + jsonSchemaIterator.read().toString());
+            throw new UnexpectedTypeException("Invalid number " + jsonSchemaIterator.read());
         return jsonSchemaIterator.readInt();
     }
 }
