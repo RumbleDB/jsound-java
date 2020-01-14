@@ -120,7 +120,13 @@ public class DateTimeItem extends AtomicItem {
 
     public static DateTime parseDateTime(String dateTime, AtomicTypes dateTimeType) throws IllegalArgumentException {
         if (!checkInvalidDateTimeFormat(dateTime, dateTimeType))
-            throw new IllegalArgumentException("The value " + dateTime + " provided as " + dateTimeType.getTypeName().toLowerCase() + " is not valid.");
+            throw new IllegalArgumentException(
+                    "The value "
+                        + dateTime
+                        + " provided as "
+                        + dateTimeType.getTypeName().toLowerCase()
+                        + " is not valid."
+            );
         dateTime = fixEndOfDay(dateTime);
         return DateTime.parse(dateTime, getDateTimeFormatter(dateTimeType));
     }

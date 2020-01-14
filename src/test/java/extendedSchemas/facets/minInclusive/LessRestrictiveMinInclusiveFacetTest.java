@@ -13,7 +13,7 @@ public class LessRestrictiveMinInclusiveFacetTest extends BaseTest {
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
             "extendedSchemas/facets/minInclusive/lessRestrictiveMinInclusiveFacet.json",
-                "atomicTypes/dateTime/facets/dateTimeFile.json",
+            "atomicTypes/dateTime/facets/dateTimeBoundariesFile.json",
             false
         );
     }

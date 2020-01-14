@@ -11,7 +11,7 @@ public class LessRestrictiveMaxExclusiveFacetTest extends BaseTest {
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
             "extendedSchemas/facets/maxExclusive/lessRestrictiveMaxExclusiveFacet.json",
-                "atomicTypes/dateTime/facets/dateTimeFile.json",
+            "atomicTypes/dateTime/facets/dateTimeBoundariesFile.json",
             false
         );
     }

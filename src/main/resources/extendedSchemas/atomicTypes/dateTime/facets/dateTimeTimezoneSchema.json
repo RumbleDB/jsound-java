@@ -1,0 +1,107 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dateTimes",
+          "type": "arrayOfDateTimes"
+        }
+      ]
+    },
+    {
+      "name": "dateTimeTimezoneRequired",
+      "kind": "atomic",
+      "baseType": "dateTime",
+      "explicitTimezone": "required"
+    },
+    {
+      "name": "dateTimeTimezoneOptional",
+      "kind": "atomic",
+      "baseType": "dateTime",
+      "explicitTimezone": "optional"
+    },
+    {
+      "name": "dateTimeTimezoneProhibited",
+      "kind": "atomic",
+      "baseType": "dateTime",
+      "explicitTimezone": "prohibited"
+    },
+    {
+      "name": "arrayOfDateTimes",
+      "kind": "array",
+      "content": [
+        "dateTimeObj"
+      ]
+    },
+    {
+      "name": "restrictedDateTimeTimezoneRequired",
+      "kind": "atomic",
+      "baseType": "dateTimeTimezoneRequired",
+      "explicitTimezone": "required"
+    },
+    {
+      "name": "restrictedDateTimeTimezoneOptionalFromOptional",
+      "kind": "atomic",
+      "baseType": "dateTimeTimezoneOptional",
+      "explicitTimezone": "optional"
+    },
+    {
+      "name": "restrictedDateTimeTimezoneRequiredFromOptional",
+      "kind": "atomic",
+      "baseType": "dateTimeTimezoneOptional",
+      "explicitTimezone": "required"
+    },
+    {
+      "name": "restrictedDateTimeTimezoneProhibitedFromOptional",
+      "kind": "atomic",
+      "baseType": "dateTimeTimezoneOptional",
+      "explicitTimezone": "prohibited"
+    },
+    {
+      "name": "restrictedDateTimeTimezoneProhibited",
+      "kind": "atomic",
+      "baseType": "dateTimeTimezoneProhibited",
+      "explicitTimezone": "prohibited"
+    },
+    {
+      "name": "dateTimeObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dateTimeTimezoneRequiredField",
+          "type": "dateTimeTimezoneRequired"
+        },
+        {
+          "name": "dateTimeTimezoneOptionalField",
+          "type": "dateTimeTimezoneOptional"
+        },
+        {
+          "name": "dateTimeTimezoneProhibitedField",
+          "type": "dateTimeTimezoneProhibited"
+        },
+        {
+          "name": "restrictedDateTimeTimezoneRequiredField",
+          "type": "restrictedDateTimeTimezoneRequired"
+        },
+        {
+          "name": "restrictedDateTimeTimezoneOptionalFromOptionalField",
+          "type": "restrictedDateTimeTimezoneOptionalFromOptional"
+        },
+        {
+          "name": "restrictedDateTimeTimezoneRequiredFromOptionalField",
+          "type": "restrictedDateTimeTimezoneRequiredFromOptional"
+        },
+        {
+          "name": "restrictedDateTimeTimezoneProhibitedFromOptionalField",
+          "type": "restrictedDateTimeTimezoneProhibitedFromOptional"
+        },
+        {
+          "name": "restrictedDateTimeTimezoneProhibitedField",
+          "type": "restrictedDateTimeTimezoneProhibited"
+        }
+      ]
+    }
+  ]
+}

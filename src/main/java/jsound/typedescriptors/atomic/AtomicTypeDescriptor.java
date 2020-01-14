@@ -509,6 +509,8 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
         if (
             facets.getDefinedFacets().contains(EXPLICITTIMEZONE)
                 &&
+                !(this.getFacets().explicitTimezone.equals(facets.explicitTimezone))
+                &&
                 !((this.getFacets().explicitTimezone.equals(TimezoneFacet.REQUIRED)
                     || this.getFacets().explicitTimezone.equals(TimezoneFacet.PROHIBITED))
                     &&

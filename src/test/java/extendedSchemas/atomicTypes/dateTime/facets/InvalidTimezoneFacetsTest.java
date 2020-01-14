@@ -13,13 +13,13 @@ import static org.api.executors.JSoundExecutor.schema;
 import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertFalse;
 
-public class InvalidFacetsTest extends BaseTest {
+public class InvalidTimezoneFacetsTest extends BaseTest {
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/dateTime/facets/dateTimeSchema.json",
-            "atomicTypes/dateTime/facets/facetsError.json",
+            "extendedSchemas/atomicTypes/dateTime/facets/dateTimeTimezoneSchema.json",
+            "atomicTypes/dateTime/facets/timezoneFacetsError.json",
             false
         );
     }

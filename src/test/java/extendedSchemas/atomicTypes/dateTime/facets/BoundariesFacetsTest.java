@@ -18,12 +18,12 @@ import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class FacetsTest extends BaseTest {
+public class BoundariesFacetsTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/dateTime/facets/dateTimeSchema.json",
-            "atomicTypes/dateTime/facets/dateTimeFile.json",
+            "extendedSchemas/atomicTypes/dateTime/facets/dateTimeBoundariesSchema.json",
+            "atomicTypes/dateTime/facets/dateTimeBoundariesFile.json",
             false
         );
     }
@@ -71,7 +71,8 @@ public class FacetsTest extends BaseTest {
         );
         assertEquals(
             createDateTime("2004-04-12T14:20:00"),
-            ((AtomicFacets) schema.get("restrictedDateTimeMinInclusive").getFacets()).minInclusive.getItem().getStringValue()
+            ((AtomicFacets) schema.get("restrictedDateTimeMinInclusive").getFacets()).minInclusive.getItem()
+                .getStringValue()
         );
 
         assertTrue(schema.get("restrictedDateTimeMinExclusive").isDateTimeType());
@@ -87,7 +88,8 @@ public class FacetsTest extends BaseTest {
         );
         assertEquals(
             createDateTime("2004-04-13T13:20:00"),
-            ((AtomicFacets) schema.get("restrictedDateTimeMinExclusive").getFacets()).minExclusive.getItem().getStringValue()
+            ((AtomicFacets) schema.get("restrictedDateTimeMinExclusive").getFacets()).minExclusive.getItem()
+                .getStringValue()
         );
 
         assertTrue(schema.get("restrictedDateTimeMaxInclusive").isDateTimeType());
@@ -103,7 +105,8 @@ public class FacetsTest extends BaseTest {
         );
         assertEquals(
             createDateTime("2004-04-12T12:20:00"),
-            ((AtomicFacets) schema.get("restrictedDateTimeMaxInclusive").getFacets()).maxInclusive.getItem().getStringValue()
+            ((AtomicFacets) schema.get("restrictedDateTimeMaxInclusive").getFacets()).maxInclusive.getItem()
+                .getStringValue()
         );
 
         assertTrue(schema.get("restrictedDateTimeMaxExclusive").isDateTimeType());
@@ -119,7 +122,8 @@ public class FacetsTest extends BaseTest {
         );
         assertEquals(
             createDateTime("2004-04-11T13:20:00"),
-            ((AtomicFacets) schema.get("restrictedDateTimeMaxExclusive").getFacets()).maxExclusive.getItem().getStringValue()
+            ((AtomicFacets) schema.get("restrictedDateTimeMaxExclusive").getFacets()).maxExclusive.getItem()
+                .getStringValue()
         );
 
         assertTrue(schema.get("combinedBoundariesFacets").isDateTimeType());

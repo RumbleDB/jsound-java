@@ -1,0 +1,31 @@
+{
+  "dateTimes": [
+    {
+      "dateTimeTimezoneRequiredField": "2004-04-12T13:20:00-05:00"
+    },
+    {
+      "dateTimeTimezoneOptionalField": "2004-04-12T13:20:00-05:00"
+    },
+    {
+      "dateTimeTimezoneOptionalField": "2004-04-12T13:20:00"
+    },
+    {
+      "dateTimeTimezoneProhibitedField": "2004-04-12T13:20:00"
+    },
+    {
+      "restrictedDateTimeTimezoneRequiredField": "2004-04-12T13:20:00Z"
+    },
+    {
+      "restrictedDateTimeTimezoneOptionalFromOptionalField": "2004-04-12T13:20:00Z"
+    },
+    {
+      "restrictedDateTimeTimezoneRequiredFromOptionalField": "2004-04-12T13:20:00+02:00"
+    },
+    {
+      "restrictedDateTimeTimezoneProhibitedFromOptionalField": "2004-04-12T13:20:00"
+    },
+    {
+      "restrictedDateTimeTimezoneProhibitedField": "2004-04-12T13:20:00"
+    }
+  ]
+}

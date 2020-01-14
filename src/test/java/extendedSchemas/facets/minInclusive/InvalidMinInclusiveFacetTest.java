@@ -27,7 +27,7 @@ public class InvalidMinInclusiveFacetTest extends BaseTest {
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
             "extendedSchemas/facets/minInclusive/invalidMinInclusiveFacet" + fileNumber + ".json",
-            "atomicTypes/dateTime/facets/dateTimeFile.json",
+            "atomicTypes/dateTime/facets/dateTimeBoundariesFile.json",
             false
         );
 
