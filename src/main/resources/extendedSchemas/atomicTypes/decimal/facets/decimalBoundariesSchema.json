@@ -1,0 +1,117 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "decimals",
+          "type": "arrayOfDecimals"
+        }
+      ]
+    },
+    {
+      "name": "decimalMinInclusive",
+      "kind": "atomic",
+      "baseType": "decimal",
+      "minInclusive": 1.23
+    },
+    {
+      "name": "decimalMinExclusive",
+      "kind": "atomic",
+      "baseType": "decimal",
+      "minExclusive": 1.23
+    },
+    {
+      "name": "decimalMaxInclusive",
+      "kind": "atomic",
+      "baseType": "decimal",
+      "maxInclusive": 1.23
+    },
+    {
+      "name": "decimalMaxExclusive",
+      "kind": "atomic",
+      "baseType": "decimal",
+      "maxExclusive": 1.23
+    },
+    {
+      "name": "arrayOfDecimals",
+      "kind": "array",
+      "content": [
+        "decimalObj"
+      ]
+    },
+    {
+      "name": "restrictedDecimalMinInclusive",
+      "kind": "atomic",
+      "baseType": "decimalMinInclusive",
+      "minInclusive": 2
+    },
+    {
+      "name": "restrictedDecimalMinExclusive",
+      "kind": "atomic",
+      "baseType": "decimalMinExclusive",
+      "minExclusive": 2
+    },
+    {
+      "name": "restrictedDecimalMaxInclusive",
+      "kind": "atomic",
+      "baseType": "decimalMaxInclusive",
+      "maxInclusive": 1
+    },
+    {
+      "name": "restrictedDecimalMaxExclusive",
+      "kind": "atomic",
+      "baseType": "decimalMaxExclusive",
+      "maxExclusive": 1
+    },
+    {
+      "name": "combinedBoundariesFacets",
+      "kind": "atomic",
+      "baseType": "decimalMaxInclusive",
+      "minInclusive": 0.5
+    },
+    {
+      "name": "decimalObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "decimalMinInclusiveField",
+          "type": "decimalMinInclusive"
+        },
+        {
+          "name": "decimalMinExclusiveField",
+          "type": "decimalMinExclusive"
+        },
+        {
+          "name": "decimalMaxInclusiveField",
+          "type": "decimalMaxInclusive"
+        },
+        {
+          "name": "decimalMaxExclusiveField",
+          "type": "decimalMaxExclusive"
+        },
+        {
+          "name": "restrictedDecimalMinInclusiveField",
+          "type": "restrictedDecimalMinInclusive"
+        },
+        {
+          "name": "restrictedDecimalMinExclusiveField",
+          "type": "restrictedDecimalMinExclusive"
+        },
+        {
+          "name": "restrictedDecimalMaxInclusiveField",
+          "type": "restrictedDecimalMaxInclusive"
+        },
+        {
+          "name": "restrictedDecimalMaxExclusiveField",
+          "type": "restrictedDecimalMaxExclusive"
+        },
+        {
+          "name": "combinedBoundariesFacetsField",
+          "type": "combinedBoundariesFacets"
+        }
+      ]
+    }
+  ]
+}

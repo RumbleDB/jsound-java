@@ -1,0 +1,31 @@
+{
+  "integers": [
+    {
+      "integerMinInclusiveField": 1
+    },
+    {
+      "integerMinExclusiveField": 2
+    },
+    {
+      "integerMaxInclusiveField": 0
+    },
+    {
+      "integerMaxExclusiveField": 0
+    },
+    {
+      "restrictedIntegerMinInclusiveField": 2
+    },
+    {
+      "restrictedIntegerMinExclusiveField": 3
+    },
+    {
+      "restrictedIntegerMaxInclusiveField": 0
+    },
+    {
+      "restrictedIntegerMaxExclusiveField": -1
+    },
+    {
+      "combinedBoundariesFacetsField": 0
+    }
+  ]
+}

@@ -23,7 +23,7 @@ public class InvalidTotalDigitsFacetTest extends BaseTest {
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
             "extendedSchemas/facets/totalDigits/invalidTotalDigitsFacet" + fileNumber + ".json",
-            "atomicTypes/decimal/facets/decimalFile.json",
+            "atomicTypes/decimal/facets/decimalDigitsFile.json",
             false
         );
     }

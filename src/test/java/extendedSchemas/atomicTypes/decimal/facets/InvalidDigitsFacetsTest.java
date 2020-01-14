@@ -13,13 +13,13 @@ import static org.api.executors.JSoundExecutor.schema;
 import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertFalse;
 
-public class InvalidFacetsTest extends BaseTest {
+public class InvalidDigitsFacetsTest extends BaseTest {
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/decimal/facets/decimalSchema.json",
-            "atomicTypes/decimal/facets/facetsError.json",
+            "extendedSchemas/atomicTypes/decimal/facets/decimalDigitsSchema.json",
+            "atomicTypes/decimal/facets/digitsFacetsError.json",
             false
         );
     }

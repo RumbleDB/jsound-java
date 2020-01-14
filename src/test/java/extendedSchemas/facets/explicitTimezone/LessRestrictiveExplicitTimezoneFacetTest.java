@@ -23,7 +23,7 @@ public class LessRestrictiveExplicitTimezoneFacetTest extends BaseTest {
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
             "extendedSchemas/facets/explicitTimezone/lessRestrictiveExplicitTimezoneFacet" + fileNumber + ".json",
-                "atomicTypes/dateTime/facets/dateTimeTimezoneFile.json",
+            "atomicTypes/dateTime/facets/dateTimeTimezoneFile.json",
             false
         );
     }

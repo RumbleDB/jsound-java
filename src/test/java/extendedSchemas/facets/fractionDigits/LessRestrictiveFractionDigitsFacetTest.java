@@ -12,7 +12,7 @@ public class LessRestrictiveFractionDigitsFacetTest extends BaseTest {
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
             "extendedSchemas/facets/fractionDigits/lessRestrictiveFractionDigitsFacet.json",
-            "atomicTypes/decimal/facets/decimalFile.json",
+            "atomicTypes/decimal/facets/decimalDigitsFile.json",
             false
         );
     }

@@ -1,0 +1,117 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "integers",
+          "type": "arrayOfIntegers"
+        }
+      ]
+    },
+    {
+      "name": "integerMinInclusive",
+      "kind": "atomic",
+      "baseType": "integer",
+      "minInclusive": 1
+    },
+    {
+      "name": "integerMinExclusive",
+      "kind": "atomic",
+      "baseType": "integer",
+      "minExclusive": 1
+    },
+    {
+      "name": "integerMaxInclusive",
+      "kind": "atomic",
+      "baseType": "integer",
+      "maxInclusive": 1
+    },
+    {
+      "name": "integerMaxExclusive",
+      "kind": "atomic",
+      "baseType": "integer",
+      "maxExclusive": 1
+    },
+    {
+      "name": "arrayOfIntegers",
+      "kind": "array",
+      "content": [
+        "integerObj"
+      ]
+    },
+    {
+      "name": "restrictedIntegerMinInclusive",
+      "kind": "atomic",
+      "baseType": "integerMinInclusive",
+      "minInclusive": 2
+    },
+    {
+      "name": "restrictedIntegerMinExclusive",
+      "kind": "atomic",
+      "baseType": "integerMinExclusive",
+      "minExclusive": 2
+    },
+    {
+      "name": "restrictedIntegerMaxInclusive",
+      "kind": "atomic",
+      "baseType": "integerMaxInclusive",
+      "maxInclusive": 0
+    },
+    {
+      "name": "restrictedIntegerMaxExclusive",
+      "kind": "atomic",
+      "baseType": "integerMaxExclusive",
+      "maxExclusive": 0
+    },
+    {
+      "name": "combinedBoundariesFacets",
+      "kind": "atomic",
+      "baseType": "integerMaxInclusive",
+      "minInclusive": -1
+    },
+    {
+      "name": "integerObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "integerMinInclusiveField",
+          "type": "integerMinInclusive"
+        },
+        {
+          "name": "integerMinExclusiveField",
+          "type": "integerMinExclusive"
+        },
+        {
+          "name": "integerMaxInclusiveField",
+          "type": "integerMaxInclusive"
+        },
+        {
+          "name": "integerMaxExclusiveField",
+          "type": "integerMaxExclusive"
+        },
+        {
+          "name": "restrictedIntegerMinInclusiveField",
+          "type": "restrictedIntegerMinInclusive"
+        },
+        {
+          "name": "restrictedIntegerMinExclusiveField",
+          "type": "restrictedIntegerMinExclusive"
+        },
+        {
+          "name": "restrictedIntegerMaxInclusiveField",
+          "type": "restrictedIntegerMaxInclusive"
+        },
+        {
+          "name": "restrictedIntegerMaxExclusiveField",
+          "type": "restrictedIntegerMaxExclusive"
+        },
+        {
+          "name": "combinedBoundariesFacetsField",
+          "type": "combinedBoundariesFacets"
+        }
+      ]
+    }
+  ]
+}

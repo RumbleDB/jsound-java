@@ -1,0 +1,31 @@
+{
+  "decimals": [
+    {
+      "decimalMinInclusiveField": 0.5
+    },
+    {
+      "decimalMinExclusiveField": 0.99
+    },
+    {
+      "decimalMaxInclusiveField": 1.24
+    },
+    {
+      "decimalMaxExclusiveField": 1.35
+    },
+    {
+      "restrictedDecimalMinInclusiveField": 1
+    },
+    {
+      "restrictedDecimalMinExclusiveField": 2
+    },
+    {
+      "restrictedDecimalMaxInclusiveField": 1.0001
+    },
+    {
+      "restrictedDecimalMaxExclusiveField": 1
+    },
+    {
+      "combinedBoundariesFacetsField": 0.499
+    }
+  ]
+}

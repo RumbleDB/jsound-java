@@ -14,12 +14,12 @@ import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class FacetsTest extends BaseTest {
+public class DigitsFacetsTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/integer/facets/integerSchema.json",
-            "atomicTypes/integer/facets/integerFile.json",
+            "extendedSchemas/atomicTypes/integer/facets/integerDigitsSchema.json",
+            "atomicTypes/integer/facets/integerDigitsFile.json",
             false
         );
     }
