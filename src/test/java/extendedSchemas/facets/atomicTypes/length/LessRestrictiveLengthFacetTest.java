@@ -22,7 +22,7 @@ public class LessRestrictiveLengthFacetTest extends BaseTest {
     @Test(expected = LessRestrictiveFacetException.class)
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/facets/atomicTypes/length/lessRestrictiveLengthFacet" + fileNumber + ".json",
+                "extendedSchemas/facets/length/lessRestrictiveLengthFacet" + fileNumber + ".json",
                 "atomicTypes/anyURI/facets/anyURIFile.json",
                 false
         );

@@ -22,7 +22,7 @@ public class InvalidLengthFacetTest extends BaseTest {
     @Test(expected = UnexpectedTypeException.class)
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/facets/atomicTypes/length/invalidLengthFacet" + fileNumber +".json",
+                "extendedSchemas/facets/length/invalidLengthFacet" + fileNumber +".json",
                 "atomicTypes/anyURI/facets/anyURIFile.json",
                 false
         );

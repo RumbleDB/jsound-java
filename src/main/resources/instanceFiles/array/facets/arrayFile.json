@@ -1,0 +1,19 @@
+{
+  "arrays": [
+    {
+      "arrayMinLengthField": ["hello", "world"]
+    },
+    {
+      "arrayMaxLengthField": ["hello", "world"]
+    },
+    {
+      "restrictedArrayMinLengthField": ["hello", "world", "!"]
+    },
+    {
+      "restrictedArrayMaxLengthField": ["hello", "world"]
+    },
+    {
+      "combinedLengthFacetsField": ["hello"]
+    }
+  ]
+}

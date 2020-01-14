@@ -1,0 +1,79 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "arrays",
+          "type": "arrayOfArrays"
+        }
+      ]
+    },
+    {
+      "name": "arrayMinLength",
+      "kind": "array",
+      "baseType": "array",
+      "content": [ "string" ],
+      "minLength": 2
+    },
+    {
+      "name": "arrayMaxLength",
+      "kind": "array",
+      "baseType": "array",
+      "content": [ "string" ],
+      "maxLength": 5
+    },
+    {
+      "name": "arrayOfArrays",
+      "kind": "array",
+      "content": [
+        "arrayObj"
+      ]
+    },
+    {
+      "name": "restrictedArrayMinLength",
+      "kind": "array",
+      "baseType": "arrayMinLength",
+      "minLength": 3
+    },
+    {
+      "name": "restrictedArrayMaxLength",
+      "kind": "array",
+      "baseType": "arrayMaxLength",
+      "maxLength": 4
+    },
+    {
+      "name": "combinedLengthFacets",
+      "kind": "array",
+      "baseType": "arrayMaxLength",
+      "minLength": 1
+    },
+    {
+      "name": "arrayObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "arrayMinLengthField",
+          "type": "arrayMinLength"
+        },
+        {
+          "name": "arrayMaxLengthField",
+          "type": "arrayMaxLength"
+        },
+        {
+          "name": "restrictedArrayMinLengthField",
+          "type": "restrictedArrayMinLength"
+        },
+        {
+          "name": "restrictedArrayMaxLengthField",
+          "type": "restrictedArrayMaxLength"
+        },
+        {
+          "name": "combinedLengthFacetsField",
+          "type": "combinedLengthFacets"
+        }
+      ]
+    }
+  ]
+}

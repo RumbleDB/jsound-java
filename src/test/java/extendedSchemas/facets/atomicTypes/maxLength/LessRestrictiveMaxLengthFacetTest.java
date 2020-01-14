@@ -13,7 +13,7 @@ public class LessRestrictiveMaxLengthFacetTest extends BaseTest {
     @Test(expected = LessRestrictiveFacetException.class)
     public void lengthFacetTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/facets/atomicTypes/maxLength/lessRestrictiveMaxLengthFacet.json",
+                "extendedSchemas/facets/maxLength/lessRestrictiveMaxLengthFacet.json",
                 "atomicTypes/anyURI/facets/anyURIFile.json",
                 false
         );
