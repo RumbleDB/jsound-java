@@ -1,0 +1,31 @@
+{
+  "doubles": [
+    {
+      "doubleMinInclusiveField": 123.3
+    },
+    {
+      "doubleMinExclusiveField": 123.5
+    },
+    {
+      "doubleMaxInclusiveField": 123.5
+    },
+    {
+      "doubleMaxExclusiveField": 123.4
+    },
+    {
+      "restrictedDoubleMinInclusiveField": 199
+    },
+    {
+      "restrictedDoubleMinExclusiveField": 2E2
+    },
+    {
+      "restrictedDoubleMaxInclusiveField": 123.1
+    },
+    {
+      "restrictedDoubleMaxExclusiveField": 13
+    },
+    {
+      "combinedBoundariesFacetsField": 0.499
+    }
+  ]
+}

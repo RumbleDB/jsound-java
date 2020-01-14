@@ -1,0 +1,117 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "doubles",
+          "type": "arrayOfDoubles"
+        }
+      ]
+    },
+    {
+      "name": "doubleMinInclusive",
+      "kind": "atomic",
+      "baseType": "double",
+      "minInclusive": 1.234e2
+    },
+    {
+      "name": "doubleMinExclusive",
+      "kind": "atomic",
+      "baseType": "double",
+      "minExclusive": 1.234e2
+    },
+    {
+      "name": "doubleMaxInclusive",
+      "kind": "atomic",
+      "baseType": "double",
+      "maxInclusive": 1.234e2
+    },
+    {
+      "name": "doubleMaxExclusive",
+      "kind": "atomic",
+      "baseType": "double",
+      "maxExclusive": 1.234e2
+    },
+    {
+      "name": "arrayOfDoubles",
+      "kind": "array",
+      "content": [
+        "doubleObj"
+      ]
+    },
+    {
+      "name": "restrictedDoubleMinInclusive",
+      "kind": "atomic",
+      "baseType": "doubleMinInclusive",
+      "minInclusive": 200
+    },
+    {
+      "name": "restrictedDoubleMinExclusive",
+      "kind": "atomic",
+      "baseType": "doubleMinExclusive",
+      "minExclusive": 123.5
+    },
+    {
+      "name": "restrictedDoubleMaxInclusive",
+      "kind": "atomic",
+      "baseType": "doubleMaxInclusive",
+      "maxInclusive": 123
+    },
+    {
+      "name": "restrictedDoubleMaxExclusive",
+      "kind": "atomic",
+      "baseType": "doubleMaxExclusive",
+      "maxExclusive": 1.234E1
+    },
+    {
+      "name": "combinedBoundariesFacets",
+      "kind": "atomic",
+      "baseType": "doubleMaxInclusive",
+      "minInclusive": 0.5
+    },
+    {
+      "name": "doubleObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "doubleMinInclusiveField",
+          "type": "doubleMinInclusive"
+        },
+        {
+          "name": "doubleMinExclusiveField",
+          "type": "doubleMinExclusive"
+        },
+        {
+          "name": "doubleMaxInclusiveField",
+          "type": "doubleMaxInclusive"
+        },
+        {
+          "name": "doubleMaxExclusiveField",
+          "type": "doubleMaxExclusive"
+        },
+        {
+          "name": "restrictedDoubleMinInclusiveField",
+          "type": "restrictedDoubleMinInclusive"
+        },
+        {
+          "name": "restrictedDoubleMinExclusiveField",
+          "type": "restrictedDoubleMinExclusive"
+        },
+        {
+          "name": "restrictedDoubleMaxInclusiveField",
+          "type": "restrictedDoubleMaxInclusive"
+        },
+        {
+          "name": "restrictedDoubleMaxExclusiveField",
+          "type": "restrictedDoubleMaxExclusive"
+        },
+        {
+          "name": "combinedBoundariesFacetsField",
+          "type": "combinedBoundariesFacets"
+        }
+      ]
+    }
+  ]
+}
