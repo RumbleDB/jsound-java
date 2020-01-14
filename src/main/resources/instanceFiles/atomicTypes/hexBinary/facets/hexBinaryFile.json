@@ -1,0 +1,25 @@
+{
+  "hexBinaries": [
+    {
+      "hexBinaryLengthField": "aBCd1234"
+    },
+    {
+      "hexBinaryMinLengthField": "0123456789abcdef"
+    },
+    {
+      "hexBinaryMaxLengthField": "0fb8"
+    },
+    {
+      "restrictedHexBinaryLengthField": "aBCd1234"
+    },
+    {
+      "restrictedHexBinaryMinLengthField": "0123456789abcdef"
+    },
+    {
+      "restrictedHexBinaryMaxLengthField": "0fb8"
+    },
+    {
+      "combinedLengthFacetsField": "abcd1234"
+    }
+  ]
+}

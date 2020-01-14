@@ -1,0 +1,97 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "hexBinaries",
+          "type": "arrayOfHexBinaries"
+        }
+      ]
+    },
+    {
+      "name": "hexBinaryLength",
+      "kind": "atomic",
+      "baseType": "hexBinary",
+      "length": 8
+    },
+    {
+      "name": "hexBinaryMinLength",
+      "kind": "atomic",
+      "baseType": "hexBinary",
+      "minLength": 5
+    },
+    {
+      "name": "hexBinaryMaxLength",
+      "kind": "atomic",
+      "baseType": "hexBinary",
+      "maxLength": 20
+    },
+    {
+      "name": "arrayOfHexBinaries",
+      "kind": "array",
+      "content": [
+        "hexBinaryObj"
+      ]
+    },
+    {
+      "name": "restrictedHexBinaryLength",
+      "kind": "atomic",
+      "baseType": "hexBinaryLength",
+      "length": 8
+    },
+    {
+      "name": "restrictedHexBinaryMinLength",
+      "kind": "atomic",
+      "baseType": "hexBinaryMinLength",
+      "minLength": 6
+    },
+    {
+      "name": "restrictedHexBinaryMaxLength",
+      "kind": "atomic",
+      "baseType": "hexBinaryMaxLength",
+      "maxLength": 19
+    },
+    {
+      "name": "combinedLengthFacets",
+      "kind": "atomic",
+      "baseType": "hexBinaryMaxLength",
+      "minLength": 7
+    },
+    {
+      "name": "hexBinaryObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "hexBinaryLengthField",
+          "type": "hexBinaryLength"
+        },
+        {
+          "name": "hexBinaryMinLengthField",
+          "type": "hexBinaryMinLength"
+        },
+        {
+          "name": "hexBinaryMaxLengthField",
+          "type": "hexBinaryMaxLength"
+        },
+        {
+          "name": "restrictedHexBinaryLengthField",
+          "type": "restrictedHexBinaryLength"
+        },
+        {
+          "name": "restrictedHexBinaryMinLengthField",
+          "type": "restrictedHexBinaryMinLength"
+        },
+        {
+          "name": "restrictedHexBinaryMaxLengthField",
+          "type": "restrictedHexBinaryMaxLength"
+        },
+        {
+          "name": "combinedLengthFacetsField",
+          "type": "combinedLengthFacets"
+        }
+      ]
+    }
+  ]
+}
