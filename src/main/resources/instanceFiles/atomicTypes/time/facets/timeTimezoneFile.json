@@ -1,0 +1,31 @@
+{
+  "times": [
+    {
+      "timeTimezoneRequiredField": "13:20:00-05:00"
+    },
+    {
+      "timeTimezoneOptionalField": "13:20:00-05:00"
+    },
+    {
+      "timeTimezoneOptionalField": "13:20:00"
+    },
+    {
+      "timeTimezoneProhibitedField": "13:20:00"
+    },
+    {
+      "restrictedTimeTimezoneRequiredField": "13:20:00Z"
+    },
+    {
+      "restrictedTimeTimezoneOptionalFromOptionalField": "13:20:00Z"
+    },
+    {
+      "restrictedTimeTimezoneRequiredFromOptionalField": "13:20:00+02:00"
+    },
+    {
+      "restrictedTimeTimezoneProhibitedFromOptionalField": "13:20:00"
+    },
+    {
+      "restrictedTimeTimezoneProhibitedField": "13:20:00"
+    }
+  ]
+}

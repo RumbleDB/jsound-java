@@ -1,0 +1,22 @@
+{
+  "times": [
+    {
+      "timeTimezoneRequiredField": "13:20:00"
+    },
+    {
+      "timeTimezoneProhibitedField": "13:20:00Z"
+    },
+    {
+      "restrictedTimeTimezoneRequiredField": "13:20:00"
+    },
+    {
+      "restrictedTimeTimezoneRequiredFromOptionalField": "13:20:00"
+    },
+    {
+      "restrictedTimeTimezoneProhibitedFromOptionalField": "13:20:00+02:00"
+    },
+    {
+      "restrictedTimeTimezoneProhibitedField": "13:20:00+01:00"
+    }
+  ]
+}

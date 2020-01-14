@@ -1,0 +1,117 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "times",
+          "type": "arrayOfTimes"
+        }
+      ]
+    },
+    {
+      "name": "timeMinInclusive",
+      "kind": "atomic",
+      "baseType": "time",
+      "minInclusive": "13:20:00"
+    },
+    {
+      "name": "timeMinExclusive",
+      "kind": "atomic",
+      "baseType": "time",
+      "minExclusive": "13:20:00"
+    },
+    {
+      "name": "timeMaxInclusive",
+      "kind": "atomic",
+      "baseType": "time",
+      "maxInclusive": "13:20:00"
+    },
+    {
+      "name": "timeMaxExclusive",
+      "kind": "atomic",
+      "baseType": "time",
+      "maxExclusive": "13:20:00"
+    },
+    {
+      "name": "arrayOfTimes",
+      "kind": "array",
+      "content": [
+        "timeObj"
+      ]
+    },
+    {
+      "name": "restrictedTimeMinInclusive",
+      "kind": "atomic",
+      "baseType": "timeMinInclusive",
+      "minInclusive": "14:20:00"
+    },
+    {
+      "name": "restrictedTimeMinExclusive",
+      "kind": "atomic",
+      "baseType": "timeMinExclusive",
+      "minExclusive": "13:20:00"
+    },
+    {
+      "name": "restrictedTimeMaxInclusive",
+      "kind": "atomic",
+      "baseType": "timeMaxInclusive",
+      "maxInclusive": "12:20:00"
+    },
+    {
+      "name": "restrictedTimeMaxExclusive",
+      "kind": "atomic",
+      "baseType": "timeMaxExclusive",
+      "maxExclusive": "11:20:00"
+    },
+    {
+      "name": "combinedBoundariesFacets",
+      "kind": "atomic",
+      "baseType": "timeMaxInclusive",
+      "minInclusive": "11:20:00"
+    },
+    {
+      "name": "timeObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "timeMinInclusiveField",
+          "type": "timeMinInclusive"
+        },
+        {
+          "name": "timeMinExclusiveField",
+          "type": "timeMinExclusive"
+        },
+        {
+          "name": "timeMaxInclusiveField",
+          "type": "timeMaxInclusive"
+        },
+        {
+          "name": "timeMaxExclusiveField",
+          "type": "timeMaxExclusive"
+        },
+        {
+          "name": "restrictedTimeMinInclusiveField",
+          "type": "restrictedTimeMinInclusive"
+        },
+        {
+          "name": "restrictedTimeMinExclusiveField",
+          "type": "restrictedTimeMinExclusive"
+        },
+        {
+          "name": "restrictedTimeMaxInclusiveField",
+          "type": "restrictedTimeMaxInclusive"
+        },
+        {
+          "name": "restrictedTimeMaxExclusiveField",
+          "type": "restrictedTimeMaxExclusive"
+        },
+        {
+          "name": "combinedBoundariesFacetsField",
+          "type": "combinedBoundariesFacets"
+        }
+      ]
+    }
+  ]
+}

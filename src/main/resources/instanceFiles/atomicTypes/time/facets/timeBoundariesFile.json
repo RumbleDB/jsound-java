@@ -1,0 +1,31 @@
+{
+  "times": [
+    {
+      "timeMinInclusiveField": "18:20:00"
+    },
+    {
+      "timeMinExclusiveField": "17:20:00"
+    },
+    {
+      "timeMaxInclusiveField": "11:20:00"
+    },
+    {
+      "timeMaxExclusiveField": "11:20:00"
+    },
+    {
+      "restrictedTimeMinInclusiveField": "19:20:00"
+    },
+    {
+      "restrictedTimeMinExclusiveField": "18:20:00"
+    },
+    {
+      "restrictedTimeMaxInclusiveField": "10:20:00"
+    },
+    {
+      "restrictedTimeMaxExclusiveField": "10:20:00"
+    },
+    {
+      "combinedBoundariesFacetsField": "11:30:00"
+    }
+  ]
+}
