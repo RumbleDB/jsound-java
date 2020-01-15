@@ -14,6 +14,28 @@
     },
     {
       "combinedLengthFacetsField": ["hello", "world", "!", "another", "String", "in", "array"]
+    },
+    {
+      "arrayMinLengthField": [1,2]
+    },
+    {
+      "arrayMinLengthField": [true, false]
+    },
+    {
+      "arrayMinLengthField": [null, null]
+    },
+    {
+      "arrayMinLengthField": [["hello"], ["world!"]]
+    },
+    {
+      "arrayMinLengthField": [
+        {
+          "field": "hello"
+        },
+        {
+          "anotherField": "world!"
+        }
+      ]
     }
   ]
 }

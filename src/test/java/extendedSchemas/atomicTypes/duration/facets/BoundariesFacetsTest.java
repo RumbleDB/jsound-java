@@ -1,16 +1,13 @@
 package extendedSchemas.atomicTypes.duration.facets;
 
 import base.BaseTest;
-import jsound.atomicItems.DurationItem;
 import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
-import jsound.types.ItemTypes;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static jsound.atomicItems.DurationItem.getDurationFromString;
 import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
 import static org.api.executors.JSoundExecutor.schemaItem;
