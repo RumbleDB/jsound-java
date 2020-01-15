@@ -1,0 +1,36 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "objects",
+          "type": "arrayOfObjects"
+        }
+      ]
+    },
+    {
+      "name": "myObject",
+      "kind": "object",
+      "content": [
+        {
+          "name": "stringField",
+          "type": "string"
+        },
+        {
+          "name": "integerField",
+          "type": "integer"
+        }
+      ],
+      "closed": null
+    },
+    {
+      "name": "arrayOfObjects",
+      "kind": "array",
+      "content": [
+        "myObject"
+      ]
+    }
+  ]
+}

@@ -110,7 +110,7 @@ public class ObjectFacets extends Facets {
 
     public static boolean getBooleanFromObject() throws IOException {
         if (!jsonSchemaIterator.whatIsNext().equals(ValueType.BOOLEAN))
-            throw new UnexpectedTypeException("Invalid string " + jsonSchemaIterator.read().toString());
+            throw new UnexpectedTypeException("Invalid string " + jsonSchemaIterator.read());
         return jsonSchemaIterator.readBoolean();
     }
 }
