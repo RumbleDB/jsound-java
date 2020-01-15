@@ -1,4 +1,4 @@
-package extendedSchemas.atomicTypes.integer.facets;
+package extendedSchemas.atomicTypes.duration.facets;
 
 import base.BaseTest;
 import org.api.ItemWrapper;
@@ -18,8 +18,8 @@ public class InvalidBoundariesFacetsTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/integer/facets/integerBoundariesSchema.json",
-            "atomicTypes/integer/facets/boundariesFacetsError.json",
+            "extendedSchemas/atomicTypes/duration/facets/durationBoundariesSchema.json",
+            "atomicTypes/duration/facets/boundariesFacetsError.json",
             false
         );
     }
@@ -27,12 +27,13 @@ public class InvalidBoundariesFacetsTest extends BaseTest {
 
     @Test
     public void testInvalidValues() {
-        TypeDescriptor integerObj = schema.get("integerObj");
+        TypeDescriptor durationObj = schema.get("durationObj");
         assertFalse(schemaItem.validate(fileItem, false));
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("integers").getItem().getItems()) {
-            assertFalse(
-                integerObj.validate(itemWrapper, false)
-            );
+        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("durations").getItem().getItems()) {
+            if (
+                durationObj.validate(itemWrapper, false)
+            )
+                System.out.println("hello");
         }
     }
 }

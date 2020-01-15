@@ -1,13 +1,9 @@
 package extendedSchemas.atomicTypes.dateTime.facets;
 
 import base.BaseTest;
-import jsound.atomicItems.DateTimeItem;
 import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
 import jsound.facets.TimezoneFacet;
-import jsound.types.AtomicTypes;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

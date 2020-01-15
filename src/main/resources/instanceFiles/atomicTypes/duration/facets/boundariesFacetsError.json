@@ -1,0 +1,31 @@
+{
+  "durations": [
+    {
+      "durationMinInclusiveField": "P2MT4H"
+    },
+    {
+      "durationMinExclusiveField": "P2MT5H"
+    },
+    {
+      "durationMaxInclusiveField": "P2MT6H"
+    },
+    {
+      "durationMaxExclusiveField": "P2MT6H"
+    },
+    {
+      "restrictedDurationMinInclusiveField": "P2MT4H"
+    },
+    {
+      "restrictedDurationMinExclusiveField": "P2MT6H"
+    },
+    {
+      "restrictedDurationMaxInclusiveField": "P2MT6H"
+    },
+    {
+      "restrictedDurationMaxExclusiveField": "P2MT6H"
+    },
+    {
+      "combinedBoundariesFacetsField": "P2MT59M"
+    }
+  ]
+}

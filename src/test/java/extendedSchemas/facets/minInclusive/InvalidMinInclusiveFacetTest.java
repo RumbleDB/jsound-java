@@ -1,7 +1,6 @@
 package extendedSchemas.facets.minInclusive;
 
 import base.BaseTest;
-import jsound.exceptions.UnexpectedTypeException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

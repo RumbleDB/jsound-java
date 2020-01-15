@@ -1,0 +1,117 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "durations",
+          "type": "arrayOfDurations"
+        }
+      ]
+    },
+    {
+      "name": "durationMinInclusive",
+      "kind": "atomic",
+      "baseType": "duration",
+      "minInclusive": "P2MT5H"
+    },
+    {
+      "name": "durationMinExclusive",
+      "kind": "atomic",
+      "baseType": "duration",
+      "minExclusive": "P2MT5H"
+    },
+    {
+      "name": "durationMaxInclusive",
+      "kind": "atomic",
+      "baseType": "duration",
+      "maxInclusive": "P2MT5H"
+    },
+    {
+      "name": "durationMaxExclusive",
+      "kind": "atomic",
+      "baseType": "duration",
+      "maxExclusive": "P2MT5H"
+    },
+    {
+      "name": "arrayOfDurations",
+      "kind": "array",
+      "content": [
+        "durationObj"
+      ]
+    },
+    {
+      "name": "restrictedDurationMinInclusive",
+      "kind": "atomic",
+      "baseType": "durationMinInclusive",
+      "minInclusive": "P2MT6H"
+    },
+    {
+      "name": "restrictedDurationMinExclusive",
+      "kind": "atomic",
+      "baseType": "durationMinExclusive",
+      "minExclusive": "P2MT6H"
+    },
+    {
+      "name": "restrictedDurationMaxInclusive",
+      "kind": "atomic",
+      "baseType": "durationMaxInclusive",
+      "maxInclusive": "P2MT4H"
+    },
+    {
+      "name": "restrictedDurationMaxExclusive",
+      "kind": "atomic",
+      "baseType": "durationMaxExclusive",
+      "maxExclusive": "P2MT4H"
+    },
+    {
+      "name": "combinedBoundariesFacets",
+      "kind": "atomic",
+      "baseType": "durationMaxInclusive",
+      "minInclusive": "P2MT1H"
+    },
+    {
+      "name": "durationObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "durationMinInclusiveField",
+          "type": "durationMinInclusive"
+        },
+        {
+          "name": "durationMinExclusiveField",
+          "type": "durationMinExclusive"
+        },
+        {
+          "name": "durationMaxInclusiveField",
+          "type": "durationMaxInclusive"
+        },
+        {
+          "name": "durationMaxExclusiveField",
+          "type": "durationMaxExclusive"
+        },
+        {
+          "name": "restrictedDurationMinInclusiveField",
+          "type": "restrictedDurationMinInclusive"
+        },
+        {
+          "name": "restrictedDurationMinExclusiveField",
+          "type": "restrictedDurationMinExclusive"
+        },
+        {
+          "name": "restrictedDurationMaxInclusiveField",
+          "type": "restrictedDurationMaxInclusive"
+        },
+        {
+          "name": "restrictedDurationMaxExclusiveField",
+          "type": "restrictedDurationMaxExclusive"
+        },
+        {
+          "name": "combinedBoundariesFacetsField",
+          "type": "combinedBoundariesFacets"
+        }
+      ]
+    }
+  ]
+}

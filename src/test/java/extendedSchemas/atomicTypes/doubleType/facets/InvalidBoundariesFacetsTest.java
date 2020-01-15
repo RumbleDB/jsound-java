@@ -18,9 +18,9 @@ public class InvalidBoundariesFacetsTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/atomicTypes/double/facets/doubleBoundariesSchema.json",
-                "atomicTypes/double/facets/boundariesFacetsError.json",
-                false
+            "extendedSchemas/atomicTypes/double/facets/doubleBoundariesSchema.json",
+            "atomicTypes/double/facets/boundariesFacetsError.json",
+            false
         );
     }
 
@@ -30,8 +30,8 @@ public class InvalidBoundariesFacetsTest extends BaseTest {
         TypeDescriptor doubleObj = schema.get("doubleObj");
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("doubles").getItem().getItems()) {
-            if(
-                    doubleObj.validate(itemWrapper, false)
+            if (
+                doubleObj.validate(itemWrapper, false)
             )
                 System.out.println("hello");
         }
