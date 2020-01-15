@@ -1,6 +1,7 @@
 package jsound.typedescriptors.union;
 
 import jsound.exceptions.InvalidSchemaException;
+import jsound.exceptions.LessRestrictiveFacetException;
 import jsound.facets.FacetTypes;
 import jsound.facets.UnionFacets;
 import jsound.typedescriptors.TypeOrReference;
@@ -85,7 +86,38 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+    public boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
         return typeDescriptor.isUnionType();
+    }
+
+    @Override
+    public void checkAgainstTypeDescriptor(TypeDescriptor typeDescriptor) {
+        boolean foundMatch;
+        for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
+            if (typeDescriptor.isUnionType()) {
+                foundMatch = false;
+                for (TypeOrReference typeOrReference1 : typeDescriptor.getFacets().getUnionContent().getTypes()) {
+                    if (typeOrReference.getTypeDescriptor().hasCompatibleType(typeOrReference1.getTypeDescriptor())) {
+                        typeOrReference.getTypeDescriptor()
+                            .checkAgainstTypeDescriptor(typeOrReference1.getTypeDescriptor());
+                        foundMatch = true;
+                        break;
+                    }
+                }
+                if (!foundMatch)
+                    throw new LessRestrictiveFacetException(
+                            typeOrReference.getTypeDescriptor().getName()
+                                + " is not less restrictive than "
+                                + typeDescriptor.getName()
+                    );
+            } else if (typeOrReference.getTypeDescriptor().hasCompatibleType(typeDescriptor)) {
+                typeOrReference.getTypeDescriptor().checkAgainstTypeDescriptor(typeDescriptor);
+            } else
+                throw new LessRestrictiveFacetException(
+                        typeOrReference.getTypeDescriptor().getName()
+                            + " is not less restrictive than "
+                            + typeDescriptor.getName()
+                );
+        }
     }
 }

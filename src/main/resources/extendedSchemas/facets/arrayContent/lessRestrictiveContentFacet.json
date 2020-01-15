@@ -1,0 +1,57 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "arrays",
+          "type": "arrayOfArrays"
+        }
+      ]
+    },
+    {
+      "name": "arrayOfHexBinaries",
+      "kind": "array",
+      "content": [
+        "hexBinary"
+      ]
+    },
+    {
+      "name": "arrayOfBinaries",
+      "kind": "array",
+      "baseType": "arrayOfHexBinaries",
+      "content": [
+        "binaries"
+      ]
+    },
+    {
+      "name": "binaries",
+      "kind": "union",
+      "content": [
+        "hexBinary", "base64Binary"
+      ]
+    },
+    {
+      "name": "arrayObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "hexBinaries",
+          "type": "arrayOfHexBinaries"
+        },
+        {
+          "name": "binaries",
+          "type": "arrayOfBinaries"
+        }
+      ]
+    },
+    {
+      "name": "arrayOfArrays",
+      "kind": "array",
+      "content": [
+        "arrayObj"
+      ]
+    }
+  ]
+}

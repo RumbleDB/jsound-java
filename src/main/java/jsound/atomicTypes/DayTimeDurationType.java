@@ -29,7 +29,7 @@ public class DayTimeDurationType extends DurationType {
     }
 
     @Override
-    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+    public boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
         return typeDescriptor.isDayTimeDurationType();
     }
 }

@@ -45,7 +45,7 @@ public class NullType extends AtomicTypeDescriptor {
     }
 
     @Override
-    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+    public boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
         return typeDescriptor.isNullType();
     }
 }

@@ -68,7 +68,7 @@ public abstract class TypeDescriptor {
                 }
 
                 @Override
-                protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+                public boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
                     return true;
                 }
             };
@@ -174,7 +174,7 @@ public abstract class TypeDescriptor {
 
     public abstract Set<FacetTypes> getAllowedFacets();
 
-    protected abstract boolean hasCompatibleType(TypeDescriptor typeDescriptor);
+    public abstract boolean hasCompatibleType(TypeDescriptor typeDescriptor);
 
     public abstract boolean validate(ItemWrapper itemWrapper, boolean isEnumValue);
 

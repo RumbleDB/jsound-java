@@ -99,7 +99,7 @@ public class IntegerType extends AtomicTypeDescriptor {
     }
 
     @Override
-    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+    public boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
         return typeDescriptor.isIntegerType() || typeDescriptor.isDecimalType();
     }
 }

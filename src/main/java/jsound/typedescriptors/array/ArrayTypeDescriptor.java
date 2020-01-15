@@ -115,7 +115,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+    public boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
         return typeDescriptor.isArrayType();
     }
 

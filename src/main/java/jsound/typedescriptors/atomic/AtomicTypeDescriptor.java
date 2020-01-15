@@ -108,7 +108,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+    public boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
         return typeDescriptor.isAtomicType();
     }
 

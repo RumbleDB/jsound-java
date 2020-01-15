@@ -2,6 +2,7 @@ package jsound.facets;
 
 import com.jsoniter.ValueType;
 import jsound.exceptions.InvalidSchemaException;
+import jsound.exceptions.UnexpectedTypeException;
 import jsound.json.SchemaFileJsonParser;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.array.ArrayContentDescriptor;
@@ -45,6 +46,8 @@ public class ArrayFacets extends Facets {
 
     public void setArrayContentFromObject() throws IOException {
         int size = 0;
+        if (!jsonSchemaIterator.whatIsNext().equals(ValueType.ARRAY))
+            throw new UnexpectedTypeException("Array content should be an array.");
         while (jsonSchemaIterator.readArray()) {
             if (size > 0)
                 throw new InvalidSchemaException("Can only specify one atomicTypes for the array content atomicTypes.");
@@ -72,6 +75,8 @@ public class ArrayFacets extends Facets {
     public void setArrayContent(String name) throws IOException {
         definedFacets.add(CONTENT);
         int size = 0;
+        if (!jsonSchemaIterator.whatIsNext().equals(ValueType.ARRAY))
+            throw new UnexpectedTypeException("Array content should be an array.");
         while (jsonSchemaIterator.readArray()) {
             if (size > 0)
                 throw new InvalidSchemaException("Can only specify one content type for array type " + name + ".");

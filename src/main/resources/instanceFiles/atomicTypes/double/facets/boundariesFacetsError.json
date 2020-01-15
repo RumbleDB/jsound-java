@@ -4,7 +4,7 @@
       "doubleMinInclusiveField": 123.3
     },
     {
-      "doubleMinExclusiveField": 123.5
+      "doubleMinExclusiveField": 123.4
     },
     {
       "doubleMaxInclusiveField": 123.5
@@ -16,7 +16,7 @@
       "restrictedDoubleMinInclusiveField": 199
     },
     {
-      "restrictedDoubleMinExclusiveField": 2E2
+      "restrictedDoubleMinExclusiveField": 123.5
     },
     {
       "restrictedDoubleMaxInclusiveField": 123.1

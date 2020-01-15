@@ -30,10 +30,7 @@ public class InvalidBoundariesFacetsTest extends BaseTest {
         TypeDescriptor doubleObj = schema.get("doubleObj");
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("doubles").getItem().getItems()) {
-            if (
-                doubleObj.validate(itemWrapper, false)
-            )
-                System.out.println("hello");
+            assertFalse(doubleObj.validate(itemWrapper, false));
         }
     }
 }

@@ -30,10 +30,9 @@ public class InvalidBoundariesFacetsTest extends BaseTest {
         TypeDescriptor dayTimeDurationObj = schema.get("dayTimeDurationObj");
         assertFalse(schemaItem.validate(fileItem, false));
         for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("dayTimeDurations").getItem().getItems()) {
-            if (
+            assertFalse(
                 dayTimeDurationObj.validate(itemWrapper, false)
-            )
-                System.out.println("hello");
+            );
         }
     }
 }

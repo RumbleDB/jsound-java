@@ -101,7 +101,7 @@ public class TimeType extends AtomicTypeDescriptor {
     }
 
     @Override
-    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+    public boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
         return typeDescriptor.isTimeType();
     }
 }

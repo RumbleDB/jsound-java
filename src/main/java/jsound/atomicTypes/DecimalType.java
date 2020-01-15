@@ -100,7 +100,7 @@ public class DecimalType extends AtomicTypeDescriptor {
     }
 
     @Override
-    protected boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
+    public boolean hasCompatibleType(TypeDescriptor typeDescriptor) {
         return typeDescriptor.isDecimalType();
     }
 }
