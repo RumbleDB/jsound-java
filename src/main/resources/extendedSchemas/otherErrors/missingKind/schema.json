@@ -1,0 +1,13 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "content": [
+        {
+          "name": "field",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}

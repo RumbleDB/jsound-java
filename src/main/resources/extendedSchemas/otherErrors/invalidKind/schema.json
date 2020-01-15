@@ -1,0 +1,14 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "abcde",
+      "content": [
+        {
+          "name": "field",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}

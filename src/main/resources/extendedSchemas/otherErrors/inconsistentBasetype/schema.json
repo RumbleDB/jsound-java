@@ -1,0 +1,9 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "atomic",
+      "minLength": 4
+    }
+  ]
+}

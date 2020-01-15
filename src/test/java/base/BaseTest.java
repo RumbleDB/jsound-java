@@ -4,10 +4,12 @@ import org.api.TypeDescriptor;
 import org.api.executors.JSoundExecutor;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
+import static jsound.json.SchemaFileJsonParser.shouldCheckBaseType;
 import static org.api.executors.JSoundExecutor.schema;
 
 public class BaseTest {
@@ -21,6 +23,7 @@ public class BaseTest {
     )
             throws IOException {
         schema = new HashMap<>();
+        shouldCheckBaseType = new ArrayList<>();
         if (compact)
             compactSchema = new HashMap<>();
         JSoundExecutor.initializeApplication(

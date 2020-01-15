@@ -1,0 +1,31 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "hexBinaries",
+          "type": "arrayOfHexBinaries"
+        }
+      ]
+    },
+    {
+      "name": "alreadyExist",
+      "kind": "atomic",
+      "baseType": "hexBinary"
+    },
+    {
+      "name": "alreadyExist",
+      "kind": "array",
+      "content": [ "hexBinary" ]
+    },
+    {
+      "name": "arrayOfHexBinaries",
+      "kind": "array",
+      "content": [
+        "alreadyExist"
+      ]
+    }
+  ]
+}

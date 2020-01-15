@@ -82,10 +82,7 @@ public class SchemaDefinitionUtils {
         if (typeDescriptor.baseType.getType() == null) {
             AtomicTypeDescriptor baseTypeDescriptor;
             try {
-                baseTypeDescriptor = (AtomicTypeDescriptor) schema.getOrDefault(
-                    typeDescriptor.baseType.getStringType(),
-                    null
-                );
+                baseTypeDescriptor = (AtomicTypeDescriptor) schema.get(typeDescriptor.baseType.getStringType());
             } catch (ClassCastException e) {
                 throw new InvalidSchemaException(
                         "BaseType for type " + typeDescriptor.getName() + " should be atomic."

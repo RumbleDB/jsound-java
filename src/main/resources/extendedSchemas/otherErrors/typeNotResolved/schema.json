@@ -1,0 +1,19 @@
+{
+  "types": [
+    {
+      "name": "myType",
+      "kind": "atomic",
+      "baseType": "abcd"
+    },
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "field",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}

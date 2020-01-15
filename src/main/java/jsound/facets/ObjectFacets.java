@@ -78,6 +78,11 @@ public class ObjectFacets extends Facets {
                         "Field \"name\" is missing in object content for type " + typeName
                 );
             }
+            if (fieldDescriptor.getTypeOrReference() == null) {
+                throw new MissingNameOrTypeException(
+                        "Field \"type\" is missing in object content for type " + typeName
+                );
+            }
             objectContent.put(fieldDescriptor.getName(), fieldDescriptor);
         }
     }

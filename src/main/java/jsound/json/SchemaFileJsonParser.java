@@ -2,7 +2,7 @@ package jsound.json;
 
 import com.jsoniter.ValueType;
 import jsound.exceptions.AlreadyExistingTypeException;
-import jsound.exceptions.IncosistentBaseTypeException;
+import jsound.exceptions.InconsistentBaseTypeException;
 import jsound.exceptions.InvalidKindException;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.JsoundException;
@@ -40,7 +40,7 @@ public class SchemaFileJsonParser {
             Arrays.asList(FacetTypes.ENUMERATION, FacetTypes.METADATA, FacetTypes.CONSTRAINTS)
     );
 
-    private static List<AtomicTypeDescriptor> shouldCheckBaseType = new ArrayList<>();
+    public static List<AtomicTypeDescriptor> shouldCheckBaseType = new ArrayList<>();
 
     public static void createSchema() {
         try {
@@ -111,7 +111,7 @@ public class SchemaFileJsonParser {
         String key, baseTypeString;
         if ((key = jsonSchemaIterator.readObject()) != null) {
             if (!key.equals("baseType"))
-                throw new IncosistentBaseTypeException(
+                throw new InconsistentBaseTypeException(
                         "Please define the baseType before defining the facets for type " + name
                 );
             baseTypeString = Facets.getStringFromObject("baseType");
@@ -270,7 +270,7 @@ public class SchemaFileJsonParser {
 
     static void throwExistingTypeException(String name) {
         try {
-            AtomicTypes.valueOf(name);
+            AtomicTypes.valueOf(name.toUpperCase());
             throw new OverrideBuiltinTypeException("Builtin types are reserved and cannot be overridden or redefined.");
         } catch (IllegalArgumentException e) {
             throw new AlreadyExistingTypeException(

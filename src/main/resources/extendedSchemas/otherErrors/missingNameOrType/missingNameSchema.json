@@ -1,0 +1,31 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "objects",
+          "type": "arrayOfObjects"
+        }
+      ]
+    },
+    {
+      "name": "myObject",
+      "kind": "object",
+      "content": [
+        {
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "arrayOfObjects",
+      "kind": "array",
+      "content": [
+        "myObject"
+      ]
+    }
+  ]
+}
