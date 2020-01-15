@@ -27,31 +27,43 @@ public class BoundariesFacetsTest extends BaseTest {
     @Test
     public void testSchema() {
         assertTrue(schema.get("dayTimeDurationMinInclusive").isDayTimeDurationType());
-        assertTrue(schema.get("dayTimeDurationMinInclusive").getFacets().getDefinedFacets().contains(FacetTypes.MININCLUSIVE));
+        assertTrue(
+            schema.get("dayTimeDurationMinInclusive").getFacets().getDefinedFacets().contains(FacetTypes.MININCLUSIVE)
+        );
         assertEquals(
             "P2DT5H",
-            ((AtomicFacets) schema.get("dayTimeDurationMinInclusive").getFacets()).minInclusive.getItem().getStringValue()
+            ((AtomicFacets) schema.get("dayTimeDurationMinInclusive").getFacets()).minInclusive.getItem()
+                .getStringValue()
         );
 
         assertTrue(schema.get("dayTimeDurationMinExclusive").isDayTimeDurationType());
-        assertTrue(schema.get("dayTimeDurationMinExclusive").getFacets().getDefinedFacets().contains(FacetTypes.MINEXCLUSIVE));
+        assertTrue(
+            schema.get("dayTimeDurationMinExclusive").getFacets().getDefinedFacets().contains(FacetTypes.MINEXCLUSIVE)
+        );
         assertEquals(
             "P2DT5H",
-            ((AtomicFacets) schema.get("dayTimeDurationMinExclusive").getFacets()).minExclusive.getItem().getStringValue()
+            ((AtomicFacets) schema.get("dayTimeDurationMinExclusive").getFacets()).minExclusive.getItem()
+                .getStringValue()
         );
 
         assertTrue(schema.get("dayTimeDurationMaxInclusive").isDayTimeDurationType());
-        assertTrue(schema.get("dayTimeDurationMaxInclusive").getFacets().getDefinedFacets().contains(FacetTypes.MAXINCLUSIVE));
+        assertTrue(
+            schema.get("dayTimeDurationMaxInclusive").getFacets().getDefinedFacets().contains(FacetTypes.MAXINCLUSIVE)
+        );
         assertEquals(
             "P2DT5H",
-            ((AtomicFacets) schema.get("dayTimeDurationMaxInclusive").getFacets()).maxInclusive.getItem().getStringValue()
+            ((AtomicFacets) schema.get("dayTimeDurationMaxInclusive").getFacets()).maxInclusive.getItem()
+                .getStringValue()
         );
 
         assertTrue(schema.get("dayTimeDurationMaxExclusive").isDayTimeDurationType());
-        assertTrue(schema.get("dayTimeDurationMaxExclusive").getFacets().getDefinedFacets().contains(FacetTypes.MAXEXCLUSIVE));
+        assertTrue(
+            schema.get("dayTimeDurationMaxExclusive").getFacets().getDefinedFacets().contains(FacetTypes.MAXEXCLUSIVE)
+        );
         assertEquals(
             "P2DT5H",
-            ((AtomicFacets) schema.get("dayTimeDurationMaxExclusive").getFacets()).maxExclusive.getItem().getStringValue()
+            ((AtomicFacets) schema.get("dayTimeDurationMaxExclusive").getFacets()).maxExclusive.getItem()
+                .getStringValue()
         );
 
         assertTrue(schema.get("restrictedDayTimeDurationMinInclusive").isDayTimeDurationType());

@@ -1,0 +1,117 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "yearMonthDurations",
+          "type": "arrayOfYearMonthDurations"
+        }
+      ]
+    },
+    {
+      "name": "yearMonthDurationMinInclusive",
+      "kind": "atomic",
+      "baseType": "yearMonthDuration",
+      "minInclusive": "P2Y5M"
+    },
+    {
+      "name": "yearMonthDurationMinExclusive",
+      "kind": "atomic",
+      "baseType": "yearMonthDuration",
+      "minExclusive": "P2Y5M"
+    },
+    {
+      "name": "yearMonthDurationMaxInclusive",
+      "kind": "atomic",
+      "baseType": "yearMonthDuration",
+      "maxInclusive": "P2Y5M"
+    },
+    {
+      "name": "yearMonthDurationMaxExclusive",
+      "kind": "atomic",
+      "baseType": "yearMonthDuration",
+      "maxExclusive": "P2Y5M"
+    },
+    {
+      "name": "arrayOfYearMonthDurations",
+      "kind": "array",
+      "content": [
+        "yearMonthDurationObj"
+      ]
+    },
+    {
+      "name": "restrictedYearMonthDurationMinInclusive",
+      "kind": "atomic",
+      "baseType": "yearMonthDurationMinInclusive",
+      "minInclusive": "P2Y6M"
+    },
+    {
+      "name": "restrictedYearMonthDurationMinExclusive",
+      "kind": "atomic",
+      "baseType": "yearMonthDurationMinExclusive",
+      "minExclusive": "P2Y6M"
+    },
+    {
+      "name": "restrictedYearMonthDurationMaxInclusive",
+      "kind": "atomic",
+      "baseType": "yearMonthDurationMaxInclusive",
+      "maxInclusive": "P2Y4M"
+    },
+    {
+      "name": "restrictedYearMonthDurationMaxExclusive",
+      "kind": "atomic",
+      "baseType": "yearMonthDurationMaxExclusive",
+      "maxExclusive": "P2Y4M"
+    },
+    {
+      "name": "combinedBoundariesFacets",
+      "kind": "atomic",
+      "baseType": "yearMonthDurationMaxInclusive",
+      "minInclusive": "P2Y1M"
+    },
+    {
+      "name": "yearMonthDurationObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "yearMonthDurationMinInclusiveField",
+          "type": "yearMonthDurationMinInclusive"
+        },
+        {
+          "name": "yearMonthDurationMinExclusiveField",
+          "type": "yearMonthDurationMinExclusive"
+        },
+        {
+          "name": "yearMonthDurationMaxInclusiveField",
+          "type": "yearMonthDurationMaxInclusive"
+        },
+        {
+          "name": "yearMonthDurationMaxExclusiveField",
+          "type": "yearMonthDurationMaxExclusive"
+        },
+        {
+          "name": "restrictedYearMonthDurationMinInclusiveField",
+          "type": "restrictedYearMonthDurationMinInclusive"
+        },
+        {
+          "name": "restrictedYearMonthDurationMinExclusiveField",
+          "type": "restrictedYearMonthDurationMinExclusive"
+        },
+        {
+          "name": "restrictedYearMonthDurationMaxInclusiveField",
+          "type": "restrictedYearMonthDurationMaxInclusive"
+        },
+        {
+          "name": "restrictedYearMonthDurationMaxExclusiveField",
+          "type": "restrictedYearMonthDurationMaxExclusive"
+        },
+        {
+          "name": "combinedBoundariesFacetsField",
+          "type": "combinedBoundariesFacets"
+        }
+      ]
+    }
+  ]
+}

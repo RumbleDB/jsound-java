@@ -1,0 +1,31 @@
+{
+  "yearMonthDurations": [
+    {
+      "yearMonthDurationMinInclusiveField": "P2Y5M"
+    },
+    {
+      "yearMonthDurationMinExclusiveField": "P2Y6M"
+    },
+    {
+      "yearMonthDurationMaxInclusiveField": "P2Y5M"
+    },
+    {
+      "yearMonthDurationMaxExclusiveField": "P2Y4M"
+    },
+    {
+      "restrictedYearMonthDurationMinInclusiveField": "P2Y6M"
+    },
+    {
+      "restrictedYearMonthDurationMinExclusiveField": "P2Y7M"
+    },
+    {
+      "restrictedYearMonthDurationMaxInclusiveField": "P2Y4M"
+    },
+    {
+      "restrictedYearMonthDurationMaxExclusiveField": "P2Y3M"
+    },
+    {
+      "combinedBoundariesFacetsField": "P2Y2M"
+    }
+  ]
+}
