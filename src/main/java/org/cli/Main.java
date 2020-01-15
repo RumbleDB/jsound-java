@@ -38,10 +38,7 @@ public class Main {
                     System.out.println("Validation completed successfully! ✅");
                     System.out.println("Annotation completed successfully! ✅");
                 } catch (JsoundException e) {
-                    System.out.println(
-                        "Annotation failed ❌ : could not annotate the file with the provided the schema."
-                    );
-                    System.out.println(e.getErrorCode() + ": " + e.getErrorMessage());
+                    System.out.println(e.getMessage());
                 }
             } else
                 System.out.println("Please specify if you want to validate or annotate the file against the schema");
@@ -53,13 +50,9 @@ public class Main {
     private static void handleException(Throwable ex) {
         if (ex != null) {
             if (ex instanceof JsoundException) {
-                System.err.println("⚠️  ️" + ex.getMessage());
+                System.err.println("⚠️ ️ " + ex.getMessage());
             } else {
-                System.out.println("An error has occured: " + ex.getMessage());
-                System.out.println(
-                    "We should investigate this. Please contact us or file an issue on GitHub with your query."
-                );
-                System.out.println("Link: ");
+                System.out.println("An error has occurred: " + ex.getMessage());
                 ex.printStackTrace();
             }
         }
