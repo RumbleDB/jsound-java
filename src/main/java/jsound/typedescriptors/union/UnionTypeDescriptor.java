@@ -106,7 +106,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
                 }
                 if (!foundMatch)
                     throw new LessRestrictiveFacetException(
-                            typeOrReference.getTypeDescriptor().getName()
+                            this.getName()
                                 + " is not less restrictive than "
                                 + typeDescriptor.getName()
                     );
@@ -114,7 +114,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
                 typeOrReference.getTypeDescriptor().checkAgainstTypeDescriptor(typeDescriptor);
             } else
                 throw new LessRestrictiveFacetException(
-                        typeOrReference.getTypeDescriptor().getName()
+                        this.getName()
                             + " is not less restrictive than "
                             + typeDescriptor.getName()
                 );

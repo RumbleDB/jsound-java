@@ -1,0 +1,49 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "objects",
+          "type": "arrayOfObjects"
+        }
+      ]
+    },
+    {
+      "name": "myObject",
+      "kind": "object",
+      "content": [
+        {
+          "name": "fieldName",
+          "type": "hexBinary"
+        }
+      ]
+    },
+    {
+      "name": "myObjectType",
+      "kind": "object",
+      "baseType": "myObject",
+      "content": [
+        {
+          "name": "fieldName",
+          "type": "binaries"
+        }
+      ]
+    },
+    {
+      "name": "arrayOfObjects",
+      "kind": "array",
+      "content": [
+        "myObjectType"
+      ]
+    },
+    {
+      "name": "binaries",
+      "kind": "union",
+      "content": [
+        "hexBinary", "base64Binary"
+      ]
+    }
+  ]
+}

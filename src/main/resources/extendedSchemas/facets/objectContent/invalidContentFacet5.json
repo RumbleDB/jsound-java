@@ -1,0 +1,28 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "objects",
+          "type": "arrayOfObjects"
+        }
+      ]
+    },
+    {
+      "name": "objectType",
+      "kind": "object",
+      "content": {
+        "field": "hello"
+      }
+    },
+    {
+      "name": "arrayOfObjects",
+      "kind": "array",
+      "content": [
+        "objectType"
+      ]
+    }
+  ]
+}

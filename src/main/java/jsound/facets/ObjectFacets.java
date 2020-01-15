@@ -43,6 +43,8 @@ public class ObjectFacets extends Facets {
 
     private void setObjectContentFromObject(String typeName) throws IOException {
         String key;
+        if (!jsonSchemaIterator.whatIsNext().equals(ValueType.ARRAY))
+            throw new UnexpectedTypeException("Object content should be an array.");
         while (jsonSchemaIterator.readArray()) {
             FieldDescriptor fieldDescriptor = new FieldDescriptor();
             if (!jsonSchemaIterator.whatIsNext().equals(ValueType.OBJECT))

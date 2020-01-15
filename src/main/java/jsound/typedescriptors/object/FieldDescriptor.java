@@ -1,7 +1,9 @@
 package jsound.typedescriptors.object;
 
+import jsound.exceptions.LessRestrictiveFacetException;
 import jsound.typedescriptors.TypeOrReference;
 import org.api.ItemWrapper;
+import org.api.TypeDescriptor;
 
 public class FieldDescriptor {
     public String name;
@@ -59,14 +61,52 @@ public class FieldDescriptor {
 
     public void isMoreRestrictive(ObjectTypeDescriptor baseTypeDescriptor) {
         this.getTypeOrReference().getTypeDescriptor().checkBaseType();
-        this.getTypeOrReference()
-            .getTypeDescriptor()
-            .checkAgainstTypeDescriptor(
-                baseTypeDescriptor.getFacets()
+        if (this.getTypeOrReference().getTypeDescriptor().isUnionType())
+            this.getTypeOrReference()
+                .getTypeDescriptor()
+                .checkAgainstTypeDescriptor(
+                    baseTypeDescriptor.getFacets()
+                        .getObjectContent()
+                        .get(this.getName())
+                        .getTypeOrReference()
+                        .getTypeDescriptor()
+                );
+        else
+            checkAgainstTypeDescriptor(baseTypeDescriptor.getFacets()
                     .getObjectContent()
                     .get(this.getName())
                     .getTypeOrReference()
-                    .getTypeDescriptor()
+                    .getTypeDescriptor());
+    }
+
+    private void checkAgainstTypeDescriptor(TypeDescriptor baseTypeDescriptor) {
+        boolean foundMatch;
+        if (baseTypeDescriptor.isUnionType()) {
+            foundMatch = false;
+            for (TypeOrReference typeOrReference : baseTypeDescriptor.getFacets().getUnionContent().getTypes()) {
+                if (
+                    this.getTypeOrReference().getTypeDescriptor().hasCompatibleType(typeOrReference.getTypeDescriptor())
+                ) {
+                    this.getTypeOrReference()
+                        .getTypeDescriptor()
+                        .checkAgainstTypeDescriptor(typeOrReference.getTypeDescriptor());
+                    foundMatch = true;
+                    break;
+                }
+            }
+            if (!foundMatch)
+                throw new LessRestrictiveFacetException(
+                        this.getTypeOrReference().getTypeDescriptor().getName()
+                            + " is not less restrictive than "
+                            + baseTypeDescriptor.getName()
+                );
+        } else if (this.getTypeOrReference().getTypeDescriptor().hasCompatibleType(baseTypeDescriptor)) {
+            this.getTypeOrReference().getTypeDescriptor().checkAgainstTypeDescriptor(baseTypeDescriptor);
+        } else
+            throw new LessRestrictiveFacetException(
+                    this.getTypeOrReference().getTypeDescriptor().getName()
+                        + " is not less restrictive than "
+                        + baseTypeDescriptor.getName()
             );
     }
 }
