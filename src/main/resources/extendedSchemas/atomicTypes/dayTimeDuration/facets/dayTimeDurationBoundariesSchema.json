@@ -1,0 +1,117 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dayTimeDurations",
+          "type": "arrayOfDayTimeDurations"
+        }
+      ]
+    },
+    {
+      "name": "dayTimeDurationMinInclusive",
+      "kind": "atomic",
+      "baseType": "dayTimeDuration",
+      "minInclusive": "P2DT5H"
+    },
+    {
+      "name": "dayTimeDurationMinExclusive",
+      "kind": "atomic",
+      "baseType": "dayTimeDuration",
+      "minExclusive": "P2DT5H"
+    },
+    {
+      "name": "dayTimeDurationMaxInclusive",
+      "kind": "atomic",
+      "baseType": "dayTimeDuration",
+      "maxInclusive": "P2DT5H"
+    },
+    {
+      "name": "dayTimeDurationMaxExclusive",
+      "kind": "atomic",
+      "baseType": "dayTimeDuration",
+      "maxExclusive": "P2DT5H"
+    },
+    {
+      "name": "arrayOfDayTimeDurations",
+      "kind": "array",
+      "content": [
+        "dayTimeDurationObj"
+      ]
+    },
+    {
+      "name": "restrictedDayTimeDurationMinInclusive",
+      "kind": "atomic",
+      "baseType": "dayTimeDurationMinInclusive",
+      "minInclusive": "P2DT6H"
+    },
+    {
+      "name": "restrictedDayTimeDurationMinExclusive",
+      "kind": "atomic",
+      "baseType": "dayTimeDurationMinExclusive",
+      "minExclusive": "P2DT6H"
+    },
+    {
+      "name": "restrictedDayTimeDurationMaxInclusive",
+      "kind": "atomic",
+      "baseType": "dayTimeDurationMaxInclusive",
+      "maxInclusive": "P2DT4H"
+    },
+    {
+      "name": "restrictedDayTimeDurationMaxExclusive",
+      "kind": "atomic",
+      "baseType": "dayTimeDurationMaxExclusive",
+      "maxExclusive": "P2DT4H"
+    },
+    {
+      "name": "combinedBoundariesFacets",
+      "kind": "atomic",
+      "baseType": "dayTimeDurationMaxInclusive",
+      "minInclusive": "P2DT1H"
+    },
+    {
+      "name": "dayTimeDurationObj",
+      "kind": "object",
+      "content": [
+        {
+          "name": "dayTimeDurationMinInclusiveField",
+          "type": "dayTimeDurationMinInclusive"
+        },
+        {
+          "name": "dayTimeDurationMinExclusiveField",
+          "type": "dayTimeDurationMinExclusive"
+        },
+        {
+          "name": "dayTimeDurationMaxInclusiveField",
+          "type": "dayTimeDurationMaxInclusive"
+        },
+        {
+          "name": "dayTimeDurationMaxExclusiveField",
+          "type": "dayTimeDurationMaxExclusive"
+        },
+        {
+          "name": "restrictedDayTimeDurationMinInclusiveField",
+          "type": "restrictedDayTimeDurationMinInclusive"
+        },
+        {
+          "name": "restrictedDayTimeDurationMinExclusiveField",
+          "type": "restrictedDayTimeDurationMinExclusive"
+        },
+        {
+          "name": "restrictedDayTimeDurationMaxInclusiveField",
+          "type": "restrictedDayTimeDurationMaxInclusive"
+        },
+        {
+          "name": "restrictedDayTimeDurationMaxExclusiveField",
+          "type": "restrictedDayTimeDurationMaxExclusive"
+        },
+        {
+          "name": "combinedBoundariesFacetsField",
+          "type": "combinedBoundariesFacets"
+        }
+      ]
+    }
+  ]
+}

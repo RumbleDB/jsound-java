@@ -1,0 +1,31 @@
+{
+  "dayTimeDurations": [
+    {
+      "dayTimeDurationMinInclusiveField": "P2DT4H"
+    },
+    {
+      "dayTimeDurationMinExclusiveField": "P2DT5H"
+    },
+    {
+      "dayTimeDurationMaxInclusiveField": "P2DT6H"
+    },
+    {
+      "dayTimeDurationMaxExclusiveField": "P2DT6H"
+    },
+    {
+      "restrictedDayTimeDurationMinInclusiveField": "P2DT4H"
+    },
+    {
+      "restrictedDayTimeDurationMinExclusiveField": "P2DT6H"
+    },
+    {
+      "restrictedDayTimeDurationMaxInclusiveField": "P2DT6H"
+    },
+    {
+      "restrictedDayTimeDurationMaxExclusiveField": "P2DT6H"
+    },
+    {
+      "combinedBoundariesFacetsField": "P2DT59M"
+    }
+  ]
+}
