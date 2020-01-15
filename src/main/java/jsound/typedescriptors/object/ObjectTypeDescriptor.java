@@ -4,7 +4,7 @@ import jsound.exceptions.ClosedNotRespectedException;
 import jsound.exceptions.ClosedSetBackToFalseException;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.LessRestrictiveFacetException;
-import jsound.exceptions.RequiredSertBackToFalseException;
+import jsound.exceptions.RequiredSetBackToFalseException;
 import jsound.facets.FacetTypes;
 import jsound.facets.ObjectFacets;
 import jsound.item.ObjectItem;
@@ -176,18 +176,6 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                 this.getFacets().definedFacets.add(facetTypes);
                 switch (facetTypes) {
                     case CLOSED:
-                        if (
-                            this.getFacets().closedIsSet
-                                && !this.getFacets().isClosed()
-                                && typeDescriptor.getFacets().isClosed()
-                        )
-                            throw new ClosedSetBackToFalseException(
-                                    "The \"closed\" facet for type "
-                                        + this.getName()
-                                        + " cannot be set back to false since it was set to true in its baseType "
-                                        + this.baseType.getTypeDescriptor().getName()
-                                        + "."
-                            );
                         this.getFacets().setClosed(typeDescriptor.getFacets().isClosed());
                         break;
                     case ENUMERATION:
@@ -196,6 +184,19 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                         resolveCommonFacets(typeDescriptor, facetTypes);
                         break;
                 }
+            } else if (
+                facetTypes.equals(CLOSED)
+                    && this.getFacets().closedIsSet
+                    && !this.getFacets().isClosed()
+                    && typeDescriptor.getFacets().isClosed()
+            ) {
+                throw new ClosedSetBackToFalseException(
+                        "The \"closed\" facet for type "
+                            + this.getName()
+                            + " cannot be set back to false since it was set to true in its baseType "
+                            + this.baseType.getTypeDescriptor().getName()
+                            + "."
+                );
             }
         }
         if (typeDescriptor.getFacets().getDefinedFacets().contains(CONTENT))
@@ -211,7 +212,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                     && this.getFacets().getObjectContent().get(fieldDescriptor.getName()).requiredIsSet()
                     && !this.getFacets().getObjectContent().get(fieldDescriptor.getName()).isRequired()
             )
-                throw new RequiredSertBackToFalseException(
+                throw new RequiredSetBackToFalseException(
                         "Field "
                             + this.getName()
                             + " cannot be set back to false. It is set to true in baseType "

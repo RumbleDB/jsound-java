@@ -24,7 +24,7 @@ public class InvalidEnumInFileTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/object/enumerationSchema.json",
+            "extendedSchemas/object/enumeration/enumerationSchema.json",
             "object/enumeration/invalidEnumError.json",
             false
         );

@@ -1,0 +1,9 @@
+{
+  "objects": [
+    {
+      "stringField": "memory",
+      "integerField": "512",
+      "binaryField": "abcd"
+    }
+  ]
+}

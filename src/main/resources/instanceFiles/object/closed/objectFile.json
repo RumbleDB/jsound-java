@@ -1,0 +1,14 @@
+{
+  "objects": [
+    {
+      "stringField": "memory",
+      "integerField": "512"
+    },
+    {
+      "stringField": "memory"
+    },
+    {
+      "integerField": "512"
+    }
+  ]
+}

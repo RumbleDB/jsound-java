@@ -27,7 +27,7 @@ public class EnumerationTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         BaseTest.initializeApplication(
-            "extendedSchemas/object/enumerationSchema.json",
+            "extendedSchemas/object/enumeration/enumerationSchema.json",
             "object/enumeration/objectEnumeration.json",
             false
         );

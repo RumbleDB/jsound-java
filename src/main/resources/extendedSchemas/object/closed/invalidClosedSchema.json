@@ -1,0 +1,42 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "objects",
+          "type": "arrayOfObjects"
+        }
+      ]
+    },
+    {
+      "name": "myObjectType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "stringField",
+          "type": "string"
+        },
+        {
+          "name": "integerField",
+          "type": "integer"
+        }
+      ],
+      "closed": true
+    },
+    {
+      "name": "myObjectSubtype",
+      "kind": "object",
+      "baseType": "myObjectType",
+      "closed": false
+    },
+    {
+      "name": "arrayOfObjects",
+      "kind": "array",
+      "content": [
+        "myObjectSubtype"
+      ]
+    }
+  ]
+}
