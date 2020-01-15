@@ -1,6 +1,7 @@
 package jsound.facets;
 
 import com.jsoniter.ValueType;
+import jsound.exceptions.UnexpectedTypeException;
 import jsound.json.SchemaFileJsonParser;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.union.UnionContentDescriptor;
@@ -30,6 +31,9 @@ public class UnionFacets extends Facets {
     }
 
     private void setUnionContentFromObject() throws IOException {
+        if (!jsonSchemaIterator.whatIsNext().equals(ValueType.ARRAY)) {
+            throw new UnexpectedTypeException("Union content must be an array");
+        }
         while (jsonSchemaIterator.readArray()) {
             if (jsonSchemaIterator.whatIsNext().equals(ValueType.STRING)) {
                 String type = jsonSchemaIterator.readString();

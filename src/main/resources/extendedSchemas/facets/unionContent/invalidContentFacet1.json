@@ -1,0 +1,27 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "unions",
+          "type": "arrayOfUnions"
+        }
+      ]
+    },
+    {
+      "name": "unionType",
+      "kind": "union",
+      "content": 1
+    },
+    {
+      "name": "arrayOfUnions",
+      "kind": "array",
+      "content": [
+        "unionType"
+      ]
+    }
+  ]
+}
+

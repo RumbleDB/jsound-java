@@ -1,0 +1,57 @@
+{
+  "types": [
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "unions",
+          "type": "arrayOfUnions"
+        }
+      ]
+    },
+    {
+      "name": "dateTimes",
+      "kind": "union",
+      "content": [
+        "date", "dateTime"
+      ]
+    },
+    {
+      "name": "dateTimes2",
+      "kind": "union",
+      "content": [
+        "date", "time", "dateTime"
+      ]
+    },
+    {
+      "name": "myObject",
+      "kind": "object",
+      "content": [
+        {
+          "name": "fieldName",
+          "type": "dateTimes"
+        }
+      ]
+    },
+    {
+      "name": "myObjectType",
+      "kind": "object",
+      "baseType": "myObject",
+      "content": [
+        {
+          "name": "fieldName",
+          "type": "dateTimes2"
+        }
+      ]
+    },
+    {
+      "name": "arrayOfUnions",
+      "kind": "array",
+      "content": [
+        "myObjectType"
+      ]
+    }
+  ]
+}
+

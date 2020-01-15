@@ -72,11 +72,13 @@ public class FieldDescriptor {
                         .getTypeDescriptor()
                 );
         else
-            checkAgainstTypeDescriptor(baseTypeDescriptor.getFacets()
+            checkAgainstTypeDescriptor(
+                baseTypeDescriptor.getFacets()
                     .getObjectContent()
                     .get(this.getName())
                     .getTypeOrReference()
-                    .getTypeDescriptor());
+                    .getTypeDescriptor()
+            );
     }
 
     private void checkAgainstTypeDescriptor(TypeDescriptor baseTypeDescriptor) {
