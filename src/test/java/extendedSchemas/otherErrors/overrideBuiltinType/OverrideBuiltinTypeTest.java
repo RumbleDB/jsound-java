@@ -11,9 +11,9 @@ public class OverrideBuiltinTypeTest extends BaseTest {
     @Test(expected = OverrideBuiltinTypeException.class)
     public void missingKindTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/otherErrors/overrideBuiltinType/schema.json",
-                "object/objectFile.json",
-                false
+            "extendedSchemas/otherErrors/overrideBuiltinType/schema.json",
+            "object/objectFile.json",
+            false
         );
     }
 }

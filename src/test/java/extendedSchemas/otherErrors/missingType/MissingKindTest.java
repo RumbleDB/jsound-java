@@ -11,9 +11,9 @@ public class MissingKindTest extends BaseTest {
     @Test(expected = MissingKindException.class)
     public void missingKindTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/otherErrors/missingKind/schema.json",
-                "object/objectFile.json",
-                false
+            "extendedSchemas/otherErrors/missingKind/schema.json",
+            "object/objectFile.json",
+            false
         );
     }
 }

@@ -11,9 +11,9 @@ public class InconsistentBasetypeTest extends BaseTest {
     @Test(expected = InconsistentBaseTypeException.class)
     public void inconsistentBaseTypeTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/otherErrors/inconsistentBasetype/schema.json",
-                "object/objectFile.json",
-                false
+            "extendedSchemas/otherErrors/inconsistentBasetype/schema.json",
+            "object/objectFile.json",
+            false
         );
     }
 }

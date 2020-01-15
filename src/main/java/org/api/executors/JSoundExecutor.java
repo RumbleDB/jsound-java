@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
@@ -63,7 +64,7 @@ public abstract class JSoundExecutor {
 
     private static void checkSubtypeCorrectness() {
         for (TypeDescriptor typeDescriptor : schema.values()) {
-            typeDescriptor.resolveAllFacets();
+            typeDescriptor.resolveAllFacets(new HashSet<>());
             typeDescriptor.checkBaseType();
         }
     }

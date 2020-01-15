@@ -1,0 +1,46 @@
+{
+  "types": [
+    {
+      "name": "myType",
+      "kind": "object",
+      "baseType": "recType"
+    },
+    {
+      "name": "recType",
+      "kind": "object",
+      "baseType": "third"
+    },
+    {
+      "name": "third",
+      "kind": "object",
+      "baseType": "myType"
+    },
+    {
+      "name": "rootType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "objects",
+          "type": "arrayOfObjects"
+        }
+      ]
+    },
+    {
+      "name": "objectType",
+      "kind": "object",
+      "content": [
+        {
+          "name": "myObject",
+          "type": "third"
+        }
+      ]
+    },
+    {
+      "name": "arrayOfObjects",
+      "kind": "array",
+      "content": [
+        "objectType"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package jsound.typedescriptors.union;
 
+import jsound.exceptions.CycleInBasetypeException;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.LessRestrictiveFacetException;
 import jsound.facets.FacetTypes;
@@ -118,6 +119,19 @@ public class UnionTypeDescriptor extends TypeDescriptor {
                             + " is not less restrictive than "
                             + typeDescriptor.getName()
                 );
+        }
+    }
+
+    @Override
+    public void resolveAllFacets(Set<TypeDescriptor> visitedTypes) {
+        if (visitedTypes.contains(this))
+            throw new CycleInBasetypeException("There is a cycle in the baseType definitions.");
+        visitedTypes.add(this);
+        if (this.getFacets().getDefinedFacets().contains(CONTENT)) {
+            for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
+                if (visitedTypes.contains(typeOrReference.getTypeDescriptor()))
+                    throw new CycleInBasetypeException("There is a cycle in the baseType definitions.");
+            }
         }
     }
 }

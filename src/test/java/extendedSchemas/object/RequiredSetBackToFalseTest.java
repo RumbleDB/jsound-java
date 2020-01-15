@@ -10,9 +10,9 @@ public class RequiredSetBackToFalseTest extends BaseTest {
     @Test(expected = RequiredSetBackToFalseException.class)
     public void requiredSetBackToFalse() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/object/requiredSetBackToFalseSchema.json",
-                "object/objectFile.json",
-                false
+            "extendedSchemas/object/requiredSetBackToFalseSchema.json",
+            "object/objectFile.json",
+            false
         );
     }
 }

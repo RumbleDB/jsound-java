@@ -11,9 +11,9 @@ public class TypeNotResolvedTest extends BaseTest {
     @Test(expected = TypeNotResolvedException.class)
     public void typeNotResolvedTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/otherErrors/typeNotResolved/schema.json",
-                "object/objectFile.json",
-                false
+            "extendedSchemas/otherErrors/typeNotResolved/schema.json",
+            "object/objectFile.json",
+            false
         );
     }
 }

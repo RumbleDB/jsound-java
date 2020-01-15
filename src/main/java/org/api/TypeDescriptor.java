@@ -180,7 +180,7 @@ public abstract class TypeDescriptor {
 
     public abstract TysonItem annotate(ItemWrapper itemWrapper);
 
-    public void resolveAllFacets() {
+    public void resolveAllFacets(Set<TypeDescriptor> visitedTypes) {
     }
 
     public void resolveCommonFacets(TypeDescriptor typeDescriptor, FacetTypes facetType) {

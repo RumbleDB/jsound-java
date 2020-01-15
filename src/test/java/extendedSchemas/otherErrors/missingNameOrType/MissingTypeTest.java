@@ -11,9 +11,9 @@ public class MissingTypeTest extends BaseTest {
     @Test(expected = MissingNameOrTypeException.class)
     public void missingTypeTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/otherErrors/missingNameOrType/missingTypeSchema.json",
-                "object/objectFile.json",
-                false
+            "extendedSchemas/otherErrors/missingNameOrType/missingTypeSchema.json",
+            "object/objectFile.json",
+            false
         );
     }
 }

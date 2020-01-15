@@ -11,9 +11,9 @@ public class AlreadyExistingTypeTest extends BaseTest {
     @Test(expected = AlreadyExistingTypeException.class)
     public void missingKindTest() throws IOException {
         BaseTest.initializeApplication(
-                "extendedSchemas/otherErrors/alreadyExistingType/schema.json",
-                "object/objectFile.json",
-                false
+            "extendedSchemas/otherErrors/alreadyExistingType/schema.json",
+            "object/objectFile.json",
+            false
         );
     }
 }

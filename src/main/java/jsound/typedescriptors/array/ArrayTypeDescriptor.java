@@ -1,5 +1,6 @@
 package jsound.typedescriptors.array;
 
+import jsound.exceptions.CycleInBasetypeException;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.LessRestrictiveFacetException;
 import jsound.facets.ArrayFacets;
@@ -147,7 +148,10 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public void resolveAllFacets() {
+    public void resolveAllFacets(Set<TypeDescriptor> visitedTypes) {
+        if (visitedTypes.contains(this))
+            throw new CycleInBasetypeException("There is a cycle in the baseType definitions.");
+        visitedTypes.add(this);
         if (this.hasResolvedAllFacets)
             return;
         ArrayTypeDescriptor baseTypeDescriptor = (ArrayTypeDescriptor) this.baseType.getTypeDescriptor();
@@ -159,7 +163,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
                         + baseTypeDescriptor
                             .getName()
             );
-        baseTypeDescriptor.resolveAllFacets();
+        baseTypeDescriptor.resolveAllFacets(visitedTypes);
         resolveArrayFacets(baseTypeDescriptor);
         this.hasResolvedAllFacets = true;
     }

@@ -15,6 +15,7 @@ import jsound.atomicTypes.NullType;
 import jsound.atomicTypes.StringType;
 import jsound.atomicTypes.TimeType;
 import jsound.atomicTypes.YearMonthDurationType;
+import jsound.exceptions.CycleInBasetypeException;
 import jsound.exceptions.LessRestrictiveFacetException;
 import jsound.exceptions.UnexpectedTypeException;
 import jsound.facets.AtomicFacets;
@@ -276,7 +277,10 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public void resolveAllFacets() {
+    public void resolveAllFacets(Set<TypeDescriptor> visitedTypes) {
+        if (visitedTypes.contains(this))
+            throw new CycleInBasetypeException("There is a cycle in the baseType definitions.");
+        visitedTypes.add(this);
         if (this.hasResolvedAllFacets)
             return;
         AtomicTypeDescriptor atomicTypeDescriptor = (AtomicTypeDescriptor) this.baseType.getTypeDescriptor();
@@ -287,7 +291,7 @@ public class AtomicTypeDescriptor extends TypeDescriptor {
                         + " is not compatible with type "
                         + atomicTypeDescriptor.getName()
             );
-        atomicTypeDescriptor.resolveAllFacets();
+        atomicTypeDescriptor.resolveAllFacets(visitedTypes);
         resolveAtomicFacets(atomicTypeDescriptor);
         this.hasResolvedAllFacets = true;
     }

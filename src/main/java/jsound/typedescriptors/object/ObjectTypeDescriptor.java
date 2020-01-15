@@ -2,6 +2,7 @@ package jsound.typedescriptors.object;
 
 import jsound.exceptions.ClosedNotRespectedException;
 import jsound.exceptions.ClosedSetBackToFalseException;
+import jsound.exceptions.CycleInBasetypeException;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.exceptions.LessRestrictiveFacetException;
 import jsound.exceptions.RequiredSetBackToFalseException;
@@ -154,7 +155,10 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public void resolveAllFacets() {
+    public void resolveAllFacets(Set<TypeDescriptor> visitedTypes) {
+        if (visitedTypes.contains(this))
+            throw new CycleInBasetypeException("There is a cycle in the baseType definitions.");
+        visitedTypes.add(this);
         if (this.hasResolvedAllFacets)
             return;
         ObjectTypeDescriptor objectTypeDescriptor = (ObjectTypeDescriptor) this.baseType.getTypeDescriptor();
@@ -165,7 +169,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
                         + " is not compatible with type "
                         + objectTypeDescriptor.getName()
             );
-        objectTypeDescriptor.resolveAllFacets();
+        objectTypeDescriptor.resolveAllFacets(visitedTypes);
         resolveObjectFacets(objectTypeDescriptor);
         this.hasResolvedAllFacets = true;
     }
