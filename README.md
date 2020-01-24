@@ -2,13 +2,13 @@
 
 Implementation of a JSound 2.0 validation and annotation engine in Java.
 
-###Getting started
+### Getting started
 
-- ####Build:
+- #### Build:
     
     `mvn clean compile assembly:single`
 
-- ####Run:
+- #### Run:
 
     You can validate and annotate a JSON instance against a JSound 2.0 schema by simply executing this tool providing a few 
     shell arguments in the format `--argName argValue`. Following are the allowed arguments:
@@ -26,7 +26,8 @@ Implementation of a JSound 2.0 validation and annotation engine in Java.
     - `output`: string, required if annotating. The path to the file where the annotated instance file will be written to. 
     The file does not need to exist beforehand; if it does, its content will be overwritten by the annotated instance. 
     
-    #####Examples:
+    ##### Examples:
+    
     Validation:
     
         java -jar target/JSound-1.0-jar-with-dependencies.jar --validate true --schema src/main/resources/compactSchemas/object/objectSchema.json --file src/main/resources/instanceFiles/object/objectFile.json --root rootType --compact true
@@ -35,6 +36,6 @@ Implementation of a JSound 2.0 validation and annotation engine in Java.
         
         java -jar target/JSound-1.0-jar-with-dependencies.jar --annotate true --schema src/main/resources/extendedSchemas/generalSchema.json --file src/main/resources/instanceFiles/generalFile.json --root rootType --compact false --output annotatedFile.json
 
-- ####Test
+- #### Test
 
     `mvn test`
