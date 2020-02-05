@@ -1,5 +1,5 @@
 { 
-	"rootType" : {
+	"targetType" : {
 		"base64Binaries": "arrayOfBase64Binaries"
 	},
         "base64BinaryType": "base64Binary",

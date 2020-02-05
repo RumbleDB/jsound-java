@@ -6,7 +6,7 @@
       "baseType": "abcd"
     },
     {
-      "name": "rootType",
+      "name": "targetType",
       "kind": "object",
       "content": [
         {

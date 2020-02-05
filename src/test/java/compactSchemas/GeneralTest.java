@@ -34,7 +34,7 @@ public class GeneralTest extends BaseTest {
 
     @Test
     public void testSchema() {
-        String[] keys = new String[] { "rootType", "persons", "person" };
+        String[] keys = new String[] { "targetType", "persons", "person" };
         Set<String> keySet = new HashSet<>(Arrays.asList(keys));
 
         for (AtomicTypes type : AtomicTypes.values()) {
@@ -42,11 +42,11 @@ public class GeneralTest extends BaseTest {
         }
         assertTrue(schema.keySet().containsAll(keySet));
 
-        assertTrue(schema.get("rootType").isObjectType());
+        assertTrue(schema.get("targetType").isObjectType());
         assertTrue(schema.get("persons").isArrayType());
         assertTrue(schema.get("person").isObjectType());
 
-        Map<String, FieldDescriptor> targetType = schema.get("rootType").getFacets().getObjectContent();
+        Map<String, FieldDescriptor> targetType = schema.get("targetType").getFacets().getObjectContent();
         assertTrue(targetType.containsKey("people"));
         assertTrue(targetType.get("people").getTypeOrReference().getTypeDescriptor().isArrayType());
     }

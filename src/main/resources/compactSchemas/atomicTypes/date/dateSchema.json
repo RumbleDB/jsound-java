@@ -1,5 +1,5 @@
 {
-  "rootType" : {
+  "targetType" : {
     "dates": "arrayOfDates"
   },
   "dateType": "date",

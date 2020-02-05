@@ -29,7 +29,7 @@ public class BaseTest {
         JSoundExecutor.initializeApplication(
             schemaPathPrefix + schemaPath,
             filePathPrefix + filePath,
-            "rootType",
+            "targetType",
             compact
         );
         return schema;

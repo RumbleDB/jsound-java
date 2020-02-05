@@ -1,5 +1,5 @@
 {
-  "rootType" : {
+  "targetType" : {
     "durations": "arrayOfDurations"
   },
   "durationType": "duration",

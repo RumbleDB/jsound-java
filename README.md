@@ -26,11 +26,11 @@ Implementation of a JSound 2.0 validation and annotation engine in Java.
     
     Validation:
     
-        java -jar target/JSound-1.0-jar-with-dependencies.jar validate --schema src/main/resources/compactSchemas/object/objectSchema.json --file src/main/resources/instanceFiles/object/objectFile.json --targetType rootType --compact true
+        java -jar target/JSound-1.0-jar-with-dependencies.jar validate --schema src/main/resources/compactSchemas/object/objectSchema.json --file src/main/resources/instanceFiles/object/objectFile.json --targetType targetType --compact true
     
     Annotation:
         
-        java -jar target/JSound-1.0-jar-with-dependencies.jar annotate --schema src/main/resources/extendedSchemas/generalSchema.json --file src/main/resources/instanceFiles/generalFile.json --targetType rootType --compact false --output annotatedFile.json
+        java -jar target/JSound-1.0-jar-with-dependencies.jar annotate --schema src/main/resources/extendedSchemas/generalSchema.json --file src/main/resources/instanceFiles/generalFile.json --targetType targetType --compact false --output annotatedFile.json
 
 - #### Test
 

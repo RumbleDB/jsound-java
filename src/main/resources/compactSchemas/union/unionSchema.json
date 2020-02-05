@@ -1,5 +1,5 @@
 {
-  "rootType" : {
+  "targetType" : {
     "unions": "arrayOfUnions"
   },
   "durations": "dayTimeDuration|yearMonthDuration|duration",

@@ -1,5 +1,5 @@
 { 
-	"rootType" : {
+	"targetType" : {
 		"strings": "arrayOfStrings"
 	},
         "stringType": "string",

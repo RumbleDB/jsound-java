@@ -1,5 +1,5 @@
 {
-  "rootType" : {
+  "targetType" : {
     "yearMonthDurations": "arrayOfYearMonthDurations"
   },
   "yearMonthDurationType": "yearMonthDuration",

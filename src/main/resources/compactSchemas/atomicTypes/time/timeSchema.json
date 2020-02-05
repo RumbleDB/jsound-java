@@ -1,5 +1,5 @@
 {
-  "rootType" : {
+  "targetType" : {
     "times": "arrayOfTimes"
   },
   "timeType": "time",

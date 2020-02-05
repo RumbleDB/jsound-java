@@ -1,5 +1,5 @@
 {
-	"rootType": {
+	"targetType": {
 		"people": "persons"
 	},
 	"dateOrDateTime": "date|dateTime",

@@ -16,7 +16,7 @@
       "baseType": "myType"
     },
     {
-      "name": "rootType",
+      "name": "targetType",
       "kind": "object",
       "content": [
         {

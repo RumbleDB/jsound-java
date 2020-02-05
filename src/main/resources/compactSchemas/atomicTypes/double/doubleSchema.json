@@ -1,5 +1,5 @@
 {
-  "rootType" : {
+  "targetType" : {
     "doubles": "arrayOfDoubles"
   },
   "doubleType": "double",

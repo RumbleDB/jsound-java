@@ -1,5 +1,5 @@
 {
-  "rootType" : {
+  "targetType" : {
     "dayTimeDurations": "arrayOfDayTimeDurations"
   },
   "dayTimeDurationType": "dayTimeDuration",
