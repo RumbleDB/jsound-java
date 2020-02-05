@@ -22,8 +22,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>13</source>
-                    <target>13</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -73,7 +73,7 @@
                 <version>3.1.1</version>
                 <configuration>
                     <excludePackageNames>org.jsound.cli:org.jsound.config</excludePackageNames>
-                    <source>13</source>
+                    <source>1.8</source>
                 </configuration>
                 <executions>
                     <execution>

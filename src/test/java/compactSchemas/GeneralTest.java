@@ -46,9 +46,9 @@ public class GeneralTest extends BaseTest {
         assertTrue(schema.get("persons").isArrayType());
         assertTrue(schema.get("person").isObjectType());
 
-        Map<String, FieldDescriptor> rootType = schema.get("rootType").getFacets().getObjectContent();
-        assertTrue(rootType.containsKey("people"));
-        assertTrue(rootType.get("people").getTypeOrReference().getTypeDescriptor().isArrayType());
+        Map<String, FieldDescriptor> targetType = schema.get("rootType").getFacets().getObjectContent();
+        assertTrue(targetType.containsKey("people"));
+        assertTrue(targetType.get("people").getTypeOrReference().getTypeDescriptor().isArrayType());
     }
 
     @Test

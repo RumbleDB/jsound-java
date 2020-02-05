@@ -9,10 +9,10 @@ import java.io.IOException;
 
 public class JSoundAnnotateExecutor extends JSoundExecutor {
 
-    public static void annotate(String schemaPath, String filePath, String rootType, String outputPath, boolean compact)
+    public static void annotate(String schemaPath, String filePath, String targetType, String outputPath, boolean compact)
             throws IOException {
         try {
-            if (!JSoundValidateExecutor.validate(schemaPath, filePath, rootType, compact))
+            if (!JSoundValidateExecutor.validate(schemaPath, filePath, targetType, compact))
                 throw new InvalidInstanceAgainstSchemaException(
                         "Annotation can't be done. The candidate instance is invalid against the provided schema."
                 );
@@ -23,7 +23,7 @@ public class JSoundAnnotateExecutor extends JSoundExecutor {
         }
         try (FileWriter file = new FileWriter(outputPath)) {
             TYSONObject rootObject = (TYSONObject) schemaItem.annotate(fileItem);
-            rootObject.setTypeName(JSoundRuntimeConfiguration.getInstance().getRootType());
+            rootObject.setTypeName(JSoundRuntimeConfiguration.getInstance().getTargetType());
             file.write(rootObject.toTYSONString());
         } catch (IOException e) {
             throw new IOException("The specified output path is not valid: " + outputPath);

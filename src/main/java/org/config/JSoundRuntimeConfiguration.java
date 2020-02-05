@@ -11,10 +11,17 @@ public class JSoundRuntimeConfiguration {
         "Invalid argument format. Required format: --property value";
     private HashMap<String, String> _arguments;
     private static JSoundRuntimeConfiguration instance;
+    private final boolean annotate;
 
     private JSoundRuntimeConfiguration(String[] args) {
         _arguments = new HashMap<>();
-        for (int index = 0; index < args.length; index += 2) {
+        if (args[0].equals("validate"))
+            annotate = false;
+        else if (args[0].equals("annotate"))
+            annotate = true;
+        else
+            throw new CliException("Please specify if you want to validate or annotate the file against the schema");
+        for (int index = 1; index < args.length; index += 2) {
             if (args[index].startsWith(ARGUMENT_PREFIX))
                 _arguments.put(args[index].trim().replace(ARGUMENT_PREFIX, ""), args[index + 1]);
             else
@@ -45,20 +52,16 @@ public class JSoundRuntimeConfiguration {
         return this._arguments.getOrDefault("schema", null);
     }
 
-    public String getRootType() {
-        return this._arguments.getOrDefault("root", null);
+    public String getTargetType() {
+        return this._arguments.getOrDefault("targetType", null);
     }
 
     public boolean isCompact() {
         return Boolean.parseBoolean(this._arguments.getOrDefault("compact", null));
     }
 
-    public boolean isValidate() {
-        return Boolean.parseBoolean(this._arguments.getOrDefault("validate", null));
-    }
-
     public boolean isAnnotate() {
-        return Boolean.parseBoolean(this._arguments.getOrDefault("annotate", null));
+        return annotate;
     }
 
     public void hasNecessaryArguments() {
@@ -66,7 +69,7 @@ public class JSoundRuntimeConfiguration {
             throw new CliException("Missing schema argument");
         if (getFile() == null)
             throw new CliException("Missing instance file argument");
-        if (getRootType() == null)
+        if (getTargetType() == null)
             throw new CliException("Missing type to validate the instance file against.");
     }
 }

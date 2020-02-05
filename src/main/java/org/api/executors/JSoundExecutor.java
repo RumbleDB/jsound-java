@@ -27,7 +27,7 @@ public abstract class JSoundExecutor {
     public static Map<String, TypeDescriptor> schema = new HashMap<>();
     public static JsonIterator jsonSchemaIterator;
 
-    public static void initializeApplication(String schemaPath, String filePath, String rootType, boolean compact)
+    public static void initializeApplication(String schemaPath, String filePath, String targetType, boolean compact)
             throws IOException {
         String schemaString, fileString;
 
@@ -55,9 +55,9 @@ public abstract class JSoundExecutor {
         else
             SchemaFileJsonParser.createSchema();
 
-        schemaItem = schema.getOrDefault(rootType, null);
+        schemaItem = schema.getOrDefault(targetType, null);
         if (schemaItem == null)
-            throw new CliException("The specified root type was not defined in the schema.");
+            throw new CliException("The specified target type was not defined in the schema.");
         fileItem = InstanceFileJsonParser.getItemFromObject(fileObject);
         checkSubtypeCorrectness();
     }
