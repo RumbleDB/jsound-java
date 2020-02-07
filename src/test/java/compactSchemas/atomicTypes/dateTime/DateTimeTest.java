@@ -5,7 +5,7 @@ import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.tyson.TYSONArray;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
-import jsound.tyson.TysonItem;
+import jsound.tyson.TYSONItem;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -98,7 +98,7 @@ public class DateTimeTest extends BaseTest {
         TYSONObject tysonObject = (TYSONObject) schemaItem.annotate(fileItem);
         assertTrue(tysonObject.containsKey("dateTimes"));
         TYSONArray tysonArray = (TYSONArray) tysonObject.get("dateTimes");
-        for (TysonItem item : tysonArray) {
+        for (TYSONItem item : tysonArray) {
             TYSONObject object = (TYSONObject) item;
             assertEquals("dateTimeObj", object.getTypeName());
 

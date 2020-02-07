@@ -7,7 +7,7 @@ import jsound.facets.FacetTypes;
 import jsound.facets.UnionFacets;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.types.ItemTypes;
-import jsound.tyson.TysonItem;
+import jsound.tyson.TYSONItem;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
@@ -77,7 +77,7 @@ public class UnionTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public TysonItem annotate(ItemWrapper itemWrapper) {
+    public TYSONItem annotate(ItemWrapper itemWrapper) {
         return validatingTypes.get(itemWrapper.getItem()).annotate(itemWrapper);
     }
 

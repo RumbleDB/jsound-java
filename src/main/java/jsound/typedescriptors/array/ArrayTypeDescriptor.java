@@ -11,7 +11,7 @@ import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.typedescriptors.object.ObjectTypeDescriptor;
 import jsound.types.ItemTypes;
 import jsound.tyson.TYSONArray;
-import jsound.tyson.TysonItem;
+import jsound.tyson.TYSONItem;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
@@ -90,7 +90,7 @@ public class ArrayTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public TysonItem annotate(ItemWrapper itemWrapper) {
+    public TYSONItem annotate(ItemWrapper itemWrapper) {
         ArrayItem arrayItem;
         try {
             arrayItem = (ArrayItem) itemWrapper.getItem();

@@ -5,7 +5,7 @@ import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.tyson.TYSONArray;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
-import jsound.tyson.TysonItem;
+import jsound.tyson.TYSONItem;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -92,7 +92,7 @@ public class DecimalTest extends BaseTest {
         TYSONObject tysonObject = (TYSONObject) schemaItem.annotate(fileItem);
         assertTrue(tysonObject.containsKey("decimals"));
         TYSONArray tysonArray = (TYSONArray) tysonObject.get("decimals");
-        for (TysonItem item : tysonArray) {
+        for (TYSONItem item : tysonArray) {
             TYSONObject object = (TYSONObject) item;
             assertEquals("decimalObj", object.getTypeName());
 

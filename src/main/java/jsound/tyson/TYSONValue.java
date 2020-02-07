@@ -3,7 +3,7 @@ package jsound.tyson;
 
 import org.api.Item;
 
-public class TYSONValue implements TysonItem {
+public class TYSONValue implements TYSONItem {
 
     private String typeName;
     private Item itemValue;

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class TYSONObject extends LinkedHashMap<String, TysonItem> implements TysonItem {
+public class TYSONObject extends LinkedHashMap<String, TYSONItem> implements TYSONItem {
 
     private String typeName;
     public static int tabCounter = 0;
@@ -25,7 +25,7 @@ public class TYSONObject extends LinkedHashMap<String, TysonItem> implements Tys
         } else {
             StringBuilder sb = new StringBuilder();
             boolean first = true;
-            Iterator<Map.Entry<String, TysonItem>> iterator = map.entrySet().iterator();
+            Iterator<Map.Entry<String, TYSONItem>> iterator = map.entrySet().iterator();
             if (map.typeName != null)
                 sb.append("(\"").append(map.typeName).append("\") ");
             sb.append('{');
@@ -39,7 +39,7 @@ public class TYSONObject extends LinkedHashMap<String, TysonItem> implements Tys
                     newLine(sb);
                 }
 
-                Map.Entry<String, TysonItem> entry = iterator.next();
+                Map.Entry<String, TYSONItem> entry = iterator.next();
                 toTYSONString(String.valueOf(entry.getKey()), entry.getValue(), sb);
             }
 
@@ -49,7 +49,7 @@ public class TYSONObject extends LinkedHashMap<String, TysonItem> implements Tys
         }
     }
 
-    private static void toTYSONString(String key, TysonItem value, StringBuilder sb) {
+    private static void toTYSONString(String key, TYSONItem value, StringBuilder sb) {
         sb.append('"');
         if (key == null) {
             sb.append("null");

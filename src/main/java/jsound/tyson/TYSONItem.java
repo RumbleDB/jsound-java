@@ -1,6 +1,6 @@
 package jsound.tyson;
 
-public interface TysonItem {
+public interface TYSONItem {
 
     String toTYSONString();
 

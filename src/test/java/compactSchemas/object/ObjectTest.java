@@ -8,7 +8,7 @@ import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.tyson.TYSONArray;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
-import jsound.tyson.TysonItem;
+import jsound.tyson.TYSONItem;
 import org.api.ItemWrapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -111,7 +111,7 @@ public class ObjectTest extends BaseTest {
         TYSONObject tysonObject = (TYSONObject) schemaItem.annotate(fileItem);
         assertTrue(tysonObject.containsKey("objects"));
         TYSONArray tysonArray = (TYSONArray) tysonObject.get("objects");
-        for (TysonItem item : tysonArray) {
+        for (TYSONItem item : tysonArray) {
             TYSONObject object = (TYSONObject) item;
             assertEquals("objectType", object.getTypeName());
 

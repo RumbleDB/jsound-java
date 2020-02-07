@@ -6,7 +6,7 @@ import jsound.types.ItemTypes;
 import jsound.tyson.TYSONArray;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
-import jsound.tyson.TysonItem;
+import jsound.tyson.TYSONItem;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -213,7 +213,7 @@ public class UnionTest extends BaseTest {
         TYSONObject tysonObject = (TYSONObject) schemaItem.annotate(fileItem);
         assertTrue(tysonObject.containsKey("unions"));
         TYSONArray tysonArray = (TYSONArray) tysonObject.get("unions");
-        for (TysonItem item : tysonArray) {
+        for (TYSONItem item : tysonArray) {
             TYSONObject union = (TYSONObject) item;
             assertEquals("unionObj", union.getTypeName());
 

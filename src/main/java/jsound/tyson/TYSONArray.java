@@ -3,7 +3,7 @@ package jsound.tyson;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class TYSONArray extends ArrayList<TysonItem> implements TysonItem {
+public class TYSONArray extends ArrayList<TYSONItem> implements TYSONItem {
 
     private String typeName;
 
@@ -17,7 +17,7 @@ public class TYSONArray extends ArrayList<TysonItem> implements TysonItem {
         } else {
             boolean first = true;
             StringBuilder sb = new StringBuilder();
-            Iterator<TysonItem> iterator = list.iterator();
+            Iterator<TYSONItem> iterator = list.iterator();
             if (list.typeName != null)
                 sb.append("(\"").append(list.typeName).append("\") ");
             sb.append('[');
@@ -31,7 +31,7 @@ public class TYSONArray extends ArrayList<TysonItem> implements TysonItem {
                     TYSONObject.newLine(sb);
                 }
 
-                TysonItem value = iterator.next();
+                TYSONItem value = iterator.next();
                 if (value == null) {
                     sb.append("null");
                 } else {

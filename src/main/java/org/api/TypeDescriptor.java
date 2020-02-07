@@ -8,7 +8,7 @@ import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.types.ItemTypes;
 import jsound.tyson.TYSONValue;
-import jsound.tyson.TysonItem;
+import jsound.tyson.TYSONItem;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -63,7 +63,7 @@ public abstract class TypeDescriptor {
                 }
 
                 @Override
-                public TysonItem annotate(ItemWrapper itemWrapper) {
+                public TYSONItem annotate(ItemWrapper itemWrapper) {
                     return new TYSONValue(null, itemWrapper.getItem());
                 }
 
@@ -178,7 +178,7 @@ public abstract class TypeDescriptor {
 
     public abstract boolean validate(ItemWrapper itemWrapper, boolean isEnumValue);
 
-    public abstract TysonItem annotate(ItemWrapper itemWrapper);
+    public abstract TYSONItem annotate(ItemWrapper itemWrapper);
 
     public void resolveAllFacets(Set<TypeDescriptor> visitedTypes) {
     }

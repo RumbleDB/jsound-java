@@ -5,7 +5,7 @@ import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.tyson.TYSONArray;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
-import jsound.tyson.TysonItem;
+import jsound.tyson.TYSONItem;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -92,7 +92,7 @@ public class BooleanTest extends BaseTest {
         TYSONObject tysonObject = (TYSONObject) schemaItem.annotate(fileItem);
         assertTrue(tysonObject.containsKey("booleans"));
         TYSONArray tysonArray = (TYSONArray) tysonObject.get("booleans");
-        for (TysonItem item : tysonArray) {
+        for (TYSONItem item : tysonArray) {
             TYSONObject object = (TYSONObject) item;
             assertEquals("booleanObj", object.getTypeName());
 

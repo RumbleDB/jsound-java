@@ -13,7 +13,7 @@ import jsound.typedescriptors.TypeOrReference;
 import jsound.types.ItemTypes;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
-import jsound.tyson.TysonItem;
+import jsound.tyson.TYSONItem;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 
@@ -121,7 +121,7 @@ public class ObjectTypeDescriptor extends TypeDescriptor {
     }
 
     @Override
-    public TysonItem annotate(ItemWrapper itemWrapper) {
+    public TYSONItem annotate(ItemWrapper itemWrapper) {
         ObjectItem objectItem;
         try {
             objectItem = (ObjectItem) itemWrapper.getItem();
