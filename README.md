@@ -11,8 +11,8 @@ Implementation of a JSound 2.0 validation and annotation engine in Java.
 - #### Run:
 
     You can validate and annotate a JSON instance against a JSound 2.0 schema by simply executing commands with the corresponding keywords:
-    - `validate`: boolean, optional. Indicates whether you want to validate the candidate instance file against the schema.
-    - `annotate`: boolean, optional. Indicates whether you want to annotate the candidate instance file with the types defined the schema. Annotation is preceded by the validation procedure, with no need to explicitly specifying it.
+    - `validate`: Indicates whether you want to validate the candidate instance file against the schema.
+    - `annotate`: Indicates whether you want to annotate the candidate instance file with the types defined the schema. Annotation is preceded by the validation procedure, with no need to explicitly specifying it.
         
         In order to perform these operations, some shell arguments have to be provided in the format `--argName argValue`. Following are the allowed arguments:
     - `schema`: string, required. The path to the schema file.
