@@ -24,10 +24,10 @@ public abstract class JSoundExecutor {
 
     public static TypeDescriptor schemaItem;
     public static ItemWrapper fileItem;
-    public static Map<String, TypeDescriptor> schema = new HashMap<>();
+    public static Map<String, TypeDescriptor> schema;
     public static JsonIterator jsonSchemaIterator;
 
-    public static void initializeApplication(String schemaPath, String filePath, String targetType, boolean compact)
+    public static void initApplicationFromPaths(String schemaPath, String filePath, String targetType, boolean compact)
             throws IOException {
         String schemaString, fileString;
 
@@ -38,13 +38,26 @@ public abstract class JSoundExecutor {
             throw new IOException("There was an error when reading the instance or the schema file.");
         }
 
-        jsonSchemaIterator = JsonIterator.parse(schemaString);
+        JsonIterator schemaObject = JsonIterator.parse(schemaString);
         JsonIterator fileObject = JsonIterator.parse(fileString);
+        initializeSchema(schemaObject, fileObject, targetType, compact);
+    }
 
+    public static void initApplicationFromFiles(String readSchema, String readFile, String targetType, boolean compact) {
+        JsonIterator schemaObject = JsonIterator.parse(readSchema);
+        JsonIterator fileObject = JsonIterator.parse(readFile);
+        initializeSchema(schemaObject, fileObject, targetType, compact);
+    }
+
+    public static void initializeSchema(JsonIterator schemaObject, JsonIterator fileObject, String targetType, boolean compact) {
+        compactSchema = new HashMap<>();
+        schema = new HashMap<>();
+        jsonSchemaIterator = schemaObject;
         for (AtomicTypes type : AtomicTypes.values()) {
             try {
                 schema.put(type.getTypeName(), AtomicTypeDescriptor.buildAtomicType(type, type.getTypeName(), false));
-                compactSchema.put(type.getTypeName(), new TypeOrReference(schema.get(type.getTypeName())));
+                if (compact)
+                    compactSchema.put(type.getTypeName(), new TypeOrReference(schema.get(type.getTypeName())));
             } catch (IOException e) {
                 throw new CliException("Something wrong happened on our end.");
             }
@@ -62,7 +75,7 @@ public abstract class JSoundExecutor {
         checkSubtypeCorrectness();
     }
 
-    private static void checkSubtypeCorrectness() {
+    static void checkSubtypeCorrectness() {
         for (TypeDescriptor typeDescriptor : schema.values()) {
             typeDescriptor.resolveAllFacets(new HashSet<>());
             typeDescriptor.checkBaseType();

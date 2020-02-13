@@ -26,7 +26,7 @@ public class BaseTest {
         shouldCheckBaseType = new ArrayList<>();
         if (compact)
             compactSchema = new HashMap<>();
-        JSoundExecutor.initializeApplication(
+        JSoundExecutor.initApplicationFromPaths(
             schemaPathPrefix + schemaPath,
             filePathPrefix + filePath,
             "targetType",

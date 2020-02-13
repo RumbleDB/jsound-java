@@ -29,7 +29,7 @@ public class Main {
                     System.out.println(e.getMessage());
                 }
             } else {
-                boolean isValid = JSoundValidateExecutor.validate(
+                boolean isValid = JSoundValidateExecutor.validateFromPaths(
                     JSoundRuntimeConfiguration.getInstance().getSchema(),
                     JSoundRuntimeConfiguration.getInstance().getFile(),
                     JSoundRuntimeConfiguration.getInstance().getTargetType(),

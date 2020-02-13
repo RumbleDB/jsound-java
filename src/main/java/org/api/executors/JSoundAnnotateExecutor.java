@@ -12,7 +12,7 @@ public class JSoundAnnotateExecutor extends JSoundExecutor {
     public static void annotate(String schemaPath, String filePath, String targetType, String outputPath, boolean compact)
             throws IOException {
         try {
-            if (!JSoundValidateExecutor.validate(schemaPath, filePath, targetType, compact))
+            if (!JSoundValidateExecutor.validateFromPaths(schemaPath, filePath, targetType, compact))
                 throw new InvalidInstanceAgainstSchemaException(
                         "Annotation can't be done. The candidate instance is invalid against the provided schema."
                 );

@@ -40,9 +40,10 @@ public class SchemaFileJsonParser {
             Arrays.asList(FacetTypes.ENUMERATION, FacetTypes.METADATA, FacetTypes.CONSTRAINTS)
     );
 
-    public static List<AtomicTypeDescriptor> shouldCheckBaseType = new ArrayList<>();
+    public static List<AtomicTypeDescriptor> shouldCheckBaseType;
 
     public static void createSchema() {
+        shouldCheckBaseType = new ArrayList<>();
         try {
             if (!jsonSchemaIterator.whatIsNext().equals(ValueType.OBJECT)) {
                 throw new InvalidSchemaException("The schema root object must be a JSON object");
