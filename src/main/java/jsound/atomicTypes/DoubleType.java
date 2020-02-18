@@ -41,7 +41,8 @@ public class DoubleType extends AtomicTypeDescriptor {
         } catch (NumberFormatException | UnexpectedTypeException e) {
             return false;
         }
-        itemWrapper.setItem(new DoubleItem(doubleValue));
+        if (itemWrapper.getItem().isStringItem())
+            itemWrapper.setItem(new DoubleItem(doubleValue));
         return this.getFacets() == null || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue);
     }
 

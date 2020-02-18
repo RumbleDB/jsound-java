@@ -50,7 +50,8 @@ public class IntegerType extends AtomicTypeDescriptor {
         } catch (NumberFormatException | UnexpectedTypeException e) {
             return false;
         }
-        itemWrapper.setItem(new IntegerItem(integerValue));
+        if (itemWrapper.getItem().isStringItem())
+            itemWrapper.setItem(new IntegerItem(integerValue));
         return this.getFacets() == null
             || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue)
                 && validateDigitsFacets(
