@@ -51,7 +51,7 @@ public class DecimalType extends AtomicTypeDescriptor {
         } catch (NumberFormatException | UnexpectedTypeException e) {
             return false;
         }
-        if (itemWrapper.getItem().isStringItem())
+        if (!(itemWrapper.getItem().isDecimalItem()))
             itemWrapper.setItem(new DecimalItem(decimalValue));
         return this.getFacets() == null
             || validateBoundariesFacets(itemWrapper.getItem(), isEnumValue)
