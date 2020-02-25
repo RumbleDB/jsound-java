@@ -13,9 +13,18 @@ public class Main {
         try {
             configuration.hasNecessaryArguments();
             if (configuration.isAnnotate()) {
-                if (configuration.getOutputPath() == null)
-                    throw new CliException("Missing output path argument");
                 try {
+                    if (JSoundRuntimeConfiguration.getInstance().getOutputPath() == null) {
+                        System.out.println(
+                                JSoundAnnotateExecutor.annotate(
+                                        JSoundRuntimeConfiguration.getInstance().getSchema(),
+                                        JSoundRuntimeConfiguration.getInstance().getFile(),
+                                        JSoundRuntimeConfiguration.getInstance().getTargetType(),
+                                        JSoundRuntimeConfiguration.getInstance().isCompact()
+                                )
+                        );
+                        return;
+                    }
                     JSoundAnnotateExecutor.annotate(
                             JSoundRuntimeConfiguration.getInstance().getSchema(),
                             JSoundRuntimeConfiguration.getInstance().getFile(),
