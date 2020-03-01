@@ -1,6 +1,5 @@
 package org.cli;
 
-import jsound.exceptions.CliException;
 import jsound.exceptions.JsoundException;
 import org.api.executors.JSoundAnnotateExecutor;
 import org.api.executors.JSoundValidateExecutor;
@@ -16,21 +15,21 @@ public class Main {
                 try {
                     if (JSoundRuntimeConfiguration.getInstance().getOutputPath() == null) {
                         System.out.println(
-                                JSoundAnnotateExecutor.annotate(
-                                        JSoundRuntimeConfiguration.getInstance().getSchema(),
-                                        JSoundRuntimeConfiguration.getInstance().getFile(),
-                                        JSoundRuntimeConfiguration.getInstance().getTargetType(),
-                                        JSoundRuntimeConfiguration.getInstance().isCompact()
-                                )
+                            JSoundAnnotateExecutor.annotateFromPaths(
+                                JSoundRuntimeConfiguration.getInstance().getSchema(),
+                                JSoundRuntimeConfiguration.getInstance().getFile(),
+                                JSoundRuntimeConfiguration.getInstance().getTargetType(),
+                                JSoundRuntimeConfiguration.getInstance().isCompact()
+                            )
                         );
                         return;
                     }
-                    JSoundAnnotateExecutor.annotate(
-                            JSoundRuntimeConfiguration.getInstance().getSchema(),
-                            JSoundRuntimeConfiguration.getInstance().getFile(),
-                            JSoundRuntimeConfiguration.getInstance().getTargetType(),
-                            JSoundRuntimeConfiguration.getInstance().getOutputPath(),
-                            JSoundRuntimeConfiguration.getInstance().isCompact()
+                    JSoundAnnotateExecutor.annotateFromPaths(
+                        JSoundRuntimeConfiguration.getInstance().getSchema(),
+                        JSoundRuntimeConfiguration.getInstance().getFile(),
+                        JSoundRuntimeConfiguration.getInstance().getTargetType(),
+                        JSoundRuntimeConfiguration.getInstance().getOutputPath(),
+                        JSoundRuntimeConfiguration.getInstance().isCompact()
                     );
                     System.out.println("Validation completed successfully! ✅");
                     System.out.println("Annotation completed successfully! ✅");
