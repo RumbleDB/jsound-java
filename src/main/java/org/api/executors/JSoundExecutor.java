@@ -20,30 +20,29 @@ import static jsound.json.CompactSchemaFileJsonParser.compactSchema;
 
 public abstract class JSoundExecutor {
 
-    public static TypeDescriptor schemaItem;
     public static Map<String, TypeDescriptor> schema;
     public static JsonIterator jsonSchemaIterator;
-    static long fileLength;
 
-    static void initApplicationFromPaths(String schemaPath, String targetType, boolean compact)
-            throws IOException {
-        String schemaString;
+    private static String parseFile(String filePath) throws IOException {
+        String file;
         try {
-            schemaString = new String(Files.readAllBytes(Paths.get(schemaPath)));
+            file = new String(Files.readAllBytes(Paths.get(filePath)));
         } catch (IOException e) {
             throw new IOException("There was an error when reading the instance or the schema file.");
         }
-
-        JsonIterator schemaObject = JsonIterator.parse(schemaString);
-        initializeSchema(schemaObject, targetType, compact);
+        return file;
     }
 
-    static void initApplicationFromFiles(String readSchema, String targetType, boolean compact) {
-        JsonIterator schemaObject = JsonIterator.parse(readSchema);
-        initializeSchema(schemaObject, targetType, compact);
+    public static JSoundSchema loadSchemaFromPath(String schemaPath, String targetType, boolean compact)
+            throws IOException {
+        return loadSchema(parseFile(schemaPath), targetType, compact);
     }
 
-    private static void initializeSchema(JsonIterator schemaObject, String targetType, boolean compact) {
+    public static JSoundSchema loadSchema(String schema, String targetType, boolean compact) {
+        return new JSoundSchema(initializeSchema(JsonIterator.parse(schema), targetType, compact));
+    }
+
+    private static TypeDescriptor initializeSchema(JsonIterator schemaObject, String targetType, boolean compact) {
         compactSchema = new HashMap<>();
         schema = new HashMap<>();
         jsonSchemaIterator = schemaObject;
@@ -62,10 +61,11 @@ public abstract class JSoundExecutor {
         else
             SchemaFileJsonParser.createSchema();
 
-        schemaItem = schema.getOrDefault(targetType, null);
+        TypeDescriptor schemaItem = schema.getOrDefault(targetType, null);
         if (schemaItem == null)
             throw new CliException("The specified target type was not defined in the schema.");
         checkSubtypeCorrectness();
+        return schemaItem;
     }
 
     static void checkSubtypeCorrectness() {

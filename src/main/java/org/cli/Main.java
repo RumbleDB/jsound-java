@@ -1,8 +1,9 @@
 package org.cli;
 
+import jsound.exceptions.CliException;
 import jsound.exceptions.JsoundException;
-import org.api.executors.JSoundAnnotateExecutor;
-import org.api.executors.JSoundValidateExecutor;
+import org.api.executors.JSoundExecutor;
+import org.api.executors.JSoundSchema;
 import org.config.JSoundRuntimeConfiguration;
 
 public class Main {
@@ -11,38 +12,36 @@ public class Main {
         JSoundRuntimeConfiguration configuration = JSoundRuntimeConfiguration.createJSoundRuntimeConfiguration(args);
         try {
             configuration.hasNecessaryArguments();
+            JSoundSchema schema = JSoundExecutor.loadSchemaFromPath(
+                JSoundRuntimeConfiguration.getInstance().getSchema(),
+                JSoundRuntimeConfiguration.getInstance().getTargetType(),
+                JSoundRuntimeConfiguration.getInstance().isCompact()
+            );
             if (configuration.isAnnotate()) {
+                if (configuration.getOutputPath() == null)
+                    throw new CliException("Missing output path argument");
                 try {
-                    if (JSoundRuntimeConfiguration.getInstance().getOutputPath() == null) {
-                        System.out.println(
-                            JSoundAnnotateExecutor.annotateFromPaths(
-                                JSoundRuntimeConfiguration.getInstance().getSchema(),
+                    if (configuration.getJSONLine())
+                        schema.annotateJSONLineFromPath(
                                 JSoundRuntimeConfiguration.getInstance().getFile(),
-                                JSoundRuntimeConfiguration.getInstance().getTargetType(),
-                                JSoundRuntimeConfiguration.getInstance().isCompact()
-                            )
+                                JSoundRuntimeConfiguration.getInstance().getOutputPath()
                         );
-                        return;
-                    }
-                    JSoundAnnotateExecutor.annotateFromPaths(
-                        JSoundRuntimeConfiguration.getInstance().getSchema(),
-                        JSoundRuntimeConfiguration.getInstance().getFile(),
-                        JSoundRuntimeConfiguration.getInstance().getTargetType(),
-                        JSoundRuntimeConfiguration.getInstance().getOutputPath(),
-                        JSoundRuntimeConfiguration.getInstance().isCompact()
-                    );
+                    else
+                        schema.annotateJSONFromPath(
+                            JSoundRuntimeConfiguration.getInstance().getFile(),
+                            JSoundRuntimeConfiguration.getInstance().getOutputPath()
+                        );
                     System.out.println("Validation completed successfully! ✅");
                     System.out.println("Annotation completed successfully! ✅");
                 } catch (JsoundException e) {
                     System.out.println(e.getMessage());
                 }
             } else {
-                boolean isValid = JSoundValidateExecutor.validateFromPaths(
-                    JSoundRuntimeConfiguration.getInstance().getSchema(),
-                    JSoundRuntimeConfiguration.getInstance().getFile(),
-                    JSoundRuntimeConfiguration.getInstance().getTargetType(),
-                    JSoundRuntimeConfiguration.getInstance().isCompact()
-                );
+                boolean isValid;
+                if (configuration.getJSONLine())
+                    isValid = schema.validateJSONLineFromPath(JSoundRuntimeConfiguration.getInstance().getFile());
+                else
+                    isValid = schema.validateJSONFromPath(JSoundRuntimeConfiguration.getInstance().getFile());
                 System.out.println(
                     isValid
                         ? "Validation completed successfully! ✅"

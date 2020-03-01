@@ -64,6 +64,13 @@ public class JSoundRuntimeConfiguration {
         return annotate;
     }
 
+    public boolean getJSONLine() {
+        return Boolean.parseBoolean(
+            this._arguments.getOrDefault("JSONLine", null)
+        );
+    }
+
+
     public void hasNecessaryArguments() {
         if (getSchema() == null)
             throw new CliException("Missing schema argument");
