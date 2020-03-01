@@ -8,7 +8,7 @@ Implementation of a JSound 2.0 validation and annotation engine in Java.
     
     `mvn clean compile assembly:single`
 
-- #### Run:
+- #### Run from CLI:
 
     You can validate and annotate a JSON instance against a JSound 2.0 schema by simply executing commands with the corresponding keywords:
     - `validate`: Indicates whether you want to validate the candidate instance file against the schema.
@@ -18,10 +18,10 @@ Implementation of a JSound 2.0 validation and annotation engine in Java.
     - `schema`: string, required. The path to the schema file.
     - `file`: string, required. The path to the instance file.
     - `targetType`: string, required. The type name in the schema file you want to validate the instance file against.
-    - `compact`: boolean, required. Indicates whether the [compact](http://www.jsound-spec.org/publish/en-US/JSound-C/2.0/html-single/JSound-C/index.html) or [extended](http://www.jsound-spec.org/publish/en-US/JSound/2.0/html-single/JSound/index.html) JSound 2.0 syntax is used to define the schema.
-    - `output`: string, optional. The path to the file where the annotated instance file will be written to. 
+    - `compact`: boolean, optional (default false). If true, indicates that the [compact](http://www.jsound-spec.org/publish/en-US/JSound-C/2.0/html-single/JSound-C/index.html) or [extended](http://www.jsound-spec.org/publish/en-US/JSound/2.0/html-single/JSound/index.html) JSound 2.0 syntax is used to define the schema.
+    - `output`: string, required if annotating . The path to the file where the annotated instance file will be written to. 
     The file does not need to exist beforehand; if it does, its content will be overwritten by the annotated instance. 
-    If absent, the result of the annotation will be printed to console.
+    - `JSONLines`: boolean, optional (default false). If true, indicates that the passed instance file is in JSON Lines format (one JSON value per line).
     ##### Examples:
     
     Validation:

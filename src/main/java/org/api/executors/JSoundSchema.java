@@ -30,7 +30,7 @@ public class JSoundSchema {
         return validateInstance(instanceFile);
     }
 
-    public boolean validateJSONLineFromPath(String filePath) throws IOException {
+    public boolean validateJSONLinesFromPath(String filePath) throws IOException {
         instanceFile = new String(Files.readAllBytes(Paths.get(filePath)));
         JsonIterator fileObject = JsonIterator.parse(instanceFile);
         long fileLength = new BufferedReader(new StringReader(instanceFile)).lines().count();
@@ -66,9 +66,9 @@ public class JSoundSchema {
         }
     }
 
-    public void annotateJSONLineFromPath(String filePath, String outputPath) {
+    public void annotateJSONLinesFromPath(String filePath, String outputPath) {
         try {
-            if (!validateJSONLineFromPath(filePath))
+            if (!validateJSONLinesFromPath(filePath))
                 throw new InvalidInstanceAgainstSchemaException(
                         "Annotation can't be done. The candidate instance is invalid against the provided schema."
                 );

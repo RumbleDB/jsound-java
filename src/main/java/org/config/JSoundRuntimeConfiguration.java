@@ -64,9 +64,9 @@ public class JSoundRuntimeConfiguration {
         return annotate;
     }
 
-    public boolean getJSONLine() {
+    public boolean getJSONLines() {
         return Boolean.parseBoolean(
-            this._arguments.getOrDefault("JSONLine", null)
+            this._arguments.getOrDefault("JSONLines", null)
         );
     }
 

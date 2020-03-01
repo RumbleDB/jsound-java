@@ -21,10 +21,10 @@ public class Main {
                 if (configuration.getOutputPath() == null)
                     throw new CliException("Missing output path argument");
                 try {
-                    if (configuration.getJSONLine())
-                        schema.annotateJSONLineFromPath(
-                                JSoundRuntimeConfiguration.getInstance().getFile(),
-                                JSoundRuntimeConfiguration.getInstance().getOutputPath()
+                    if (configuration.getJSONLines())
+                        schema.annotateJSONLinesFromPath(
+                            JSoundRuntimeConfiguration.getInstance().getFile(),
+                            JSoundRuntimeConfiguration.getInstance().getOutputPath()
                         );
                     else
                         schema.annotateJSONFromPath(
@@ -38,8 +38,8 @@ public class Main {
                 }
             } else {
                 boolean isValid;
-                if (configuration.getJSONLine())
-                    isValid = schema.validateJSONLineFromPath(JSoundRuntimeConfiguration.getInstance().getFile());
+                if (configuration.getJSONLines())
+                    isValid = schema.validateJSONLinesFromPath(JSoundRuntimeConfiguration.getInstance().getFile());
                 else
                     isValid = schema.validateJSONFromPath(JSoundRuntimeConfiguration.getInstance().getFile());
                 System.out.println(
