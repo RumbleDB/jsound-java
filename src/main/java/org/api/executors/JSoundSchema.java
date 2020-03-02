@@ -7,9 +7,10 @@ import jsound.json.InstanceFileJsonParser;
 import org.api.TypeDescriptor;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -31,11 +32,10 @@ public class JSoundSchema {
     }
 
     public boolean validateJSONLinesFromPath(String filePath) throws IOException {
-        instanceFile = new String(Files.readAllBytes(Paths.get(filePath)));
-        JsonIterator fileObject = JsonIterator.parse(instanceFile);
-        long fileLength = new BufferedReader(new StringReader(instanceFile)).lines().count();
-        for (long i = 0; i < fileLength; i++) {
-            if (!schemaItem.validate(InstanceFileJsonParser.getItemFromObject(fileObject), false))
+        BufferedReader instanceFileReader = Files.newBufferedReader(Paths.get(filePath));
+        String line;
+        while((line = instanceFileReader.readLine()) != null) {
+            if (!validateInstance(line))
                 return false;
         }
         return true;
@@ -78,13 +78,12 @@ public class JSoundSchema {
             );
         }
         try (FileWriter file = new FileWriter(outputPath)) {
-            StringBuilder sb = new StringBuilder();
-            JsonIterator fileObject = JsonIterator.parse(instanceFile);
-            long fileLength = new BufferedReader(new StringReader(instanceFile)).lines().count();
-            for (long i = 0; i < fileLength; i++)
-                sb.append(schemaItem.annotate(InstanceFileJsonParser.getItemFromObject(fileObject)).toTYSONString())
-                    .append("\n");
-            file.write(sb.toString());
+            BufferedReader instanceFileReader = Files.newBufferedReader(Paths.get(filePath));
+            String line;
+            while((line = instanceFileReader.readLine()) != null) {
+                file.append(schemaItem.annotate(InstanceFileJsonParser.getItemFromObject(JsonIterator.parse(line))).toTYSONString())
+                        .append("\n");
+            }
         } catch (IOException e) {
             throw new JsoundException("The specified output file path is not valid: " + outputPath);
         }
