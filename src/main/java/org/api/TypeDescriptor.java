@@ -7,8 +7,8 @@ import jsound.facets.Facets;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.types.ItemTypes;
-import jsound.tyson.TYSONValue;
 import jsound.tyson.TYSONItem;
+import jsound.tyson.TYSONValue;
 
 import java.util.Arrays;
 import java.util.HashSet;

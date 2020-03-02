@@ -3,9 +3,9 @@ package compactSchemas.atomicTypes.yearMonthDuration;
 import base.BaseTest;
 import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.tyson.TYSONArray;
+import jsound.tyson.TYSONItem;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
-import jsound.tyson.TYSONItem;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

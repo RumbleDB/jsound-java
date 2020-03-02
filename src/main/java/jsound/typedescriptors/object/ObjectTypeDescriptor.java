@@ -11,9 +11,9 @@ import jsound.facets.ObjectFacets;
 import jsound.item.ObjectItem;
 import jsound.typedescriptors.TypeOrReference;
 import jsound.types.ItemTypes;
+import jsound.tyson.TYSONItem;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
-import jsound.tyson.TYSONItem;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
 

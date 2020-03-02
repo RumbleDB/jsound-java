@@ -4,9 +4,9 @@ import base.BaseTest;
 import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.types.ItemTypes;
 import jsound.tyson.TYSONArray;
+import jsound.tyson.TYSONItem;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
-import jsound.tyson.TYSONItem;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

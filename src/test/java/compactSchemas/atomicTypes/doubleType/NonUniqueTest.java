@@ -11,7 +11,6 @@ import java.util.Map;
 import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
 import static org.api.executors.JSoundExecutor.schemaItem;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

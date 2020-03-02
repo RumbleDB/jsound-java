@@ -7,10 +7,8 @@ import jsound.json.InstanceFileJsonParser;
 import org.api.TypeDescriptor;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -34,7 +32,7 @@ public class JSoundSchema {
     public boolean validateJSONLinesFromPath(String filePath) throws IOException {
         BufferedReader instanceFileReader = Files.newBufferedReader(Paths.get(filePath));
         String line;
-        while((line = instanceFileReader.readLine()) != null) {
+        while ((line = instanceFileReader.readLine()) != null) {
             if (!validateInstance(line))
                 return false;
         }
@@ -80,9 +78,12 @@ public class JSoundSchema {
         try (FileWriter file = new FileWriter(outputPath)) {
             BufferedReader instanceFileReader = Files.newBufferedReader(Paths.get(filePath));
             String line;
-            while((line = instanceFileReader.readLine()) != null) {
-                file.append(schemaItem.annotate(InstanceFileJsonParser.getItemFromObject(JsonIterator.parse(line))).toTYSONString())
-                        .append("\n");
+            while ((line = instanceFileReader.readLine()) != null) {
+                file.append(
+                    schemaItem.annotate(InstanceFileJsonParser.getItemFromObject(JsonIterator.parse(line)))
+                        .toTYSONString()
+                )
+                    .append("\n");
             }
         } catch (IOException e) {
             throw new JsoundException("The specified output file path is not valid: " + outputPath);
