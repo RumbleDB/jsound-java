@@ -5,6 +5,7 @@ import jsound.atomicItems.StringItem;
 import jsound.item.ArrayItem;
 import org.api.Item;
 import org.api.ItemWrapper;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,19 +15,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class EnumerationTest extends BaseTest {
+    String filePath = "array/enumeration/arrayEnumeration.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/array/enumerationSchema.json",
-            "array/enumeration/arrayEnumeration.json",
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + "extendedSchemas/array/enumerationSchema.json",
+            "targetType",
             false
         );
     }
@@ -44,6 +44,11 @@ public class EnumerationTest extends BaseTest {
                 .getTypeDescriptor()
                 .isArrayType()
         );
+    }
+
+    @Test
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 
     @Test
@@ -86,13 +91,14 @@ public class EnumerationTest extends BaseTest {
         for (ArrayItem value : values) {
             assertTrue(enumValues.contains(value));
         }
-
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("arrays").getItem().getItems())
+        for (
+            ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem()
+                .getItemMap()
+                .get("arrays")
+                .getItem()
+                .getItems()
+        )
             assertTrue(values.contains((ArrayItem) itemWrapper.getItem().getItemMap().get("myArray").getItem()));
     }
 
-    @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
-    }
 }

@@ -16,20 +16,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class EnumerationTest extends BaseTest {
+    String filePath = "object/enumeration/objectEnumeration.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/object/enumeration/enumerationSchema.json",
-            "object/enumeration/objectEnumeration.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/object/enumeration/enumerationSchema.json",
+                "targetType",
+                false
         );
     }
 
@@ -86,12 +86,12 @@ public class EnumerationTest extends BaseTest {
             assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("objects").getItem().getItems())
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("objects").getItem().getItems())
             assertTrue(values.contains((ObjectItem) itemWrapper.getItem().getItemMap().get("myObject").getItem()));
     }
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 }

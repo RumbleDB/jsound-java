@@ -3,6 +3,7 @@ package extendedSchemas.atomicTypes.nullType;
 import base.BaseTest;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.typedescriptors.object.FieldDescriptor;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,10 +15,10 @@ public class InvalidDefaultTest extends BaseTest {
 
     @Test(expected = InvalidSchemaException.class)
     public void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/null/invalidDefaultSchema.json",
-            "atomicTypes/null/enumeration/nullEnumeration.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/null/invalidDefaultSchema.json",
+                "targetType",
+                false
         );
     }
 

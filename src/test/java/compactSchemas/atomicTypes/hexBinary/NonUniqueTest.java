@@ -2,15 +2,15 @@ package compactSchemas.atomicTypes.hexBinary;
 
 import base.BaseTest;
 import jsound.typedescriptors.object.FieldDescriptor;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -22,9 +22,9 @@ public class NonUniqueTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         String schemaPath = "atomicTypes/hexBinary/hexBinarySchema.json";
-        BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
+            "targetType",
             compact
         );
         hexBinaryObj = schema.get("hexBinaryObj").getFacets().getObjectContent();
@@ -32,12 +32,12 @@ public class NonUniqueTest extends BaseTest {
 
 
     @Test
-    public void testUniqueField() {
+    public void testUniqueField() throws IOException {
         assertTrue(schema.get("hexBinaryObj").isObjectType());
         assertTrue(hexBinaryObj.get("uniqueHexBinary").isUnique());
-        assertFalse(schemaItem.validate(fileItem, false));
+        assertFalse(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
         assertEquals(
-            fileItem.getItem()
+            jSoundSchema.instanceItem.getItem()
                 .getItemMap()
                 .get("hexBinaries")
                 .getItem()
@@ -47,7 +47,7 @@ public class NonUniqueTest extends BaseTest {
                 .getItemMap()
                 .get("uniqueHexBinary")
                 .getItem(),
-            fileItem.getItem()
+            jSoundSchema.instanceItem.getItem()
                 .getItemMap()
                 .get("hexBinaries")
                 .getItem()
@@ -59,7 +59,7 @@ public class NonUniqueTest extends BaseTest {
                 .getItem()
         );
         assertFalse(
-            schema.get("arrayOfHexBinaries").validate(fileItem.getItem().getItemMap().get("hexBinaries"), false)
+            schema.get("arrayOfHexBinaries").validate(jSoundSchema.instanceItem.getItem().getItemMap().get("hexBinaries"), false)
         );
     }
 }

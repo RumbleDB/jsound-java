@@ -3,6 +3,7 @@ package extendedSchemas.atomicTypes.base64Binary;
 import base.BaseTest;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.typedescriptors.object.FieldDescriptor;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,10 +15,10 @@ public class InvalidDefaultTest extends BaseTest {
 
     @Test(expected = InvalidSchemaException.class)
     public void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/base64Binary/invalidDefaultSchema.json",
-            "atomicTypes/base64Binary/enumeration/base64BinaryEnumeration.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/base64Binary/invalidDefaultSchema.json",
+                "targetType",
+                false
         );
     }
 

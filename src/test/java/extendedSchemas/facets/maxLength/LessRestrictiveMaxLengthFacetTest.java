@@ -2,6 +2,7 @@ package extendedSchemas.facets.maxLength;
 
 import base.BaseTest;
 import jsound.exceptions.LessRestrictiveFacetException;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -9,11 +10,11 @@ import java.io.IOException;
 public class LessRestrictiveMaxLengthFacetTest extends BaseTest {
 
     @Test(expected = LessRestrictiveFacetException.class)
-    public void lengthFacetTest() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/facets/maxLength/lessRestrictiveMaxLengthFacet.json",
-            "atomicTypes/anyURI/facets/anyURIFile.json",
-            false
+    public void maxLengthFacetTest() throws IOException {
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/facets/maxLength/lessRestrictiveMaxLengthFacet.json",
+                "targetType",
+                false
         );
     }
 

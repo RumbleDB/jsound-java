@@ -9,19 +9,19 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidClosedFileTest extends BaseTest {
+    String filePath = "object/closed/invalidClosedFile.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/object/closed/closedSchema.json",
-            "object/closed/invalidClosedFile.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/object/closed/closedSchema.json",
+                "targetType",
+                false
         );
     }
 
@@ -33,13 +33,13 @@ public class InvalidClosedFileTest extends BaseTest {
 
     @Test(expected = ClosedNotRespectedException.class)
     public void testValidateSingularly() {
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("objects").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("objects").getItem().getItems()) {
             schema.get("myObject").validate(itemWrapper, false);
         }
     }
 
     @Test(expected = ClosedNotRespectedException.class)
-    public void testValidate() {
-        schemaItem.validate(fileItem, false);
+    public void testValidate() throws IOException {
+        jSoundSchema.validateJSONFromPath(filePathPrefix + filePath);
     }
 }

@@ -3,6 +3,7 @@ package extendedSchemas.atomicTypes.doubleType;
 import base.BaseTest;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.typedescriptors.object.FieldDescriptor;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,10 +15,10 @@ public class InvalidDefaultTest extends BaseTest {
 
     @Test(expected = InvalidSchemaException.class)
     public void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/double/invalidDefaultSchema.json",
-            "atomicTypes/double/enumeration/doubleEnumeration.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/double/invalidDefaultSchema.json",
+                "targetType",
+                false
         );
     }
 

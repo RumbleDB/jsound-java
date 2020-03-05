@@ -2,6 +2,7 @@ package extendedSchemas.facets.closed;
 
 import base.BaseTest;
 import jsound.exceptions.UnexpectedTypeException;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -20,11 +21,11 @@ public class InvalidClosedFacetTest extends BaseTest {
     }
 
     @Test(expected = UnexpectedTypeException.class)
-    public void contentFacetTest() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/facets/closed/invalidClosedFacet" + fileNumber + ".json",
-            "object/objectFile.json",
-            false
+    public void closedFacetTest() throws IOException {
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/facets/closed/invalidClosedFacet" + fileNumber + ".json",
+                "targetType",
+                false
         );
     }
 }

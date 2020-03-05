@@ -2,6 +2,7 @@ package extendedSchemas.facets.totalDigits;
 
 import base.BaseTest;
 import jsound.exceptions.UnexpectedTypeException;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -20,11 +21,11 @@ public class InvalidTotalDigitsFacetTest extends BaseTest {
     }
 
     @Test(expected = UnexpectedTypeException.class)
-    public void lengthFacetTest() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/facets/totalDigits/invalidTotalDigitsFacet" + fileNumber + ".json",
-            "atomicTypes/decimal/facets/decimalDigitsFile.json",
-            false
+    public void totalDigitsFacetTest() throws IOException {
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/facets/totalDigits/invalidTotalDigitsFacet" + fileNumber + ".json",
+                "targetType",
+                false
         );
     }
 }

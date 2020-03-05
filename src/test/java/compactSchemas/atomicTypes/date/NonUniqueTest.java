@@ -2,15 +2,15 @@ package compactSchemas.atomicTypes.date;
 
 import base.BaseTest;
 import jsound.typedescriptors.object.FieldDescriptor;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -22,21 +22,21 @@ public class NonUniqueTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         String schemaPath = "atomicTypes/date/dateSchema.json";
-        BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
+            "targetType",
             compact
         );
         dateObj = schema.get("dateObj").getFacets().getObjectContent();
     }
 
     @Test
-    public void testUniqueField() {
+    public void testUniqueField() throws IOException {
         assertTrue(schema.get("dateObj").isObjectType());
         assertTrue(dateObj.get("uniqueDate").isUnique());
-        assertFalse(schemaItem.validate(fileItem, false));
+        assertFalse(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
         assertEquals(
-            fileItem.getItem()
+            jSoundSchema.instanceItem.getItem()
                 .getItemMap()
                 .get("dates")
                 .getItem()
@@ -46,7 +46,7 @@ public class NonUniqueTest extends BaseTest {
                 .getItemMap()
                 .get("uniqueDate")
                 .getItem(),
-            fileItem.getItem()
+            jSoundSchema.instanceItem.getItem()
                 .getItemMap()
                 .get("dates")
                 .getItem()
@@ -57,6 +57,6 @@ public class NonUniqueTest extends BaseTest {
                 .get("uniqueDate")
                 .getItem()
         );
-        assertFalse(schema.get("arrayOfDates").validate(fileItem.getItem().getItemMap().get("dates"), false));
+        assertFalse(schema.get("arrayOfDates").validate(jSoundSchema.instanceItem.getItem().getItemMap().get("dates"), false));
     }
 }

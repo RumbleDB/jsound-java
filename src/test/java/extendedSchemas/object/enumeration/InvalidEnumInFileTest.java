@@ -12,30 +12,29 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidEnumInFileTest extends BaseTest {
     private static TypeDescriptor objectObj;
-
+    String filePath = "object/enumeration/invalidEnumError.json";
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/object/enumeration/enumerationSchema.json",
-            "object/enumeration/invalidEnumError.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/object/enumeration/enumerationSchema.json",
+                "targetType",
+                false
         );
         objectObj = schema.get("objectObj");
     }
 
     @Test
-    public void testInvalidValues() {
+    public void testInvalidValues() throws IOException {
         assertTrue(objectObj.isObjectType());
-        assertFalse(schemaItem.validate(fileItem, false));
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("objects").getItem().getItems()) {
+        assertFalse(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("objects").getItem().getItems()) {
             assertFalse(
                 objectObj.validate(itemWrapper, false)
             );
@@ -48,7 +47,7 @@ public class InvalidEnumInFileTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("objects").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("objects").getItem().getItems()) {
             try {
                 assertFalse(
                     enumValues.contains(itemWrapper.getItem().getItemMap().get("myObject").getItem())

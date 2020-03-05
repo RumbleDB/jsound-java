@@ -6,6 +6,7 @@ import jsound.atomicItems.TimeItem;
 import jsound.types.AtomicTypes;
 import org.api.Item;
 import org.api.ItemWrapper;
+import org.api.executors.JSoundExecutor;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.BeforeClass;
@@ -16,20 +17,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class EnumerationTest extends BaseTest {
+    String filePath = "atomicTypes/time/enumeration/timeEnumeration.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/time/enumerationSchema.json",
-            "atomicTypes/time/enumeration/timeEnumeration.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/time/enumerationSchema.json",
+                "targetType",
+                false
         );
     }
 
@@ -69,7 +69,7 @@ public class EnumerationTest extends BaseTest {
             assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("times").getItem().getItems())
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("times").getItem().getItems())
             assertTrue(values.contains((TimeItem) itemWrapper.getItem().getItemMap().get("myTime").getItem()));
     }
 
@@ -82,7 +82,7 @@ public class EnumerationTest extends BaseTest {
     }
 
     @Test
-    public void testValitime() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 }

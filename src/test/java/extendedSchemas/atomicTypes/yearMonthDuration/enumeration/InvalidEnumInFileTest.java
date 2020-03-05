@@ -5,6 +5,7 @@ import jsound.exceptions.UnexpectedTypeException;
 import org.api.Item;
 import org.api.ItemWrapper;
 import org.api.TypeDescriptor;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,30 +13,29 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidEnumInFileTest extends BaseTest {
     private static TypeDescriptor yearMonthDurationObj;
+    String filePath = "atomicTypes/yearMonthDuration/enumeration/invalidEnumError.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/yearMonthDuration/enumerationSchema.json",
-            "atomicTypes/yearMonthDuration/enumeration/invalidEnumError.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/yearMonthDuration/enumerationSchema.json",
+                "targetType",
+                false
         );
         yearMonthDurationObj = schema.get("yearMonthDurationObj");
     }
 
     @Test
-    public void testInvalidValues() {
+    public void testInvalidValues() throws IOException {
         assertTrue(yearMonthDurationObj.isObjectType());
-        assertFalse(schemaItem.validate(fileItem, false));
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("yearMonthDurations").getItem().getItems()) {
+        assertFalse(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("yearMonthDurations").getItem().getItems()) {
             assertFalse(
                 yearMonthDurationObj.validate(itemWrapper, false)
             );
@@ -48,7 +48,7 @@ public class InvalidEnumInFileTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("yearMonthDurations").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("yearMonthDurations").getItem().getItems()) {
             try {
                 assertFalse(
                     enumValues.contains(itemWrapper.getItem().getItemMap().get("myYearMonthDuration").getItem())

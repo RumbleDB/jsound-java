@@ -8,9 +8,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -22,19 +21,19 @@ public class InvalidValuesTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         String schemaPath = "object/objectSchema.json";
-        BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
+            "targetType",
             compact
         );
         objectType = schema.get("objectType");
     }
 
     @Test
-    public void testInvalidValues() {
+    public void testInvalidValues() throws IOException {
         assertTrue(objectType.isObjectType());
-        assertFalse(schemaItem.validate(fileItem, false));
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("objects").getItem().getItems()) {
+        assertFalse(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("objects").getItem().getItems()) {
             assertFalse(
                 objectType.validate(itemWrapper, false)
             );

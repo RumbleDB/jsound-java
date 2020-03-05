@@ -2,17 +2,18 @@ package extendedSchemas.facets.minExclusive;
 
 import base.BaseTest;
 import jsound.exceptions.LessRestrictiveFacetException;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 
 import java.io.IOException;
 
 public class LessRestrictiveMinExclusiveFacetTest extends BaseTest {
     @Test(expected = LessRestrictiveFacetException.class)
-    public void lengthFacetTest() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/facets/minExclusive/lessRestrictiveMinExclusiveFacet.json",
-            "atomicTypes/dateTime/facets/dateTimeBoundariesFile.json",
-            false
+    public void minExclusiveFacetTest() throws IOException {
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/facets/minExclusive/lessRestrictiveMinExclusiveFacet.json",
+                "targetType",
+                false
         );
     }
 

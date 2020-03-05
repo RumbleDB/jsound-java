@@ -2,6 +2,7 @@ package extendedSchemas.facets.length;
 
 import base.BaseTest;
 import jsound.exceptions.UnexpectedTypeException;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -21,10 +22,10 @@ public class InvalidLengthFacetTest extends BaseTest {
 
     @Test(expected = UnexpectedTypeException.class)
     public void lengthFacetTest() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/facets/length/invalidLengthFacet" + fileNumber + ".json",
-            "atomicTypes/anyURI/facets/anyURIFile.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/facets/length/invalidLengthFacet" + fileNumber + ".json",
+                "targetType",
+                false
         );
     }
 }

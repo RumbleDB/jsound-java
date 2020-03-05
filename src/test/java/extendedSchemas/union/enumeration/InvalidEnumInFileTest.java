@@ -12,30 +12,30 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InvalidEnumInFileTest extends BaseTest {
     private static TypeDescriptor unionObj;
+    String filePath = "union/enumeration/invalidEnumError.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/union/enumerationSchema.json",
-            "union/enumeration/invalidEnumError.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/union/enumerationSchema.json",
+                "targetType",
+                false
         );
         unionObj = schema.get("unionObj");
     }
 
     @Test
-    public void testInvalidValues() {
+    public void testInvalidValues() throws IOException {
         assertTrue(unionObj.isObjectType());
-        assertFalse(schemaItem.validate(fileItem, false));
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("unions").getItem().getItems()) {
+        assertFalse(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("unions").getItem().getItems()) {
             assertFalse(
                 unionObj.validate(itemWrapper, false)
             );
@@ -48,7 +48,7 @@ public class InvalidEnumInFileTest extends BaseTest {
             .collect(
                 Collectors.toList()
             );
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("unions").getItem().getItems()) {
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("unions").getItem().getItems()) {
             try {
                 assertFalse(
                     enumValues.contains(itemWrapper.getItem().getItemMap().get("myUnion").getItem())

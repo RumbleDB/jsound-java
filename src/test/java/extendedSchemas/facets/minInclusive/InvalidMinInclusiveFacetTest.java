@@ -7,12 +7,12 @@ import org.junit.runners.Parameterized;
 
 import java.io.IOException;
 
-import static org.api.executors.JSoundExecutor.fileItem;
-import static org.api.executors.JSoundExecutor.schemaItem;
+import org.api.executors.JSoundExecutor;
 import static org.junit.Assert.assertFalse;
 
 @RunWith(Parameterized.class)
 public class InvalidMinInclusiveFacetTest extends BaseTest {
+    String filePath = "atomicTypes/dateTime/facets/dateTimeBoundariesFile.json";
 
     @Parameterized.Parameter
     public int fileNumber;
@@ -23,13 +23,13 @@ public class InvalidMinInclusiveFacetTest extends BaseTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void lengthFacetTest() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/facets/minInclusive/invalidMinInclusiveFacet" + fileNumber + ".json",
-            "atomicTypes/dateTime/facets/dateTimeBoundariesFile.json",
-            false
+    public void minInclusiveFacetTest() throws IOException {
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/facets/minInclusive/invalidMinInclusiveFacet" + fileNumber + ".json",
+                "targetType",
+                false
         );
 
-        assertFalse(schemaItem.validate(fileItem, false));
+        assertFalse(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 }

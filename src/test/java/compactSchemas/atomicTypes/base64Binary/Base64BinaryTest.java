@@ -6,15 +6,14 @@ import jsound.tyson.TYSONArray;
 import jsound.tyson.TYSONItem;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -27,9 +26,9 @@ public class Base64BinaryTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         String schemaPath = "atomicTypes/base64Binary/base64BinarySchema.json";
-        BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
+            "targetType",
             compact
         );
         base64BinaryObj = schema.get("base64BinaryObj").getFacets().getObjectContent();
@@ -93,13 +92,13 @@ public class Base64BinaryTest extends BaseTest {
     }
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 
     @Test
-    public void testAnnotate() {
-        TYSONObject tysonObject = (TYSONObject) schemaItem.annotate(fileItem);
+    public void testAnnotate() throws IOException {
+        TYSONObject tysonObject = (TYSONObject) jSoundSchema.annotateJSONFromPath(filePathPrefix + filePath);
         assertTrue(tysonObject.containsKey("base64Binaries"));
         TYSONArray tysonArray = (TYSONArray) tysonObject.get("base64Binaries");
         for (TYSONItem item : tysonArray) {

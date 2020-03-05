@@ -3,6 +3,7 @@ package extendedSchemas.array.enumeration;
 import base.BaseTest;
 import jsound.exceptions.InvalidEnumValueException;
 import org.api.ItemWrapper;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,9 +15,9 @@ public class InvalidEnumInSchemaTest extends BaseTest {
 
     @Test(expected = InvalidEnumValueException.class)
     public void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/array/invalidEnumInSchema.json",
-            "array/enumeration/arrayEnumeration.json",
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + "extendedSchemas/array/invalidEnumInSchema.json",
+            "targetType",
             false
         );
     }

@@ -68,9 +68,8 @@ public class UnionTypeDescriptor extends TypeDescriptor {
 
     private boolean validateContentFacet(ItemWrapper itemWrapper) {
         for (TypeOrReference typeOrReference : this.getFacets().getUnionContent().getTypes()) {
-            Item itemBeforeValidation = itemWrapper.getItem();
             if (typeOrReference.getTypeDescriptor().validate(itemWrapper, false)) {
-                validatingTypes.put(itemBeforeValidation, typeOrReference.getTypeDescriptor());
+                validatingTypes.put(itemWrapper.getItem(), typeOrReference.getTypeDescriptor());
                 return true;
             }
         }

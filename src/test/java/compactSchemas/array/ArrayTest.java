@@ -10,6 +10,7 @@ import jsound.tyson.TYSONItem;
 import jsound.tyson.TYSONObject;
 import jsound.tyson.TYSONValue;
 import org.api.ItemWrapper;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -18,9 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -33,9 +32,9 @@ public class ArrayTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         String schemaPath = "array/arraySchema.json";
-        BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
+            "targetType",
             compact
         );
         arrayObject = schema.get("arrayObj").getFacets().getObjectContent();
@@ -143,13 +142,13 @@ public class ArrayTest extends BaseTest {
     }
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 
     @Test
-    public void testAnnotate() {
-        TYSONObject tysonObject = (TYSONObject) schemaItem.annotate(fileItem);
+    public void testAnnotate() throws IOException {
+        TYSONObject tysonObject = (TYSONObject) jSoundSchema.annotateJSONFromPath(filePathPrefix + filePath);
         assertTrue(tysonObject.containsKey("arrays"));
         TYSONArray tysonArray = (TYSONArray) tysonObject.get("arrays");
         for (TYSONItem item : tysonArray) {

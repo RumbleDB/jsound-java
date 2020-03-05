@@ -3,6 +3,7 @@ package extendedSchemas.atomicTypes.anyURI.enumeration;
 import base.BaseTest;
 import jsound.exceptions.InvalidEnumValueException;
 import org.api.ItemWrapper;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,10 +15,10 @@ public class InvalidEnumInSchemaTest extends BaseTest {
 
     @Test(expected = InvalidEnumValueException.class)
     public void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/anyURI/invalidEnumInSchema.json",
-            "atomicTypes/anyURI/enumeration/anyURIEnumeration.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/anyURI/invalidEnumInSchema.json",
+                "targetType",
+                false
         );
     }
 

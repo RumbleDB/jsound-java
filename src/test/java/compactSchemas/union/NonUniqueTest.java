@@ -8,9 +8,9 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -22,21 +22,21 @@ public class NonUniqueTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         String schemaPath = "union/unionSchema.json";
-        BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
+            "targetType",
             compact
         );
         unionObj = schema.get("unionObj").getFacets().getObjectContent();
     }
 
     @Test
-    public void testUniqueField() {
+    public void testUniqueField() throws IOException {
         assertTrue(schema.get("unionObj").isObjectType());
         assertTrue(unionObj.get("uniqueDurations").isUnique());
-        assertFalse(schemaItem.validate(fileItem, false));
+        assertFalse(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
         assertEquals(
-            fileItem.getItem()
+            jSoundSchema.instanceItem.getItem()
                 .getItemMap()
                 .get("unions")
                 .getItem()
@@ -46,7 +46,7 @@ public class NonUniqueTest extends BaseTest {
                 .getItemMap()
                 .get("uniqueDurations")
                 .getItem(),
-            fileItem.getItem()
+            jSoundSchema.instanceItem.getItem()
                 .getItemMap()
                 .get("unions")
                 .getItem()
@@ -57,6 +57,6 @@ public class NonUniqueTest extends BaseTest {
                 .get("uniqueDurations")
                 .getItem()
         );
-        assertFalse(schema.get("arrayOfUnions").validate(fileItem.getItem().getItemMap().get("unions"), false));
+        assertFalse(schema.get("arrayOfUnions").validate(jSoundSchema.instanceItem.getItem().getItemMap().get("unions"), false));
     }
 }

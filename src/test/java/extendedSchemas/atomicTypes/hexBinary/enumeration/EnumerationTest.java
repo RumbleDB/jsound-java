@@ -4,6 +4,7 @@ import base.BaseTest;
 import jsound.atomicItems.HexBinaryItem;
 import org.api.Item;
 import org.api.ItemWrapper;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,20 +13,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class EnumerationTest extends BaseTest {
+    String filePath = "atomicTypes/hexBinary/enumeration/hexBinaryEnumeration.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/hexBinary/enumerationSchema.json",
-            "atomicTypes/hexBinary/enumeration/hexBinaryEnumeration.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/hexBinary/enumerationSchema.json",
+                "targetType",
+                false
         );
     }
 
@@ -65,14 +65,14 @@ public class EnumerationTest extends BaseTest {
             assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("hexBinaries").getItem().getItems())
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("hexBinaries").getItem().getItems())
             assertTrue(
                 values.contains((HexBinaryItem) itemWrapper.getItem().getItemMap().get("myHexBinary").getItem())
             );
     }
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 }

@@ -17,9 +17,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -32,9 +31,9 @@ public class ObjectTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         String schemaPath = "object/objectSchema.json";
-        BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
+            "targetType",
             compact
         );
         objectType = schema.get("objectType").getFacets().getObjectContent();
@@ -102,13 +101,13 @@ public class ObjectTest extends BaseTest {
     }
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 
     @Test
-    public void testAnnotate() {
-        TYSONObject tysonObject = (TYSONObject) schemaItem.annotate(fileItem);
+    public void testAnnotate() throws IOException {
+        TYSONObject tysonObject = (TYSONObject) jSoundSchema.annotateJSONFromPath(filePathPrefix + filePath);
         assertTrue(tysonObject.containsKey("objects"));
         TYSONArray tysonArray = (TYSONArray) tysonObject.get("objects");
         for (TYSONItem item : tysonArray) {

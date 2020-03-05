@@ -2,6 +2,7 @@ package extendedSchemas.facets.objectContent;
 
 import base.BaseTest;
 import jsound.exceptions.UnexpectedTypeException;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -21,10 +22,10 @@ public class InvalidContentFacetTest extends BaseTest {
 
     @Test(expected = UnexpectedTypeException.class)
     public void contentFacetTest() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/facets/objectContent/invalidContentFacet" + fileNumber + ".json",
-            "object/objectFile.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/facets/objectContent/invalidContentFacet" + fileNumber + ".json",
+                "targetType",
+                false
         );
     }
 }

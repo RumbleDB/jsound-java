@@ -3,6 +3,7 @@ package compactSchemas;
 import base.BaseTest;
 import jsound.typedescriptors.object.FieldDescriptor;
 import jsound.types.AtomicTypes;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -24,9 +25,9 @@ public class GeneralTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         String schemaPath = "generalSchema.json";
-        BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
+            "targetType",
             compact
         );
         person = schema.get("person").getFacets().getObjectContent();

@@ -4,6 +4,7 @@ import base.BaseTest;
 import jsound.atomicItems.IntegerItem;
 import org.api.Item;
 import org.api.ItemWrapper;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,20 +13,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class EnumerationTest extends BaseTest {
+    String filePath = "atomicTypes/integer/enumeration/integerEnumeration.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/integer/enumerationSchema.json",
-            "atomicTypes/integer/enumeration/integerEnumeration.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/integer/enumerationSchema.json",
+                "targetType",
+                false
         );
     }
 
@@ -65,12 +65,12 @@ public class EnumerationTest extends BaseTest {
             assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("integers").getItem().getItems())
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("integers").getItem().getItems())
             assertTrue(values.contains((IntegerItem) itemWrapper.getItem().getItemMap().get("myInteger").getItem()));
     }
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 }

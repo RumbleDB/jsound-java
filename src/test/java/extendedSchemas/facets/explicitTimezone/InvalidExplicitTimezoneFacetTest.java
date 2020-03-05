@@ -2,6 +2,7 @@ package extendedSchemas.facets.explicitTimezone;
 
 import base.BaseTest;
 import jsound.exceptions.UnexpectedTypeException;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -20,11 +21,11 @@ public class InvalidExplicitTimezoneFacetTest extends BaseTest {
     }
 
     @Test(expected = UnexpectedTypeException.class)
-    public void lengthFacetTest() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/facets/explicitTimezone/invalidExplicitTimezoneFacet" + fileNumber + ".json",
-            "atomicTypes/dateTime/facets/dateTimeTimezoneFile.json",
-            false
+    public void explicitTimezoneFacetTest() throws IOException {
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/facets/explicitTimezone/invalidExplicitTimezoneFacet" + fileNumber + ".json",
+                "targetType",
+                false
         );
     }
 }

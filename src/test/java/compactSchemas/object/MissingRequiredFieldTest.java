@@ -8,9 +8,8 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -22,21 +21,21 @@ public class MissingRequiredFieldTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         String schemaPath = "object/missingRequiredFieldSchema.json";
-        BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
+            "targetType",
             compact
         );
         object = schema.get("object").getFacets().getObjectContent();
     }
 
     @Test
-    public void testMissingRequiredField() {
+    public void testMissingRequiredField() throws IOException {
         assertTrue(schema.get("object").isObjectType());
         assertTrue(object.get("requiredField").isRequired());
-        assertFalse(schemaItem.validate(fileItem, false));
+        assertFalse(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
         assertTrue(
-            !fileItem.getItem()
+            !jSoundSchema.instanceItem.getItem()
                 .getItemMap()
                 .get("objects")
                 .getItem()
@@ -49,7 +48,7 @@ public class MissingRequiredFieldTest extends BaseTest {
         );
         assertFalse(
             schema.get("object")
-                .validate(fileItem.getItem().getItemMap().get("objects").getItem().getItems().get(0), false)
+                .validate(jSoundSchema.instanceItem.getItem().getItemMap().get("objects").getItem().getItems().get(0), false)
         );
     }
 }

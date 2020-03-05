@@ -3,6 +3,7 @@ package extendedSchemas.array;
 import base.BaseTest;
 import jsound.exceptions.InvalidSchemaException;
 import jsound.typedescriptors.object.FieldDescriptor;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,9 +15,9 @@ public class InvalidDefaultTest extends BaseTest {
 
     @Test(expected = InvalidSchemaException.class)
     public void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/array/invalidDefaultSchema.json",
-            "array/enumeration/arrayEnumeration.json",
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + "extendedSchemas/array/invalidDefaultSchema.json",
+            "targetType",
             false
         );
     }

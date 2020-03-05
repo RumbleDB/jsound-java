@@ -20,20 +20,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static jsound.atomicItems.DurationItem.getDurationFromString;
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class EnumerationTest extends BaseTest {
+    String filePath = "union/enumeration/unionEnumeration.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/union/enumerationSchema.json",
-            "union/enumeration/unionEnumeration.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/union/enumerationSchema.json",
+                "targetType",
+                false
         );
     }
 
@@ -75,7 +75,7 @@ public class EnumerationTest extends BaseTest {
             assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("unions").getItem().getItems())
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("unions").getItem().getItems())
             assertTrue(values.contains(itemWrapper.getItem().getItemMap().get("myUnion").getItem()));
     }
 
@@ -88,7 +88,7 @@ public class EnumerationTest extends BaseTest {
     }
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 }

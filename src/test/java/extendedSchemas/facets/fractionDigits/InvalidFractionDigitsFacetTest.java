@@ -2,6 +2,7 @@ package extendedSchemas.facets.fractionDigits;
 
 import base.BaseTest;
 import jsound.exceptions.UnexpectedTypeException;
+import org.api.executors.JSoundExecutor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -20,11 +21,11 @@ public class InvalidFractionDigitsFacetTest extends BaseTest {
     }
 
     @Test(expected = UnexpectedTypeException.class)
-    public void lengthFacetTest() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/facets/fractionDigits/invalidFractionDigitsFacet" + fileNumber + ".json",
-            "atomicTypes/decimal/facets/decimalDigitsFile.json",
-            false
+    public void fractionDigitFacetTest() throws IOException {
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/facets/fractionDigits/invalidFractionDigitsFacet" + fileNumber + ".json",
+                "targetType",
+                false
         );
     }
 }

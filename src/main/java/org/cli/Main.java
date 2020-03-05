@@ -6,6 +6,9 @@ import org.api.executors.JSoundExecutor;
 import org.api.executors.JSoundSchema;
 import org.config.JSoundRuntimeConfiguration;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -26,11 +29,18 @@ public class Main {
                             JSoundRuntimeConfiguration.getInstance().getFile(),
                             JSoundRuntimeConfiguration.getInstance().getOutputPath()
                         );
-                    else
-                        schema.annotateJSONFromPath(
-                            JSoundRuntimeConfiguration.getInstance().getFile(),
-                            JSoundRuntimeConfiguration.getInstance().getOutputPath()
-                        );
+                    else {
+                        try (
+                            FileWriter file = new FileWriter(JSoundRuntimeConfiguration.getInstance().getOutputPath())
+                        ) {
+                            file.write(
+                                schema.annotateJSONFromPath(JSoundRuntimeConfiguration.getInstance().getFile())
+                                    .toTYSONString()
+                            );
+                        } catch (IOException e) {
+                            throw new JsoundException("The specified output file path is not valid.");
+                        }
+                    }
                     System.out.println("Validation completed successfully! ✅");
                     System.out.println("Annotation completed successfully! ✅");
                 } catch (JsoundException e) {

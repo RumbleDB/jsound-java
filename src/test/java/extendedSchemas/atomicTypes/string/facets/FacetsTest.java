@@ -3,24 +3,25 @@ package extendedSchemas.atomicTypes.string.facets;
 import base.BaseTest;
 import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class FacetsTest extends BaseTest {
+    String filePath = "atomicTypes/string/facets/stringFile.json";
+
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/string/facets/stringSchema.json",
-            "atomicTypes/string/facets/stringFile.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/string/facets/stringSchema.json",
+                "targetType",
+                false
         );
     }
 
@@ -72,7 +73,7 @@ public class FacetsTest extends BaseTest {
     }
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 }

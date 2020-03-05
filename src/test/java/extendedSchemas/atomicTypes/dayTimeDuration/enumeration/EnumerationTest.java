@@ -5,6 +5,7 @@ import jsound.atomicItems.DayTimeDurationItem;
 import jsound.types.ItemTypes;
 import org.api.Item;
 import org.api.ItemWrapper;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,20 +15,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static jsound.atomicItems.DurationItem.getDurationFromString;
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class EnumerationTest extends BaseTest {
+    String filePath = "atomicTypes/dayTimeDuration/enumeration/dayTimeDurationEnumeration.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/dayTimeDuration/enumerationSchema.json",
-            "atomicTypes/dayTimeDuration/enumeration/dayTimeDurationEnumeration.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/dayTimeDuration/enumerationSchema.json",
+                "targetType",
+                false
         );
     }
 
@@ -67,7 +67,7 @@ public class EnumerationTest extends BaseTest {
             assertTrue(enumValues.contains(value));
         }
 
-        for (ItemWrapper itemWrapper : fileItem.getItem().getItemMap().get("dayTimeDurations").getItem().getItems())
+        for (ItemWrapper itemWrapper : jSoundSchema.instanceItem.getItem().getItemMap().get("dayTimeDurations").getItem().getItems())
             assertTrue(
                 values.contains(
                     (DayTimeDurationItem) itemWrapper.getItem().getItemMap().get("myDayTimeDuration").getItem()
@@ -80,7 +80,7 @@ public class EnumerationTest extends BaseTest {
     }
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 }

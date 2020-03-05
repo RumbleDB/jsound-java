@@ -4,25 +4,26 @@ import base.BaseTest;
 import jsound.atomicItems.DecimalItem;
 import jsound.facets.AtomicFacets;
 import jsound.facets.FacetTypes;
+import org.api.executors.JSoundExecutor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import static org.api.executors.JSoundExecutor.fileItem;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class BoundariesFacetsTest extends BaseTest {
+    String filePath = "atomicTypes/decimal/facets/decimalBoundariesFile.json";
+
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/atomicTypes/decimal/facets/decimalBoundariesSchema.json",
-            "atomicTypes/decimal/facets/decimalBoundariesFile.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/atomicTypes/decimal/facets/decimalBoundariesSchema.json",
+                "targetType",
+                false
         );
     }
 
@@ -144,7 +145,7 @@ public class BoundariesFacetsTest extends BaseTest {
 
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 }

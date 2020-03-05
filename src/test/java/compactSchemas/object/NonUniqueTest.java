@@ -8,9 +8,9 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -22,21 +22,21 @@ public class NonUniqueTest extends BaseTest {
     @BeforeClass
     public static void initializeApplication() throws IOException {
         String schemaPath = "object/objectSchema.json";
-        BaseTest.initializeApplication(
-            (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
-            filePath,
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+            schemaPathPrefix + (compact ? "compactSchemas/" : "extendedSchemas/") + schemaPath,
+            "targetType",
             compact
         );
         objectType = schema.get("objectType").getFacets().getObjectContent();
     }
 
     @Test
-    public void testUniqueField() {
+    public void testUniqueField() throws IOException {
         assertTrue(schema.get("objectType").isObjectType());
         assertTrue(objectType.get("uniqueObject").isUnique());
-        assertFalse(schemaItem.validate(fileItem, false));
+        assertFalse(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
         assertEquals(
-            fileItem.getItem()
+            jSoundSchema.instanceItem.getItem()
                 .getItemMap()
                 .get("objects")
                 .getItem()
@@ -46,7 +46,7 @@ public class NonUniqueTest extends BaseTest {
                 .getItemMap()
                 .get("uniqueObject")
                 .getItem(),
-            fileItem.getItem()
+            jSoundSchema.instanceItem.getItem()
                 .getItemMap()
                 .get("objects")
                 .getItem()
@@ -57,6 +57,6 @@ public class NonUniqueTest extends BaseTest {
                 .get("uniqueObject")
                 .getItem()
         );
-        assertFalse(schema.get("arrayOfObjects").validate(fileItem.getItem().getItemMap().get("objects"), false));
+        assertFalse(schema.get("arrayOfObjects").validate(jSoundSchema.instanceItem.getItem().getItemMap().get("objects"), false));
     }
 }

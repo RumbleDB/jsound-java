@@ -7,19 +7,19 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.api.executors.JSoundExecutor.fileItem;
+import org.api.executors.JSoundExecutor;
 import static org.api.executors.JSoundExecutor.schema;
-import static org.api.executors.JSoundExecutor.schemaItem;
 import static org.junit.Assert.assertTrue;
 
 public class ClosedFacetTest extends BaseTest {
+    String filePath = "object/closed/objectFile.json";
 
     @BeforeClass
     public static void initializeApplication() throws IOException {
-        BaseTest.initializeApplication(
-            "extendedSchemas/object/closed/closedSchema.json",
-            "object/closed/objectFile.json",
-            false
+        jSoundSchema = JSoundExecutor.loadSchemaFromPath(
+                schemaPathPrefix + "extendedSchemas/object/closed/closedSchema.json",
+                "targetType",
+                false
         );
     }
 
@@ -30,7 +30,7 @@ public class ClosedFacetTest extends BaseTest {
     }
 
     @Test
-    public void testValidate() {
-        assertTrue(schemaItem.validate(fileItem, false));
+    public void testValidate() throws IOException {
+        assertTrue(jSoundSchema.validateJSONFromPath(filePathPrefix + filePath));
     }
 }
